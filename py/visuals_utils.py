@@ -21,6 +21,10 @@ DATA_RAW = ROOT / "data" / "raw"
 # one of these -- nothing is written directly into IMG_DIR any more.
 BLOCK1_DIR = IMG_DIR / "block-1-codemeta-wikidata-datamodel"
 BLOCK3_DIR = IMG_DIR / "block-3-four-step-pattern"
+# Not one of the three numbered "blocks" -- system-level diagrams that sit
+# above them (the consolidated architecture, and later the open-archaeo
+# pipeline), so they get their own, non-numbered folder.
+SYSTEM_ARCH_DIR = IMG_DIR / "system-architecture"
 
 FONT_REGULAR = FONTS_DIR / "FiraSans-Regular.ttf"
 FONT_BOLD = FONTS_DIR / "FiraSans-Bold.ttf"

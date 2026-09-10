@@ -28,16 +28,18 @@ img/
 │   ├── chublets-wikidata-properties-overview.svg/.png
 │   ├── chublets-codemeta-wikidata-crosswalk.svg/.png
 │   └── chublets-wikibase-datamodel.svg/.png
-└── block-3-four-step-pattern/
-    ├── chublets-four-step-pattern.svg/.png       (banner)
-    ├── step-1-ingest-badge.svg/.png              (icon only, S4)
-    ├── step-1-ingest-detail.svg/.png             (explainer, S4b)
-    ├── step-2-model-badge.svg/.png
-    ├── step-2-model-detail.svg/.png
-    ├── step-3-curate-link-badge.svg/.png
-    ├── step-3-curate-link-detail.svg/.png
-    ├── step-4-export-publish-badge.svg/.png
-    └── step-4-export-publish-detail.svg/.png
+├── block-3-four-step-pattern/
+│   ├── chublets-four-step-pattern.svg/.png       (banner)
+│   ├── step-1-ingest-badge.svg/.png              (icon only, S4)
+│   ├── step-1-ingest-detail.svg/.png             (explainer, S4b)
+│   ├── step-2-model-badge.svg/.png
+│   ├── step-2-model-detail.svg/.png
+│   ├── step-3-curate-link-badge.svg/.png
+│   ├── step-3-curate-link-detail.svg/.png
+│   ├── step-4-export-publish-badge.svg/.png
+│   └── step-4-export-publish-detail.svg/.png
+└── system-architecture/
+    └── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
 ```
 
 `badge` = the small transparent icon alone (for slide corners, navigation).
@@ -71,9 +73,15 @@ Ingest, the same federated-datamodel numbers as Block 1 for Model, a
 four-stage curation workflow for Curate & Link, and the SPARQL-to-
 marketplace export pipeline for Export & Publish).
 
-Further blocks (FAIR4RS chain, system architecture, open-archaeo→Wikidata
-pipeline) are planned; see [`PRIMER.md`](PRIMER.md) for the full plan and
-current status.
+**System architecture (S5)** — `chublets-software-architecture`: the
+five-stage bird's-eye view (Wikidata bridge → data sources → chublets
+Wikibase → export pipeline → marketplaces) that consolidates Block 1 and
+Block 3 into the single diagram that used to be three separate F28 panels.
+Reads the same datamodel numbers as Block 1/Block 3, live, so it can't
+drift from them.
+
+Further work (FAIR4RS chain, open-archaeo→Wikidata pipeline) is planned;
+see [`PRIMER.md`](PRIMER.md) for the full plan and current status.
 
 ## Usage
 

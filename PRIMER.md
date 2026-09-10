@@ -129,6 +129,10 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   Kopfzeile wie die zugehörige `-badge`-Datei — seit 2026-09-10 Pflicht
   (Befund unten), damit nie unklar ist, zu welchem Schritt eine Grafik
   gehört.
+- **System-Diagramme, die über den drei nummerierten Blöcken stehen**
+  (die konsolidierte Architektur, künftig die open-archaeo-Pipeline)
+  bekommen einen eigenen, unnummerierten Unterordner
+  (`img/system-architecture/`), keinen `block-N`-Ordner.
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -181,7 +185,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
 | S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
-| S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | offen |
+| S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
 
 S3, S4b und S6 sind voneinander unabhängig und können in beliebiger Reihenfolge
@@ -386,6 +390,43 @@ Wie geplant. Alter, flacher Dateibestand (13 Dateipaare direkt unter
 kein Umbenennen/Löschen transportieren, siehe PATCH-README dieses
 Schritts). Determinismus-Check über alle 9 Schritte bestanden.
 
+## S5 — System Architecture
+
+**Ziel:** ein einziges, konsolidiertes Diagramm, das die drei alten
+F28-Panels (Wikibase-Klassendiagramm, Workflow, Output) ersetzt und dabei
+die Wikidata-Brücke als eigene, explizite erste Stufe zeigt statt sie
+stillschweigend unter "Data Sources" zu verstecken (F28 hatte "Wikidata
+IDs" bereits als Input gelistet, aber nie gezeigt, dass das ein separates,
+bereits aktives System ist).
+
+**Uploads:** keine neuen.
+
+**Substanz:**
+
+- `py/step_architecture.py` → `chublets-software-architecture` in einem
+  neuen, unnummerierten Ordner `img/system-architecture/` (`SYSTEM_ARCH_DIR`
+  in `visuals_utils.py`) — steht bewusst nicht unter `block-*`, weil es kein
+  eigener Block ist, sondern ein System-Überblick über mehrere Blöcke
+  hinweg.
+- Fünf Stufen in einer Reihe: **Wikidata bridge** (neutral) → **Data
+  sources** (Teal, = Ingest-Farbe) → **chublets.software Wikibase** (Lila,
+  = Model-Farbe) → **Export pipeline** (Blaugrau, = Export & Publish-Farbe)
+  → **Marketplaces & KG** (neutral). Die drei mittleren Farben sind absichtlich
+  identisch zu den Block-3-Badges, damit die Systemgrafik sich sichtbar auf
+  die Detailgrafiken bezieht, ohne sie zu wiederholen.
+- Zahlen in Stufe 3 kommen live aus denselben zwei Quellen wie S2 und
+  `chublets-model-datamodel` (S4b) — drei Grafiken, eine Zahl (A3).
+
+**Abnahme:** `img/system-architecture/chublets-software-architecture.png`
+existiert, transparenter Hintergrund, ≤10px Rand; zweimal `python main.py
+--only architecture` hintereinander → identische Prüfsummen; `python
+main.py` (alle 10 Schritte) läuft weiterhin fehlerfrei durch.
+
+### Erledigt 2026-09-10
+
+Wie geplant, visuell geprüft. Determinismus-Check über alle 10 Schritte
+bestanden (23 Dateien + `pipeline_report.txt`).
+
 ---
 
 # Teil D — Offene Punkte
@@ -401,10 +442,6 @@ Schritts). Determinismus-Check über alle 9 Schritte bestanden.
   pro Prinzip — in A4 als Vorschlag eingetragen, aber nicht gegen die
   tatsächliche deRSE26-FAIR-Tabelle geprüft. Sobald das Paper zugänglich ist:
   gegenprüfen statt neu erfinden.
-- **System Architecture (S5)** konsolidiert die drei Panels der alten F28
-  (Klassendiagramm/Workflow/Output) zu einem Diagramm und ergänzt die
-  Wikidata-Brücke als expliziten ersten Schritt (siehe Talk-Chat, dort schon
-  skizziert) — S2 und S4b sind jetzt beide da, S5 kann jederzeit starten.
 - **open-archaeo-Pipeline (S6)** ist inhaltlich bereits im Talk-Chat
   skizziert (Transform+Identity → Enrich → Reconcile → Push); für dieses Repo
   fehlt noch die Anbindung an echte Quelldaten (vermutlich das
