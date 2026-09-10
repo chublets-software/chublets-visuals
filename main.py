@@ -12,9 +12,9 @@
 Step modules are imported lazily so `--list` and `--dry-run` stay instant
 and free of resvg-py/Pillow/openpyxl.
 
-Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6) is built. New
-work gets a fresh id appended to STEPS; existing ids never change, since
-PATCH-README.md and PRIMER.md refer to them by id.
+Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b) is built.
+New work gets a fresh id appended to STEPS; existing ids never change,
+since PATCH-README.md and PRIMER.md refer to them by id.
 """
 
 from __future__ import annotations
@@ -46,6 +46,9 @@ STEPS = [
     ("fair-interoperable", "Block 2 (4/5): Interoperable detail (CodeMeta hub)", "step_fair_interoperable"),
     ("fair-reusable", "Block 2 (5/5): Reusable detail", "step_fair_reusable"),
     ("open-archaeo", "S6: open-archaeo to Wikidata import pipeline", "step_open_archaeo_pipeline"),
+    ("oa-two-routes", "S6b (1/3): open-archaeo two routes overview", "step_open_archaeo_two_routes"),
+    ("oa-python-route", "S6b (2/3): the Python route session", "step_open_archaeo_python_route"),
+    ("oa-openrefine-route", "S6b (3/3): the OpenRefine route", "step_open_archaeo_openrefine_route"),
 ]
 
 

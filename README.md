@@ -50,7 +50,10 @@ img/
 │   └── step-4-export-publish-detail.svg/.png
 └── system-architecture/
     ├── chublets-software-architecture.svg/.png       (S5, consolidates Block 1 + Block 3)
-    └── open-archaeo-wikidata-pipeline.svg/.png       (S6, detail behind S5's "Wikidata bridge")
+    ├── open-archaeo-wikidata-pipeline.svg/.png       (S6, detail behind S5's "Wikidata bridge")
+    ├── open-archaeo-two-routes.svg/.png              (S6b, from the real repo: split into two teams)
+    ├── open-archaeo-python-route.svg/.png            (S6b, the py/wikidata/main.py session)
+    └── open-archaeo-openrefine-route.svg/.png        (S6b, the OpenRefine session)
 ```
 
 `badge` = the small transparent icon alone (for slide corners, navigation).
@@ -104,8 +107,13 @@ GitHub enrichment, category reconciliation, push) that turn the
 open-archaeo register into Wikidata items — content from already-built,
 tested pipeline code (not this repo's source, see `PRIMER.md` A1 Befund 9).
 
-All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6) is built; see
-[`PRIMER.md`](PRIMER.md) Teil D for what's next.
+All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b) is built;
+see [`PRIMER.md`](PRIMER.md) Teil D for what's next -- including an open
+question about whether S6 itself needs updating now that S6b exists
+(S6 predates a clone of the real `n4o-rse/open-archaeo` repo and describes
+an earlier, since-superseded shape of the pipeline; S6b was built by
+cloning the repo directly and is checked against its actual code and
+docs).
 
 ## Usage
 

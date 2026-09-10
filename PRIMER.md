@@ -100,6 +100,23 @@ nicht auf ihn beschränkt.
    externen Quelle, die dieses Repo nicht enthält — nicht dasselbe wie
    S4b's "aus dem Talk-Chat, ungeprüft", weil der Pipeline-Code real
    existiert und läuft, nur eben anderswo.
+10. **S6 (Befund 9) war veraltet gegenüber dem echten Repo-Stand.** Geprüft
+    2026-09-10 durch Klonen von `github.com/n4o-rse/open-archaeo`: die
+    Pipeline hat sich seit dem Wissensstand, aus dem S6 gebaut wurde,
+    spürbar weiterentwickelt. Drei konkrete Abweichungen: (a) nur **zwei**
+    Pflicht-Statements (`P31` + `P6104`), nicht sechs — `P361`/`P195`/`P217`/
+    `P2888` aus S6 kommen in `docs/MAPPING.md` so nicht vor; (b) kein
+    `enrich.py` mehr, stattdessen ein deterministischer, stratifizierter
+    `split`-Schritt, der den 416-Eintrags-Datensatz in zwei nicht
+    überlappende 208er-Hälften teilt — eine für OpenRefine
+    (`out/OpenRefine/`), eine für Python (`out/Python/`); (c) die
+    Python-Seite hat acht CLI-Schritte (`check`/`preview`/`reconcile`/
+    `vocab`/`categories`/`subjects`/`push`/`sparql`/`site`, siehe
+    `py/wikidata/main.py`), nicht die vier aus S6. S6 selbst wurde nicht
+    angefasst (Flo: "das was wir haben passt") — die drei neuen S6b-Grafiken
+    (Befund 9-Nachfolger) sind jetzt live gegen den echten Repo-Inhalt
+    gebaut; ob S6 zusätzlich aktualisiert oder ersetzt werden soll, ist
+    Teil D.
 
 ## A2. Zielbild
 
@@ -204,6 +221,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | erledigt 2026-09-10 |
+| S6b | open-archaeo: die zwei echten Routen (Übersicht, Python-Route, OpenRefine-Route), aus dem echten Repo gebaut | chublets-visuals | S6 | erledigt 2026-09-10 |
 
 Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
 
@@ -523,9 +541,66 @@ Wie geplant, visuell geprüft. Determinismus-Check über alle 16 Schritte
 bestanden. Damit sind alle in Teil B geplanten Schritte abgeschlossen —
 siehe Teil D für das, was als Nächstes anliegt.
 
+## S6b — open-archaeo: die zwei echten Routen
+
+**Ziel:** drei weitere Grafiken, diesmal direkt aus
+`github.com/n4o-rse/open-archaeo` geklont und gelesen (`py/`, `docs/`,
+`out/OpenRefine/README.md`, `out/Python/README.md`) statt aus Erinnerung —
+Flo: "es soll hier speziell um das verfahren gehen wie man daten von open
+archaeo reinbringt (da gibt es ja den py wikibase api weg und open refine
+etc.)".
+
+**Uploads:** keine neuen (Repo direkt geklont, `codeload.github.com`/
+`github.com` sind im Sandkasten-Netzwerk erlaubt).
+
+**Substanz:**
+
+- `py/step_open_archaeo_two_routes.py` → `open-archaeo-two-routes`: die
+  Aufteilung selbst — `open-archaeo.csv` (562) → `transform` (416er
+  Software-Subset) → `split` (stratifiziert, deterministisch) → zwei
+  nicht überlappende 208er-Hälften (`out/OpenRefine/`, `out/Python/`) →
+  gemeinsame Vokabular- und Concordance-Dateien. Farben (Teal/Lila)
+  bewusst an die beiden Routen-Grafiken darunter gekoppelt.
+- `py/step_open_archaeo_python_route.py` → `open-archaeo-python-route`:
+  die tatsächliche Sitzung aus `out/Python/README.md` — `check`
+  (Default-Schritt, schreibt nichts) → `preview` (`docs/preview.html`) →
+  `reconcile` (read-only, langsam) → `push` (Dry-Run per Default) →
+  `push --live` (der einzige Schritt, der wirklich schreibt, und nur für
+  bereits reconciliierte Zeilen — legt nie neue Items an).
+- `py/step_open_archaeo_openrefine_route.py` →
+  `open-archaeo-openrefine-route`: aus `out/OpenRefine/README.md` —
+  Setup → Split & Derive (GREL-Ausdrücke für VCS/Archivdatum/CRAN-PyPI) →
+  Reconcile (Name+Repository-Match, hält das gemeinsame Vokabular für
+  *beide* Routen) → Schema & Upload → Hand back (id,qid-CSV).
+- Alle drei in `img/system-architecture/`, neben `chublets-software-
+  architecture` und `open-archaeo-wikidata-pipeline` (S6) — kein eigener
+  Ordner, weil sie inhaltlich zu S6 gehören, nicht zu einem der drei
+  nummerierten Blöcke.
+
+**Abnahme:** drei neue PNG/SVG-Paare in `img/system-architecture/`;
+zweimal `python main.py` (alle 19 Schritte) → identische Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Wie geplant, visuell geprüft, direkt gegen den geklonten Repo-Inhalt
+verifiziert (Zahlen 562/416/208/208 und die acht CLI-Schritte stammen
+wörtlich aus dem Code, nicht aus Erinnerung). Dabei wurde entdeckt, dass
+S6 selbst veraltet ist (Befund 10) — bewusst nicht angefasst, siehe
+Teil D.
+
 ---
 
 # Teil D — Offene Punkte
+
+- **S6 widerspricht jetzt S6b** (Befund 10): sechs Identity-Statements vs.
+  die echten zwei, "GitHub enrichment" vs. den echten stratifizierten
+  `split`, vier CLI-Schritte vs. die echten acht. Drei Optionen: (a) S6 so
+  lassen, als bewusst vereinfachte/ältere Übersichtsgrafik neben den
+  präziseren S6b-Grafiken; (b) S6 löschen, S6b übernimmt seine Rolle
+  komplett; (c) S6 auf den echten Zwei-Routen-Stand aktualisieren und S5's
+  "Wikidata bridge"-Stufe entsprechend nachziehen. Nicht selbst
+  entschieden, weil Flo S6 explizit als "passt" bezeichnet hatte, bevor
+  Befund 10 auffiel — nächste Sitzung fragen.
 
 - **Curate & Link / Export & Publish haben keine geprüfte Quelle** — beide
   S4b-Grafiken übernehmen den Inhalt unverändert aus dem alten
@@ -540,11 +615,14 @@ siehe Teil D für das, was als Nächstes anliegt.
   Paper zugänglich ist: gegenprüfen statt weiter auf dem Vorschlag
   aufzubauen, besonders bevor die Grafiken auch im Paper selbst verwendet
   werden.
-- **open-archaeo-Pipeline (S6) liest nicht live aus dem echten Repo** —
-  bewusste Entscheidung (Befund 9), aber falls `n4o-rse/open-archaeo`
-  jemals als Upload in einen Chat zu diesem Repo kommt, wäre ein Parser
-  wie `crosswalk_data.py` die konsequentere Lösung als die aktuell von
-  Hand gepflegte Stufenliste.
+- **S6 und S6b lesen nicht live aus dem echten Repo, sondern sind von Hand
+  gepflegte Beschreibungen** — bewusste Entscheidung (Befund 9), auch
+  nachdem das Repo für S6b tatsächlich geklont wurde (die drei S6b-Skripte
+  parsen keine Datei daraus, sie tragen die beim Klonen gelesenen Zahlen
+  und Schrittnamen als Literale). Ein `crosswalk_data.py`-artiger Parser
+  wäre konsequenter, bräuchte aber das Repo als dauerhafte `data/raw/`-
+  Quelle (z. B. als Submodule oder erneuter Klon bei jedem Build) statt
+  eines einmaligen Chat-Klons.
 - **Talk-spezifische Foliengrafiken** (wie `fdox-visuals` sie in S8–S10 hat:
   reale Folien mit Screenshots/Logos komponiert, nicht nur generische Badges)
   sind für chublets-visuals noch nicht geplant — falls der CAA-Talk das
