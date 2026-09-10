@@ -187,6 +187,14 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   wikidata-main.py`, gelesen von `py/open_archaeo_data.py`. Aktualisieren
   bei einer neuen Repo-Version heißt: Datei ersetzen, neuen A1-Befund mit
   Datum, kein Codeänderung im Step nötig.
+- **Echte, nicht regenerierbare Assets** (das Logo) liegen unter
+  `img/source/`, nicht unter `data/raw/` — sie sind kein Rohdaten-Input für
+  einen Parser, sondern werden per `paste_raster()` direkt auf eine schon
+  gerenderte PNG-Leinwand kopiert (vor `trim_transparent_border`, solange
+  die Canvas-Pixelkoordinaten noch exakt dem Design-Raster entsprechen).
+  Talk-spezifische, komponierte Folien (die dieses Muster benutzen) liegen
+  in einem eigenen `img/talk/`-Ordner, getrennt von den generischen,
+  wiederverwendbaren Badges in den `block-N`-Ordnern.
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -212,7 +220,8 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Namensschema | `chublets-<thema>` je Grafik, `img/chublets-<thema>.svg/.png` | 2026-09-10 |
 | Repo-Ziel | `chublets-software/chublets-visuals` | 2026-09-10 (angelegt, S1+S2 committet) |
 | Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | bestätigt 2026-09-10 (S4) |
-| FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | übernommen für S3, 2026-09-10 (weiterhin ungeprüft gegen das deRSE26-Paper, Teil D) |
+| FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | übernommen für S3, 2026-09-10 (bleibt Referenz — Paper zieht bei Bedarf nach, nicht umgekehrt, bestätigt 2026-09-10) |
+| Curate & Link / Export & Publish | F28-Konzept-Stand bleibt, keine Prüfung gegen echten Code vor Existenz einer chublets-Wikibase | bestätigt 2026-09-10 |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -243,6 +252,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S6b | open-archaeo: die zwei echten Routen (Übersicht, Python-Route, OpenRefine-Route), aus dem echten Repo gebaut | chublets-visuals | S6 | erledigt 2026-09-10 |
 | S6c | S6 auf den echten Repo-Stand gebracht, aus einer vendorten Quelldatei statt Literalen | chublets-visuals | S6b | erledigt 2026-09-10 |
+| S7 | Talk-Closing-Folie: 8 Badges als Ring um das chublets-Logo | chublets-visuals | S3, S4b | erledigt 2026-09-10 |
 
 Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
 
@@ -650,35 +660,73 @@ Wie geplant, visuell geprüft. Der Teil-D-Punkt "S6 widerspricht S6b" ist
 damit erledigt und aus Teil D entfernt. Determinismus-Check über alle 19
 Schritte bestanden.
 
+## S7 — Talk-Closing-Folie
+
+**Ziel:** eine Abschlussfolie für den CAA-Talk, analog zu
+`fdox-visuals`' S10 — die acht Badges (vier Four-Step-Pattern + vier
+FAIR4RS) als Ring, diesmal um das echte chublets-Logo statt um eine
+generische Sphäre. Flo, 2026-09-10: "wenn du talk spezifische grafiken
+(max. 1-2) vor allem für den Abschluss findest wäre das super."
+
+**Uploads:** `chublets_software_logo.png` (bereits zu Beginn des
+Talk-Chats hochgeladen, jetzt als `img/source/chublets-logo.png`
+vendort).
+
+**Substanz:**
+
+- `paste_raster()` aus `fdox-visuals/py/visuals_utils.py` übernommen —
+  komponiert ein echtes Raster-Asset auf eine bereits gerenderte PNG,
+  *vor* `trim_transparent_border`, solange die Pixelkoordinaten noch exakt
+  dem Design-Raster entsprechen.
+- `img/source/` (vendorte Assets, hier das Logo) und `img/talk/`
+  (komponierte Folien) als zwei neue, eigene Ordner (A3).
+- `py/step_talk_closing.py`: acht Badges auf einem Ring (Radius 480) um
+  das Logo (560×~593, Seitenverhältnis des Originals erhalten). Rechte
+  Hälfte (−90° bis 45°) die vier Four-Step-Badges in Reihenfolge, linke
+  Hälfte (90° bis 225°) die vier FAIR4RS-Badges in *umgekehrter*
+  Reihenfolge (Reusable → Interoperable → Accessible → Findable) — damit
+  der Ring als eine durchgehende Schleife liest statt als zwei
+  gegenläufige Halbkreise. Keine Kausalitätsbehauptung zwischen
+  benachbarten Badges (anders als bei fdox, wo Step→Purpose echt
+  Ursache→Wirkung ist) — nur eine bewusste, kommentierte Lesart am
+  Nahtpunkt Findable/Ingest.
+
+**Abnahme:** `img/talk/chublets-talk-closing.png` existiert, Logo mittig
+und unverdeckt von den acht Badges, transparenter Hintergrund, ≤10px Rand;
+zweimal `python main.py --only talk-closing` hintereinander → identische
+Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Wie geplant, visuell geprüft (Logo lesbar, alle acht Badges klar
+zugeordnet, keine Überlappung). Determinismus-Check bestanden. Nur eine
+Variante gebaut (fdox hat zwei) — zweite Variante mit echten externen
+Hubs (nfdi.software/find.software/Wikidata) ist Teil D, nicht angefragt.
+
 ---
 
 # Teil D — Offene Punkte
 
-
-- **Curate & Link / Export & Publish haben keine geprüfte Quelle** — beide
-  S4b-Grafiken übernehmen den Inhalt unverändert aus dem alten
-  F28-Workflow-Panel (Talk-Chat), nicht gegen echten Code oder eine
-  Spezifikation geprüft, anders als S2's xlsx-/CSV-gestützte Zahlen. Sollte
-  vor der finalen Vortragsfassung mindestens stichprobenartig gegen die
-  tatsächliche chublets-Wikibase-Implementierung (sobald sie existiert)
-  geprüft werden.
-- **FAIR4RS-Mechanismen (Block 2) sind gebaut, aber weiterhin ungeprüft**
-  gegen die tatsächliche deRSE26-FAIR-Tabelle — in A4 als Vorschlag
-  eingetragen und unverändert in `FAIR_PRINCIPLES` übernommen. Sobald das
-  Paper zugänglich ist: gegenprüfen statt weiter auf dem Vorschlag
-  aufzubauen, besonders bevor die Grafiken auch im Paper selbst verwendet
-  werden.
-- **S6b liest weiterhin nicht aus einer Datei, S6 jetzt schon** — S6c hat
-  S6 auf einen echten Parser (`open_archaeo_data.py` + vendorte
-  `wikidata-main.py`) umgestellt; die drei S6b-Grafiken tragen ihre Zahlen
-  (562/416/208/208, die Routen-Schritte) weiterhin als Literale. Bei
-  Gelegenheit könnten `open-archaeo-two-routes` und die beiden
-  Routen-Grafiken denselben Vendoring-Ansatz übernehmen — aus `py/main.py`,
-  `py/split.py` und den beiden Slice-READMEs.
-- **Talk-spezifische Foliengrafiken** (wie `fdox-visuals` sie in S8–S10 hat:
-  reale Folien mit Screenshots/Logos komponiert, nicht nur generische Badges)
-  sind für chublets-visuals noch nicht geplant — falls der CAA-Talk das
-  braucht, wäre das ein weiterer Block.
+- **Curate & Link / Export & Publish bleiben auf F28-Konzept-Stand** —
+  entschieden 2026-09-10 (Flo: "so lassen, da bis auf open-archaeo noch
+  nichts implementiert ist"). Keine weitere Prüfung ansteht, bis es echten
+  chublets-Wikibase-Code gibt.
+- **FAIR4RS-Mechanismen bleiben der A4-Vorschlag** — entschieden
+  2026-09-10 (Flo: "lass das so, an das paper müssen wir eh noch ran zur
+  überarbeitung, im zweifel gleichen wir das paper dann an"). Die Grafiken
+  sind also die Referenz, das Paper zieht bei Bedarf nach.
+- **S6b liest weiterhin nicht aus einer Datei** — bewusst niedrige
+  Priorität, 2026-09-10 bestätigt. Bei Gelegenheit könnten
+  `open-archaeo-two-routes` und die beiden Routen-Grafiken denselben
+  Vendoring-Ansatz wie S6c übernehmen (aus `py/main.py`, `py/split.py` und
+  den beiden Slice-READMEs).
+- **Talk-Closing-Grafik (S7) hat noch keine zweite Variante** —
+  fdox-visuals hat für seine Abschlussfolie zwei Varianten (A: nur
+  Ring+Sphäre, B: Ring plus echte externe Hubs wie Wikidata/OpenStreetMap/
+  NFDI4Objects angebunden). Für chublets wäre eine Variante B mit
+  nfdi.software/find.software/Wikidata als angebundenen Knoten denkbar,
+  aber nur auf Zuruf — S7 Variante A allein deckt "1-2 Grafiken für den
+  Abschluss" schon ab.
 - **Repo-Anlage:** `chublets-software/chublets-visuals` existiert jetzt auf
   GitHub und S1+S2 sind committet (bestätigt 2026-09-10) — Rest dieses Punkts
   erledigt.

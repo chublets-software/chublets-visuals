@@ -26,6 +26,15 @@ BLOCK3_DIR = IMG_DIR / "block-3-four-step-pattern"
 # above them (the consolidated architecture, and later the open-archaeo
 # pipeline), so they get their own, non-numbered folder.
 SYSTEM_ARCH_DIR = IMG_DIR / "system-architecture"
+# Composited, talk-specific slides (real assets like the logo pasted onto
+# a generated ring/banner) -- distinct from the generic, reusable badges
+# in the block-N folders, same distinction fdox-visuals draws with its
+# "talk-*" steps.
+TALK_DIR = IMG_DIR / "talk"
+# Real, non-regeneratable assets (the logo) that a talk-specific step
+# composites onto a generated canvas -- input, not output, but kept under
+# img/ so it travels with what uses it (mirrors fdox-visuals' img/source/).
+SOURCE_DIR = IMG_DIR / "source"
 
 FONT_REGULAR = FONTS_DIR / "FiraSans-Regular.ttf"
 FONT_BOLD = FONTS_DIR / "FiraSans-Bold.ttf"
@@ -244,6 +253,29 @@ def flatten_to_jpg(png_path: Path, jpg_path: Path, quality: int = 95) -> None:
         bg = Image.new("RGB", im.size, (255, 255, 255))
         bg.paste(im, mask=im.split()[3])
         bg.save(jpg_path, "JPEG", quality=quality, subsampling=0)
+
+
+def paste_raster(base_png_path: Path, asset_path: Path, x: int, y: int, w: int, h: int,
+                  scale: float, circular: bool = False) -> None:
+    """Composite a source raster asset (e.g. the chublets logo, under
+    img/source/) onto an already-rendered PNG, at design-grid (x, y, w, h)
+    scaled by the same `scale` factor the SVG was rasterised at. Call this
+    BEFORE trim_transparent_border -- it needs the untrimmed canvas, whose
+    pixel coordinates are known in advance from the design grid; trimming
+    first would make (x, y) ambiguous.
+    """
+    from PIL import Image, ImageDraw
+
+    base = Image.open(base_png_path).convert("RGBA")
+    px, py, pw, ph = (int(v * scale) for v in (x, y, w, h))
+    src = Image.open(asset_path).convert("RGBA").resize((pw, ph), Image.LANCZOS)
+    if circular:
+        mask = Image.new("L", (pw, ph), 0)
+        ImageDraw.Draw(mask).ellipse((0, 0, pw, ph), fill=255)
+        base.paste(src, (px, py), mask)
+    else:
+        base.paste(src, (px, py), src)
+    base.save(base_png_path)
 
 
 # --- generic SVG primitives ---------------------------------------------

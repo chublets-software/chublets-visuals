@@ -49,12 +49,16 @@ img/
 │   ├── step-3-curate-link-detail.svg/.png
 │   ├── step-4-export-publish-badge.svg/.png
 │   └── step-4-export-publish-detail.svg/.png
-└── system-architecture/
-    ├── chublets-software-architecture.svg/.png       (S5, consolidates Block 1 + Block 3)
-    ├── open-archaeo-wikidata-pipeline.svg/.png       (S6, detail behind S5's "Wikidata bridge")
-    ├── open-archaeo-two-routes.svg/.png              (S6b, from the real repo: split into two teams)
-    ├── open-archaeo-python-route.svg/.png            (S6b, the py/wikidata/main.py session)
-    └── open-archaeo-openrefine-route.svg/.png        (S6b, the OpenRefine session)
+├── system-architecture/
+│   ├── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
+│   ├── open-archaeo-wikidata-pipeline.svg/.png   (S6, `main.py all`'s 8 real steps)
+│   ├── open-archaeo-two-routes.svg/.png          (S6b, the real repo's two-team split)
+│   ├── open-archaeo-python-route.svg/.png        (S6b, the py/wikidata/main.py session)
+│   └── open-archaeo-openrefine-route.svg/.png    (S6b, the OpenRefine session)
+├── talk/
+│   └── chublets-talk-closing.svg/.png            (S7, 8 badges ringed around the logo)
+└── source/
+    └── chublets-logo.png                         (vendored asset, not generated -- input to S7)
 ```
 
 `badge` = the small transparent icon alone (for slide corners, navigation).
@@ -112,8 +116,13 @@ rewrite. `open-archaeo-two-routes`, `open-archaeo-python-route` and
 directly) cover the rest: the stratified two-team split, and the
 interactive session for each route.
 
-All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c) is
+All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7) is
 built; see [`PRIMER.md`](PRIMER.md) Teil D for what's next.
+
+**Talk-specific slide (S7)** — `chublets-talk-closing`: the eight badges
+(four-step + FAIR4RS) as a ring around the chublets logo (`img/source/`),
+composited the way `fdox-visuals` composites real assets onto a generated
+canvas. A closing/summary slide, not a reusable generic badge.
 
 ## Usage
 
