@@ -16,14 +16,22 @@ FONTS_DIR = ROOT / "fonts"
 IMG_DIR = ROOT / "img"
 DATA_RAW = ROOT / "data" / "raw"
 
+# Block subfolders under img/ (Flo, 2026-09-10: "die 'bloecke' im img
+# folder in einzelne subfolder stecken"). Every step writes into exactly
+# one of these -- nothing is written directly into IMG_DIR any more.
+BLOCK1_DIR = IMG_DIR / "block-1-codemeta-wikidata-datamodel"
+BLOCK3_DIR = IMG_DIR / "block-3-four-step-pattern"
+
 FONT_REGULAR = FONTS_DIR / "FiraSans-Regular.ttf"
 FONT_BOLD = FONTS_DIR / "FiraSans-Bold.ttf"
 FONT_FAMILY = "Fira Sans"
 
-# Every generated SVG lives directly under img/, so the relative path back
-# to fonts/ is always the same. If a step ever writes its SVG somewhere
-# else, this constant has to move with it.
-_FONT_REL_PREFIX = "../fonts"
+# Every generated SVG now lives one level under img/ (img/<block>/*.svg),
+# so the relative path back to fonts/ is two levels up, not one. Changed
+# 2026-09-10 together with the block-subfolder move -- see the comment on
+# BLOCK1_DIR/BLOCK3_DIR above. If a step ever writes its SVG at a
+# different depth, this constant has to move with it.
+_FONT_REL_PREFIX = "../../fonts"
 
 INK = "#1E1425"
 MUTED = "#5B5568"
@@ -92,8 +100,8 @@ FOUR_STEPS = [
 ]
 
 
-def ensure_dirs() -> None:
-    IMG_DIR.mkdir(parents=True, exist_ok=True)
+def ensure_dirs(path: Path = IMG_DIR) -> None:
+    path.mkdir(parents=True, exist_ok=True)
 
 
 def esc(text: str) -> str:
@@ -304,3 +312,30 @@ def four_step_icon(step_idx: int, color: str) -> str:
         f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
     )
     return bracket + arrow
+
+
+def step_header(step_idx: int, step: dict, x: float, y: float, r: float = 45) -> tuple[str, float]:
+    """A small version of the S4 badge (icon only, no number tag -- the
+    text next to it already says which step) plus a "Step N -- Title"
+    label, used as a consistent header on every S4b detail diagram (Flo,
+    2026-09-10: "ich verstehe bei der Bezeichnung nicht welcher step es
+    ist" / fdox-visuals keeps its step badge visible everywhere, this
+    repo hadn't). Reuses four_step_icon() at a smaller scale rather than
+    drawing a second icon set (A3).
+
+    Returns (svg_markup, y) where y is the top of the first content row
+    below the header, so a step file can do
+    `header_svg, content_y = step_header(...)` and lay out from there.
+    """
+    color = step["color"]
+    scale = r / 150
+    fill = tint(color, 0.88)
+    cx, cy = x + r, y + r
+    out = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}" stroke="{color}" stroke-width="4"/>'
+    out += f'<g transform="translate({cx},{cy}) scale({scale:.4f})">{four_step_icon(step_idx, color)}</g>'
+    title = " ".join(step["title"])
+    out += (
+        f'<text x="{x + 2*r + 22}" y="{cy+9}" text-anchor="start" font-family="{FONT_FAMILY}" '
+        f'font-weight="700" font-size="26" fill="{INK}">Step {step["num"]} \u2014 {esc(title)}</text>'
+    )
+    return out, y + 2 * r + 34

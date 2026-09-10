@@ -28,7 +28,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
     DATA_RAW,
-    IMG_DIR,
+    BLOCK1_DIR,
+    ROOT,
     INK,
     MUTED,
     CATEGORY_COLORS,
@@ -145,7 +146,7 @@ def _build_svg(sections: dict[str, list[tuple[str, str | None]]]) -> tuple[str, 
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs()
+    ensure_dirs(BLOCK1_DIR)
     log: list[str] = []
 
     sections = crosswalk_data.load(DATA_RAW / "codemeta-wikidata-crosswalk.xlsx")
@@ -155,13 +156,13 @@ def run(strict: bool = False) -> list[str]:
     log.append(f"read crosswalk: {mapped_all} of {total_all} CodeMeta properties mapped to Wikidata")
 
     svg_text, w, h = _build_svg(sections)
-    svg_path = IMG_DIR / "chublets-codemeta-wikidata-crosswalk.svg"
+    svg_path = BLOCK1_DIR / "chublets-codemeta-wikidata-crosswalk.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
-        f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+        f"wrote {svg_path.relative_to(ROOT)} + .png "
         f"({final_w}x{final_h}, transparent, <=10px border)"
     )
     return log

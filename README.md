@@ -13,13 +13,40 @@ data/raw/*.xlsx, *.csv   real source data (crosswalk, property lists), read at b
       ▼  py/step_*.py     geometry + text (no rendering logic)
       │
       ▼  main.py
-img/*.svg                 source, versioned
+img/<block>/*.svg         source, versioned, grouped by block
       │
       ▼  resvg-py (in-process, no rsvg-convert/ImageMagick/libcairo needed)
-img/*.png                 final graphics for slides, papers, READMEs — transparent background
+img/<block>/*.png         final graphics for slides, papers, READMEs — transparent background
 ```
 
-**Block 1 — CodeMeta / Wikidata / chublets datamodel** (built so far):
+Every graphic lives under a block subfolder, never directly in `img/`:
+
+```
+img/
+├── block-1-codemeta-wikidata-datamodel/
+│   ├── chublets-codemeta-overview.svg/.png
+│   ├── chublets-wikidata-properties-overview.svg/.png
+│   ├── chublets-codemeta-wikidata-crosswalk.svg/.png
+│   └── chublets-wikibase-datamodel.svg/.png
+└── block-3-four-step-pattern/
+    ├── chublets-four-step-pattern.svg/.png       (banner)
+    ├── step-1-ingest-badge.svg/.png              (icon only, S4)
+    ├── step-1-ingest-detail.svg/.png             (explainer, S4b)
+    ├── step-2-model-badge.svg/.png
+    ├── step-2-model-detail.svg/.png
+    ├── step-3-curate-link-badge.svg/.png
+    ├── step-3-curate-link-detail.svg/.png
+    ├── step-4-export-publish-badge.svg/.png
+    └── step-4-export-publish-detail.svg/.png
+```
+
+`badge` = the small transparent icon alone (for slide corners, navigation).
+`detail` = the diagram that actually explains the step; every `detail`
+diagram carries the same badge icon plus a "Step N — Title" header, so it
+stays visibly tied to its badge (mirrors how `fdox-visuals` keeps its step
+icon present everywhere, not just on the banner).
+
+**Block 1 — CodeMeta / Wikidata / chublets datamodel:**
 
 - **`chublets-codemeta-overview`** — the CodeMeta term set (`Thing` →
   `CreativeWork` → `SoftwareSourceCode`/`SoftwareApplication`) as a class
@@ -37,9 +64,16 @@ img/*.png                 final graphics for slides, papers, READMEs — transpa
   Wikidata properties and new properties for the CodeMeta-only fields, read
   live from the other two steps' own sources.
 
-Further blocks (FAIR4RS chain, chublets four-step pattern, system
-architecture, open-archaeo→Wikidata pipeline) are planned; see
-[`PRIMER.md`](PRIMER.md) for the full plan and current status.
+**Block 3 — chublets.software four-step pattern** (Ingest → Model →
+Curate & Link → Export & Publish): one banner, four icon badges, and four
+detail diagrams that actually explain each step (three input sources for
+Ingest, the same federated-datamodel numbers as Block 1 for Model, a
+four-stage curation workflow for Curate & Link, and the SPARQL-to-
+marketplace export pipeline for Export & Publish).
+
+Further blocks (FAIR4RS chain, system architecture, open-archaeo→Wikidata
+pipeline) are planned; see [`PRIMER.md`](PRIMER.md) for the full plan and
+current status.
 
 ## Usage
 

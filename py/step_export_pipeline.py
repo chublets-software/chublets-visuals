@@ -8,7 +8,7 @@ sequence from the talk chat, not yet checked against real pipeline code
 (PRIMER.md Teil D).
 
 Produces:
-  img/chublets-export-pipeline.svg / .png (transparent)
+  img/block-3-four-step-pattern/step-4-export-publish-detail.svg / .png (transparent)
 
 Runnable standalone: `python py/step_export_pipeline.py`
 """
@@ -20,29 +20,35 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
+    BLOCK3_DIR,
     FOUR_STEPS,
-    IMG_DIR,
     INK,
-    MUTED,
+    ROOT,
     arrow_marker,
     ensure_dirs,
     font_face_css,
     label_box,
     render_svg_to_png,
+    step_header,
     tint,
     trim_transparent_border,
 )
 
-ACCENT = FOUR_STEPS[3]["color"]  # slate blue -- same as the Export & Publish badge
+STEP_IDX = 3
+STEP = FOUR_STEPS[STEP_IDX]
+ACCENT = STEP["color"]  # slate blue -- same as the Export & Publish badge
 
 BOX_W = 260
 GAP_X = 50
 MARGIN = 50
+GAP_HEADER_TO_ROWS = 40
 
-ROW1_Y, ROW1_H = 50, 90
-ROW2_Y, ROW2_H = 220, 90
-ROW3_Y, ROW3_H = 380, 70
-ROW4_Y, ROW4_H = 510, 110
+# Row heights, and each row's vertical offset *from the first content row*
+# (row 1 sits right at the content top, the others are spaced below it).
+ROW1_H, ROW1_DY = 90, 0
+ROW2_H, ROW2_DY = 90, 170
+ROW3_H, ROW3_DY = 70, 330
+ROW4_H, ROW4_DY = 110, 460
 
 OVERSAMPLE = 1.8
 
@@ -58,9 +64,15 @@ def _row_xs(n: int, total_w: float) -> list[float]:
 
 
 def _build_svg() -> tuple[str, float, float]:
+    header_svg, top_y = step_header(STEP_IDX, STEP, MARGIN, MARGIN)
+    top_y += GAP_HEADER_TO_ROWS
+
+    row1_y, row2_y = top_y + ROW1_DY, top_y + ROW2_DY
+    row3_y, row4_y = top_y + ROW3_DY, top_y + ROW4_DY
+
     total_w = 4 * BOX_W + 3 * GAP_X  # row 1 sets the overall width
     W = MARGIN * 2 + total_w
-    H = ROW4_Y + ROW4_H + MARGIN
+    H = row4_y + ROW4_H + MARGIN
 
     xs1 = _row_xs(4, total_w)
     xs2 = _row_xs(3, total_w)
@@ -71,48 +83,49 @@ def _build_svg() -> tuple[str, float, float]:
     p.append("<defs>")
     p.append(arrow_marker("arrow", ACCENT))
     p.append("</defs>")
+    p.append(header_svg)
 
     fill = tint(ACCENT, 0.9)
 
     # Row 1: the linear read-and-parse chain
     for i, title in enumerate(ROW1):
-        p.append(label_box(xs1[i], ROW1_Y, BOX_W, ROW1_H, [(title, 700, 20)], fill=fill, stroke=ACCENT, text_color=INK))
+        p.append(label_box(xs1[i], row1_y, BOX_W, ROW1_H, [(title, 700, 20)], fill=fill, stroke=ACCENT, text_color=INK))
         if i < 3:
             x2 = xs1[i] + BOX_W
-            y = ROW1_Y + ROW1_H / 2
+            y = row1_y + ROW1_H / 2
             p.append(f'<line x1="{x2}" y1="{y}" x2="{xs1[i+1]-6}" y2="{y}" '
                       f'stroke="{ACCENT}" stroke-width="4" marker-end="url(#arrow)"/>')
 
     # branch: Property mapping (last of row 1) fans out to the 3 mappers
     src_x = xs1[3] + BOX_W / 2
-    src_y = ROW1_Y + ROW1_H
+    src_y = row1_y + ROW1_H
     for x in xs2:
-        p.append(f'<line x1="{src_x}" y1="{src_y}" x2="{x+BOX_W/2}" y2="{ROW2_Y}" '
+        p.append(f'<line x1="{src_x}" y1="{src_y}" x2="{x+BOX_W/2}" y2="{row2_y}" '
                   f'stroke="{ACCENT}" stroke-width="3.5" marker-end="url(#arrow)"/>')
 
     # Row 2: the three vocabulary mappers
     for i, title in enumerate(ROW2):
-        p.append(label_box(xs2[i], ROW2_Y, BOX_W, ROW2_H, [(title, 700, 20)], fill=fill, stroke=ACCENT, text_color=INK))
+        p.append(label_box(xs2[i], row2_y, BOX_W, ROW2_H, [(title, 700, 20)], fill=fill, stroke=ACCENT, text_color=INK))
 
     # Row 2 -> Row 3: one arrow each, straight down
     for x in xs2:
         cx = x + BOX_W / 2
-        p.append(f'<line x1="{cx}" y1="{ROW2_Y+ROW2_H}" x2="{cx}" y2="{ROW3_Y}" '
+        p.append(f'<line x1="{cx}" y1="{row2_y+ROW2_H}" x2="{cx}" y2="{row3_y}" '
                   f'stroke="{ACCENT}" stroke-width="3.5" marker-end="url(#arrow)"/>')
 
     # Row 3: the three output files
     outfill = tint(ACCENT, 0.95)
     for i, title in enumerate(ROW3):
-        p.append(label_box(xs3[i], ROW3_Y, BOX_W, ROW3_H, [(title, 400, 18)], fill=outfill, stroke=ACCENT, text_color=INK))
+        p.append(label_box(xs3[i], row3_y, BOX_W, ROW3_H, [(title, 400, 18)], fill=outfill, stroke=ACCENT, text_color=INK))
 
     # converge: three outputs -> one marketplace box
-    dst_x, dst_y = W / 2, ROW4_Y
+    dst_x, dst_y = W / 2, row4_y
     for x in xs3:
-        p.append(f'<line x1="{x+BOX_W/2}" y1="{ROW3_Y+ROW3_H}" x2="{dst_x}" y2="{dst_y}" '
+        p.append(f'<line x1="{x+BOX_W/2}" y1="{row3_y+ROW3_H}" x2="{dst_x}" y2="{dst_y}" '
                   f'stroke="{ACCENT}" stroke-width="3.5" marker-end="url(#arrow)"/>')
 
     p.append(label_box(
-        (W - total_w) / 2, ROW4_Y, total_w, ROW4_H,
+        (W - total_w) / 2, row4_y, total_w, ROW4_H,
         [("nfdi.software & find.software", 700, 24), ("+ KGE4RSE knowledge graph", 400, 17)],
         fill=tint(ACCENT, 0.85), stroke=ACCENT, text_color=INK,
     ))
@@ -122,17 +135,17 @@ def _build_svg() -> tuple[str, float, float]:
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs()
+    ensure_dirs(BLOCK3_DIR)
     log: list[str] = []
 
     svg_text, w, h = _build_svg()
-    svg_path = IMG_DIR / "chublets-export-pipeline.svg"
+    svg_path = BLOCK3_DIR / "step-4-export-publish-detail.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
-        f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+        f"wrote {svg_path.relative_to(ROOT)} + .png "
         f"({final_w}x{final_h}, transparent, <=10px border)"
     )
     return log

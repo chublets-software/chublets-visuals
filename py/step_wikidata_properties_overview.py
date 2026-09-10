@@ -28,7 +28,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
     DATA_RAW,
-    IMG_DIR,
+    BLOCK1_DIR,
+    ROOT,
     INK,
     MUTED,
     CATEGORY_COLORS,
@@ -115,7 +116,7 @@ def _build_svg(data: dict[str, list[tuple[str, str]]]) -> tuple[str, float, floa
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs()
+    ensure_dirs(BLOCK1_DIR)
     log: list[str] = []
 
     data = _load(DATA_RAW / "wikidata-software-properties.csv")
@@ -123,13 +124,13 @@ def run(strict: bool = False) -> list[str]:
     log.append(f"read {total} Wikidata properties across {len(data)} categories from CSV")
 
     svg_text, w, h = _build_svg(data)
-    svg_path = IMG_DIR / "chublets-wikidata-properties-overview.svg"
+    svg_path = BLOCK1_DIR / "chublets-wikidata-properties-overview.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
-        f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+        f"wrote {svg_path.relative_to(ROOT)} + .png "
         f"({final_w}x{final_h}, transparent, <=10px border)"
     )
     return log

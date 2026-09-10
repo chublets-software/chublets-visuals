@@ -11,7 +11,7 @@ data/raw source the way S2 is (PRIMER.md Teil D) -- these are the three
 source *kinds*, not counted instances, so there is nothing to parse yet.
 
 Produces:
-  img/chublets-ingest-inputs.svg / .png (transparent)
+  img/block-3-four-step-pattern/step-1-ingest-detail.svg / .png (transparent)
 
 Runnable standalone: `python py/step_ingest_inputs.py`
 """
@@ -23,27 +23,31 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
+    BLOCK3_DIR,
     FOUR_STEPS,
-    IMG_DIR,
     INK,
     MUTED,
+    ROOT,
     arrow_marker,
     ensure_dirs,
     esc,
     font_face_css,
     render_svg_to_png,
+    step_header,
     tint,
     trim_transparent_border,
 )
 
-ACCENT = FOUR_STEPS[0]["color"]  # teal -- same as the Ingest badge
+STEP_IDX = 0
+STEP = FOUR_STEPS[STEP_IDX]
+ACCENT = STEP["color"]  # teal -- same as the Ingest badge
 
 BOX_W = 380
 BOX_H = 180
-TOP_Y = 70
-BOTTOM_Y = 500
 GAP_X = 60
 MARGIN = 60
+GAP_HEADER_TO_SOURCES = 40
+GAP_SOURCES_TO_RESULT = 90
 
 OVERSAMPLE = 1.8
 
@@ -66,6 +70,10 @@ def _source_box(x: float, y: float, title: str, lines: list[str], color: str) ->
 
 
 def _build_svg() -> tuple[str, float, float]:
+    header_svg, top_y = step_header(STEP_IDX, STEP, MARGIN, MARGIN)
+    top_y += GAP_HEADER_TO_SOURCES
+    result_y = top_y + BOX_H + GAP_SOURCES_TO_RESULT
+
     n = 3
     total_w = n * BOX_W + (n - 1) * GAP_X
     xs = [MARGIN + i * (BOX_W + GAP_X) for i in range(n)]
@@ -74,7 +82,6 @@ def _build_svg() -> tuple[str, float, float]:
     result_w = total_w
     result_h = 150
     result_x = MARGIN
-    result_y = BOTTOM_Y
 
     W = MARGIN * 2 + total_w
     H = result_y + result_h + MARGIN
@@ -84,6 +91,7 @@ def _build_svg() -> tuple[str, float, float]:
     p.append("<defs>")
     p.append(arrow_marker("arrow", MUTED))
     p.append("</defs>")
+    p.append(header_svg)
 
     sources = [
         ("Wikidata items", ["chublets bridge items from the", "open-archaeo \u2192 Wikidata pipeline"]),
@@ -91,8 +99,8 @@ def _build_svg() -> tuple[str, float, float]:
         ("Git repos via CFF", ["Direct CITATION.cff harvest,", "no Wikidata/FDOx wrapper yet"]),
     ]
     for x, (title, lines) in zip(xs, sources):
-        p.append(_source_box(x, TOP_Y, title, lines, ACCENT))
-        p.append(f'<line x1="{x+BOX_W/2}" y1="{TOP_Y+BOX_H}" x2="{center_x:.1f}" y2="{result_y}" '
+        p.append(_source_box(x, top_y, title, lines, ACCENT))
+        p.append(f'<line x1="{x+BOX_W/2}" y1="{top_y+BOX_H}" x2="{center_x:.1f}" y2="{result_y}" '
                   f'stroke="{MUTED}" stroke-width="3.5" marker-end="url(#arrow)"/>')
 
     fill = tint(ACCENT, 0.88)
@@ -116,17 +124,17 @@ def _build_svg() -> tuple[str, float, float]:
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs()
+    ensure_dirs(BLOCK3_DIR)
     log: list[str] = []
 
     svg_text, w, h = _build_svg()
-    svg_path = IMG_DIR / "chublets-ingest-inputs.svg"
+    svg_path = BLOCK3_DIR / "step-1-ingest-detail.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
-        f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+        f"wrote {svg_path.relative_to(ROOT)} + .png "
         f"({final_w}x{final_h}, transparent, <=10px border)"
     )
     return log

@@ -75,6 +75,20 @@ nicht auf ihn beschränkt.
    cairosvg wegen fehlender System-libcairo unter Windows, Fira Sans
    vendored, `trim_transparent_border`, Google-Slides-25-Megapixel-Grenze) —
    siehe `fdox-visuals/PRIMER.md` A1.1–A1.6 für die Herleitung.
+7. **Drei der vier S4b-Detailgrafiken hatten keinen Icon-Bezug zum
+   zugehörigen S4-Badge** (nur `chublets-model-datamodel` hatte ein Icon,
+   `ingest`/`curate`/`export` waren reine Flussdiagramme ohne jeden
+   Hinweis, zu welchem Schritt sie gehören) — Flo, 2026-09-10: "ich
+   verstehe bei der Bezeichnung nicht welcher step es ist", zusätzlich
+   Hinweis, dass `fdox-visuals` sein Schritt-Icon konsequent überall
+   mitführt. Behoben durch `step_header()` (S4c).
+8. **`_FONT_REL_PREFIX` war für die alte flache `img/`-Struktur berechnet**
+   (`../fonts`, ein Verzeichnis hoch). Mit dem Umzug auf
+   `img/<block>/*.svg` (S4c) liegen alle SVGs jetzt eine Ebene tiefer —
+   der Pfad musste auf `../../fonts` korrigiert werden, sonst findet eine
+   direkt geöffnete `.svg`-Datei (Browser/Inkscape) die Schrift nicht mehr
+   (die PNG-Rasterung selbst war nie betroffen, die läuft über
+   `font_files=`, nicht über das `@font-face`-CSS).
 
 ## A2. Zielbild
 
@@ -105,6 +119,16 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 
 - Rohdaten liegen unverändert unter `data/raw/`, read-only. Was ein Skript
   daraus macht, geht nach `img/`.
+- **Jede Grafik liegt unter einem Block-Unterordner** (`img/block-1-.../`,
+  `img/block-3-.../`), nie direkt unter `img/` — seit 2026-09-10 (vorher lag
+  alles flach in `img/`). Neue Blöcke bekommen ihren eigenen Unterordner.
+- **Namensschema in `block-3-four-step-pattern/`:** `step-<n>-<slug>-badge`
+  (das reine Icon, transparent, für Folienecken) und `step-<n>-<slug>-
+  detail` (die Grafik, die den Schritt tatsächlich erklärt). Jede
+  `-detail`-Grafik trägt denselben Icon-Badge plus "Step N — Titel" als
+  Kopfzeile wie die zugehörige `-badge`-Datei — seit 2026-09-10 Pflicht
+  (Befund unten), damit nie unklar ist, zu welchem Schritt eine Grafik
+  gehört.
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -156,6 +180,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | offen |
 | S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
+| S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | offen |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
 
@@ -320,6 +345,46 @@ und Export & Publish stammt weiterhin nur aus dem alten F28-Workflow
 (Talk-Chat), nicht aus echtem Code — siehe Teil D, dieser Punkt bleibt
 offen. Determinismus-Check bestanden (zweiter Lauf, identische SHA-256 über
 alle 9 Schritte / 22 Dateien).
+
+## S4c — Ordnerstruktur + konsistente Step-Icons
+
+**Ziel:** zwei Korrekturen aus dem Talk-Chat: (1) jede der vier S4b-
+Detailgrafiken trägt sichtbar dasselbe Icon wie ihr S4-Badge, nicht nur
+`chublets-model-datamodel`; (2) `img/` ist nach Block gegliedert statt
+flach.
+
+**Uploads:** keine neuen.
+
+**Substanz:**
+
+- `visuals_utils.py`: `BLOCK1_DIR`, `BLOCK3_DIR` ergänzt; `ensure_dirs()`
+  nimmt jetzt einen Pfad; `_FONT_REL_PREFIX` von `../fonts` auf
+  `../../fonts` korrigiert (Befund 8); neue Funktion `step_header()`
+  (kleines Badge ohne Nummern-Tag + "Step N — Titel", nutzt
+  `four_step_icon()` skaliert).
+- Alle acht Block-1/Block-3-Steps auf `BLOCK1_DIR`/`BLOCK3_DIR` und
+  `svg_path.relative_to(ROOT)` (statt `IMG_DIR.parent`) umgestellt.
+- `step_pattern.py`: Badges heißen jetzt `step-<n>-<slug>-badge.svg`
+  (vorher `chublets-step-<n>-<slug>.svg`).
+- Alle vier S4b-Steps: `step_header()` als erste Zeile jeder Grafik,
+  bestehender Inhalt entsprechend nach unten verschoben. Neue Dateinamen
+  `step-<n>-<slug>-detail.svg` (vorher `chublets-<thema>.svg`).
+  `step_model_datamodel.py` dabei umgebaut: das große freistehende Icon
+  ist durch denselben kompakten Header wie bei den anderen drei ersetzt,
+  die beiden Zahlen stehen jetzt in einer eigenen Content-Karte darunter.
+
+**Abnahme:** `python main.py` (alle 9 Schritte) läuft durch und schreibt
+ausschließlich unter `img/block-1-.../` bzw. `img/block-3-.../`, nichts
+mehr direkt unter `img/`; jede `-detail`-Datei zeigt sichtbar denselben
+Icon-Kreis wie ihre `-badge`-Datei; zweimal laufen lassen → identische
+Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Wie geplant. Alter, flacher Dateibestand (13 Dateipaare direkt unter
+`img/`) wurde beim Patch explizit als zu löschen markiert (ZIPs können
+kein Umbenennen/Löschen transportieren, siehe PATCH-README dieses
+Schritts). Determinismus-Check über alle 9 Schritte bestanden.
 
 ---
 

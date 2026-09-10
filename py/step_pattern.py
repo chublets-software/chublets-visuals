@@ -19,7 +19,8 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
     FOUR_STEPS,
-    IMG_DIR,
+    BLOCK3_DIR,
+    ROOT,
     INK,
     MUTED,
     ensure_dirs,
@@ -135,7 +136,7 @@ def _build_icon_svg(step_idx: int, step: dict) -> tuple[str, int]:
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs()
+    ensure_dirs(BLOCK3_DIR)
     log: list[str] = []
     warnings: list[str] = []
 
@@ -145,25 +146,25 @@ def run(strict: bool = False) -> list[str]:
             warnings.append(f'description for "{s["id"]}" wraps to {len(lines)} lines (design assumes <=3)')
 
     svg_text, h = _build_content_svg(desc_lines_per_step)
-    svg_path = IMG_DIR / "chublets-four-step-pattern.svg"
+    svg_path = BLOCK3_DIR / "chublets-four-step-pattern.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(W * OVERSAMPLE), int(h * OVERSAMPLE))
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
-        f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+        f"wrote {svg_path.relative_to(ROOT)} + .png "
         f"({final_w}x{final_h}, transparent, <=10px border)"
     )
 
     for i, step in enumerate(FOUR_STEPS):
         svg_text, vb = _build_icon_svg(i, step)
-        svg_path = IMG_DIR / f"chublets-step-{step['num']}-{step['id']}.svg"
+        svg_path = BLOCK3_DIR / f"step-{step['num']}-{step['id']}-badge.svg"
         svg_path.write_text(svg_text, encoding="utf-8")
         png_path = svg_path.with_suffix(".png")
         render_svg_to_png(svg_path, png_path, int(vb * ICON_SCALE), int(vb * ICON_SCALE))
         final_w, final_h = trim_transparent_border(png_path, margin_px=10)
         log.append(
-            f"wrote {svg_path.relative_to(IMG_DIR.parent)} + .png "
+            f"wrote {svg_path.relative_to(ROOT)} + .png "
             f"({final_w}x{final_h}, transparent, <=10px border)"
         )
 
