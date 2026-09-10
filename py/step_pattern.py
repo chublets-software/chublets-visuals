@@ -25,6 +25,7 @@ from visuals_utils import (  # noqa: E402
     ensure_dirs,
     esc,
     font_face_css,
+    four_step_icon,
     render_svg_to_png,
     tint,
     trim_transparent_border,
@@ -53,50 +54,13 @@ OVERSAMPLE = 1.5
 ICON_SCALE = 4
 
 
-def _node_icon(step_idx: int, color: str) -> str:
-    sw = 6
-    if step_idx == 0:  # Ingest -- three sources converging into one point
-        pts = [(-56, -50), (0, -64), (56, -50)]
-        lines = "".join(
-            f'<line x1="{x}" y1="{y}" x2="0" y2="22" stroke="{color}" '
-            f'stroke-width="{sw}" stroke-linecap="round"/>' for x, y in pts
-        )
-        dots = "".join(f'<circle cx="{x}" cy="{y}" r="14" fill="white" stroke="{color}" stroke-width="{sw}"/>' for x, y in pts)
-        return lines + dots + f'<circle cx="0" cy="22" r="26" fill="{color}"/>'
-    if step_idx == 1:  # Model -- a small three-node property graph
-        pts = [(0, -58), (54, 38), (-54, 38)]
-        edges = [(0, 1), (1, 2), (2, 0)]
-        lines = "".join(
-            f'<line x1="{pts[a][0]}" y1="{pts[a][1]}" x2="{pts[b][0]}" y2="{pts[b][1]}" '
-            f'stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>' for a, b in edges
-        )
-        dots = "".join(f'<circle cx="{x}" cy="{y}" r="17" fill="{color}"/>' for x, y in pts)
-        return lines + dots
-    if step_idx == 2:  # Curate & Link -- a checkmark
-        return (
-            f'<polyline points="-40,2 -10,34 48,-40" fill="none" stroke="{color}" '
-            f'stroke-width="{sw+4}" stroke-linecap="round" stroke-linejoin="round"/>'
-        )
-    # Export & Publish -- an arrow leaving an open container
-    bracket = (
-        f'<polyline points="6,-52 -34,-52 -34,52 6,52" fill="none" stroke="{color}" '
-        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
-    )
-    arrow = (
-        f'<line x1="-14" y1="0" x2="52" y2="0" stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>'
-        f'<polyline points="30,-20 56,0 30,20" fill="none" stroke="{color}" '
-        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
-    )
-    return bracket + arrow
-
-
 def _badge_markup(cx: float, cy: float, step_idx: int, step: dict) -> str:
     color = step["color"]
     tint_fill = tint(color, 0.88)
     tag_x = cx - BADGE_R - TAG_OFFSET
     tag_y = cy - BADGE_R - TAG_OFFSET
     out = f'<circle cx="{cx}" cy="{cy}" r="{BADGE_R}" fill="{tint_fill}" stroke="{color}" stroke-width="7"/>'
-    out += f'<g transform="translate({cx},{cy})">{_node_icon(step_idx, color)}</g>'
+    out += f'<g transform="translate({cx},{cy})">{four_step_icon(step_idx, color)}</g>'
     out += f'<rect x="{tag_x}" y="{tag_y}" width="{TAG_SIZE}" height="{TAG_SIZE}" rx="26" fill="{color}"/>'
     out += (
         f'<text x="{tag_x + TAG_SIZE/2}" y="{tag_y + TAG_SIZE/2 + 40}" text-anchor="middle" '

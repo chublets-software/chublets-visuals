@@ -243,3 +243,64 @@ def open_triangle(x1: float, y1: float, x2: float, y2: float, color: str = "whit
         f'<polyline points="{ax1:.1f},{ay1:.1f} {x2},{y2} {ax2:.1f},{ay2:.1f}" '
         f'fill="white" stroke="{color}" stroke-width="3" stroke-linejoin="round"/>'
     )
+
+
+def label_box(x: float, y: float, w: float, h: float, lines: list[tuple[str, int, float]],
+              fill: str = "white", stroke: str = INK, text_color: str = INK, radius: float = 10) -> str:
+    """A rounded rectangle centred on (x + w/2, y + h/2) holding one or more
+    text lines, each given as (text, font-weight, font-size), vertically
+    centred as a block. Used by flow-style diagrams (S4b curate/export).
+    """
+    out = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{radius}" fill="{fill}" stroke="{stroke}" stroke-width="3"/>'
+    n = len(lines)
+    line_h = 30
+    start_y = y + h / 2 - (n - 1) * line_h / 2 + 8
+    for i, (text, weight, size) in enumerate(lines):
+        out += (
+            f'<text x="{x + w/2}" y="{start_y + i*line_h}" text-anchor="middle" font-family="{FONT_FAMILY}" '
+            f'font-weight="{weight}" font-size="{size}" fill="{text_color}">{esc(text)}</text>'
+        )
+    return out
+
+
+def four_step_icon(step_idx: int, color: str) -> str:
+    """The four chublets.software step glyphs (Ingest/Model/Curate &
+    Link/Export & Publish), centred on (0, 0) in a local -90..90-ish
+    coordinate space. Shared by step_pattern.py (badges) and any S4b
+    detail diagram that wants the same glyph next to its own content, so
+    the icon is drawn once, not redrawn slightly differently per file (A3).
+    """
+    sw = 6
+    if step_idx == 0:  # Ingest -- three sources converging into one point
+        pts = [(-56, -50), (0, -64), (56, -50)]
+        lines = "".join(
+            f'<line x1="{x}" y1="{y}" x2="0" y2="22" stroke="{color}" '
+            f'stroke-width="{sw}" stroke-linecap="round"/>' for x, y in pts
+        )
+        dots = "".join(f'<circle cx="{x}" cy="{y}" r="14" fill="white" stroke="{color}" stroke-width="{sw}"/>' for x, y in pts)
+        return lines + dots + f'<circle cx="0" cy="22" r="26" fill="{color}"/>'
+    if step_idx == 1:  # Model -- a small three-node property graph
+        pts = [(0, -58), (54, 38), (-54, 38)]
+        edges = [(0, 1), (1, 2), (2, 0)]
+        lines = "".join(
+            f'<line x1="{pts[a][0]}" y1="{pts[a][1]}" x2="{pts[b][0]}" y2="{pts[b][1]}" '
+            f'stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>' for a, b in edges
+        )
+        dots = "".join(f'<circle cx="{x}" cy="{y}" r="17" fill="{color}"/>' for x, y in pts)
+        return lines + dots
+    if step_idx == 2:  # Curate & Link -- a checkmark
+        return (
+            f'<polyline points="-40,2 -10,34 48,-40" fill="none" stroke="{color}" '
+            f'stroke-width="{sw+4}" stroke-linecap="round" stroke-linejoin="round"/>'
+        )
+    # Export & Publish -- an arrow leaving an open container
+    bracket = (
+        f'<polyline points="6,-52 -34,-52 -34,52 6,52" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+    arrow = (
+        f'<line x1="-14" y1="0" x2="52" y2="0" stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>'
+        f'<polyline points="30,-20 56,0 30,20" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+    return bracket + arrow

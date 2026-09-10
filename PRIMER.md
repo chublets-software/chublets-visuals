@@ -155,7 +155,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S2 | Block 1: CodeMeta / Wikidata / chublets-Datamodel (4 Grafiken) | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | offen |
 | S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | offen |
+| S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | offen |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
 
@@ -281,22 +281,57 @@ Talk-Chat). Banner + 4 Badges gerendert, visuell geprüft (Icons lesbar auch
 im kleinen Badge-Format), Determinismus-Check bestanden (zweiter Lauf,
 identische SHA-256).
 
+## S4b — Four-Step-Pattern: die vier Detailgrafiken
+
+**Ziel:** zu jedem der vier Schritte aus S4 eine eigene Grafik, die den
+Schritt tatsächlich erklärt statt nur zu betiteln.
+
+**Uploads:** keine neuen.
+
+**Substanz:**
+
+- `four_step_icon()` aus `_node_icon` in `py/step_pattern.py` nach
+  `py/visuals_utils.py` verschoben (A3: eine Quelle) — wird jetzt sowohl
+  von S4 (Badges) als auch von S4b (`chublets-model-datamodel`) benutzt.
+  `label_box()` (zentrierte Box mit 1–2 Textzeilen) ebenfalls aus
+  `fdox-visuals` übernommen für die S4b-Flussdiagramme.
+- `py/step_ingest_inputs.py` → `chublets-ingest-inputs`: dieselbe
+  Drei-Quellen-Konvergenz wie `chublets-wikibase-datamodel` (S2), jetzt für
+  die drei Eingangswege statt für die zwei Property-Hälften.
+- `py/step_model_datamodel.py` → `chublets-model-datamodel`: kompakte Karte
+  (Icon + Zahlen), liest dieselben zwei Quellen wie S2 live neu ein —
+  bewusst keine dritte, eigene Zählung.
+- `py/step_curate_workflow.py` → `chublets-curate-workflow`: vierstufige
+  Kette Create → Statements → Curation → QC.
+- `py/step_export_pipeline.py` → `chublets-export-pipeline`: SPARQL-Kette
+  plus 1-zu-3-Verzweigung (drei Mapper) plus 3-zu-1-Konvergenz (ein
+  Marketplace-Ziel) — komplexeste Grafik des Repos bisher.
+
+**Abnahme:** alle vier `img/chublets-{ingest-inputs,model-datamodel,
+curate-workflow,export-pipeline}.png` existieren, transparenter
+Hintergrund, ≤10px Rand; zweimal `python main.py --from ingest`
+hintereinander → identische Prüfsummen; `python main.py` (alle 9 Schritte)
+läuft weiterhin fehlerfrei durch.
+
+### Erledigt 2026-09-10
+
+Wie geplant, alle vier Grafiken visuell geprüft. Inhalt für Curate & Link
+und Export & Publish stammt weiterhin nur aus dem alten F28-Workflow
+(Talk-Chat), nicht aus echtem Code — siehe Teil D, dieser Punkt bleibt
+offen. Determinismus-Check bestanden (zweiter Lauf, identische SHA-256 über
+alle 9 Schritte / 22 Dateien).
+
 ---
 
 # Teil D — Offene Punkte
 
-- **S4b (die vier Detailgrafiken) sind noch nicht gebaut:**
-  `chublets-ingest-inputs` (drei Input-Quellen: Wikidata-Items, FDOx-Objekte
-  aus der FDOx-squirrel-Registry, Git-Repos über CFF), `chublets-model-
-  datamodel` (vereinfachte Badge-Kontext-Version von `chublets-wikibase-
-  datamodel` aus S2 — sollte dieselben Zahlen live aus derselben Quelle
-  lesen, nicht von Hand wiederholen), `chublets-curate-workflow` (Create
-  Items → Statements & Qualifiers → Manual Curation → QC),
-  `chublets-export-pipeline` (SPARQL-Endpoint → rdflib → CodeMeta-/DCAT-/
-  DataCite-Mapper → Output). Für Curate/Export fehlt noch eine geprüfte
-  Quelle (bisher nur aus dem alten F28-Workflow übernommen, nicht gegen
-  echten Code oder eine Spezifikation geprüft) — zu klären, ob das reicht
-  oder ob es wie S2 eine `data/raw`-Quelle braucht.
+- **Curate & Link / Export & Publish haben keine geprüfte Quelle** — beide
+  S4b-Grafiken übernehmen den Inhalt unverändert aus dem alten
+  F28-Workflow-Panel (Talk-Chat), nicht gegen echten Code oder eine
+  Spezifikation geprüft, anders als S2's xlsx-/CSV-gestützte Zahlen. Sollte
+  vor der finalen Vortragsfassung mindestens stichprobenartig gegen die
+  tatsächliche chublets-Wikibase-Implementierung (sobald sie existiert)
+  geprüft werden.
 - **FAIR4RS-Detailgrafiken (Block 2) brauchen je einen eigenen Mechanismus**
   pro Prinzip — in A4 als Vorschlag eingetragen, aber nicht gegen die
   tatsächliche deRSE26-FAIR-Tabelle geprüft. Sobald das Paper zugänglich ist:
@@ -304,7 +339,7 @@ identische SHA-256).
 - **System Architecture (S5)** konsolidiert die drei Panels der alten F28
   (Klassendiagramm/Workflow/Output) zu einem Diagramm und ergänzt die
   Wikidata-Brücke als expliziten ersten Schritt (siehe Talk-Chat, dort schon
-  skizziert) — braucht S4b, nicht nur S4.
+  skizziert) — S2 und S4b sind jetzt beide da, S5 kann jederzeit starten.
 - **open-archaeo-Pipeline (S6)** ist inhaltlich bereits im Talk-Chat
   skizziert (Transform+Identity → Enrich → Reconcile → Push); für dieses Repo
   fehlt noch die Anbindung an echte Quelldaten (vermutlich das
