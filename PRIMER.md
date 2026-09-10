@@ -133,6 +133,12 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   (die konsolidierte Architektur, künftig die open-archaeo-Pipeline)
   bekommen einen eigenen, unnummerierten Unterordner
   (`img/system-architecture/`), keinen `block-N`-Ordner.
+- **Namensschema in `block-2-fair4rs-chain/`:** analog zu Block 3,
+  `fair-<slug>-badge` / `fair-<slug>-detail` statt `step-<n>-...`, weil die
+  vier FAIR4RS-Prinzipien keine Sequenz sind, sondern gleichrangig
+  nebeneinanderstehen — die Buchstaben F/A/I/R ersetzen die Nummer 1–4 im
+  Badge-Tag (`step_header()` bekommt dafür einen `prefix=""`-Parameter statt
+  des festen "Step "-Präfixes).
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -158,7 +164,7 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Namensschema | `chublets-<thema>` je Grafik, `img/chublets-<thema>.svg/.png` | 2026-09-10 |
 | Repo-Ziel | `chublets-software/chublets-visuals` | 2026-09-10 (angelegt, S1+S2 committet) |
 | Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | bestätigt 2026-09-10 (S4) |
-| FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | Vorschlag, 2026-09-10 |
+| FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | übernommen für S3, 2026-09-10 (weiterhin ungeprüft gegen das deRSE26-Paper, Teil D) |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -181,16 +187,14 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S0 | Festlegungen: Palette, Font, Namensschema | chublets-visuals | — | erledigt 2026-09-10 |
 | S1 | Skeleton: `main.py`, `visuals_utils.py`, Lizenz/Citation/README | chublets-visuals | S0 | erledigt 2026-09-10 |
 | S2 | Block 1: CodeMeta / Wikidata / chublets-Datamodel (4 Grafiken) | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | offen |
+| S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
 | S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
 
-S3, S4b und S6 sind voneinander unabhängig und können in beliebiger Reihenfolge
-laufen. S5 braucht die Datenmodell-Zahlen aus S2 und die Detailgrafiken aus
-S4b, sollte also nach beiden kommen.
+S6 ist von allen anderen Schritten unabhängig und kann jederzeit starten.
 
 ---
 
@@ -427,6 +431,51 @@ main.py` (alle 10 Schritte) läuft weiterhin fehlerfrei durch.
 Wie geplant, visuell geprüft. Determinismus-Check über alle 10 Schritte
 bestanden (23 Dateien + `pipeline_report.txt`).
 
+## S3 — Block 2: FAIR4RS-Kette
+
+**Ziel:** dieselbe Banner-plus-Badges-plus-Detailgrafiken-Struktur wie
+Block 3 (S4/S4b), jetzt für die vier FAIR4RS-Prinzipien statt für einen
+Prozess. `S3` war seit S0 als ID reserviert, aber erst jetzt gebaut — Block
+3 kam zuerst, weil die Talk-Reihenfolge das so vorgab.
+
+**Uploads:** keine neuen.
+
+**Substanz:**
+
+- `FAIR_PRINCIPLES` in `visuals_utils.py` — vier Einträge, `num` trägt den
+  Buchstaben (`F`/`A`/`I`/`R`) statt einer Zahl; Mechanismen aus A4
+  übernommen (Vorschlag, nicht gegen das deRSE26-Paper geprüft, s. Teil D).
+- `fair4rs_icon()` — vier neue Icons (Lupe, offenes Schloss, zwei
+  verschlungene Ringe, Kreispfeil), gleicher Stil/Strichstärke wie
+  `four_step_icon()`, aber eigene Funktion statt Wiederverwendung — Block 3
+  und Block 2 bedeuten unterschiedliche Dinge, ein gemeinsames Icon-Set
+  hätte das verwischt (dieselbe Trennung wie in `fdox-visuals` zwischen
+  `step_pattern.py` und `step_purpose.py`).
+- `step_header()` um `icon_fn`- und `prefix`-Parameter erweitert (Block 3
+  ruft weiterhin mit den Defaults `four_step_icon`/`"Step "`, Block 2 mit
+  `fair4rs_icon`/`""`) — Rückwärtskompatibilität geprüft: alle vier
+  S4b-Grafiken byte-identisch vor/nach der Signaturänderung.
+- `py/step_fair_pattern.py` → Banner `chublets-fair4rs-chain` + 4 Badges
+  `fair-<slug>-badge`.
+- `py/step_fair_findable.py`, `step_fair_accessible.py`,
+  `step_fair_reusable.py` → einfache Karten (Icon-Header + Textkarte, wie
+  `chublets-model-datamodel`).
+- `py/step_fair_interoperable.py` → statt einer Textkarte ein
+  Hub-Diagramm: CodeMeta in der Mitte, vier Speichen zu Wikidata/DCAT/
+  DataCite/CFF — "interoperabel" heißt konkret "verbindet mehrere
+  Vokabulare", das zeigt eine Grafik besser als ein Satz.
+- Alle fünf Grafiken landen in einem neuen Ordner `img/block-2-fair4rs-chain/`
+  (`BLOCK2_DIR`).
+
+**Abnahme:** `img/block-2-fair4rs-chain/` enthält Banner + 4 Badges + 4
+Detailgrafiken (10 Dateien × 2 Formate); jede `-detail`-Grafik trägt
+denselben Icon-Kreis wie ihre `-badge`-Datei; zweimal `python main.py`
+(alle 15 Schritte) → identische Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Wie geplant. Determinismus-Check über alle 15 Schritte bestanden.
+
 ---
 
 # Teil D — Offene Punkte
@@ -438,10 +487,12 @@ bestanden (23 Dateien + `pipeline_report.txt`).
   vor der finalen Vortragsfassung mindestens stichprobenartig gegen die
   tatsächliche chublets-Wikibase-Implementierung (sobald sie existiert)
   geprüft werden.
-- **FAIR4RS-Detailgrafiken (Block 2) brauchen je einen eigenen Mechanismus**
-  pro Prinzip — in A4 als Vorschlag eingetragen, aber nicht gegen die
-  tatsächliche deRSE26-FAIR-Tabelle geprüft. Sobald das Paper zugänglich ist:
-  gegenprüfen statt neu erfinden.
+- **FAIR4RS-Mechanismen (Block 2) sind gebaut, aber weiterhin ungeprüft**
+  gegen die tatsächliche deRSE26-FAIR-Tabelle — in A4 als Vorschlag
+  eingetragen und unverändert in `FAIR_PRINCIPLES` übernommen. Sobald das
+  Paper zugänglich ist: gegenprüfen statt weiter auf dem Vorschlag
+  aufzubauen, besonders bevor die Grafiken auch im Paper selbst verwendet
+  werden.
 - **open-archaeo-Pipeline (S6)** ist inhaltlich bereits im Talk-Chat
   skizziert (Transform+Identity → Enrich → Reconcile → Push); für dieses Repo
   fehlt noch die Anbindung an echte Quelldaten (vermutlich das

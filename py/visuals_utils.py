@@ -20,6 +20,7 @@ DATA_RAW = ROOT / "data" / "raw"
 # folder in einzelne subfolder stecken"). Every step writes into exactly
 # one of these -- nothing is written directly into IMG_DIR any more.
 BLOCK1_DIR = IMG_DIR / "block-1-codemeta-wikidata-datamodel"
+BLOCK2_DIR = IMG_DIR / "block-2-fair4rs-chain"
 BLOCK3_DIR = IMG_DIR / "block-3-four-step-pattern"
 # Not one of the three numbered "blocks" -- system-level diagrams that sit
 # above them (the consolidated architecture, and later the open-archaeo
@@ -99,6 +100,44 @@ FOUR_STEPS = [
         "num": "4",
         "title": ["Export", "& Publish"],
         "desc": "SPARQL to CodeMeta/DCAT/DataCite, into nfdi.software & find.software",
+        "color": CATEGORY_COLORS[4],  # slate blue
+    },
+]
+
+# The four FAIR4RS principles (Block 2), same badge/banner geometry as
+# FOUR_STEPS, different content and icon set (step_fair_pattern.py).
+# Mechanisms are a proposal (PRIMER.md A4, 2026-09-10) not yet checked
+# against the actual deRSE26 paper's FAIR table (Teil D) -- Flo's own
+# earlier framing ("F über nfdi.software, A/I/R via existing standards")
+# is the basis. "num" holds the principle's letter rather than a step
+# index, reusing the same tag rendering.
+FAIR_PRINCIPLES = [
+    {
+        "id": "findable",
+        "num": "F",
+        "title": ["Findable"],
+        "desc": "Persistent Wikidata Q-IDs, indexed by nfdi.software",
+        "color": CATEGORY_COLORS[2],  # teal
+    },
+    {
+        "id": "accessible",
+        "num": "A",
+        "title": ["Accessible"],
+        "desc": "Open Wikibase API & SPARQL endpoint, no login for reads",
+        "color": CATEGORY_COLORS[0],  # purple
+    },
+    {
+        "id": "interoperable",
+        "num": "I",
+        "title": ["Interoperable"],
+        "desc": "CodeMeta as the pivot format between vocabularies",
+        "color": CATEGORY_COLORS[1],  # gold
+    },
+    {
+        "id": "reusable",
+        "num": "R",
+        "title": ["Reusable"],
+        "desc": "License & provenance statements, carried from CFF",
         "color": CATEGORY_COLORS[4],  # slate blue
     },
 ]
@@ -318,28 +357,79 @@ def four_step_icon(step_idx: int, color: str) -> str:
     return bracket + arrow
 
 
-def step_header(step_idx: int, step: dict, x: float, y: float, r: float = 45) -> tuple[str, float]:
-    """A small version of the S4 badge (icon only, no number tag -- the
-    text next to it already says which step) plus a "Step N -- Title"
-    label, used as a consistent header on every S4b detail diagram (Flo,
-    2026-09-10: "ich verstehe bei der Bezeichnung nicht welcher step es
-    ist" / fdox-visuals keeps its step badge visible everywhere, this
-    repo hadn't). Reuses four_step_icon() at a smaller scale rather than
-    drawing a second icon set (A3).
+def fair4rs_icon(idx: int, color: str) -> str:
+    """The four FAIR4RS principle glyphs (Findable/Accessible/
+    Interoperable/Reusable), same local -60..60-ish coordinate space and
+    stroke weight as four_step_icon() so the two badge chains read as one
+    family despite being separate diagrams (fdox-visuals keeps its
+    four-step and four-purpose icon sets in separate files too; this
+    mirrors that rather than forcing one shared icon function to serve
+    two different meanings).
+    """
+    sw = 6
+    if idx == 0:  # Findable -- a magnifying glass
+        return (
+            f'<circle cx="-8" cy="-8" r="32" fill="none" stroke="{color}" stroke-width="{sw}"/>'
+            f'<line x1="15" y1="15" x2="46" y2="46" stroke="{color}" stroke-width="{sw+2}" stroke-linecap="round"/>'
+        )
+    if idx == 1:  # Accessible -- an open padlock
+        body = f'<rect x="-30" y="2" width="60" height="46" rx="8" fill="{color}"/>'
+        shackle = (
+            f'<path d="M -14,2 V -16 A 14 14 0 0 1 14,-30 A 14 14 0 0 1 28,-16 V -8" '
+            f'fill="none" stroke="{color}" stroke-width="{sw}" stroke-linecap="round"/>'
+        )
+        return shackle + body
+    if idx == 2:  # Interoperable -- two linked rings
+        return (
+            f'<circle cx="-18" cy="0" r="30" fill="none" stroke="{color}" stroke-width="{sw}"/>'
+            f'<circle cx="18" cy="0" r="30" fill="none" stroke="{color}" stroke-width="{sw}"/>'
+        )
+    # Reusable -- a circular reuse arrow (two opposing arcs)
+    arc1 = (
+        f'<path d="M -32,-6 A 34 34 0 0 1 14,-33" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round"/>'
+        f'<polyline points="0,-38 16,-33 8,-18" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+    arc2 = (
+        f'<path d="M 32,6 A 34 34 0 0 1 -14,33" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round"/>'
+        f'<polyline points="0,38 -16,33 -8,18" fill="none" stroke="{color}" '
+        f'stroke-width="{sw}" stroke-linecap="round" stroke-linejoin="round"/>'
+    )
+    return arc1 + arc2
+
+
+def step_header(step_idx: int, step: dict, x: float, y: float, r: float = 45,
+                 icon_fn=None, prefix: str = "Step ") -> tuple[str, float]:
+    """A small version of an S4/Block-2 badge (icon only, no number tag --
+    the text next to it already says which step) plus a "Step N -- Title"
+    or "F -- Title" label, used as a consistent header on every detail
+    diagram (Flo, 2026-09-10: "ich verstehe bei der Bezeichnung nicht
+    welcher step es ist" / fdox-visuals keeps its step badge visible
+    everywhere). Reuses the badge's own icon function at a smaller scale
+    rather than drawing a second icon set (A3).
+
+    `icon_fn` defaults to four_step_icon (Block 3); pass fair4rs_icon for
+    Block 2 diagrams. `prefix` goes in front of `step["num"]` in the
+    label -- "Step " for Block 3 (numeric), "" for Block 2 (the FAIR
+    letters read fine on their own, "Step F" would not).
 
     Returns (svg_markup, y) where y is the top of the first content row
     below the header, so a step file can do
     `header_svg, content_y = step_header(...)` and lay out from there.
     """
+    if icon_fn is None:
+        icon_fn = four_step_icon
     color = step["color"]
     scale = r / 150
     fill = tint(color, 0.88)
     cx, cy = x + r, y + r
     out = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}" stroke="{color}" stroke-width="4"/>'
-    out += f'<g transform="translate({cx},{cy}) scale({scale:.4f})">{four_step_icon(step_idx, color)}</g>'
+    out += f'<g transform="translate({cx},{cy}) scale({scale:.4f})">{icon_fn(step_idx, color)}</g>'
     title = " ".join(step["title"])
     out += (
         f'<text x="{x + 2*r + 22}" y="{cy+9}" text-anchor="start" font-family="{FONT_FAMILY}" '
-        f'font-weight="700" font-size="26" fill="{INK}">Step {step["num"]} \u2014 {esc(title)}</text>'
+        f'font-weight="700" font-size="26" fill="{INK}">{prefix}{step["num"]} \u2014 {esc(title)}</text>'
     )
     return out, y + 2 * r + 34

@@ -13,11 +13,12 @@ Step modules are imported lazily so `--list` and `--dry-run` stay instant
 and free of resvg-py/Pillow/openpyxl.
 
 Only Block 1 (CodeMeta / Wikidata / chublets datamodel), S4 (the four-step
-pattern banner + badges), S4b (its four detail diagrams) and S5 (the
-consolidated system architecture) are built so far -- see PRIMER.md Teil B
-for the full plan (Block 2 FAIR4RS chain, open-archaeo-to-Wikidata
-pipeline). New steps are appended to STEPS as they are built; existing ids
-never change, since PATCH-README.md and PRIMER.md refer to them by id.
+pattern banner + badges), S4b (its four detail diagrams), S5 (the
+consolidated system architecture) and Block 2 (the FAIR4RS chain) are
+built so far -- see PRIMER.md Teil B for the full plan
+(open-archaeo-to-Wikidata pipeline). New steps are appended to STEPS as
+they are built; existing ids never change, since PATCH-README.md and
+PRIMER.md refer to them by id.
 """
 
 from __future__ import annotations
@@ -43,6 +44,11 @@ STEPS = [
     ("curate", "S4b (3/4): Curate & Link detail -- curation workflow", "step_curate_workflow"),
     ("export", "S4b (4/4): Export & Publish detail -- export pipeline", "step_export_pipeline"),
     ("architecture", "S5: chublets.software system architecture (5 stages)", "step_architecture"),
+    ("fair-pattern", "Block 2 (1/5): FAIR4RS chain banner + 4 badges", "step_fair_pattern"),
+    ("fair-findable", "Block 2 (2/5): Findable detail", "step_fair_findable"),
+    ("fair-accessible", "Block 2 (3/5): Accessible detail", "step_fair_accessible"),
+    ("fair-interoperable", "Block 2 (4/5): Interoperable detail (CodeMeta hub)", "step_fair_interoperable"),
+    ("fair-reusable", "Block 2 (5/5): Reusable detail", "step_fair_reusable"),
 ]
 
 

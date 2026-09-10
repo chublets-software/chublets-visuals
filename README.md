@@ -28,6 +28,16 @@ img/
 │   ├── chublets-wikidata-properties-overview.svg/.png
 │   ├── chublets-codemeta-wikidata-crosswalk.svg/.png
 │   └── chublets-wikibase-datamodel.svg/.png
+├── block-2-fair4rs-chain/
+│   ├── chublets-fair4rs-chain.svg/.png           (banner)
+│   ├── fair-findable-badge.svg/.png
+│   ├── fair-findable-detail.svg/.png
+│   ├── fair-accessible-badge.svg/.png
+│   ├── fair-accessible-detail.svg/.png
+│   ├── fair-interoperable-badge.svg/.png
+│   ├── fair-interoperable-detail.svg/.png        (CodeMeta hub diagram)
+│   ├── fair-reusable-badge.svg/.png
+│   └── fair-reusable-detail.svg/.png
 ├── block-3-four-step-pattern/
 │   ├── chublets-four-step-pattern.svg/.png       (banner)
 │   ├── step-1-ingest-badge.svg/.png              (icon only, S4)
@@ -73,6 +83,15 @@ Ingest, the same federated-datamodel numbers as Block 1 for Model, a
 four-stage curation workflow for Curate & Link, and the SPARQL-to-
 marketplace export pipeline for Export & Publish).
 
+**Block 2 — the FAIR4RS chain** (Findable → Accessible → Interoperable →
+Reusable): same banner-plus-badges-plus-detail structure as Block 3, own
+icon set (magnifying glass, open padlock, linked rings, reuse arrow).
+Three detail diagrams are explanatory cards; Interoperable gets an actual
+hub diagram (CodeMeta in the centre, spokes to Wikidata/DCAT/DataCite/CFF)
+because "interoperable" specifically means connecting several
+vocabularies. Mechanisms are a proposal, not yet checked against the
+deRSE26 paper's own FAIR table — see `PRIMER.md` Teil D.
+
 **System architecture (S5)** — `chublets-software-architecture`: the
 five-stage bird's-eye view (Wikidata bridge → data sources → chublets
 Wikibase → export pipeline → marketplaces) that consolidates Block 1 and
@@ -80,8 +99,8 @@ Block 3 into the single diagram that used to be three separate F28 panels.
 Reads the same datamodel numbers as Block 1/Block 3, live, so it can't
 drift from them.
 
-Further work (FAIR4RS chain, open-archaeo→Wikidata pipeline) is planned;
-see [`PRIMER.md`](PRIMER.md) for the full plan and current status.
+Further work (open-archaeo→Wikidata pipeline) is planned; see
+[`PRIMER.md`](PRIMER.md) for the full plan and current status.
 
 ## Usage
 
