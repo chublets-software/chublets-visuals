@@ -12,13 +12,9 @@
 Step modules are imported lazily so `--list` and `--dry-run` stay instant
 and free of resvg-py/Pillow/openpyxl.
 
-Only Block 1 (CodeMeta / Wikidata / chublets datamodel), S4 (the four-step
-pattern banner + badges), S4b (its four detail diagrams), S5 (the
-consolidated system architecture) and Block 2 (the FAIR4RS chain) are
-built so far -- see PRIMER.md Teil B for the full plan
-(open-archaeo-to-Wikidata pipeline). New steps are appended to STEPS as
-they are built; existing ids never change, since PATCH-README.md and
-PRIMER.md refer to them by id.
+Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6) is built. New
+work gets a fresh id appended to STEPS; existing ids never change, since
+PATCH-README.md and PRIMER.md refer to them by id.
 """
 
 from __future__ import annotations
@@ -49,6 +45,7 @@ STEPS = [
     ("fair-accessible", "Block 2 (3/5): Accessible detail", "step_fair_accessible"),
     ("fair-interoperable", "Block 2 (4/5): Interoperable detail (CodeMeta hub)", "step_fair_interoperable"),
     ("fair-reusable", "Block 2 (5/5): Reusable detail", "step_fair_reusable"),
+    ("open-archaeo", "S6: open-archaeo to Wikidata import pipeline", "step_open_archaeo_pipeline"),
 ]
 
 

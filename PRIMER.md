@@ -89,6 +89,17 @@ nicht auf ihn beschränkt.
    direkt geöffnete `.svg`-Datei (Browser/Inkscape) die Schrift nicht mehr
    (die PNG-Rasterung selbst war nie betroffen, die läuft über
    `font_files=`, nicht über das `@font-face`-CSS).
+9. **Der open-archaeo-Pipeline-Code selbst liegt nicht in diesem Repo** —
+   die sechs Identity-Statements, `enrich.py` mit ETag-Caching, die
+   Kategorien-Reconciliation und `push --create`/`--skip-blocked` sind alle
+   aus echter, bereits gebauter und getesteter Arbeit (eigener
+   Chat-Verlauf), aber `chublets-visuals` hat keinen Zugriff auf das
+   `n4o-rse/open-archaeo`-Pipeline-Repo selbst. S6 ist deshalb wie
+   `chublets-wikidata-properties-overview` behandelt: eine kuratierte,
+   von Hand gepflegte Beschreibung statt eines Live-Parse aus einer
+   externen Quelle, die dieses Repo nicht enthält — nicht dasselbe wie
+   S4b's "aus dem Talk-Chat, ungeprüft", weil der Pipeline-Code real
+   existiert und läuft, nur eben anderswo.
 
 ## A2. Zielbild
 
@@ -192,9 +203,9 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
 | S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
-| S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
+| S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | erledigt 2026-09-10 |
 
-S6 ist von allen anderen Schritten unabhängig und kann jederzeit starten.
+Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
 
 ---
 
@@ -476,6 +487,42 @@ denselben Icon-Kreis wie ihre `-badge`-Datei; zweimal `python main.py`
 
 Wie geplant. Determinismus-Check über alle 15 Schritte bestanden.
 
+## S6 — open-archaeo → Wikidata Pipeline
+
+**Ziel:** das Detail hinter S5's "Wikidata bridge"-Stufe — die fünf realen
+Schritte, die aus der open-archaeo-CSV Wikidata-Items mit Identity-Block
+machen.
+
+**Uploads:** keine neuen (Inhalt aus eigenem Wissen über die bereits
+gebaute Pipeline, nicht aus einer Datei in diesem Repo — Befund 9).
+
+**Substanz:**
+
+- `py/step_open_archaeo_pipeline.py` → `open-archaeo-wikidata-pipeline` in
+  `img/system-architecture/`, neben `chublets-software-architecture` (S5),
+  nicht in einem `block-N`-Ordner (A3).
+- Fünf Stufen in neutralem Grau (`CATEGORY_COLORS[5]`) — dieselbe Farbe wie
+  S5's "Wikidata bridge"-Box, damit der Bezug sichtbar ist, ohne die Stufen
+  farblich mit einem der drei nummerierten Blöcke zu verwechseln:
+  **open-archaeo CSV** → **Transform + identity** (Slug-Logik, die sechs
+  Statements P31/P6104/P361/P195+Qualifier/P217/P2888) → **GitHub
+  enrichment** (ETag-gecacht) → **Category reconciliation**
+  (suggest/verify/apply) → **Push to Wikidata** (create/skip-blocked).
+- Fußzeile verweist explizit auf `chublets-ingest-inputs` (Block 3), da der
+  Output dieser Pipeline exakt deren "Wikidata items"-Input ist — schließt
+  den Kreis zwischen S6, S5 und Block 3.
+
+**Abnahme:** `img/system-architecture/open-archaeo-wikidata-pipeline.png`
+existiert, transparenter Hintergrund, ≤10px Rand; zweimal `python main.py
+--only open-archaeo` hintereinander → identische Prüfsummen; `python
+main.py` (alle 16 Schritte) läuft fehlerfrei durch.
+
+### Erledigt 2026-09-10
+
+Wie geplant, visuell geprüft. Determinismus-Check über alle 16 Schritte
+bestanden. Damit sind alle in Teil B geplanten Schritte abgeschlossen —
+siehe Teil D für das, was als Nächstes anliegt.
+
 ---
 
 # Teil D — Offene Punkte
@@ -493,12 +540,11 @@ Wie geplant. Determinismus-Check über alle 15 Schritte bestanden.
   Paper zugänglich ist: gegenprüfen statt weiter auf dem Vorschlag
   aufzubauen, besonders bevor die Grafiken auch im Paper selbst verwendet
   werden.
-- **open-archaeo-Pipeline (S6)** ist inhaltlich bereits im Talk-Chat
-  skizziert (Transform+Identity → Enrich → Reconcile → Push); für dieses Repo
-  fehlt noch die Anbindung an echte Quelldaten (vermutlich das
-  `n4o-rse/open-archaeo`-Pipeline-Repo selbst, nicht nur die Beschreibung) —
-  zu klären, ob S6 aus echtem Code liest oder aus einer kuratierten
-  Zusammenfassung wie S2's Wikidata-CSV.
+- **open-archaeo-Pipeline (S6) liest nicht live aus dem echten Repo** —
+  bewusste Entscheidung (Befund 9), aber falls `n4o-rse/open-archaeo`
+  jemals als Upload in einen Chat zu diesem Repo kommt, wäre ein Parser
+  wie `crosswalk_data.py` die konsequentere Lösung als die aktuell von
+  Hand gepflegte Stufenliste.
 - **Talk-spezifische Foliengrafiken** (wie `fdox-visuals` sie in S8–S10 hat:
   reale Folien mit Screenshots/Logos komponiert, nicht nur generische Badges)
   sind für chublets-visuals noch nicht geplant — falls der CAA-Talk das

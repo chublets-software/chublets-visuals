@@ -49,7 +49,8 @@ img/
 │   ├── step-4-export-publish-badge.svg/.png
 │   └── step-4-export-publish-detail.svg/.png
 └── system-architecture/
-    └── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
+    ├── chublets-software-architecture.svg/.png       (S5, consolidates Block 1 + Block 3)
+    └── open-archaeo-wikidata-pipeline.svg/.png       (S6, detail behind S5's "Wikidata bridge")
 ```
 
 `badge` = the small transparent icon alone (for slide corners, navigation).
@@ -92,15 +93,19 @@ because "interoperable" specifically means connecting several
 vocabularies. Mechanisms are a proposal, not yet checked against the
 deRSE26 paper's own FAIR table — see `PRIMER.md` Teil D.
 
-**System architecture (S5)** — `chublets-software-architecture`: the
+**System architecture (S5, S6)** — `chublets-software-architecture`: the
 five-stage bird's-eye view (Wikidata bridge → data sources → chublets
 Wikibase → export pipeline → marketplaces) that consolidates Block 1 and
 Block 3 into the single diagram that used to be three separate F28 panels.
 Reads the same datamodel numbers as Block 1/Block 3, live, so it can't
-drift from them.
+drift from them. `open-archaeo-wikidata-pipeline` is the detail behind its
+"Wikidata bridge" stage: the five real steps (transform + identity block,
+GitHub enrichment, category reconciliation, push) that turn the
+open-archaeo register into Wikidata items — content from already-built,
+tested pipeline code (not this repo's source, see `PRIMER.md` A1 Befund 9).
 
-Further work (open-archaeo→Wikidata pipeline) is planned; see
-[`PRIMER.md`](PRIMER.md) for the full plan and current status.
+All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6) is built; see
+[`PRIMER.md`](PRIMER.md) Teil D for what's next.
 
 ## Usage
 
