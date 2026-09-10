@@ -1,0 +1,8 @@
+# Rendering: pure pip install, no system library needed.
+# resvg-py ships the (Rust, statically-linked) SVG renderer inside the wheel
+# itself -- unlike cairosvg, which needs a system libcairo-2.dll/.so that pip
+# cannot provide. Loose (>=): tested against the pinned-in-comment version,
+# no known fragile API surface.
+resvg-py>=0.4     # tested 0.5.0 -- needs the font_files= / skip_system_fonts= kwargs
+pillow>=10.0      # tested 12.1.1 -- only RGBA-on-white JPEG flattening, alpha-bbox crop
+openpyxl>=3.1     # tested 3.1.5 -- reads data/raw/codemeta-wikidata-crosswalk.xlsx

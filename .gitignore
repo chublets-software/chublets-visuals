@@ -1,0 +1,13 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Per-run report (terminal already shows the same lines; not a citable product)
+img/pipeline_report.txt
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db
+PATCH-README.md
