@@ -1,17 +1,21 @@
-"""S6 -- the open-archaeo -> Wikidata import pipeline.
+"""S6 -- `python py/wikidata/main.py all`: the automated read-only build.
 
-The detail behind chublets-software-architecture's (S5) "Wikidata bridge"
-stage, which is deliberately neutral-grey there and says "see S6" --
-this is that S6. Unlike Block 2's FAIR mechanisms or S4b's Curate/Export
-content, this pipeline is not a talk-chat sketch: every stage names a real,
-already-built and exercised part of the open-archaeo -> Wikidata Python
-pipeline (own conversation history, not this repo -- see PRIMER.md A1
-Befund 9). It is written here as a curated description rather than parsed
-from the pipeline's own source, because that source is not part of this
-repository (Teil D, was an open question in S6's placeholder entry;
-resolved by treating it the same way as chublets-wikidata-properties-
-overview treats the WikiProject page: a maintained CSV of record, not a
-live parse of an external repo this one doesn't contain).
+Rebuilt 2026-09-10 to match the real repo (Flo: "S6 auf den echten Stand
+bringen, dass es konsistent ist") -- the previous version described a
+six-statement identity block and a GitHub-enrichment step that do not
+exist in the current pipeline (PRIMER.md A1 Befund 10). This version
+parses ALL_STEPS out of a vendored snapshot of the real
+py/wikidata/main.py (open_archaeo_data.py) instead of carrying the step
+list as a literal here, so refreshing it when the upstream repo changes
+is a file copy, not a rewrite (Flo, 2026-09-10: "damit können wir es auch
+weiterfuehren, wenn sich in dem repo was tut").
+
+Distinct from the other open-archaeo diagrams rather than a fourth
+near-duplicate of them: S6b(1/3) shows the two-team split, S6b(2/3) the
+interactive human session for the Python route (check -> preview ->
+reconcile -> push -> push --live). This diagram shows the one thing `all`
+actually runs end to end with no human in the loop and nothing written to
+Wikidata -- a third, genuinely different view of the same pipeline.
 
 Produces:
   img/system-architecture/open-archaeo-wikidata-pipeline.svg / .png (transparent)
@@ -27,6 +31,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from visuals_utils import (  # noqa: E402
     CATEGORY_COLORS,
+    DATA_RAW,
     INK,
     MUTED,
     ROOT,
@@ -39,24 +44,19 @@ from visuals_utils import (  # noqa: E402
     tint,
     trim_transparent_border,
 )
+import open_archaeo_data  # noqa: E402
 
 ACCENT = CATEGORY_COLORS[5]  # neutral grey -- same as S5's "Wikidata bridge" stage
 
-BOX_W = 280
-BOX_H = 150
-GAP_X = 60
+BOX_W = 260
+BOX_H = 130
+GAP_X = 40
+GAP_Y = 60
 MARGIN = 60
 TITLE_H = 60
+COLS = 4
 
 OVERSAMPLE = 1.8
-
-STAGES = [
-    ("open-archaeo CSV", "Community register on GitHub"),
-    ("Transform + identity", "Slug logic, six statements (P31/P6104/P361/P195+q/P217/P2888)"),
-    ("GitHub enrichment", "Licence, dates, topics, language -- ETag-cached"),
-    ("Category reconciliation", "suggest / verify / apply"),
-    ("Push to Wikidata", "create or skip-blocked items"),
-]
 
 
 def _wrap(text: str, max_chars: int) -> list[str]:
@@ -73,12 +73,14 @@ def _wrap(text: str, max_chars: int) -> list[str]:
     return lines
 
 
-def _build_svg() -> tuple[str, float, float]:
-    n = len(STAGES)
-    total_w = n * BOX_W + (n - 1) * GAP_X
+def _build_svg(all_steps: list[tuple[str, bool, str]]) -> tuple[str, float, float]:
+    n = len(all_steps)
+    rows = [all_steps[i:i + COLS] for i in range(0, n, COLS)]
+    total_w = COLS * BOX_W + (COLS - 1) * GAP_X
     W = MARGIN * 2 + total_w
     top_y = MARGIN + TITLE_H
-    H = top_y + BOX_H + MARGIN + 40
+    n_rows = len(rows)
+    H = top_y + n_rows * BOX_H + (n_rows - 1) * GAP_Y + MARGIN + 44
 
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">']
     p.append(font_face_css())
@@ -88,26 +90,42 @@ def _build_svg() -> tuple[str, float, float]:
 
     p.append(
         f'<text x="{MARGIN}" y="{MARGIN+10}" text-anchor="start" font-family="Fira Sans" '
-        f'font-weight="700" font-size="28" fill="{INK}">open-archaeo \u2192 Wikidata pipeline</text>'
+        f'font-weight="700" font-size="28" fill="{INK}">python py/wikidata/main.py all</text>'
     )
 
     fill = tint(ACCENT, 0.92)
-    for i, (title, sub) in enumerate(STAGES):
-        x = MARGIN + i * (BOX_W + GAP_X)
-        lines = [(title, 700, 19)]
-        sub_lines = _wrap(sub, 30)
-        lines += [(s, 400, 14) for s in sub_lines]
-        p.append(label_box(x, top_y, BOX_W, BOX_H, lines, fill=fill, stroke=ACCENT, text_color=INK))
-        if i < n - 1:
-            x2 = x + BOX_W
-            y = top_y + BOX_H / 2
-            p.append(f'<line x1="{x2}" y1="{y}" x2="{x2+GAP_X-6}" y2="{y}" '
+    positions = {}
+    for r, row in enumerate(rows):
+        y = top_y + r * (BOX_H + GAP_Y)
+        for c, (name, needs_conn, desc) in enumerate(row):
+            x = MARGIN + c * (BOX_W + GAP_X)
+            positions[(r, c)] = (x, y)
+            tag = "reads Wikidata" if needs_conn else "offline"
+            lines = [(name, 700, 20), (tag, 400, 13)] + [(s, 400, 13) for s in _wrap(desc, 27)]
+            p.append(label_box(x, y, BOX_W, BOX_H, lines, fill=fill, stroke=ACCENT, text_color=INK))
+
+    # arrows: left-to-right within a row, then last-of-row to first-of-next-row
+    flat = [(r, c) for r in range(len(rows)) for c in range(len(rows[r]))]
+    for i in range(len(flat) - 1):
+        r1, c1 = flat[i]
+        r2, c2 = flat[i + 1]
+        x1, y1 = positions[(r1, c1)]
+        x2, y2 = positions[(r2, c2)]
+        if r1 == r2:
+            p.append(f'<line x1="{x1+BOX_W}" y1="{y1+BOX_H/2}" x2="{x2-6}" y2="{y2+BOX_H/2}" '
+                      f'stroke="{ACCENT}" stroke-width="4" marker-end="url(#arrow)"/>')
+        else:
+            midy = y1 + BOX_H + GAP_Y / 2
+            p.append(f'<path d="M {x1+BOX_W/2},{y1+BOX_H} L {x1+BOX_W/2},{midy} '
+                      f'L {x2+BOX_W/2},{midy} L {x2+BOX_W/2},{y2-6}" fill="none" '
                       f'stroke="{ACCENT}" stroke-width="4" marker-end="url(#arrow)"/>')
 
+    footnote_y = top_y + n_rows * BOX_H + (n_rows - 1) * GAP_Y + 34
     p.append(
-        f'<text x="{MARGIN}" y="{top_y+BOX_H+34}" text-anchor="start" font-family="Fira Sans" '
-        f'font-weight="400" font-size="15" fill="{MUTED}">Output: Wikidata items carrying the identity block '
-        f'-- the "Wikidata items" input to chublets-ingest-inputs.</text>'
+        f'<text x="{MARGIN}" y="{footnote_y}" text-anchor="start" font-family="Fira Sans" '
+        f'font-weight="400" font-size="15" fill="{MUTED}">Deliberately left out of `all`: reconcile '
+        f'(slow -- add with --reconcile) and push (writes -- a decision, not automation). See '
+        f'open-archaeo-python-route.</text>'
     )
 
     p.append("</svg>")
@@ -118,7 +136,11 @@ def run(strict: bool = False) -> list[str]:
     ensure_dirs(SYSTEM_ARCH_DIR)
     log: list[str] = []
 
-    svg_text, w, h = _build_svg()
+    data = open_archaeo_data.load(DATA_RAW / "open-archaeo" / "wikidata-main.py")
+    all_steps = data["all_steps"]
+    log.append(f"read ALL_STEPS from vendored py/wikidata/main.py: {len(all_steps)} steps")
+
+    svg_text, w, h = _build_svg(all_steps)
     svg_path = SYSTEM_ARCH_DIR / "open-archaeo-wikidata-pipeline.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")

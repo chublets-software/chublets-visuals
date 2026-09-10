@@ -112,11 +112,25 @@ nicht auf ihn beschränkt.
     (`out/OpenRefine/`), eine für Python (`out/Python/`); (c) die
     Python-Seite hat acht CLI-Schritte (`check`/`preview`/`reconcile`/
     `vocab`/`categories`/`subjects`/`push`/`sparql`/`site`, siehe
-    `py/wikidata/main.py`), nicht die vier aus S6. S6 selbst wurde nicht
-    angefasst (Flo: "das was wir haben passt") — die drei neuen S6b-Grafiken
-    (Befund 9-Nachfolger) sind jetzt live gegen den echten Repo-Inhalt
-    gebaut; ob S6 zusätzlich aktualisiert oder ersetzt werden soll, ist
-    Teil D.
+    `py/wikidata/main.py`), nicht die vier aus S6. S6 selbst wurde zunächst
+    nicht angefasst (Flo: "das was wir haben passt") — mit S6c dann doch
+    korrigiert, siehe Befund 11.
+11. **S6 neu gebaut, diesmal aus einer vendorten Quelldatei statt aus
+    Literalen im Skript** (S6c, 2026-09-10). `data/raw/open-archaeo/
+    wikidata-main.py` ist eine unveränderte Kopie von
+    `py/wikidata/main.py` aus dem geklonten Repo; `py/open_archaeo_data.py`
+    liest `ALL_STEPS`/`STEPS`/`RECONCILE_STEP` daraus per
+    `ast.literal_eval` (Klammern-Matching, kein Regex über mehrzeilige
+    Literale). Damit S6 nicht zur vierten Wiederholung von S6b(1–3) wird,
+    zeigt es etwas inhaltlich anderes: nicht den Zwei-Team-Split (S6b 1/3)
+    und nicht die interaktive Session mit `reconcile`/`push` (S6b 2/3),
+    sondern genau das, was `python py/wikidata/main.py all` automatisiert
+    durchläuft — acht rein lesende Schritte, `reconcile` und `push` bewusst
+    ausgeschlossen (Kommentar im Quellcode: "writing to Wikidata is a
+    decision and a step named 'all' is a bad place to keep one"). Aktualisieren
+    heißt ab jetzt: `wikidata-main.py` durch eine frische Kopie ersetzen,
+    mit Datum in einem neuen A1-Befund — kein Code in
+    `step_open_archaeo_pipeline.py` muss sich dafür ändern.
 
 ## A2. Zielbild
 
@@ -167,6 +181,12 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   nebeneinanderstehen — die Buchstaben F/A/I/R ersetzen die Nummer 1–4 im
   Badge-Tag (`step_header()` bekommt dafür einen `prefix=""`-Parameter statt
   des festen "Step "-Präfixes).
+- **Externe Quell-Repos, aus denen ein Diagramm gebaut wird, werden als
+  unveränderte Datei-Kopie unter `data/raw/<repo-name>/` vendort**, nicht
+  als Literal im `step_*.py` nachgebaut — Beispiel `data/raw/open-archaeo/
+  wikidata-main.py`, gelesen von `py/open_archaeo_data.py`. Aktualisieren
+  bei einer neuen Repo-Version heißt: Datei ersetzen, neuen A1-Befund mit
+  Datum, kein Codeänderung im Step nötig.
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -222,6 +242,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S6b | open-archaeo: die zwei echten Routen (Übersicht, Python-Route, OpenRefine-Route), aus dem echten Repo gebaut | chublets-visuals | S6 | erledigt 2026-09-10 |
+| S6c | S6 auf den echten Repo-Stand gebracht, aus einer vendorten Quelldatei statt Literalen | chublets-visuals | S6b | erledigt 2026-09-10 |
 
 Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
 
@@ -588,19 +609,51 @@ wörtlich aus dem Code, nicht aus Erinnerung). Dabei wurde entdeckt, dass
 S6 selbst veraltet ist (Befund 10) — bewusst nicht angefasst, siehe
 Teil D.
 
+## S6c — S6 auf den echten Stand gebracht
+
+**Ziel:** S6 (`open-archaeo-wikidata-pipeline`) korrigieren, ohne eine
+vierte Wiederholung von S6b zu werden, und so, dass ein künftiges Update
+des Quell-Repos keine Codeänderung hier braucht (Flo: "dann können wir es
+auch weiterführen, wenn sich in dem repo was tut").
+
+**Uploads:** keine neuen (Repo bereits für S6b geklont).
+
+**Substanz:**
+
+- `data/raw/open-archaeo/wikidata-main.py` — unveränderte Kopie von
+  `py/wikidata/main.py` aus dem geklonten Repo (neue Konvention, A3).
+- `py/open_archaeo_data.py` — liest `ALL_STEPS`, `STEPS` und
+  `RECONCILE_STEP` per klammern-gematchter Extraktion +
+  `ast.literal_eval`, kein Nachbau der Listen als Literal.
+- `py/step_open_archaeo_pipeline.py` komplett neu: zeigt jetzt, was
+  `python py/wikidata/main.py all` tatsächlich automatisiert durchläuft —
+  acht rein lesende Schritte (`transform → vocab → categories → subjects
+  → check → preview → sparql → site`), zwei Zeilen à vier Boxen mit
+  Zeilenumbruch-Pfeil. Bewusst **nicht** dasselbe wie S6b(1/3) (der
+  Zwei-Team-Split) oder S6b(2/3) (die interaktive Session mit
+  `reconcile`/`push`) — dritte, eigenständige Sicht auf dieselbe Pipeline.
+  Fußzeile erklärt, warum `reconcile` und `push` fehlen (Kommentar aus dem
+  Quellcode übernommen) und verweist auf `open-archaeo-python-route` für
+  die interaktive Session.
+- Dateiname/Output-Pfad unverändert
+  (`img/system-architecture/open-archaeo-wikidata-pipeline.svg/.png`) —
+  S5's Verweis "see S6" bleibt gültig, keine Folgeänderung dort nötig.
+
+**Abnahme:** `open-archaeo-wikidata-pipeline.png` zeigt die acht echten
+`ALL_STEPS`-Namen; zweimal `python main.py --only open-archaeo`
+hintereinander → identische Prüfsummen; `python main.py` (alle 19
+Schritte) läuft weiterhin fehlerfrei durch.
+
+### Erledigt 2026-09-10
+
+Wie geplant, visuell geprüft. Der Teil-D-Punkt "S6 widerspricht S6b" ist
+damit erledigt und aus Teil D entfernt. Determinismus-Check über alle 19
+Schritte bestanden.
+
 ---
 
 # Teil D — Offene Punkte
 
-- **S6 widerspricht jetzt S6b** (Befund 10): sechs Identity-Statements vs.
-  die echten zwei, "GitHub enrichment" vs. den echten stratifizierten
-  `split`, vier CLI-Schritte vs. die echten acht. Drei Optionen: (a) S6 so
-  lassen, als bewusst vereinfachte/ältere Übersichtsgrafik neben den
-  präziseren S6b-Grafiken; (b) S6 löschen, S6b übernimmt seine Rolle
-  komplett; (c) S6 auf den echten Zwei-Routen-Stand aktualisieren und S5's
-  "Wikidata bridge"-Stufe entsprechend nachziehen. Nicht selbst
-  entschieden, weil Flo S6 explizit als "passt" bezeichnet hatte, bevor
-  Befund 10 auffiel — nächste Sitzung fragen.
 
 - **Curate & Link / Export & Publish haben keine geprüfte Quelle** — beide
   S4b-Grafiken übernehmen den Inhalt unverändert aus dem alten
@@ -615,14 +668,13 @@ Teil D.
   Paper zugänglich ist: gegenprüfen statt weiter auf dem Vorschlag
   aufzubauen, besonders bevor die Grafiken auch im Paper selbst verwendet
   werden.
-- **S6 und S6b lesen nicht live aus dem echten Repo, sondern sind von Hand
-  gepflegte Beschreibungen** — bewusste Entscheidung (Befund 9), auch
-  nachdem das Repo für S6b tatsächlich geklont wurde (die drei S6b-Skripte
-  parsen keine Datei daraus, sie tragen die beim Klonen gelesenen Zahlen
-  und Schrittnamen als Literale). Ein `crosswalk_data.py`-artiger Parser
-  wäre konsequenter, bräuchte aber das Repo als dauerhafte `data/raw/`-
-  Quelle (z. B. als Submodule oder erneuter Klon bei jedem Build) statt
-  eines einmaligen Chat-Klons.
+- **S6b liest weiterhin nicht aus einer Datei, S6 jetzt schon** — S6c hat
+  S6 auf einen echten Parser (`open_archaeo_data.py` + vendorte
+  `wikidata-main.py`) umgestellt; die drei S6b-Grafiken tragen ihre Zahlen
+  (562/416/208/208, die Routen-Schritte) weiterhin als Literale. Bei
+  Gelegenheit könnten `open-archaeo-two-routes` und die beiden
+  Routen-Grafiken denselben Vendoring-Ansatz übernehmen — aus `py/main.py`,
+  `py/split.py` und den beiden Slice-READMEs.
 - **Talk-spezifische Foliengrafiken** (wie `fdox-visuals` sie in S8–S10 hat:
   reale Folien mit Screenshots/Logos komponiert, nicht nur generische Badges)
   sind für chublets-visuals noch nicht geplant — falls der CAA-Talk das

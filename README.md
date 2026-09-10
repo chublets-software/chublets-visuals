@@ -9,6 +9,7 @@ same house pattern, own palette.
 
 ```
 data/raw/*.xlsx, *.csv   real source data (crosswalk, property lists), read at build time
+data/raw/open-archaeo/    a vendored snapshot of github.com/n4o-rse/open-archaeo (py/wikidata/main.py)
       │
       ▼  py/step_*.py     geometry + text (no rendering logic)
       │
@@ -96,24 +97,23 @@ because "interoperable" specifically means connecting several
 vocabularies. Mechanisms are a proposal, not yet checked against the
 deRSE26 paper's own FAIR table — see `PRIMER.md` Teil D.
 
-**System architecture (S5, S6)** — `chublets-software-architecture`: the
+**System architecture (S5, S6, S6b, S6c)** — `chublets-software-architecture`: the
 five-stage bird's-eye view (Wikidata bridge → data sources → chublets
 Wikibase → export pipeline → marketplaces) that consolidates Block 1 and
 Block 3 into the single diagram that used to be three separate F28 panels.
 Reads the same datamodel numbers as Block 1/Block 3, live, so it can't
-drift from them. `open-archaeo-wikidata-pipeline` is the detail behind its
-"Wikidata bridge" stage: the five real steps (transform + identity block,
-GitHub enrichment, category reconciliation, push) that turn the
-open-archaeo register into Wikidata items — content from already-built,
-tested pipeline code (not this repo's source, see `PRIMER.md` A1 Befund 9).
+drift from them. `open-archaeo-wikidata-pipeline` shows what `python
+py/wikidata/main.py all` runs automatically (eight read-only steps),
+parsed straight out of a vendored copy of the real `py/wikidata/main.py`
+(`data/raw/open-archaeo/wikidata-main.py` + `py/open_archaeo_data.py`) —
+refreshing it when the upstream repo changes is a file copy, not a
+rewrite. `open-archaeo-two-routes`, `open-archaeo-python-route` and
+`open-archaeo-openrefine-route` (from `github.com/n4o-rse/open-archaeo`
+directly) cover the rest: the stratified two-team split, and the
+interactive session for each route.
 
-All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b) is built;
-see [`PRIMER.md`](PRIMER.md) Teil D for what's next -- including an open
-question about whether S6 itself needs updating now that S6b exists
-(S6 predates a clone of the real `n4o-rse/open-archaeo` repo and describes
-an earlier, since-superseded shape of the pipeline; S6b was built by
-cloning the repo directly and is checked against its actual code and
-docs).
+All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c) is
+built; see [`PRIMER.md`](PRIMER.md) Teil D for what's next.
 
 ## Usage
 
