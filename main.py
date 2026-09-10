@@ -12,9 +12,9 @@
 Step modules are imported lazily so `--list` and `--dry-run` stay instant
 and free of resvg-py/Pillow/openpyxl.
 
-Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7)
-is built. New work gets a fresh id appended to STEPS; existing ids never
-change, since PATCH-README.md and PRIMER.md refer to them by id.
+Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7,
+S7b) is built. New work gets a fresh id appended to STEPS; existing ids
+never change, since PATCH-README.md and PRIMER.md refer to them by id.
 """
 
 from __future__ import annotations
