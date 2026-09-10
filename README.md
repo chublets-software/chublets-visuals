@@ -58,7 +58,7 @@ img/
 ├── talk/
 │   └── chublets-talk-closing.svg/.png            (S7, 8 badges ringed around the logo)
 └── source/
-    └── chublets-logo.png                         (vendored asset, not generated -- input to S7)
+    └── chublets-logo.svg                         (vendored vector asset -- input to S7)
 ```
 
 `badge` = the small transparent icon alone (for slide corners, navigation).
@@ -116,13 +116,15 @@ rewrite. `open-archaeo-two-routes`, `open-archaeo-python-route` and
 directly) cover the rest: the stratified two-team split, and the
 interactive session for each route.
 
-All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7) is
+All planned work (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7, S7b) is
 built; see [`PRIMER.md`](PRIMER.md) Teil D for what's next.
 
 **Talk-specific slide (S7)** — `chublets-talk-closing`: the eight badges
-(four-step + FAIR4RS) as a ring around the chublets logo (`img/source/`),
-composited the way `fdox-visuals` composites real assets onto a generated
-canvas. A closing/summary slide, not a reusable generic badge.
+(four-step + FAIR4RS) as a ring around the chublets logo, embedded as a
+nested `<svg>` directly in the generated markup (`img/source/chublets-
+logo.svg`) rather than composited onto the rendered PNG afterward, so the
+`.svg` source and the `.png` render are provably identical. A closing/
+summary slide, not a reusable generic badge.
 
 ## Usage
 

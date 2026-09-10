@@ -257,12 +257,20 @@ def flatten_to_jpg(png_path: Path, jpg_path: Path, quality: int = 95) -> None:
 
 def paste_raster(base_png_path: Path, asset_path: Path, x: int, y: int, w: int, h: int,
                   scale: float, circular: bool = False) -> None:
-    """Composite a source raster asset (e.g. the chublets logo, under
-    img/source/) onto an already-rendered PNG, at design-grid (x, y, w, h)
-    scaled by the same `scale` factor the SVG was rasterised at. Call this
-    BEFORE trim_transparent_border -- it needs the untrimmed canvas, whose
-    pixel coordinates are known in advance from the design grid; trimming
-    first would make (x, y) ambiguous.
+    """Composite a source raster asset onto an already-rendered PNG, at
+    design-grid (x, y, w, h) scaled by the same `scale` factor the SVG was
+    rasterised at. Call this BEFORE trim_transparent_border -- it needs
+    the untrimmed canvas, whose pixel coordinates are known in advance
+    from the design grid; trimming first would make (x, y) ambiguous.
+
+    Prefer load_logo_inner_svg() over this for the chublets logo
+    specifically: an inline nested <svg> renders identically in both the
+    .svg source and the .png (one render pass, resvg-py draws the paths
+    directly), where paste_raster only ever touches the already-rasterised
+    .png -- the .svg source then has no logo in it at all, confirmed the
+    hard way (Flo, 2026-09-10: "bei meinem output (und im repo nicht)").
+    Kept for genuine raster-only assets (screenshots) that have no vector
+    original to embed.
     """
     from PIL import Image, ImageDraw
 
@@ -276,6 +284,42 @@ def paste_raster(base_png_path: Path, asset_path: Path, x: int, y: int, w: int, 
     else:
         base.paste(src, (px, py), src)
     base.save(base_png_path)
+
+
+def load_logo_inner_svg(svg_path: Path) -> tuple[str, float, float]:
+    """Returns (inner_xml, view_w, view_h) for a vendored, hand-authored
+    SVG (namely img/source/chublets-logo.svg, Inkscape-exported) so it can
+    be embedded as a nested <svg x=".." y=".." width=".." height=".."
+    viewBox="0 0 view_w view_h">{inner_xml}</svg> inside a generated
+    diagram -- the nested viewport does the scaling, no manual path
+    transform needed.
+
+    Strips <sodipodi:namedview>, the one element in an Inkscape export
+    that uses a namespace (xmlns:sodipodi) this repo's SVGs never declare
+    on their own root <svg> -- harmless editor metadata (last-used zoom
+    and pan position), not part of the drawing, so removing it is safe
+    rather than declaring a namespace for content nothing reads.
+    """
+    import re
+
+    source = svg_path.read_text(encoding="utf-8")
+
+    m = re.search(r'viewBox="0 0 ([\d.]+) ([\d.]+)"', source)
+    if not m:
+        raise ValueError(f"no viewBox found in {svg_path}")
+    view_w, view_h = float(m.group(1)), float(m.group(2))
+
+    body_start = source.index(">", source.index("<svg")) + 1
+    body_end = source.rindex("</svg>")
+    inner = source[body_start:body_end]
+
+    inner = re.sub(r"<sodipodi:namedview.*?/>", "", inner, flags=re.DOTALL)
+    # Inkscape also drops per-path editor hints like sodipodi:nodetypes="..."
+    # scattered through the drawing (path curve-node hints, irrelevant to
+    # rendering) -- same undeclared-namespace problem, strip case by case.
+    inner = re.sub(r'\s+(?:sodipodi|inkscape):[\w-]+="[^"]*"', "", inner)
+
+    return inner, view_w, view_h
 
 
 # --- generic SVG primitives ---------------------------------------------

@@ -131,6 +131,24 @@ nicht auf ihn beschränkt.
     heißt ab jetzt: `wikidata-main.py` durch eine frische Kopie ersetzen,
     mit Datum in einem neuen A1-Befund — kein Code in
     `step_open_archaeo_pipeline.py` muss sich dafür ändern.
+12. **Das Logo-SVG braucht Namespace-Bereinigung, nicht nur Extraktion.**
+    Der erste Versuch, `chublets-logo.svg` als verschachteltes `<svg>`
+    einzubetten, scheiterte an `resvg-py`: `sodipodi:nodetypes`-Attribute
+    (Inkscape-Editor-Metadaten, 15 Vorkommen auf einzelnen `<path>`-
+    Elementen, nicht nur im bereits entfernten `<sodipodi:namedview>`-Block)
+    lösten "unknown namespace prefix" aus, weil der Wurzel-`<svg>` dieses
+    Repos `xmlns:sodipodi` nie deklariert. Behoben durch eine zweite,
+    generische Regex, die jedes `sodipodi:*`/`inkscape:*`-Attribut überall
+    im inneren Markup entfernt, nicht nur das eine Element.
+13. **Die erste Logo-Größe (S7) ließ die Nuggets die Nachbar-Badges
+    berühren** — Flo, 2026-09-10: "schau dass die nuggets nichts
+    beruehren", nach einem hochgeladenen Screenshot. Ursache: die
+    Abstandsrechnung prüfte nur die halbe Logo-Höhe gegen den Ring-
+    Freiraum, nicht die halbe Bilddiagonale — die Ecken der (rechteckigen)
+    Logo-Box zeigen aber genau in Richtung der diagonal stehenden Badges
+    (Export & Publish bei 45°, Findable bei 225° usw.). Mit Diagonale statt
+    Höhe gerechnet: `LOGO_W` von 560 auf 440 reduziert (`step_talk_closing.py`,
+    S7b).
 
 ## A2. Zielbild
 
@@ -188,13 +206,14 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   bei einer neuen Repo-Version heißt: Datei ersetzen, neuen A1-Befund mit
   Datum, kein Codeänderung im Step nötig.
 - **Echte, nicht regenerierbare Assets** (das Logo) liegen unter
-  `img/source/`, nicht unter `data/raw/` — sie sind kein Rohdaten-Input für
-  einen Parser, sondern werden per `paste_raster()` direkt auf eine schon
-  gerenderte PNG-Leinwand kopiert (vor `trim_transparent_border`, solange
-  die Canvas-Pixelkoordinaten noch exakt dem Design-Raster entsprechen).
-  Talk-spezifische, komponierte Folien (die dieses Muster benutzen) liegen
-  in einem eigenen `img/talk/`-Ordner, getrennt von den generischen,
-  wiederverwendbaren Badges in den `block-N`-Ordnern.
+  `img/source/`, nicht unter `data/raw/` — Vektor-Originale werden per
+  `load_logo_inner_svg()` als verschachteltes `<svg>` direkt ins generierte
+  Markup eingebettet (ein Renderdurchlauf, `.svg` und `.png` bleiben
+  beweisbar identisch); nur echte Rasterbilder ohne Vektororiginal
+  (Screenshots) nutzen weiterhin `paste_raster()` auf das schon gerenderte
+  PNG. Talk-spezifische, komponierte Folien liegen in einem eigenen
+  `img/talk/`-Ordner, getrennt von den generischen, wiederverwendbaren
+  Badges in den `block-N`-Ordnern.
 - Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
   Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
   SIL-OFL-Lizenz, gleicher Zweck).
@@ -253,6 +272,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S6b | open-archaeo: die zwei echten Routen (Übersicht, Python-Route, OpenRefine-Route), aus dem echten Repo gebaut | chublets-visuals | S6 | erledigt 2026-09-10 |
 | S6c | S6 auf den echten Repo-Stand gebracht, aus einer vendorten Quelldatei statt Literalen | chublets-visuals | S6b | erledigt 2026-09-10 |
 | S7 | Talk-Closing-Folie: 8 Badges als Ring um das chublets-Logo | chublets-visuals | S3, S4b | erledigt 2026-09-10 |
+| S7b | S7-Logo als eingebettetes SVG statt PNG-Komposit, Nuggets-Kollision behoben | chublets-visuals | S7 | erledigt 2026-09-10 |
 
 Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
 
@@ -702,6 +722,49 @@ Wie geplant, visuell geprüft (Logo lesbar, alle acht Badges klar
 zugeordnet, keine Überlappung). Determinismus-Check bestanden. Nur eine
 Variante gebaut (fdox hat zwei) — zweite Variante mit echten externen
 Hubs (nfdi.software/find.software/Wikidata) ist Teil D, nicht angefragt.
+
+## S7b — S7-Logo eingebettet statt komponiert, Kollision behoben
+
+**Ziel:** zwei Korrekturen nach Flos Sichtung des ersten S7-Exports.
+(1) Das Logo fehlte, wenn er die `.svg`-Datei selbst öffnete — nur die
+`.png` hatte es, weil `paste_raster()` ausschließlich das schon
+gerenderte Raster verändert. (2) Die Nuggets am Fuß der Krähe berührten
+die Badges "Curate & Link" bzw. lagen zu nah an anderen.
+
+**Uploads:** `chublets-talk-closing.svg`, `chublets-talk-closing.png`
+(Flos eigener Export/Screenshot, zeigte beide Probleme), außerdem erneut
+das Logo — diesmal als `.svg` statt `.png`.
+
+**Substanz:**
+
+- `load_logo_inner_svg()` in `visuals_utils.py`: extrahiert `viewBox`
+  sowie den inneren Markup-Block einer Inkscape-exportierten SVG und
+  entfernt zwei Klassen von Editor-Metadaten, die `resvg-py` mit "unknown
+  namespace prefix" ablehnt — den `<sodipodi:namedview>`-Block *und*
+  einzelne `sodipodi:nodetypes="..."`-Attribute auf 15 verschiedenen
+  `<path>`-Elementen (Befund 12).
+- `step_talk_closing.py`: Logo jetzt als verschachteltes
+  `<svg x=".." y=".." width=".." height=".." viewBox="0 0 2016 2136">`
+  direkt im generierten Markup statt per `paste_raster()` nachträglich
+  aufs PNG geklebt — ein Renderdurchlauf zeichnet Logo und Badges
+  zusammen, `.svg`-Quelle und `.png` sind dadurch beweisbar identisch.
+  `paste_raster()` bleibt in `visuals_utils.py` für echte Rasterbilder
+  ohne Vektororiginal (Screenshots).
+- `LOGO_W` von 560 auf 440 reduziert, diesmal nach der Bild**diagonale**
+  gerechnet statt nach der halben Höhe (Befund 13) — 54px Sicherheitsabstand
+  zum nächsten Badge statt einer Überlappung.
+- `img/source/chublets-logo.png` durch `img/source/chublets-logo.svg`
+  ersetzt (die PNG-Version wird von keinem Step mehr gebraucht).
+
+**Abnahme:** `chublets-talk-closing.svg` enthält das Logo direkt (`grep
+sodipodi img/talk/chublets-talk-closing.svg` → 0 Treffer, `grep "<svg
+x="` → 1 Treffer); keine Nugget-Badge-Überlappung mehr, visuell geprüft;
+zweimal `python main.py --only talk-closing` → identische Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Wie geplant. Beide von Flo gemeldeten Probleme behoben und visuell
+bestätigt. Determinismus-Check über alle 20 Schritte bestanden.
 
 ---
 

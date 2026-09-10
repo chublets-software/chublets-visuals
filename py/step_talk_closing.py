@@ -7,15 +7,21 @@ Link -> Export & Publish), left half is the four FAIR4RS principles
 rather than a claimed cause/effect pairing between them, since unlike
 fdox's step/purpose chain there isn't a real one-to-one mapping here.
 
-The logo (img/source/chublets-logo.png, the crow with the nuggets, Flo's
-own upload) is composited onto the rendered ring with PIL, the same
-paste_raster() pattern fdox-visuals uses for real assets that cannot be
-regenerated from a script -- done before trim_transparent_border, while
-the canvas is still untrimmed and its pixel coordinates are still exactly
-what the design grid says.
+The logo (img/source/chublets-logo.svg, the crow with the nuggets, Flo's
+own upload) is embedded as a nested <svg> inline in the generated markup
+-- load_logo_inner_svg() strips it down to a viewBox and inner XML, then
+_build_svg() places it as <svg x=".." y=".." width=".." height=".."
+viewBox="..">{inner}</svg>, so the nested viewport does the scaling and
+one resvg-py render pass draws logo and badges together. First version
+composited the logo onto the rendered .png with PIL instead (fdox-visuals'
+paste_raster() pattern, still in visuals_utils.py for genuine raster-only
+assets); that left the .png right but the .svg source with no logo at all
+(Flo, 2026-09-10: "bei meinem output (und im repo nicht)") -- inline
+embedding renders identically in both because there is only one render
+path now.
 
 Produces:
-  img/chublets-talk-closing.svg / .png (transparent, white-background slide)
+  img/talk/chublets-talk-closing.svg / .png (transparent, white-background slide)
 
 Runnable standalone: `python py/step_talk_closing.py`
 """
@@ -39,7 +45,7 @@ from visuals_utils import (  # noqa: E402
     fair4rs_icon,
     font_face_css,
     four_step_icon,
-    paste_raster,
+    load_logo_inner_svg,
     render_svg_to_png,
     tint,
     trim_transparent_border,
@@ -51,8 +57,16 @@ RING_R = 480
 BADGE_R = 105
 TAG_SIZE = 60
 TAG_OFFSET = 14
-LOGO_W = 560
-LOGO_H = round(LOGO_W * 2119 / 2000)  # the logo's own aspect ratio, not forced to square
+# Logo footprint, sized to the *diagonal* clearance to the ring, not just
+# its half-height -- the crow's feet and the scattered nuggets reach
+# close to all four corners of the logo's own bounding box, and the
+# nearest badges (Export & Publish at 45 deg, Reusable at 90 deg, Findable
+# at 225 deg, Ingest at -90 deg) sit in those corner directions. A first
+# version sized only against half-height overlapped the nuggets into
+# Curate & Link's badge (Flo, 2026-09-10: "schau dass die nuggets nichts
+# beruehren") -- half-diagonal is the number that actually matters here.
+LOGO_W = 440
+LOGO_H = round(LOGO_W * 2136 / 2016)  # the logo's own aspect ratio (viewBox 2016x2136)
 
 OVERSAMPLE = 2.0
 
@@ -95,7 +109,7 @@ def _badge(cx: float, cy: float, icon_fn, icon_idx: int, item: dict) -> str:
     return out
 
 
-def _build_svg() -> str:
+def _build_svg(logo_inner: str, logo_view_w: float, logo_view_h: float) -> str:
     p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">']
     p.append(font_face_css())
     for angle, icon_fn, idx, item in _RING:
@@ -103,6 +117,13 @@ def _build_svg() -> str:
         cx = CX + RING_R * math.cos(rad)
         cy = CY + RING_R * math.sin(rad)
         p.append(_badge(cx, cy, icon_fn, idx, item))
+
+    logo_x, logo_y = CX - LOGO_W / 2, CY - LOGO_H / 2
+    p.append(
+        f'<svg x="{logo_x}" y="{logo_y}" width="{LOGO_W}" height="{LOGO_H}" '
+        f'viewBox="0 0 {logo_view_w:g} {logo_view_h:g}">{logo_inner}</svg>'
+    )
+
     p.append("</svg>")
     return "\n".join(p)
 
@@ -111,23 +132,18 @@ def run(strict: bool = False) -> list[str]:
     ensure_dirs(TALK_DIR)
     log: list[str] = []
 
-    svg_text = _build_svg()
+    logo_inner, logo_view_w, logo_view_h = load_logo_inner_svg(SOURCE_DIR / "chublets-logo.svg")
+
+    svg_text = _build_svg(logo_inner, logo_view_w, logo_view_h)
     svg_path = TALK_DIR / "chublets-talk-closing.svg"
     svg_path.write_text(svg_text, encoding="utf-8")
     png_path = svg_path.with_suffix(".png")
     render_svg_to_png(svg_path, png_path, int(W * OVERSAMPLE), int(H * OVERSAMPLE))
 
-    logo_path = SOURCE_DIR / "chublets-logo.png"
-    paste_raster(
-        png_path, logo_path,
-        x=CX - LOGO_W / 2, y=CY - LOGO_H / 2, w=LOGO_W, h=LOGO_H,
-        scale=OVERSAMPLE,
-    )
-
     final_w, final_h = trim_transparent_border(png_path, margin_px=10)
     log.append(
         f"wrote {svg_path.relative_to(ROOT)} + .png "
-        f"({final_w}x{final_h}, transparent, <=10px border, logo composited)"
+        f"({final_w}x{final_h}, transparent, <=10px border, logo embedded inline)"
     )
     return log
 
