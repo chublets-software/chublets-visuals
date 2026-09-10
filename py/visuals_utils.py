@@ -52,6 +52,45 @@ CATEGORY_COLORS = [
     "#5B5568",  # neutral (misc / footnote groups)
 ]
 
+# chublets.software's own four-step documentation pattern (Block 3),
+# analogous to fdox-visuals' FDO Encapsulation -> ... -> Federated KG
+# Integration chain. Confirmed 2026-09-10 (PRIMER.md A4, was a proposal
+# since S0). Colour assignment: the two house colours sit in the middle as
+# the chublets-specific steps (Model, Curate & Link); teal and slate
+# bookend them as the steps that face outward, toward data coming in and
+# going back out. Every graphic that needs "the chublets step colours"
+# reads this list rather than repeating a hex code (A3).
+FOUR_STEPS = [
+    {
+        "id": "ingest",
+        "num": "1",
+        "title": ["Ingest"],
+        "desc": "Wikidata items, FDOx objects & Git repos via CFF",
+        "color": CATEGORY_COLORS[2],  # teal
+    },
+    {
+        "id": "model",
+        "num": "2",
+        "title": ["Model"],
+        "desc": "Federated datamodel: Wikidata properties + CodeMeta-only fields",
+        "color": CATEGORY_COLORS[0],  # purple
+    },
+    {
+        "id": "curate-link",
+        "num": "3",
+        "title": ["Curate", "& Link"],
+        "desc": "Statements, qualifiers, manual curation & quality control",
+        "color": CATEGORY_COLORS[1],  # gold
+    },
+    {
+        "id": "export-publish",
+        "num": "4",
+        "title": ["Export", "& Publish"],
+        "desc": "SPARQL to CodeMeta/DCAT/DataCite, into nfdi.software & find.software",
+        "color": CATEGORY_COLORS[4],  # slate blue
+    },
+]
+
 
 def ensure_dirs() -> None:
     IMG_DIR.mkdir(parents=True, exist_ok=True)

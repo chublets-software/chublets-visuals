@@ -128,8 +128,8 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | CodeMeta-Übersicht | Klassendiagramm statt Force-Directed-Graph (Determinismus) | 2026-09-10 |
 | Wikidata-Property-Quelle | von Hand kuratierte CSV statt Live-PDF-Scraping | 2026-09-10 |
 | Namensschema | `chublets-<thema>` je Grafik, `img/chublets-<thema>.svg/.png` | 2026-09-10 |
-| Repo-Ziel | `chublets-software/chublets-visuals` | Vorschlag, 2026-09-10 |
-| Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | Vorschlag, 2026-09-10 |
+| Repo-Ziel | `chublets-software/chublets-visuals` | 2026-09-10 (angelegt, S1+S2 committet) |
+| Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | bestätigt 2026-09-10 (S4) |
 | FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | Vorschlag, 2026-09-10 |
 
 ## A5. Was in welchem Chat hochgeladen wird
@@ -154,13 +154,14 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S1 | Skeleton: `main.py`, `visuals_utils.py`, Lizenz/Citation/README | chublets-visuals | S0 | erledigt 2026-09-10 |
 | S2 | Block 1: CodeMeta / Wikidata / chublets-Datamodel (4 Grafiken) | chublets-visuals | S1 | erledigt 2026-09-10 |
 | S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | offen |
-| S4 | Block 3: chublets.software Four-Step-Pattern (Banner + 4 Detailgrafiken) | chublets-visuals | S1 | offen |
-| S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4 | offen |
+| S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
+| S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | offen |
+| S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | offen |
 | S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | offen |
 
-S3, S4 und S6 sind voneinander unabhängig und können in beliebiger Reihenfolge
-laufen. S5 braucht die Datenmodell-Zahlen aus S2 und die Schrittnamen aus S4,
-sollte also nach beiden kommen.
+S3, S4b und S6 sind voneinander unabhängig und können in beliebiger Reihenfolge
+laufen. S5 braucht die Datenmodell-Zahlen aus S2 und die Detailgrafiken aus
+S4b, sollte also nach beiden kommen.
 
 ---
 
@@ -242,14 +243,60 @@ gefixt, bevor die erste Grafik final gerendert wurde. Determinismus-Check:
 siehe unten im Chat-Protokoll dieses Schritts (zweiter Lauf, `git status`
 sauber).
 
+## S4 — chublets.software Four-Step-Pattern: Banner + Icon-Badges
+
+**Ziel:** das eigene Vier-Schritte-Muster von chublets.software als
+Banner-Grafik (alle vier Schritte in einer Reihe) und als vier einzelne,
+transparente Icon-Badges — analog zu `fdox-four-step-pattern` in
+`fdox-visuals`, gleiche Geometrie/Renderpfad, eigene Icons und Farben.
+
+**Uploads:** keine neuen (nutzt nur `py/visuals_utils.py` aus S1).
+
+**Substanz:**
+
+- `FOUR_STEPS` in `py/visuals_utils.py` — die vier Schritte als einzige
+  Quelle (Titel, Beschreibung, Farbe), damit S4b und S5 dieselbe Definition
+  lesen statt sie zu wiederholen (A3). Die Namen (**Ingest → Model → Curate
+  & Link → Export & Publish**) waren seit S0 ein Vorschlag (A4) und werden
+  mit diesem Schritt bestätigt.
+- `py/step_pattern.py` — vier neue, eigens gezeichnete Icons (kein
+  Icon-Font, reine SVG-Primitive wie der Rest des Repos): Ingest = drei
+  Quellpunkte, die in einen Punkt zusammenlaufen; Model = ein Dreiecksgraph
+  (drei Knoten, drei Kanten); Curate & Link = ein Häkchen; Export & Publish
+  = ein Pfeil, der einen offenen Container verlässt. Farbreihenfolge bewusst
+  nicht linear durch die Kategorie-Palette, sondern mit den beiden
+  Hausfarben (Lila, Gold) in der Mitte für die chublets-spezifischen
+  Schritte (Model, Curate & Link) und Teal/Blaugrau außen für die Schritte,
+  die nach außen zeigen (Ingest kommt rein, Export & Publish geht raus).
+
+**Abnahme:** `img/chublets-four-step-pattern.png` + vier
+`img/chublets-step-<n>-<slug>.png` existieren, transparenter Hintergrund,
+≤10px Rand; zweimal `python main.py --only pattern` hintereinander →
+identische Prüfsummen.
+
+### Erledigt 2026-09-10
+
+Vier-Schritte-Namen aus dem Vorschlag in A4 bestätigt (keine Einwände im
+Talk-Chat). Banner + 4 Badges gerendert, visuell geprüft (Icons lesbar auch
+im kleinen Badge-Format), Determinismus-Check bestanden (zweiter Lauf,
+identische SHA-256).
+
 ---
 
 # Teil D — Offene Punkte
 
-- **Vier-Schritte-Namen (Block 3) sind ein Vorschlag**, nicht bestätigt:
-  Ingest → Model → Curate & Link → Export & Publish. Alternative: Begriffe
-  aus dem deRSE26-Paper übernehmen ("Modeling & Maintaining", "RDF Export"),
-  die dort schon feststehen und nicht doppelt benannt werden sollten.
+- **S4b (die vier Detailgrafiken) sind noch nicht gebaut:**
+  `chublets-ingest-inputs` (drei Input-Quellen: Wikidata-Items, FDOx-Objekte
+  aus der FDOx-squirrel-Registry, Git-Repos über CFF), `chublets-model-
+  datamodel` (vereinfachte Badge-Kontext-Version von `chublets-wikibase-
+  datamodel` aus S2 — sollte dieselben Zahlen live aus derselben Quelle
+  lesen, nicht von Hand wiederholen), `chublets-curate-workflow` (Create
+  Items → Statements & Qualifiers → Manual Curation → QC),
+  `chublets-export-pipeline` (SPARQL-Endpoint → rdflib → CodeMeta-/DCAT-/
+  DataCite-Mapper → Output). Für Curate/Export fehlt noch eine geprüfte
+  Quelle (bisher nur aus dem alten F28-Workflow übernommen, nicht gegen
+  echten Code oder eine Spezifikation geprüft) — zu klären, ob das reicht
+  oder ob es wie S2 eine `data/raw`-Quelle braucht.
 - **FAIR4RS-Detailgrafiken (Block 2) brauchen je einen eigenen Mechanismus**
   pro Prinzip — in A4 als Vorschlag eingetragen, aber nicht gegen die
   tatsächliche deRSE26-FAIR-Tabelle geprüft. Sobald das Paper zugänglich ist:
@@ -257,7 +304,7 @@ sauber).
 - **System Architecture (S5)** konsolidiert die drei Panels der alten F28
   (Klassendiagramm/Workflow/Output) zu einem Diagramm und ergänzt die
   Wikidata-Brücke als expliziten ersten Schritt (siehe Talk-Chat, dort schon
-  skizziert) — sobald S4 die Schrittnamen liefert, wird daraus S5.
+  skizziert) — braucht S4b, nicht nur S4.
 - **open-archaeo-Pipeline (S6)** ist inhaltlich bereits im Talk-Chat
   skizziert (Transform+Identity → Enrich → Reconcile → Push); für dieses Repo
   fehlt noch die Anbindung an echte Quelldaten (vermutlich das
@@ -268,6 +315,6 @@ sauber).
   reale Folien mit Screenshots/Logos komponiert, nicht nur generische Badges)
   sind für chublets-visuals noch nicht geplant — falls der CAA-Talk das
   braucht, wäre das ein weiterer Block.
-- **Repo-Anlage:** `chublets-software/chublets-visuals` existiert noch nicht
-  auf GitHub (A4-Zeile ist ein Vorschlag) — zu klären, ob unter derselben Org
-  wie `open-archaeo`/`chublets.software` selbst oder einer neuen.
+- **Repo-Anlage:** `chublets-software/chublets-visuals` existiert jetzt auf
+  GitHub und S1+S2 sind committet (bestätigt 2026-09-10) — Rest dieses Punkts
+  erledigt.
