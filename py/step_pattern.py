@@ -13,8 +13,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import captions  # noqa: E402
 import chain_banner  # noqa: E402
+import icons  # noqa: E402
 import four_steps  # noqa: E402
-from visuals_utils import FOUR_STEPS, four_step_icon  # noqa: E402
+from visuals_utils import FOUR_STEPS  # noqa: E402
 import model_data  # noqa: E402
 import model_graphics as g  # noqa: E402
 
@@ -43,9 +44,9 @@ def run(strict: bool = False) -> list[str]:
     f = facts
     log = [g.save(NAME, build(M))]
     descs = ["Wikidata items, FDOx objects and Git repositories", f"{f['n_props']} properties from Wikidata and CodeMeta", f"{f['n_items']} items and {f['n_statements']} statements, curated and linked", "CodeMeta, DCAT and DataCite for the software marketplaces"]
-    log.append(g.save(BANNER, chain_banner.build(FOUR_STEPS, four_step_icon, descs, "steps")))
+    log.append(g.save(BANNER, chain_banner.build(FOUR_STEPS, icons.step_icon, descs, "steps")))
     for i, stem in enumerate(['step-1-ingest-badge', 'step-2-model-badge', 'step-3-curate-link-badge', 'step-4-export-publish-badge']):
-        log.append(g.save(stem, chain_banner.badge(FOUR_STEPS[i], four_step_icon, i)))
+        log.append(g.save(stem, chain_banner.badge(FOUR_STEPS[i], icons.step_icon, i)))
     if BANNER in captions.load():
         captions.render(BANNER, **facts)
     if NAME in captions.load():

@@ -35,6 +35,8 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import captions  # noqa: E402
+import chain_banner  # noqa: E402
+import icons  # noqa: E402
 import model_data  # noqa: E402
 import model_graphics as g  # noqa: E402
 from visuals_utils import (  # noqa: E402
@@ -46,9 +48,7 @@ from visuals_utils import (  # noqa: E402
     TALK_DIR,
     ensure_dirs,
     esc,
-    fair4rs_icon,
     font_face_css,
-    four_step_icon,
     load_logo_inner_svg,
     render_svg_to_png,
     tint,
@@ -82,14 +82,14 @@ OVERSAMPLE = 2.0
 # seam, which is at least a defensible "found, then ingested" reading --
 # not claimed as more than that).
 _RING = [
-    (-90, four_step_icon, 0, FOUR_STEPS[0]),   # Ingest
-    (-45, four_step_icon, 1, FOUR_STEPS[1]),   # Model
-    (0,   four_step_icon, 2, FOUR_STEPS[2]),   # Curate & Link
-    (45,  four_step_icon, 3, FOUR_STEPS[3]),   # Export & Publish
-    (90,  fair4rs_icon,   3, FAIR_PRINCIPLES[3]),  # Reusable
-    (135, fair4rs_icon,   2, FAIR_PRINCIPLES[2]),  # Interoperable
-    (180, fair4rs_icon,   1, FAIR_PRINCIPLES[1]),  # Accessible
-    (225, fair4rs_icon,   0, FAIR_PRINCIPLES[0]),  # Findable
+    (-90, icons.step_icon, 0, FOUR_STEPS[0]),   # Ingest
+    (-45, icons.step_icon, 1, FOUR_STEPS[1]),   # Model
+    (0,   icons.step_icon, 2, FOUR_STEPS[2]),   # Curate & Link
+    (45,  icons.step_icon, 3, FOUR_STEPS[3]),   # Export & Publish
+    (90,  icons.fair_icon,   3, FAIR_PRINCIPLES[3]),  # Reusable
+    (135, icons.fair_icon,   2, FAIR_PRINCIPLES[2]),  # Interoperable
+    (180, icons.fair_icon,   1, FAIR_PRINCIPLES[1]),  # Accessible
+    (225, icons.fair_icon,   0, FAIR_PRINCIPLES[0]),  # Findable
 ]
 
 
@@ -98,8 +98,7 @@ def _badge(cx: float, cy: float, icon_fn, icon_idx: int, item: dict) -> str:
     fill = tint(color, 0.88)
     tag_x, tag_y = cx - BADGE_R - TAG_OFFSET, cy - BADGE_R - TAG_OFFSET
     out = f'<circle cx="{cx}" cy="{cy}" r="{BADGE_R}" fill="{fill}" stroke="{color}" stroke-width="5"/>'
-    scale = BADGE_R / 150
-    out += f'<g transform="translate({cx},{cy}) scale({scale:.4f})">{icon_fn(icon_idx, color)}</g>'
+    out += chain_banner._icon(icon_fn, icon_idx, color, cx, cy, r=BADGE_R)
     out += f'<rect x="{tag_x}" y="{tag_y}" width="{TAG_SIZE}" height="{TAG_SIZE}" rx="12" fill="{color}"/>'
     out += (
         f'<text x="{tag_x + TAG_SIZE/2}" y="{tag_y + TAG_SIZE/2 + 18}" text-anchor="middle" '

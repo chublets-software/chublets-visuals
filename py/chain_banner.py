@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import re
 
+import icons
 import model_graphics as g
 from visuals_utils import INK, MUTED, tint
 
@@ -16,6 +17,16 @@ TAG = 40       # number tag size
 TAGO = 13      # tag offset
 COL_W = 360
 TEXT_W = COL_W - 40
+ICON_K = 1.3   # the icons fill the badge (they were small in the circle)
+# Offsets (icon units) that centre each icon in its circle; measured from the rendered icons.
+CENTRE = {"step_icon": [(0, 16.5), (0, 10), (-4, 3), (0, 0)],
+          "fair_icon": [(-3.5, -3.5), (0, 0), (0, 0), (0, 0)]}
+
+
+def _icon(icon_fn, idx, col, cx=0.0, cy=0.0, r=BR):
+    k = r / 150 * ICON_K
+    dx, dy = CENTRE[icon_fn.__name__][idx]
+    return f'<g transform="translate({g.f(cx + dx * k)},{g.f(cy + dy * k)}) scale({k:.4f})">{icon_fn(idx, col)}</g>'
 
 
 def _round(svg: str) -> str:
@@ -41,7 +52,7 @@ def build(items, icon_fn, descs, uid):
     for i, (it, d, cx) in enumerate(zip(items, descs, centres)):
         col = it["color"]
         out += f'<circle cx="{g.f(cx)}" cy="{g.f(cy)}" r="{BR}" fill="{tint(col, 0.88)}" stroke="{col}" stroke-width="4"/>'
-        out += f'<g transform="translate({g.f(cx)},{g.f(cy)}) scale({BR / 150:.4f})">{icon_fn(i, col)}</g>'
+        out += _icon(icon_fn, i, col, cx, cy)
         tx, ty = cx - BR - TAGO, cy - BR - TAGO
         out += g.rect(tx, ty, TAG, TAG, fill=col, rx=9)
         out += g.text(tx + TAG / 2, ty + TAG / 2 + 10, it["num"], 30, bold=True, fill="#ffffff", anchor="middle")
@@ -61,7 +72,7 @@ def badge(item, icon_fn, idx):
     cv = g.Canvas()
     col = item["color"]
     out = f'<circle cx="0" cy="0" r="{BR}" fill="{tint(col, 0.88)}" stroke="{col}" stroke-width="4"/>'
-    out += f'<g transform="scale({BR / 150:.4f})">{icon_fn(idx, col)}</g>'
+    out += _icon(icon_fn, idx, col)
     tx, ty = -BR - TAGO, -BR - TAGO
     out += g.rect(tx, ty, TAG, TAG, fill=col, rx=9)
     out += g.text(tx + TAG / 2, ty + TAG / 2 + 10, item["num"], 30, bold=True, fill="#ffffff", anchor="middle")
