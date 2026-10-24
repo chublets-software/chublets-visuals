@@ -286,3 +286,52 @@ chublets-fair-reusable:
     statements carry a reference ({n_with_qual} a qualifier, for example a date).
   alt: Three boxes in a chain, licence, provenance and attribution.
   sources: [chublets-wikibase-demo]
+
+chublets-software-architecture:
+  caption: >-
+    Architecture of chublets.software from the sources to the marketplaces. The open-archaeo import pipeline
+    ({n_oa_entries} entries) brings software into Wikidata; Wikidata items, FDOx objects and Git repositories
+    are the data sources of the Wikibase of chublets ({n_props} properties, {n_classes} classes, {n_items} items),
+    whose data are exported with SPARQL and rdflib as CodeMeta, DCAT and DataCite to nfdi.software, find.software
+    and the KGE4RSE knowledge graph.
+  alt: Five boxes in a row joined by arrows, from the Wikidata bridge to the marketplaces.
+  sources: [chublets-wikibase-demo, open-archaeo]
+
+open-archaeo-wikidata-pipeline:
+  caption: >-
+    The eight steps that the command `all` of the open-archaeo Wikidata tool runs, in order. Only `check` reads
+    Wikidata. Reconcile (slow) and push (writes) are not part of `all` on purpose. The steps are read from
+    the vendored copy of py/wikidata/main.py of the open-archaeo repository.
+  alt: Eight boxes in two rows of four joined by arrows, each with the step name, whether it reads Wikidata and a short description.
+  sources: [open-archaeo]
+
+open-archaeo-two-routes:
+  caption: >-
+    How open-archaeo is split for the Wikidata import. The {n_oa_entries} software entries of the 562 entries of
+    open-archaeo.csv are split in a stratified, deterministic way into two halves of {n_oa_half} entries that do
+    not overlap, one for the OpenRefine route and one for the Python route. Both routes share one vocabulary
+    and one concordance of identifiers and Q-IDs.
+  alt: A row of three boxes (CSV, transform, split), two boxes for the OpenRefine and Python slices, and one box for the shared vocabulary and concordance.
+  sources: [open-archaeo]
+
+open-archaeo-python-route:
+  caption: >-
+    The Python route of the open-archaeo Wikidata session: check, preview, reconcile and a dry-run push; only
+    `push --live` writes, and only rows that reconcile has matched to a Q-ID, so it never creates items.
+  alt: Five boxes in a row joined by arrows with a note on the worksheet steps that are not part of the session.
+  sources: [open-archaeo]
+
+open-archaeo-openrefine-route:
+  caption: >-
+    The OpenRefine route of the open-archaeo Wikidata session: set up, split and derive values, reconcile
+    (which owns the shared vocabulary), edit the schema and upload, and hand the identifiers and Q-IDs back
+    to the concordance.
+  alt: Five boxes in a row joined by arrows, from setup to hand back.
+  sources: [open-archaeo]
+
+chublets-talk-closing:
+  caption: >-
+    The four steps of the chublets pipeline (Ingest, Model, Curate and link, Export and publish) and the four FAIR
+    principles as a ring of eight badges around the chublets raven with its nuggets, for the closing slide of a talk.
+  alt: A purple raven standing among gold nuggets, surrounded by eight round badges with icons for the four steps and the four FAIR principles.
+  sources: [chublets-wikibase-demo]

@@ -29,10 +29,14 @@ Runnable standalone: `python py/step_talk_closing.py`
 from __future__ import annotations
 
 import math
+import re
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
+import captions  # noqa: E402
+import model_data  # noqa: E402
+import model_graphics as g  # noqa: E402
 from visuals_utils import (  # noqa: E402
     FAIR_PRINCIPLES,
     FOUR_STEPS,
@@ -51,6 +55,7 @@ from visuals_utils import (  # noqa: E402
     trim_transparent_border,
 )
 
+NAME = "chublets-talk-closing"
 W, H = 1500, 1500
 CX, CY = 750, 750
 RING_R = 480
@@ -109,42 +114,34 @@ def _badge(cx: float, cy: float, icon_fn, icon_idx: int, item: dict) -> str:
     return out
 
 
-def _build_svg(logo_inner: str, logo_view_w: float, logo_view_h: float) -> str:
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">']
-    p.append(font_face_css())
+def _round(svg: str) -> str:
+    """Two decimals everywhere, so the file is the same on every platform (PRIMER.md finding 16)."""
+    return re.sub(r"-?\d+\.\d{3,}", lambda m: g.f(float(m.group(0))), svg)
+
+
+def build(logo_inner: str, logo_view_w: float, logo_view_h: float) -> g.Canvas:
+    cv = g.Canvas()
+    parts = []
     for angle, icon_fn, idx, item in _RING:
         rad = math.radians(angle)
         cx = CX + RING_R * math.cos(rad)
         cy = CY + RING_R * math.sin(rad)
-        p.append(_badge(cx, cy, icon_fn, idx, item))
-
+        parts.append(_badge(cx, cy, icon_fn, idx, item))
     logo_x, logo_y = CX - LOGO_W / 2, CY - LOGO_H / 2
-    p.append(
+    parts.append(
         f'<svg x="{logo_x}" y="{logo_y}" width="{LOGO_W}" height="{LOGO_H}" '
         f'viewBox="0 0 {logo_view_w:g} {logo_view_h:g}">{logo_inner}</svg>'
     )
-
-    p.append("</svg>")
-    return "\n".join(p)
+    cv.add(_round("\n".join(parts)), 150, 150, 1336, 1395)
+    return cv
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs(TALK_DIR)
-    log: list[str] = []
-
+    M = model_data.load()
     logo_inner, logo_view_w, logo_view_h = load_logo_inner_svg(SOURCE_DIR / "chublets-logo.svg")
-
-    svg_text = _build_svg(logo_inner, logo_view_w, logo_view_h)
-    svg_path = TALK_DIR / "chublets-talk-closing.svg"
-    svg_path.write_text(svg_text, encoding="utf-8")
-    png_path = svg_path.with_suffix(".png")
-    render_svg_to_png(svg_path, png_path, int(W * OVERSAMPLE), int(H * OVERSAMPLE))
-
-    final_w, final_h = trim_transparent_border(png_path, margin_px=10)
-    log.append(
-        f"wrote {svg_path.relative_to(ROOT)} + .png "
-        f"({final_w}x{final_h}, transparent, <=10px border, logo embedded inline)"
-    )
+    log = [g.save(NAME, build(logo_inner, logo_view_w, logo_view_h))]
+    if NAME in captions.load():
+        captions.render(NAME, **model_data.caption_facts(M))
     return log
 
 

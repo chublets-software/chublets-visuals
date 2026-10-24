@@ -365,5 +365,6 @@ def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
         "n_schema_org": sum(1 for p in props if p.schema_org),
         "n_datacite": sum(1 for p in props if p.datacite),
         "n_wikiproject": len(wikiproject_software_list()),
+        "n_oa_half": entity_facts()["n_oa_entries"] // 2,
         **entity_facts(),
     }

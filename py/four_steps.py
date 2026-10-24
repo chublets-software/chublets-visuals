@@ -18,15 +18,20 @@ HEAD = 66         # header height
 GAP = 26          # gap between boxes in a panel
 
 
-def _box(x, y, w, title, lines, col, fill=0.9, size=15.5, tsize=18, bold_lines=False):
+def _box(x, y, w, title, lines, col, fill=0.9, size=15.5, tsize=18, bold_lines=False, min_h=0):
     """A box whose height follows its wrapped text; returns (svg, height)."""
     wrapped = []
     for ln in lines:
         wrapped += g.wrap(ln, size, w - 24, bold=bold_lines)
-    h = 14 + tsize + 8 + len(wrapped) * (size + 6) + 10 if wrapped else 14 + tsize + 14
+    tl = g.wrap(title, tsize, w - 24, bold=True) if title else []
+    h = 14 + len(tl) * (tsize + 4) + 4 + len(wrapped) * (size + 6) + 10
+    h = max(h, min_h)
     out = g.rect(x, y, w, h, fill=tint(col, fill), stroke=col, sw=2.5, rx=10)
-    out += g.text(x + w / 2, y + 14 + tsize * 0.85, title, tsize, bold=True, fill=INK, anchor="middle")
-    yy = y + 14 + tsize + 8 + size
+    yy = y + 14 + tsize * 0.85
+    for ln in tl:
+        out += g.text(x + w / 2, yy, ln, tsize, bold=True, fill=INK, anchor="middle")
+        yy += tsize + 4
+    yy += 4 - (tsize * 0.85 - size) if wrapped else 0
     for ln in wrapped:
         out += g.text(x + w / 2, yy, ln, size, fill=INK, anchor="middle", bold=bold_lines)
         yy += size + 6

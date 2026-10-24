@@ -20,7 +20,7 @@ img/<block>/*.svg         source, versioned, grouped by block
 img/<block>/*.png         final graphics for slides, papers, READMEs — transparent background
 ```
 
-The model graphics (S10) and the redrawn Block 1, Block 2 and Block 3 graphics (S11) sit directly in `img/`; the older ones are still in subfolders until S11 is finished:
+The model graphics (S10) and the redrawn Block 1, Block 2 and Block 3 graphics (S11) sit directly in `img/`; only `img/source/` (the vendored logo) is still a subfolder:
 
 ```
 img/
@@ -32,14 +32,12 @@ img/
 ├── chublets-step-ingest / -model / -curate-link / -export-publish .svg/.png
 ├── chublets-fair.svg/.png                        (collage of F, A, I, R)
 ├── chublets-fair-findable / -accessible / -interoperable / -reusable .svg/.png
-├── system-architecture/
-│   ├── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
-│   ├── open-archaeo-wikidata-pipeline.svg/.png   (S6, `main.py all`'s 8 real steps)
-│   ├── open-archaeo-two-routes.svg/.png          (S6b, the real repo's two-team split)
-│   ├── open-archaeo-python-route.svg/.png        (S6b, the py/wikidata/main.py session)
-│   └── open-archaeo-openrefine-route.svg/.png    (S6b, the OpenRefine session)
-├── talk/
-│   └── chublets-talk-closing.svg/.png            (S7, 8 badges ringed around the logo)
+├── chublets-software-architecture.svg/.png      (sources to marketplaces)
+├── open-archaeo-wikidata-pipeline.svg/.png      (the steps of `all`, read from the vendored main.py)
+├── open-archaeo-two-routes.svg/.png             (the split into an OpenRefine and a Python slice)
+├── open-archaeo-python-route.svg/.png
+├── open-archaeo-openrefine-route.svg/.png
+├── chublets-talk-closing.svg/.png               (8 badges ringed around the logo)
 └── source/
     └── chublets-logo.svg                         (vendored vector asset -- input to S7)
 ```

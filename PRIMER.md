@@ -175,7 +175,7 @@ nicht auf ihn beschränkt.
     genau eine Datei des Bestands, `img/talk/chublets-talk-closing.svg`, in
     der letzten Dezimalstelle einer `sin`/`cos`-Koordinate
     (`410.5887450304572` gegen `410.58874503045723`). Die Datei ist
-    unangetastet geblieben. Neue Steps runden Koordinaten (`:.2f`), damit sie
+    unangetastet geblieben. **Nachtrag 2026-10-25 (S11):** `chublets-talk-closing` rundet jetzt auf zwei Dezimalstellen und liegt flach unter `img/`. Neue Steps runden Koordinaten (`:.2f`), damit sie
     auf jeder Plattform byte-gleich sind; der Bestand wird in S12 angeglichen.
     **Nachtrag 2026-10-24:** Auch die gemessene Textbreite (Pillow/FreeType)
     kann zwischen Rechnern um Bruchteile eines Pixels abweichen (z. B. Chipbreite
@@ -362,7 +362,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
 | S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | gebaut 2026-10-24: alle 13 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base`); Feinschliff nach Durchsicht im Paper |
-| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | in Arbeit: Gruppe A (Block 1), B (vier Schritte, `chublets-four-steps`) und C (FAIR, `chublets-fair`, je + vier Einzelbilder) fertig; offen: D (Architektur, open-archaeo, Talk) |
+| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | fertig (Gruppen A bis D): alle Bestandsgrafiken flach unter `img/`, ohne Header, Zahlen aus dem Modell; Nachprüfung durch Flo auf Windows steht aus |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
 Alle Schritte aus dem ursprünglichen Plan (bis S7b) sind erledigt; S8 bis S12 sind die Neubasis auf Starter Pack, Demo, `wikibase-static` und `wikibase-federation`.
