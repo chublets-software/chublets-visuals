@@ -283,7 +283,25 @@ def entity_facts() -> dict[str, int]:
     n_none = sum(1 for e in items if not inst.get(e["id"]))
     origin = Counter(e["origin"] for e in items)
     by_kind = Counter(kind.get(st["subject"], "") for st in stm)
+    quals = {x["sid"] for x in read_csv(DEMO / "data" / "csv" / "qualifiers.csv")}
+    refs = {x["sid"] for x in read_csv(DEMO / "data" / "csv" / "references.csv")}
+    meta: dict[str, set[str]] = {}
+    for st in stm:
+        if kind.get(st["subject"]) == "property":
+            meta.setdefault(st["property"], set()).add(st["subject"])
+    example = [e for e in items if e["id"] == "Q360"]
+    n_versions = sum(1 for st in stm if st["subject"] == "Q360" and st["property"] == "P148") if example else 0
+    origin_st = Counter(st["origin"] for st in stm)
     return {
+        **{f"n_meta_{k.lower()}": len(v) for k, v in meta.items()},
+        "n_with_ref": sum(1 for st in stm if st["sid"] in refs),
+        "n_with_qual": sum(1 for st in stm if st["sid"] in quals),
+        "n_origin_oa": origin_st["open-archaeo"],
+        "n_origin_wd": origin_st["wikidata"],
+        "item_id": "Q360",
+        "item_label": example[0]["label_en"] if example else "",
+        "n_item_statements": sum(1 for st in stm if st["subject"] == "Q360"),
+        "n_item_versions": n_versions,
         "n_items": len(items),
         "n_chublet_items": n_chub,
         "n_other_items": len(items) - n_chub - n_none,

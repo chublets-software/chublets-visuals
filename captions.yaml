@@ -80,3 +80,47 @@ entity-overview:
     Three boxes for classes, items and properties, connected by arrows for instance of and statements,
     with the items split by class and by origin.
   sources: [chublets-wikibase-demo, wikibase-static]
+
+property-metadata-layer:
+  caption: >-
+    The metadata layer of a property. A property of the chublets Wikibase is itself an entity and carries
+    statements; the example is the property "programmed in" (P123). Bars show for how many of the
+    {n_props} properties each statement exists: Wikidata equivalent (P4) {n_meta_p4}, close match
+    (P100) {n_meta_p100}, equivalent CodeMeta term (P101) {n_meta_p101}, equivalent schema.org term (P102)
+    {n_meta_p102}, domain (P9) {n_meta_p9}, range (P10) {n_meta_p10} and formatter URL (P5) {n_meta_p5}.
+  alt: >-
+    Amber box for the example property above seven rows, each naming a statement on the property, an example
+    value and a bar for how many properties have it.
+  sources: [chublets-wikibase-demo, wikibase-static]
+
+chublet-item:
+  caption: >-
+    A chublet as an item of the Wikibase: {item_label} ({item_id}) with {n_item_statements} statements,
+    of which a selection is shown. Class values are drawn in orange, item values in grey, literals as plain
+    text; qualifiers appear below the statement they qualify, and every statement carries references. The
+    item has {n_item_versions} statements for software versions, of which the preferred one is shown.
+  alt: >-
+    Item card with the title, the statements instance of, Wikidata equivalent, developer, programmed in,
+    repository URL, version, DOI and website, with chips for classes and items and reference counts.
+  sources: [chublets-wikibase-demo]
+
+statement-provenance:
+  caption: >-
+    Provenance of statements. Left: one statement (a version of SPARQLing Unicorn QGIS Plugin) with its
+    qualifiers and two groups of references. Right: of the {n_statements} statements in the Wikibase,
+    {n_with_ref} carry at least one reference and {n_with_qual} at least one qualifier; {n_origin_oa}
+    statements were imported from the open-archaeo list and {n_origin_wd} were taken over from Wikidata.
+  alt: >-
+    Boxes for a statement, its qualifiers and two references on the left, and three bar groups for origin,
+    references and qualifiers on the right.
+  sources: [chublets-wikibase-demo, wikibase-static]
+
+codemeta-coverage:
+  caption: >-
+    Coverage of the {n_codemeta_terms} CodeMeta terms, grouped by the CodeMeta type they belong to.
+    {n_crosswalked} terms are crosswalked to a Wikidata property (purple); {n_codemeta_only} terms exist in
+    CodeMeta only (teal). All of them are properties of the chublets Wikibase.
+  alt: >-
+    Rows per CodeMeta type, each with one coloured chip per term, purple for crosswalked terms and teal for
+    terms without a Wikidata property.
+  sources: [chublets-wikibase-demo]

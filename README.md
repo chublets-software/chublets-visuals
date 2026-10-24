@@ -188,9 +188,12 @@ come from in the CodeMeta-Wikidata crosswalk and which of them have an equivalen
 in Wikidata, CodeMeta, schema.org and DataCite. `property-topics` groups the
 properties into 14 topics, `property-vocabulary-overlap` shows how the Wikidata and
 CodeMeta vocabularies overlap, and `entity-overview` counts classes, items and
-properties. Build one with `python main.py --only class-tree` (or
+properties. `property-metadata-layer` shows what a property itself states,
+`chublet-item` draws one real chublet as an item, `statement-provenance` explains
+qualifiers and references, and `codemeta-coverage` lists all CodeMeta terms by type
+and coverage. Build one with `python main.py --only class-tree` (or
 `property-origin`, `property-topics`, `property-vocabulary-overlap`,
-`entity-overview`).
+`entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`).
 
 ## Design
 

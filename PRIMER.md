@@ -353,7 +353,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
-| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: 5 von 13 gebaut 2026-10-24 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`), 8 offen |
+| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: 9 von 13 gebaut 2026-10-24 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`), 4 offen: `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base` |
 | S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
@@ -969,14 +969,33 @@ flache Grafiken).
   „instance of (P2)" und „statements". Die 6873 Aussagen zählen Demo und Kernel;
   die 6852 in früheren Notizen waren ohne Kernel.
 
+- `property-metadata-layer`: eine Property ist selbst eine Entität; Beispiel
+  „programmed in“ (P123), sieben Zeilen (P4, P100, P101, P102, P9, P10, P5) mit
+  Beispielwert und Balken „bei wie vielen der 168 Properties vorhanden“
+  (114 / 22 / 83 / 71 / 135 / 71 / 4).
+- `chublet-item`: das echte Item Q360 (SPARQLing Unicorn QGIS Plugin, 39
+  Aussagen) wie eine Item-Seite: Klassen orange, Items grau, Literale als Text,
+  Qualifier darunter, Referenzzahl je Aussage; gezeigt wird eine Auswahl.
+- `statement-provenance`: links die Anatomie einer Aussage (Version 0.17.4 von
+  Q360 mit zwei Qualifiern und zwei Referenzgruppen), rechts die Nutzung: 6873
+  Aussagen nach Herkunft, 6440 mit Referenz, 1352 mit Qualifier, häufigste
+  Qualifier. Ohne Herkunft sind 320 Aussagen (Kernel und einzelne Items).
+- `codemeta-coverage`: alle 83 CodeMeta-Terme als Chips nach CodeMeta-Typ,
+  violett = gemappt (37), türkis = nur CodeMeta (46). `relatedLink` hat zwei
+  Zeilen und zählt einmal; die Gruppe „(v2 term)“ ist mit ihrer Hauptgruppe
+  zusammengelegt. Der Schritt prüft die Summe gegen `mapping-summary`.
+- `caption_facts()` liefert jetzt auch Item- und Aussagezahlen
+  (`entity_facts` in `model_data.py`), damit Captions und Übersichtsseite
+  dieselben Zahlen haben.
+
 **Wording.** Tabellen und Grafiken enthalten „Starter Pack" nirgends;
 `tables_data._check_wording` und `model_graphics.save` brechen sonst ab. In der
 Quellentabelle heißt es „modelling repository".
 
 **Prüfung.** Zwei Läufe ändern nichts; Zahlen stimmen mit `table-property-evidence`
 überein (114 / 22 / 83 / 71 / 34); Captions rendern mit den Fakten aus
-`caption_facts()`. Noch zu bauen: Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz,
-Bootstrap, static vs. federation, Evidenzbasis.
+`caption_facts()`. Noch zu bauen: Identity (chublet-identity), Bootstrap,
+static vs. federation, Evidenzbasis.
 
 # Teil D — Offene Punkte
 
