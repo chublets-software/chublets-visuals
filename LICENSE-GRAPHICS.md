@@ -6,7 +6,7 @@
 | Code (`py/`, `main.py`) | MIT, see `LICENSE` |
 | Fira Sans (`fonts/`) | SIL Open Font License 1.1, see `fonts/LICENSE-FiraSans.txt` |
 
-Decided on 2026-10-24. Please attribute as given in `CITATION.cff`.
+Decided on 2026-10-24: every graphic, table and caption is CC BY 4.0 by **Florian Thiery**. The name and licence are in the SVG metadata, in the header of each `.tex` file and on the overview pages. Please attribute as given in `CITATION.cff`.
 
 The graphics and tables are built from model tables of the chublets Wikibase
 (`chublets-wikibase-demo`, `wikibase-static`, `wikibase-federation`) and the

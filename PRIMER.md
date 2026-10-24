@@ -312,7 +312,7 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Bestandsgrafiken | alle 20 Schritte bleiben und werden gegen den neuen Stand geprüft und aktualisiert (ohne Header, flach); Step-IDs ändern sich nicht | 2026-10-24 |
 | Pack-Grafiken | alle neun Mermaid-Diagramme und die Balkenabbildung werden in Python neu gezeichnet (keine Mermaid-CLI), Titel entfallen | 2026-10-24 |
 | Themenfelder der Properties | eigene Themen (`data/topics.yaml`), 14 Themen, von Flo freigegeben („Die Themen passen zunächst") | 2026-10-24 |
-| Lizenz | Grafiken, Tabellen, Captions und Übersichtsseite **CC BY 4.0**, Code **MIT** (`LICENSE-GRAPHICS.md`); Standard in `captions.DEFAULT_LICENCE` | 2026-10-24 |
+| Lizenz | Grafiken, Tabellen, Captions und Übersichtsseite **immer CC BY 4.0 von Florian Thiery**, Code **MIT** (`LICENSE-GRAPHICS.md`); Konstanten `CREATOR`, `LICENCE` in `visuals_utils.py`; stehen in SVG-Metadaten, `.tex`-Kopf und Übersichtsseiten | 2026-10-24 |
 | Tabellen für das Paper | LaTeX-`longtable` unter `tex/` (nur `longtable` und `array`), Appendix; dieselben Tabellen (`py/tables_data.py`) als HTML in `docs/` | 2026-10-24 |
 | Übersichtsseiten | `docs/index.html` (Grafiken) und `docs/tables.html` (Tabellen), GitHub Pages aus `main` / `/docs` (läuft, bestätigt 2026-10-24), ohne Netz | 2026-10-24 |
 | Grafiken stehen allein | Jede Grafik ist im Paper ohne Wissen aus dem Code lesbar: Legende erklärt Farben, Formen, Chips und IDs; Modell-Bezeichner (P4, P100, P102, Q-IDs, `crmdig:D14`) bleiben, Code-Begriffe (kernel, pack, importer stub, Starter Pack) kommen nicht vor | 2026-10-24 |
@@ -353,7 +353,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
-| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: 9 von 13 gebaut 2026-10-24 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`), 4 offen: `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base` |
+| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | gebaut 2026-10-24: alle 13 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base`); Feinschliff nach Durchsicht im Paper |
 | S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
@@ -984,6 +984,29 @@ flache Grafiken).
   violett = gemappt (37), türkis = nur CodeMeta (46). `relatedLink` hat zwei
   Zeilen und zählt einmal; die Gruppe „(v2 term)“ ist mit ihrer Hauptgruppe
   zusammengelegt. Der Schritt prüft die Summe gegen `mapping-summary`.
+- `chublet-identity`: das Item pastclim (Q424) mit seinem Identitätsblock
+  (instance of chublet, maintained by WikiProject, part of Plattform und
+  Sammlung), drei von allen Chublets geteilte Items (je 417 Nutzer), darunter
+  die 7 Merges aus `merges.csv` (Eintrag der Quellenliste und Wikidata-Item =
+  dasselbe).
+- `wikibase-bootstrap`: die Phasen core (3 Klassen, 10 Properties), model (7
+  Klassen, 158 Properties) und items (803 + 6; die 17 Stubs werden nicht
+  geschrieben), die Regeln des Push und der Ablauf bei nicht leerem Ziel
+  (Inventory, Adopt-Liste mit 93 Paaren, Lauf). Quelle: README und Dateien des
+  Use Case `chublets` in `wikibase-federation`.
+- `static-vs-federation`: ein CSV-Modell, zwei Wege. Aussagen über die beiden
+  Repositories stehen nur dort, wo ihre Dokumentation sie trägt
+  (`wikibase-static`: schreibgeschützte statische HTML-Seiten, nie
+  Schreibzugriff; `wikibase-federation`: Push mit `wbeditentity`).
+- `model-evidence-base`: sechs Quellen (Crosswalk, CodeMeta-Terms-Seite,
+  WikiProject-Liste, Wikidata-Prüfung mit 246 Checks und 14 Abweichungen,
+  Entscheidungstabellen, open-archaeo mit 416 Einträgen) und was sie speisen.
+  Die Zahl 15 „Terme ohne Workbook-Zeile“ stammt aus `mapping-summary` (frühere
+  Notizen nannten 16).
+- **Lizenz-Regel (2026-10-24, „immer“):** jede Grafik, Tabelle und Caption ist
+  CC BY 4.0 von Florian Thiery. `visuals_utils.CREATOR` und `LICENCE` sind die
+  einzige Quelle; sie stehen in den SVG-Metadaten (`<metadata>`), im Kopf jeder
+  `.tex`-Datei, auf den Übersichtsseiten und in `LICENSE-GRAPHICS.md`.
 - `caption_facts()` liefert jetzt auch Item- und Aussagezahlen
   (`entity_facts` in `model_data.py`), damit Captions und Übersichtsseite
   dieselben Zahlen haben.
@@ -994,8 +1017,8 @@ Quellentabelle heißt es „modelling repository".
 
 **Prüfung.** Zwei Läufe ändern nichts; Zahlen stimmen mit `table-property-evidence`
 überein (114 / 22 / 83 / 71 / 34); Captions rendern mit den Fakten aus
-`caption_facts()`. Noch zu bauen: Identity (chublet-identity), Bootstrap,
-static vs. federation, Evidenzbasis.
+`caption_facts()`. Alle 13 Grafiken sind gebaut; offen ist die Durchsicht im Paper und
+S11 (Bestandsgrafiken).
 
 # Teil D — Offene Punkte
 

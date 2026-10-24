@@ -292,7 +292,17 @@ def entity_facts() -> dict[str, int]:
     example = [e for e in items if e["id"] == "Q360"]
     n_versions = sum(1 for st in stm if st["subject"] == "Q360" and st["property"] == "P148") if example else 0
     origin_st = Counter(st["origin"] for st in stm)
+    bg = DEMO / "background"
+    ver = Counter(r["verdict"] for r in read_csv(bg / "verification-report.csv"))
+    fed = FEDERATION / "usecases" / "chublets"
     return {
+        "n_merges": len(read_csv(DEMO / "data" / "csv" / "merges.csv")),
+        "n_adopt": len(read_csv(fed / "adopt-chublets-wikibase.de.csv")),
+        "n_idmap": len(read_csv(fed / "idmap-chublets-wikibase.de.csv")),
+        "n_checks": sum(ver.values()),
+        "n_checks_diff": ver["DIFF"],
+        "n_domain_range": len(read_csv(bg / "decisions" / "domain-range.csv")),
+        "n_oa_entries": sum(1 for r in read_csv(DEMO / "data" / "csv" / "idmap.csv") if r["key"].startswith("entry:")),
         **{f"n_meta_{k.lower()}": len(v) for k, v in meta.items()},
         "n_with_ref": sum(1 for st in stm if st["sid"] in refs),
         "n_with_qual": sum(1 for st in stm if st["sid"] in quals),

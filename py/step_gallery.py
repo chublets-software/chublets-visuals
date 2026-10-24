@@ -141,7 +141,7 @@ def _graphics(fact: dict[str, object]) -> tuple[str, int, int]:
                 f'<a class="thumb" href="img/{_e(rel)}"><img loading="lazy" src="img/{_e(thumb)}" alt="{_e(alt)}"></a>'
                 f'<figcaption><strong>{_e(stem)}</strong>'
                 + (f'<details class="cap"><summary>Caption</summary><p>{_e(cap)}</p></details>' if entry else f'<span class="cap missing">{_e(cap)}</span>')
-                + f'<span class="meta">{_e(lic)}{" · " + _e(srcs) if srcs else ""} · {links}</span></figcaption></figure>'
+                + f'<span class="meta">{_e(captions.CREATOR)}, {_e(lic)}{" · " + _e(srcs) if srcs else ""} · {links}</span></figcaption></figure>'
             )
         parts.append("</div>")
     return "\n".join(parts), len(svgs), with_caption
@@ -233,7 +233,7 @@ def _page(*, title: str, active: str, intro: str, body: str, search: str) -> str
 <main>
 {body}
 </main>
-<footer>Graphics and tables: {DEFAULT_LICENCE}. Code: MIT. Built by <code>python main.py</code> from the snapshot recorded in <code>data/raw/SNAPSHOT.md</code>.</footer>
+<footer>Graphics and tables: {captions.CREATOR}, {DEFAULT_LICENCE}. Code: MIT. Built by <code>python main.py</code> from the snapshot recorded in <code>data/raw/SNAPSHOT.md</code>.</footer>
 <script>{JS}</script>
 </body>
 </html>

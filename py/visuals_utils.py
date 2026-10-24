@@ -65,6 +65,13 @@ CHUBLETS_GOLD = "#B8862E"
 # are chosen for clear separation at small swatch size, not because they
 # carry their own semantics -- unlike a status colour, a category colour
 # here just has to stay distinct from its neighbours in the same diagram.
+# Every graphic, table and caption of the model graphics is CC BY 4.0, by Florian Thiery
+# (decided 2026-10-24; the code is MIT). One place, so no output can forget it.
+CREATOR = "Florian Thiery"
+LICENCE = "CC BY 4.0"
+LICENCE_URL = "https://creativecommons.org/licenses/by/4.0/"
+ATTRIBUTION = f"{CREATOR}, {LICENCE}"
+
 CATEGORY_COLORS = [
     "#3B1F4A",  # purple   -- house primary
     "#B8862E",  # gold     -- house secondary

@@ -124,3 +124,50 @@ codemeta-coverage:
     Rows per CodeMeta type, each with one coloured chip per term, purple for crosswalked terms and teal for
     terms without a Wikidata property.
   sources: [chublets-wikibase-demo]
+
+chublet-identity:
+  caption: >-
+    How a chublet gets its identity, shown for pastclim ({n_oa_entries} chublets come from entries of the
+    open-archaeo list). The item is an instance of chublet and ties itself to three items that all chublets
+    share: the WikiProject, the platform and the collection. The key of the source entry stays in the
+    id map. Where an entry of the source list and a Wikidata item describe the same thing, the two records
+    are merged into one item ({n_merges} merges).
+  alt: >-
+    An item card for pastclim linked to three shared items (WikiProject, platform, collection), and below
+    it a list of seven merges from one item id to another.
+  sources: [chublets-wikibase-demo]
+
+wikibase-bootstrap:
+  caption: >-
+    Writing the model into a real Wikibase in three phases: core ({n_kernel_classes} built-in classes and
+    {n_kernel} built-in properties), model ({n_pack_classes} classes defined for chublets and
+    {n_pack} + {n_review} properties) and items (from open-archaeo and Wikidata; stubs of Wikidata items are
+    not written). All properties are local, Wikidata items are federated values, and a dry run is the
+    default. If the target is not empty, an inventory leads to an adopt list ({n_adopt} pairs) that maps
+    model ids onto existing entities before the run.
+  alt: >-
+    Three phase boxes connected by arrows, a list of rules of the push, and a three-step flow from
+    inventory over adopt list to run.
+  sources: [wikibase-federation, chublets-wikibase-demo]
+
+static-vs-federation:
+  caption: >-
+    One model, two routes. The model is kept as CSV tables ({n_classes} classes, {n_props} properties,
+    {n_items} items, {n_statements} statements). wikibase-static renders it as read-only HTML pages that
+    need no server and no account; wikibase-federation writes it into a real Wikibase and records the new
+    ids.
+  alt: >-
+    A box for the CSV model with two arrows to boxes for the static route and the federation route, each
+    listing what it does, what it needs, how it treats Wikidata items and what it produces.
+  sources: [wikibase-static, wikibase-federation, chublets-wikibase-demo]
+
+model-evidence-base:
+  caption: >-
+    Sources of the modelling and the parts of the Wikibase they feed: the CodeMeta-Wikidata crosswalk and
+    the CodeMeta terms page, the Wikidata WikiProject list of software properties, a check of labels and
+    datatypes against live Wikidata ({n_checks} checks, {n_checks_diff} differences), decision tables for
+    domain, range and schema.org terms ({n_domain_range} properties), and the open-archaeo list
+    ({n_oa_entries} software entries). The chip on each source says how it was used.
+  alt: >-
+    Six source boxes on the left with arrows to boxes for properties, classes and items on the right.
+  sources: [chublets-wikibase-demo]

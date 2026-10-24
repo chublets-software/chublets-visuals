@@ -191,9 +191,11 @@ CodeMeta vocabularies overlap, and `entity-overview` counts classes, items and
 properties. `property-metadata-layer` shows what a property itself states,
 `chublet-item` draws one real chublet as an item, `statement-provenance` explains
 qualifiers and references, and `codemeta-coverage` lists all CodeMeta terms by type
-and coverage. Build one with `python main.py --only class-tree` (or
+and coverage. `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation` and
+`model-evidence-base` explain identity, the push into a Wikibase, the two routes and
+the sources. Every graphic is CC BY 4.0 by Florian Thiery (in the SVG metadata). Build one with `python main.py --only class-tree` (or
 `property-origin`, `property-topics`, `property-vocabulary-overlap`,
-`entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`).
+`entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base`).
 
 ## Design
 

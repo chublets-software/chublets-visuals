@@ -39,7 +39,10 @@ REQUIRE_ALL = False
 
 # Graphics, tables and captions are CC BY 4.0, the code is MIT (decided 2026-10-24,
 # see LICENSE-GRAPHICS.md). An entry may name another licence; without one this applies.
-DEFAULT_LICENCE = "CC BY 4.0"
+import visuals_utils  # noqa: E402
+
+DEFAULT_LICENCE = visuals_utils.LICENCE
+CREATOR = visuals_utils.CREATOR
 
 REQUIRED_KEYS = ("caption", "alt")
 KNOWN_KEYS = {"caption", "alt", "sources", "licence", "title"}

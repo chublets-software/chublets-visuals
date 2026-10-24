@@ -26,11 +26,14 @@ from PIL import ImageFont
 
 from visuals_utils import (
     CATEGORY_COLORS,
+    CREATOR,
     FONT_BOLD,
     FONT_FAMILY,
     FONT_REGULAR,
     IMG_DIR,
     INK,
+    LICENCE,
+    LICENCE_URL,
     MUTED,
     ROOT,
     ensure_dirs,
@@ -185,8 +188,12 @@ class Canvas:
             f'<svg xmlns="http://www.w3.org/2000/svg" width="{f(w)}" height="{f(h)}" '
             f'viewBox="0 0 {f(w)} {f(h)}">'
         )
+        meta = (
+            f'<metadata xmlns:dc="http://purl.org/dc/elements/1.1/"><dc:creator>{CREATOR}</dc:creator>'
+            f'<dc:rights>{LICENCE} ({LICENCE_URL})</dc:rights></metadata>'
+        )
         body = f'<g transform="translate({f(ox)},{f(oy)})">' + "\n".join(self.parts) + "</g>"
-        return head + font_face_css(FONT_REL) + body + "</svg>", w, h
+        return head + meta + font_face_css(FONT_REL) + body + "</svg>", w, h
 
 
 # A graphic has to be readable in the paper without the code (PRIMER.md A4): the starting set the
