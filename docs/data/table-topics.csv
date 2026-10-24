@@ -1,0 +1,16 @@
+Topic,Properties,Kernel,Pack,Review,schema.org,DataCite
+Kernel,6,6,--,--,--,--
+Property description,7,4,3,--,--,--
+Identity and naming,10,--,10,--,4,4
+Registry and catalogue IDs,16,--,16,--,--,--
+Source code and development,11,--,11,--,3,--
+"Platform, requirements and dependencies",20,--,20,--,11,--
+"Files, formats and standards",11,--,7,4,3,2
+"Versions, releases and dates",18,--,17,1,8,4
+"Links, media and web presence",13,--,12,1,7,4
+Agent roles,13,--,13,--,11,9
+Person and organisation,12,--,12,--,6,--
+"Rights, funding and access",9,--,8,1,5,6
+"Classification, features and relations",16,--,14,2,9,3
+"Publication, citation and review",6,--,6,--,4,2
+total,168,10,149,9,71,34

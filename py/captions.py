@@ -11,7 +11,7 @@ file stem (`class-tree` for `img/class-tree.svg`).
         Class tree of the chublets Wikibase: {n_classes} classes ...
       alt: Tree of seven classes below the root class Instance ...
       sources: [chublets-wikibase-demo, wikibase-static]
-      licence: ~            # undecided, see PRIMER.md D (Starter Pack open point 7)
+      licence: ~            # optional; empty means DEFAULT_LICENCE (CC BY 4.0)
 
 `caption` and `alt` are English (British); `{placeholders}` are filled from the
 facts a step passes to `render()`, so a number in a caption is the number the
@@ -36,6 +36,10 @@ CAPTIONS_FILE = ROOT / "captions.yaml"
 # Becomes True when the last graphic has its entry (end of the S11 migration):
 # from then on a graphic without a caption is an error in --strict.
 REQUIRE_ALL = False
+
+# Graphics, tables and captions are CC BY 4.0, the code is MIT (decided 2026-10-24,
+# see LICENSE-GRAPHICS.md). An entry may name another licence; without one this applies.
+DEFAULT_LICENCE = "CC BY 4.0"
 
 REQUIRED_KEYS = ("caption", "alt")
 KNOWN_KEYS = {"caption", "alt", "sources", "licence", "title"}

@@ -1,0 +1,85 @@
+CodeMeta term,CodeMeta type,Status,Wikidata,Wikibase property,DataCite,Bridge
+codeRepository,SoftwareSourceCode,crosswalked,P1324,P125 source code repository URL,--,Wikidata only
+codeSampleType,SoftwareSourceCode,CodeMeta only,--,P163 code sample type,--,neither
+programmingLanguage,SoftwareSourceCode,crosswalked,P277,P123 programmed in,--,Wikidata only
+runtimePlatform,SoftwareSourceCode,crosswalked,P400,P143 platform,--,Wikidata only
+targetProduct,SoftwareSourceCode,CodeMeta only,--,P150 target product,--,neither
+applicationCategory,SoftwareApplication,CodeMeta only,--,P103 application category,--,neither
+applicationSubCategory,SoftwareApplication,CodeMeta only,--,P128 application sub category,--,neither
+applicationSuite,SoftwareApplication,CodeMeta only,--,P129 application suite,--,neither
+availableOnDevice,SoftwareApplication,CodeMeta only,--,P158 available on device,--,neither
+countriesNotSupported,SoftwareApplication,CodeMeta only,--,P169 countries not supported,--,neither
+countriesSupported,SoftwareApplication,CodeMeta only,--,P170 countries supported,--,neither
+downloadUrl,SoftwareApplication,crosswalked,P4945,P133 download URL,relatedIdentifier,both
+featureList,SoftwareApplication,CodeMeta only,--,P192 feature list,--,neither
+fileSize,SoftwareApplication,crosswalked,P3575,P172 data size,size,both
+installUrl,SoftwareApplication,CodeMeta only,--,P207 install URL,--,neither
+memoryRequirements,SoftwareApplication,CodeMeta only,--,P214 memory requirements,--,neither
+operatingSystem,SoftwareApplication,crosswalked,P306,P142 operating system,--,Wikidata only
+permissions,SoftwareApplication,CodeMeta only,--,P221 permissions,--,neither
+processorRequirements,SoftwareApplication,CodeMeta only,--,P227 processor requirements,--,neither
+screenshot,SoftwareApplication,crosswalked,P18,P204 image,--,Wikidata only
+softwareAddOn,SoftwareApplication,CodeMeta only,--,P237 software add on,--,neither
+softwareHelp,SoftwareApplication,crosswalked,P2078,P151 user manual URL,--,Wikidata only
+softwareRequirements,SoftwareApplication,crosswalked,P1547,P109 depends on software,--,Wikidata only
+softwareVersion,SoftwareApplication,crosswalked,P348,P148 software version identifier,version,both
+storageRequirements,SoftwareApplication,CodeMeta only,--,P245 storage requirements,--,neither
+supportingData,SoftwareApplication,CodeMeta only,--,P149 supporting data,--,neither
+author,CreativeWork,crosswalked,P178,P113 developer,creator,both
+citation,CreativeWork,crosswalked,P2860,P162 cites work,relatedItem,both
+contributor,CreativeWork,crosswalked,P767,P131 contributor to the creative work or subject,contributor,both
+copyrightHolder,CreativeWork,CodeMeta only,--,P167 copyright holder,contributor,DataCite only
+copyrightYear,CreativeWork,CodeMeta only,--,P168 copyright year,date,DataCite only
+dateCreated,CreativeWork,crosswalked,P571,P137 inception,date,both
+dateModified,CreativeWork,crosswalked,P5017,P139 last update,date,both
+datePublished,CreativeWork,crosswalked,P577,P144 publication date,date,both
+editor,CreativeWork,CodeMeta only,--,P183 editor,contributor,DataCite only
+encoding,CreativeWork,CodeMeta only,--,P187 encoding,--,neither
+encodingFormat,CreativeWork,crosswalked,P2701,P194 file format,format,both
+funder,CreativeWork,crosswalked,P8324,P134 funder,"fundingReference, funderName",both
+hasPart,CreativeWork,crosswalked,P527,P136 has part(s),relatedItem,both
+isAccessibleForFree,CreativeWork,CodeMeta only,--,P209 is accessible for free,--,neither
+isPartOf,CreativeWork,crosswalked,P361,P122 part of,relatedItem,both
+keywords,CreativeWork,crosswalked,P921,P117 main subject,subject,both
+license,CreativeWork,crosswalked,P275,P107 copyright license,rights,both
+producer,CreativeWork,crosswalked,P162,P228 producer,contributor,both
+provider,CreativeWork,CodeMeta only,--,P229 provider,contributor,DataCite only
+publisher,CreativeWork,crosswalked,P123,P230 publisher,publisher,both
+review,CreativeWork,CodeMeta only,--,P233 review,--,neither
+sponsor,CreativeWork,crosswalked,P859,P242 sponsor,contributor,both
+description,Thing,CodeMeta only,--,P112 description,description,DataCite only
+identifier,Thing,crosswalked,P356,P114 DOI,identifier,both
+name,Thing,crosswalked,P2561,P119 name,title,both
+sameAs,Thing,crosswalked,P2888,P115 exact match,"relatedItem, relatedItemIdentifier",both
+url,Thing,crosswalked,P856,P120 official website,"relatedItem, relatedItemIdentifier",both
+relatedLink,Thing (outside hierarchy),crosswalked,P973,P110 described at URL,relatedIdentifier,both
+relatedLink,Thing (outside hierarchy),crosswalked,P11201,P141 official demo URL,relatedIdentifier,both
+buildInstructions,CodeMeta additional,CodeMeta only,--,P161 build instructions,--,neither
+continuousIntegration,CodeMeta additional,CodeMeta only,--,P166 continuous integration,--,neither
+developmentStatus,CodeMeta additional,CodeMeta only,--,P132 development status,--,neither
+embargoDate,CodeMeta additional,CodeMeta only,--,P185 embargo date,date,DataCite only
+embargoEndDate,CodeMeta additional,CodeMeta only,--,P186 embargo end date,date,DataCite only
+funding,CodeMeta additional,CodeMeta only,--,P199 funding,fundingReference,DataCite only
+hasSourceCode,CodeMeta additional,CodeMeta only,--,P203 has source code,--,neither
+isSourceCodeOf,CodeMeta additional,CodeMeta only,--,P210 is source code of,--,neither
+issueTracker,CodeMeta additional,crosswalked,P1401,P138 issue tracker URL,--,Wikidata only
+maintainer,CodeMeta additional,crosswalked,P126,P140 maintained by,contributor,both
+readme,CodeMeta additional,CodeMeta only,--,P231 readme,--,neither
+referencePublication,CodeMeta additional,crosswalked,P1343,P111 described by source,relatedItem,DataCite only
+softwareSuggestions,CodeMeta additional,CodeMeta only,--,P240 software suggestions,--,neither
+fileFormat,SoftwareSourceCode/SoftwareApplication (v2 term),crosswalked,P2701,P194 file format,format,not in crosswalk
+version,SoftwareSourceCode/SoftwareApplication,CodeMeta only,--,P152 version,--,not in crosswalk
+position,SoftwareSourceCode/SoftwareApplication,CodeMeta only,--,P225 position,--,not in crosswalk
+releaseNotes,SoftwareSourceCode/SoftwareApplication,CodeMeta only,--,P232 release notes,--,neither
+contIntegration,CodeMeta (v2 only),CodeMeta only,--,P165 cont integration,--,not in crosswalk
+address,Person,CodeMeta only,--,P155 address,--,not in crosswalk
+affiliation,Person,CodeMeta only,--,P156 affiliation,--,not in crosswalk
+email,Person,crosswalked,P968,P184 email address,--,not in crosswalk
+familyName,Person,crosswalked,P734,P191 family name,--,not in crosswalk
+givenName,Person,crosswalked,P735,P200 given name,--,not in crosswalk
+identifier (Person),Person,CodeMeta only,--,P222 person identifier,--,not in crosswalk
+reviewAspect,Review (v3),CodeMeta only,--,P234 review aspect,--,not in crosswalk
+reviewBody,Review (v3),CodeMeta only,--,P235 review body,--,not in crosswalk
+roleName,Role (v3),CodeMeta only,--,P236 role name,--,not in crosswalk
+startDate,Role (v3),CodeMeta only,--,P243 start date,--,not in crosswalk
+endDate,Role (v3),CodeMeta only,--,P188 end date,--,not in crosswalk

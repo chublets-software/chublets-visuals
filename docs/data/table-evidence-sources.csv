@@ -1,0 +1,14 @@
+Code,Source,Origin,Retrieved
+S1,"CodeMeta <-> Wikidata crosswalk workbook (template Leyla Jael Castro; review Stephan Ferenz; filled by Florian Thiery; reviewers Maryam, Lu, Aida)",chublets-software/chublets-visuals data/raw/ (HEAD 0a9c5a7),2026-10-21
+S2,"47-row transcription of the WikiProject Informatics/Software/Properties PDF, five categories",chublets-software/chublets-visuals data/raw/,2026-10-21
+S3,"n4o-rse/open-archaeo: target model, 416-entry software subset, controlled vocabulary; model.py read for constants",n4o-rse/open-archaeo (HEAD 51d23b1),2026-10-21
+S4,Wikidata:WikiProject chublets-software,https://www.wikidata.org/wiki/Wikidata:WikiProject_chublets-software,2026-10-21
+S5,CodeMeta crosswalk for Wikidata properties (30 rows),https://codemeta.github.io/crosswalk/wikidata/,2026-10-21
+S6,Various Wikidata pages and tutorials seen as search snippets,see docs/05-open-points.md,2026-10-21
+S7,"Earlier chats with Flo (Wikidata Properties fuer Software, 2026-08-25; chublets-visuals talk chat, 2026-09-10)",claude.ai chat history,2026-10-21
+S8,"CodeMeta terms page (all terms with ranges, v2 and v3)",https://codemeta.github.io/terms/,2026-10-21
+S9,"Official ConnOSS crosswalk 'Crosswalks of Research Software Metadata Schemas to CodeMeta', v1.2.0 (2026-08-14), CC BY 4.0; 21 schemas incl. Wikidata and DataCite 4.6; 68 properties",https://doi.org/10.5281/zenodo.21935688,2026-10-21
+S10,"Wikidata:WikiProject Informatics/Software/Properties (page id 31817518; created 10 June 2017, last edited 8 May 2024 22:11 by LiberatorG, 27 edits, fewer than 30 watchers)",https://www.wikidata.org/wiki/Wikidata:WikiProject_Informatics/Software/Properties,2026-10-22
+S11,"Label and datatype of the 137 Wikidata properties, classes and items of the pack against live Wikidata (246 checks, 14 differences)",tools/verify_wikidata.py of the Starter Pack,2026-10-21
+S12,"Decision tables for domain/range and schema.org terms, filled in by Florian Thiery; schema.org terms checked by Claude against schema.ttl of github.com/schemaorg/schemaorg",decisions of 2026-10-22,2026-10-22
+R,Assistant recall,-,2026-10-21

@@ -305,7 +305,10 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | DataCite | nur Kästchen als Zusatzevidenz (abgeleitet über CodeMeta), keine eigene Hub-Grafik | 2026-10-24 |
 | Bestandsgrafiken | alle 20 Schritte bleiben und werden gegen den neuen Stand geprüft und aktualisiert (ohne Header, flach); Step-IDs ändern sich nicht | 2026-10-24 |
 | Pack-Grafiken | alle neun Mermaid-Diagramme und die Balkenabbildung werden in Python neu gezeichnet (keine Mermaid-CLI), Titel entfallen | 2026-10-24 |
-| Themenfelder der Properties | eigene Themen (`data/topics.yaml`), Entwurf mit 14 Themen, **Freigabe offen** | 2026-10-24 |
+| Themenfelder der Properties | eigene Themen (`data/topics.yaml`), 14 Themen, von Flo freigegeben („Die Themen passen zunächst") | 2026-10-24 |
+| Lizenz | Grafiken, Tabellen, Captions und Übersichtsseite **CC BY 4.0**, Code **MIT** (`LICENSE-GRAPHICS.md`); Standard in `captions.DEFAULT_LICENCE` | 2026-10-24 |
+| Tabellen für das Paper | LaTeX-`longtable` unter `tex/` (nur `longtable` und `array`), Appendix; dieselben Tabellen (`py/tables_data.py`) als HTML in `docs/` | 2026-10-24 |
+| Übersichtsseite | `docs/index.html`, GitHub Pages aus `main` / `/docs`, ohne Netz, Grafiken und Tabellen zusammen | 2026-10-24 |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -339,7 +342,9 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S7 | Talk-Closing-Folie: 8 Badges als Ring um das chublets-Logo | chublets-visuals | S3, S4b | erledigt 2026-09-10 |
 | S7b | S7-Logo als eingebettetes SVG statt PNG-Komposit, Nuggets-Kollision behoben | chublets-visuals | S7 | erledigt 2026-09-10 |
 | S8 | Datenschicht: Quellen vendort (Demo, static, federation, Starter Pack), `model_data.py`, `captions.yaml`, Prüfschritte `model-data` und `captions` | chublets-visuals | S1 | erledigt 2026-10-24 |
-| S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | Entwurf fertig 2026-10-24, **wartet auf Freigabe** |
+| S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
+| S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
+| S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
 | S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | offen |
 | S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
@@ -862,7 +867,8 @@ properties exactly once" melden. Zweimal laufen lassen ändert nichts.
 **Ziel.** Jede der 168 Properties in genau einem Themenfeld, für die
 Katalog-Grafik `property-topics` und die Spalten der Herkunfts-Grafiken.
 
-**Stand.** `data/topics.yaml` ist ein **Entwurf** mit 14 Themen (Kernel;
+**Stand.** `data/topics.yaml` ist von Flo freigegeben (2026-10-24, „Die Themen
+passen zunächst" — spätere Änderungen sind möglich) und hat 14 Themen (Kernel;
 Property-Beschreibung; Identität und Namen; Registry-IDs; Quellcode und
 Entwicklung; Plattform, Anforderungen und Abhängigkeiten; Dateien, Formate
 und Standards; Versionen, Releases und Daten; Links, Medien und Web;
@@ -872,7 +878,43 @@ Klassifikation, Features und Relationen; Publikation, Zitation und Review).
 WikiProject-Gruppe, CodeMeta-Typ). Änderungen am Zuschnitt sind eine
 Änderung an dieser einen Datei; die Grafiken folgen automatisch.
 
-**Offen.** Freigabe durch Flo (siehe Teil D).
+## S9b — LaTeX-Tabellen für den Appendix
+
+**Ziel.** Die Statistiken und Werte des Datenmodells (welche Properties aus
+Wikidata, CodeMeta, gecrosswalkt, neu) als fertige Tabellen für das
+Overleaf-Paper.
+
+**Gebaut (2026-10-24).** `py/tables_data.py` baut elf neutrale `Table`-Objekte
+aus `model_data` und `topics` (Kennzahlen; Properties nach Herkunft und Status;
+Evidenz je Status; Themen nach Herkunft und nach Status; Katalog der 168
+Properties nach Thema; 84 CodeMeta-Terme; WikiProject-Gruppen; DataCite-Evidenz;
+Klassen; Quellen). Alle Zahlen kommen aus den Daten, `build()` prüft die Summen
+(168, 153, 84, 68 ...). `py/latex_utils.py` schreibt sie als `longtable`
+(nur ASCII, ohne Zeitstempel) nach `tex/`, `tex/appendix-tables.tex` bindet alle
+ein. Das Escaping lehnt unbekannte Zeichen ab, statt sie durchzureichen.
+
+**Prüfung.** `python main.py --only tables` zweimal: `git status` unverändert.
+Kompilieren mit `longtable` + `array` ergibt keine Fehler und keine
+Overfull-Boxen (11 Tabellen, 15 Seiten in `article`, 11 pt, A4). Die Spaltenbreiten
+sind auf `\linewidth` bezogen und rechnen das Padding ein; bei anderer
+Schriftgröße im Paper ggf. `\renewcommand{\chubletstablesize}{\scriptsize}`.
+
+## S9c — HTML-Übersicht
+
+**Ziel.** Eine schnelle Übersicht aller Grafiken und Tabellen, die auf GitHub
+Pages läuft.
+
+**Gebaut (2026-10-24).** `py/step_gallery.py` schreibt `docs/index.html`
+(eine Datei, Hell/Dunkel, ohne CDN und ohne Webfont), kopiert `img/` nach
+`docs/img/` und die Downloads nach `docs/data/` (CSV und `.tex` je Tabelle).
+Grafiken erscheinen mit Caption, Alt-Text, Quellen und Lizenz aus
+`captions.yaml` (fehlt der Eintrag, steht „No caption yet"); die Tabellen sind
+sortier- und filterbar, die Suche oben filtert Grafiken und Tabellen zugleich.
+Platzhalter in Captions (`{n_props}`, `{n_classes}`, `{n_kernel}`, `{n_pack}`,
+`{n_review}`, `{n_topics}`, `{n_codemeta_terms}`) füllt `step_gallery.facts()`.
+
+**Prüfung.** Im Headless-Browser: keine JS-Fehler, Sortieren (Summenzeile bleibt
+unten), Filter, keine horizontale Seitenscroll bei 390 px Breite.
 
 # Teil D — Offene Punkte
 
@@ -900,12 +942,16 @@ WikiProject-Gruppe, CodeMeta-Typ). Änderungen am Zuschnitt sind eine
   GitHub und S1+S2 sind committet (bestätigt 2026-09-10) — Rest dieses Punkts
   erledigt.
 
-- **Themenfelder warten auf Freigabe** (S9) — Entwurf liegt vor, S10 baut erst
-  darauf auf, wenn er bestätigt oder geändert ist.
-- **Lizenz der Grafiken offen** — Starter-Pack-Open-Point 7 (Wikidata CC0,
-  Crosswalk CC BY, chublets-visuals MIT). `captions.yaml` lässt `licence`
-  leer, die Grafik „Reusable" (FAIR) darf keine Lizenz-Statements
+- **Lizenz entschieden** (2026-10-24): Grafiken CC BY 4.0, Code MIT. Offen
+  daran: `CITATION.cff` nennt nur MIT; ob dort beide stehen sollen
+  (`license` als Liste), entscheidet Flo. Die Tabellen gelten ebenfalls als
+  CC BY 4.0 (abgeleitet aus Wikidata CC0 und dem ConnOSS-Crosswalk CC BY 4.0).
+  Die Grafik „Reusable" (FAIR) darf weiterhin keine Lizenz-Statements
   behaupten, die es im Modell nicht gibt.
+- **Annahmen in den Tabellen** — Klassen Q372, Q378, Q379 heißen
+  „importer stub", weil ihr `origin` im Modell `wikidata-stub` lautet; mehr
+  behauptet die Tabelle nicht. Der DataCite-Wert einer Property ist über CodeMeta
+  abgeleitet, nicht veröffentlicht (Spaltenüberschrift und Caption sagen das).
 - **Klassenhierarchie unverifiziert** — der Klassenbaum des Packs (06) trennt
   „belegt" (durchgezogen) und „erwartet" (gestrichelt). Die Verifikation der
   Demo (S11 dort) prüfte nur Label und Datentyp, nicht die Hierarchie; die

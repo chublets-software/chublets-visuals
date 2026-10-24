@@ -16,7 +16,9 @@ Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7,
 S7b) is built; S8 onwards (the graphics of the Wikibase data model) is under
 way, see PRIMER.md. New work gets a fresh id; existing ids never change, since
 PATCH-README.md and PRIMER.md refer to them by id. `model-data` runs first and
-`captions` last because they check, they do not draw.
+`captions` checks the finished graphics; `tables` writes tex/ (paper appendix) and
+`gallery` last writes docs/ (the GitHub Pages overview), because it shows everything
+the steps before it produced.
 """
 
 from __future__ import annotations
@@ -53,7 +55,9 @@ STEPS = [
     ("oa-python-route", "S6b (2/3): the Python route session", "step_open_archaeo_python_route"),
     ("oa-openrefine-route", "S6b (3/3): the OpenRefine route", "step_open_archaeo_openrefine_route"),
     ("talk-closing", "Talk closing slide: 8 badges as a ring around the logo", "step_talk_closing"),
+    ("tables", "S9b: LaTeX tables for the paper appendix (tex/)", "step_latex_tables"),
     ("captions", "S8: captions.yaml against the graphics on disk", "step_captions_check"),
+    ("gallery", "S9c: HTML overview of graphics and tables for GitHub Pages (docs/)", "step_gallery"),
 ]
 
 

@@ -9,9 +9,9 @@
 #              step passes to captions.render(), so numbers cannot drift
 #     alt:     alternative text, one or two sentences
 #     sources: [optional list of source repositories / tables]
-#     licence: optional; left empty until the licence question is decided
-#              (Starter Pack open point 7: Wikidata CC0, crosswalk CC BY,
-#              chublets-visuals MIT)
+#     licence: optional; without it the default of py/captions.py applies
+#              (CC BY 4.0 for graphics and tables, MIT for the code; see
+#              LICENSE-GRAPHICS.md)
 #
 # Entries are added with the graphic they belong to (S10, S11).
 {}

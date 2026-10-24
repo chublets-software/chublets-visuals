@@ -81,6 +81,32 @@ def datacite_elements(text: str) -> tuple[str, ...]:
     return (text.split()[0],)
 
 
+_TAG_FULL = re.compile(r"<\s*([A-Za-z][A-Za-z0-9]*)([^>]*)>")
+_ATTR = re.compile(r'([A-Za-z][A-Za-z0-9]*)="([^"]*)"')
+
+
+def datacite_detail(text: str) -> tuple[str, ...]:
+    """DataCite element plus the qualifiers that tell its many-to-one uses apart.
+
+    `<relatedItem relatedItemType="JournalArticle" relationType="IsDocumentedBy">`
+    becomes `relatedItem [relatedItemType=JournalArticle, relationType=IsDocumentedBy]`.
+    Attribute values that are only a placeholder ("....." in the crosswalk) are
+    dropped. A bare element ("creator") stays as it is."""
+    text = text.strip()
+    if not text:
+        return ()
+    found = _TAG_FULL.findall(text)
+    if not found:
+        return (text.split()[0],)
+    out: list[str] = []
+    for name, attrs in found:
+        pairs = [f"{k}={v}" for k, v in _ATTR.findall(attrs) if v.strip(".") != ""]
+        item = f"{name} [{', '.join(pairs)}]" if pairs else name
+        if item not in out:
+            out.append(item)
+    return tuple(out)
+
+
 @dataclass(frozen=True)
 class Prop:
     id: str
@@ -95,6 +121,7 @@ class Prop:
     schema_org: tuple[str, ...]        # P102
     datacite: tuple[str, ...]          # element names, derived via CodeMeta (not published)
     datacite_raw: str
+    datacite_detail: tuple[str, ...]   # element + qualifiers, see datacite_detail()
     wikiproject_group: str     # group of the twin on the WikiProject page ("" if none)
     domain: str                # P9
     range: str                 # P10
@@ -203,6 +230,7 @@ def load() -> Model:
             schema_org=vals(pid, "P102"),
             datacite=datacite_elements(dc_raw),
             datacite_raw=dc_raw,
+            datacite_detail=datacite_detail(dc_raw),
             wikiproject_group=wp_group.get(twin, ""),
             domain=(vals(pid, "P9") or ("",))[0],
             range=(vals(pid, "P10") or ("",))[0],

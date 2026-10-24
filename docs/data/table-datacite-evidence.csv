@@ -1,0 +1,35 @@
+ID,Label,CodeMeta term,DataCite element [qualifiers]
+P107,copyright license,license,rights
+P110,described at URL,relatedLink,"relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]"
+P111,described by source,referencePublication,"relatedItem [relatedItemType=JournalArticle, relationType=IsDocumentedBy]"
+P112,description,description,description
+P113,developer,author,creator
+P114,DOI,identifier,identifier
+P115,exact match,sameAs,relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]
+P117,main subject,keywords,subject
+P119,name,name,title
+P120,official website,url,relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]
+P122,part of,isPartOf,relatedItem [relationType=IsPartOf]
+P131,contributor to the creative work or subject,contributor,contributor [contributorType=Contributor]
+P133,download URL,downloadUrl,"relatedIdentifier [relatedIdentifierType=URL, relationType=IsIdenticalTo]"
+P134,funder,funder,fundingReference; funderName
+P136,has part(s),hasPart,relatedItem [relationType=HasPart]
+P137,inception,dateCreated,date [dateType=Created]
+P139,last update,dateModified,date [dateType=Updated]
+P140,maintained by,maintainer,contributor [contributorType=ContactPerson]
+P141,official demo URL,relatedLink,"relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]"
+P144,publication date,datePublished,date [dateType=Issued]
+P148,software version identifier,softwareVersion,version
+P162,cites work,citation,"relatedItem [relatedItemType=JournalArticle, relationType=Cites]"
+P167,copyright holder,copyrightHolder,contributor [contributorType=RightsHolder]
+P168,copyright year,copyrightYear,date [dateType=Copyrighted]
+P172,data size,fileSize,size
+P183,editor,editor,contributor [contributorType=Editor]
+P185,embargo date,embargoDate,date [dateType=Accepted]
+P186,embargo end date,embargoEndDate,date [dateType=Available]
+P194,file format,"encodingFormat, fileFormat",format
+P199,funding,funding,fundingReference
+P228,producer,producer,contributor [contributorType=Producer]
+P229,provider,provider,contributor [contributorType=HostingInstitution]
+P230,publisher,publisher,publisher
+P242,sponsor,sponsor,contributor [contributorType=Sponsor]

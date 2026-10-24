@@ -163,6 +163,21 @@ and have their caption, alt text, sources and licence in `captions.yaml`
 (`py/captions.py`). The properties are grouped into topics in `data/topics.yaml`
 (`python py/topics.py` prints the review table).
 
+### Tables and overview page
+
+`python main.py --only tables` writes the statistics and catalogues of the model
+(properties by origin and topic, CodeMeta terms, DataCite evidence, classes,
+sources) as LaTeX `longtable`s to `tex/`; `tex/appendix-tables.tex` inputs them all.
+In Overleaf add `\usepackage{longtable}` and `\usepackage{array}`, copy `tex/` into
+the project and `\input{tex/appendix-tables}` in the appendix. The same tables are
+built once in `py/tables_data.py` and rendered twice, so the paper and the web page
+cannot differ.
+
+`python main.py --only gallery` writes `docs/index.html`: all graphics with their
+captions and the same tables as sortable, filterable HTML tables with CSV and
+LaTeX downloads. It needs no network. To publish it, set GitHub Pages to deploy
+from the branch `main`, folder `/docs`.
+
 ## Design
 
 Colour and type live in one place, `py/visuals_utils.py` — every step
@@ -184,6 +199,7 @@ anything larger.
 
 ## License
 
-Code: MIT, see `LICENSE`. Please cite via `CITATION.cff`.
+Code: MIT, see `LICENSE`. Graphics, tables and captions: CC BY 4.0, see
+`LICENSE-GRAPHICS.md`. Please cite via `CITATION.cff`.
 Font: Fira Sans is licensed separately under the SIL Open Font License 1.1,
 see `fonts/LICENSE-FiraSans.txt`.
