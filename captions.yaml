@@ -335,3 +335,51 @@ chublets-talk-closing:
     principles as a ring of eight badges around the chublets raven with its nuggets, for the closing slide of a talk.
   alt: A purple raven standing among gold nuggets, surrounded by eight round badges with icons for the four steps and the four FAIR principles.
   sources: [chublets-wikibase-demo]
+
+chublets-four-step-pattern:
+  caption: >-
+    The four steps of the chublets pipeline as a chain: Ingest (Wikidata items, FDOx objects and Git repositories),
+    Model ({n_props} properties from Wikidata and CodeMeta), Curate and link ({n_items} items and {n_statements}
+    statements) and Export and publish (CodeMeta, DCAT and DataCite for the software marketplaces).
+  alt: Four round badges with icons on a line that changes colour from step to step, each with its title and one line of text.
+  sources: [chublets-wikibase-demo]
+
+chublets-fair4rs-chain:
+  caption: >-
+    The four FAIR principles as a chain and how the chublets Wikibase meets them: Findable (persistent Q-IDs,
+    indexed by nfdi.software and find.software), Accessible (open Wikibase API and SPARQL endpoint), Interoperable
+    (CodeMeta as the pivot between the vocabularies) and Reusable (licence and provenance statements carried over from CFF).
+  alt: Four round badges with the letters F, A, I and R on a line that changes colour, each with its title and one line of text.
+  sources: [chublets-wikibase-demo]
+
+step-1-ingest-badge:
+  caption: The badge of step 1, Ingest, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+step-2-model-badge:
+  caption: The badge of step 2, Model, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+step-3-curate-link-badge:
+  caption: The badge of step 3, Curate and link, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+step-4-export-publish-badge:
+  caption: The badge of step 4, Export and publish, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+fair-findable-badge:
+  caption: The badge of the principle F, Findable, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+fair-accessible-badge:
+  caption: The badge of the principle A, Accessible, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+fair-interoperable-badge:
+  caption: The badge of the principle I, Interoperable, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.
+
+fair-reusable-badge:
+  caption: The badge of the principle R, Reusable, for slide corners and navigation.
+  alt: A round badge with an icon and a number or letter tag.

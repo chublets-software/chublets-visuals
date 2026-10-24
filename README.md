@@ -28,8 +28,12 @@ img/
 ├── chublets-codemeta-wikidata-crosswalk.svg/.png
 ├── chublets-wikidata-properties-overview.svg/.png
 ├── chublets-wikibase-datamodel.svg/.png
+├── chublets-four-step-pattern.svg/.png           (chain of the four steps, with the four badges)
+├── step-1-ingest-badge / step-2-model-badge / step-3-curate-link-badge / step-4-export-publish-badge .svg/.png
 ├── chublets-four-steps.svg/.png                  (collage of the four steps)
 ├── chublets-step-ingest / -model / -curate-link / -export-publish .svg/.png
+├── chublets-fair4rs-chain.svg/.png               (chain of F, A, I, R, with the four badges)
+├── fair-findable-badge / fair-accessible-badge / fair-interoperable-badge / fair-reusable-badge .svg/.png
 ├── chublets-fair.svg/.png                        (collage of F, A, I, R)
 ├── chublets-fair-findable / -accessible / -interoperable / -reusable .svg/.png
 ├── chublets-software-architecture.svg/.png      (sources to marketplaces)
