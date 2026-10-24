@@ -2,13 +2,13 @@ ID,Label,Origin,Parent class,Wikidata,CRM class
 Q1,Class,kernel,Q3 Instance,--,--
 Q2,Property,kernel,Q3 Instance,--,--
 Q3,Instance,kernel,--,--,--
-Q100,software,Starter Pack,Q3 Instance,Q7397,crmdig:D14
-Q101,research software,Starter Pack,Q100 software,Q95001953,crmdig:D14 (from Q100)
-Q102,application software,Starter Pack,Q100 software,Q166142,crmdig:D14 (from Q100)
-Q103,software library,Starter Pack,Q100 software,Q188860,crmdig:D14 (from Q100)
-Q104,script file,Starter Pack,Q100 software,Q1070421,crmdig:D14 (from Q100)
-Q105,Little Minion,Starter Pack,Q3 Instance,Q73899440,crmdig:D14
-Q106,chublet,Starter Pack,"Q105 Little Minion, Q101 research software",Q141115627,crmdig:D14 (from Q105)
-Q372,utility software,importer stub,Q100 software,Q312466,crmdig:D14 (from Q100)
-Q378,QGIS plugin,importer stub,Q100 software,Q123054280,crmdig:D14 (from Q100)
-Q379,plug-in,importer stub,Q100 software,Q184148,crmdig:D14 (from Q100)
+Q100,software,chublets,Q3 Instance,Q7397,crmdig:D14
+Q101,research software,chublets,Q100 software,Q95001953,crmdig:D14 (from Q100)
+Q102,application software,chublets,Q100 software,Q166142,crmdig:D14 (from Q100)
+Q103,software library,chublets,Q100 software,Q188860,crmdig:D14 (from Q100)
+Q104,script file,chublets,Q100 software,Q1070421,crmdig:D14 (from Q100)
+Q105,Little Minion,chublets,Q3 Instance,Q73899440,crmdig:D14
+Q106,chublet,chublets,"Q105 Little Minion, Q101 research software",Q141115627,crmdig:D14 (from Q105)
+Q372,utility software,Wikidata stub,Q100 software,Q312466,crmdig:D14 (from Q100)
+Q378,QGIS plugin,Wikidata stub,Q100 software,Q123054280,crmdig:D14 (from Q100)
+Q379,plug-in,Wikidata stub,Q100 software,Q184148,crmdig:D14 (from Q100)

@@ -193,19 +193,22 @@ def tint(hex_color: str, white_ratio: float) -> str:
     return f"#{mix(r):02X}{mix(g):02X}{mix(b):02X}"
 
 
-def font_face_css() -> str:
+def font_face_css(rel_prefix: str | None = None) -> str:
     """@font-face block pointing at the two vendored weights.
 
     Vendored, not referenced: the repo carries its own copy of Fira Sans
     under fonts/, so a fresh clone renders identically without the font
-    being installed on the machine that runs it.
+    being installed on the machine that runs it. `rel_prefix` is the relative
+    path from the SVG back to fonts/ (default: two levels up, the old block
+    folders; the flat graphics directly under img/ pass "../fonts").
     """
+    prefix = _FONT_REL_PREFIX if rel_prefix is None else rel_prefix
     return (
         "<style>"
         f'@font-face {{ font-family: "{FONT_FAMILY}"; '
-        f'src: url("{_FONT_REL_PREFIX}/FiraSans-Regular.ttf"); font-weight: 400; }} '
+        f'src: url("{prefix}/FiraSans-Regular.ttf"); font-weight: 400; }} '
         f'@font-face {{ font-family: "{FONT_FAMILY}"; '
-        f'src: url("{_FONT_REL_PREFIX}/FiraSans-Bold.ttf"); font-weight: 700; }}'
+        f'src: url("{prefix}/FiraSans-Bold.ttf"); font-weight: 700; }}'
         "</style>"
     )
 

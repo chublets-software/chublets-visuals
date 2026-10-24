@@ -14,4 +14,31 @@
 #              LICENSE-GRAPHICS.md)
 #
 # Entries are added with the graphic they belong to (S10, S11).
-{}
+
+class-tree:
+  caption: >-
+    Class tree of the chublets Wikibase: {n_classes} classes below the root class Instance (Q3).
+    Class (Q1) and Property (Q2) are among the {n_kernel_classes} built-in classes of the data model,
+    {n_pack_classes} classes were defined for chublets, and {n_stub_classes} classes were taken over from
+    Wikidata as stubs. Each class shows its Wikidata equivalent (P4). The CIDOC CRM class
+    crmdig:D14 (software) is stated for software (Q100) and Little Minion (Q105) and inherited by the
+    classes below them. Chublet (Q106) has two parents, Little Minion and research software. The
+    hierarchy is the one recorded in the model (P1); it has not been checked against Wikidata.
+  alt: >-
+    Left-to-right tree of the 13 classes with Instance as root, software with seven subclasses,
+    Little Minion with the chublet class, and the built-in classes Class and Property.
+  sources: [chublets-wikibase-demo, wikibase-static]
+
+property-origin:
+  caption: >-
+    Origin of the {n_props} properties of the chublets Wikibase by origin in the CodeMeta-Wikidata crosswalk:
+    {n_crosswalked} crosswalked (a CodeMeta term with a Wikidata twin), {n_codemeta_only} CodeMeta only,
+    {n_wikidata_only} Wikidata only, {n_chublets_addition} chublets additions that are in neither
+    vocabulary, and {n_no_status} kernel and review properties that are not part of the crosswalk. The bars below show
+    how many properties of each group carry a Wikidata twin (P4), a loose Wikidata close match (P100),
+    a CodeMeta term, a schema.org term (P102) and a DataCite element. DataCite (dashed) is derived via
+    the CodeMeta hub and is not a published mapping.
+  alt: >-
+    Stacked bar of 168 properties in five coloured groups with five rows of evidence bars beneath
+    showing how many properties of each group have a Wikidata, CodeMeta, schema.org or DataCite counterpart.
+  sources: [chublets-wikibase-demo]

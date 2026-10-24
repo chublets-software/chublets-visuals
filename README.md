@@ -173,10 +173,20 @@ the project and `\input{tex/appendix-tables}` in the appendix. The same tables a
 built once in `py/tables_data.py` and rendered twice, so the paper and the web page
 cannot differ.
 
-`python main.py --only gallery` writes `docs/index.html`: all graphics with their
-captions and the same tables as sortable, filterable HTML tables with CSV and
-LaTeX downloads. It needs no network. To publish it, set GitHub Pages to deploy
-from the branch `main`, folder `/docs`.
+`python main.py --only gallery` writes two pages: `docs/index.html` shows all
+graphics with their captions, `docs/tables.html` the same tables as sortable,
+filterable HTML tables with CSV and LaTeX downloads. They need no network. To
+publish them, set GitHub Pages to deploy from the branch `main`, folder `/docs`.
+
+### Model graphics
+
+Flat under `img/`, without title, header or footer; each one is readable on its
+own, with a legend for colours, shapes and identifiers.
+`class-tree` shows the 13 classes with their subclass relations, Wikidata
+equivalents and CIDOC CRM class; `property-origin` shows where the 168 properties
+come from in the CodeMeta-Wikidata crosswalk and which of them have an equivalent
+in Wikidata, CodeMeta, schema.org and DataCite. Build one with
+`python main.py --only class-tree` (or `property-origin`).
 
 ## Design
 

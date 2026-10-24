@@ -308,7 +308,9 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Themenfelder der Properties | eigene Themen (`data/topics.yaml`), 14 Themen, von Flo freigegeben („Die Themen passen zunächst") | 2026-10-24 |
 | Lizenz | Grafiken, Tabellen, Captions und Übersichtsseite **CC BY 4.0**, Code **MIT** (`LICENSE-GRAPHICS.md`); Standard in `captions.DEFAULT_LICENCE` | 2026-10-24 |
 | Tabellen für das Paper | LaTeX-`longtable` unter `tex/` (nur `longtable` und `array`), Appendix; dieselben Tabellen (`py/tables_data.py`) als HTML in `docs/` | 2026-10-24 |
-| Übersichtsseite | `docs/index.html`, GitHub Pages aus `main` / `/docs`, ohne Netz, Grafiken und Tabellen zusammen | 2026-10-24 |
+| Übersichtsseiten | `docs/index.html` (Grafiken) und `docs/tables.html` (Tabellen), GitHub Pages aus `main` / `/docs` (läuft, bestätigt 2026-10-24), ohne Netz | 2026-10-24 |
+| Grafiken stehen allein | Jede Grafik ist im Paper ohne Wissen aus dem Code lesbar: Legende erklärt Farben, Formen, Chips und IDs; Modell-Bezeichner (P4, P100, P102, Q-IDs, `crmdig:D14`) bleiben, Code-Begriffe (kernel, pack, importer stub, Starter Pack) kommen nicht vor | 2026-10-24 |
+| Basis der Modellierung | Der CodeMeta-Wikidata-Crosswalk. „Starter Pack/Kit" war nur der Startpunkt und steht in keiner Grafik, Caption oder Tabelle. Herkunftsklassen: crosswalked, CodeMeta only, Wikidata only, chublets addition, unclassified; Mengen: kernel, initial, review. Interne Feldnamen (`pack`, `starter-pack`) und vendorte Pfade bleiben | 2026-10-24 |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -345,7 +347,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
-| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | offen |
+| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: `class-tree` und `property-origin` gebaut 2026-10-24, 11 offen |
 | S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
@@ -904,17 +906,55 @@ Schriftgröße im Paper ggf. `\renewcommand{\chubletstablesize}{\scriptsize}`.
 **Ziel.** Eine schnelle Übersicht aller Grafiken und Tabellen, die auf GitHub
 Pages läuft.
 
-**Gebaut (2026-10-24).** `py/step_gallery.py` schreibt `docs/index.html`
-(eine Datei, Hell/Dunkel, ohne CDN und ohne Webfont), kopiert `img/` nach
-`docs/img/` und die Downloads nach `docs/data/` (CSV und `.tex` je Tabelle).
-Grafiken erscheinen mit Caption, Alt-Text, Quellen und Lizenz aus
-`captions.yaml` (fehlt der Eintrag, steht „No caption yet"); die Tabellen sind
-sortier- und filterbar, die Suche oben filtert Grafiken und Tabellen zugleich.
-Platzhalter in Captions (`{n_props}`, `{n_classes}`, `{n_kernel}`, `{n_pack}`,
-`{n_review}`, `{n_topics}`, `{n_codemeta_terms}`) füllt `step_gallery.facts()`.
+**Gebaut (2026-10-24).** `py/step_gallery.py` schreibt zwei Seiten:
+`docs/index.html` (Grafiken) und `docs/tables.html` (die elf Tabellen; seit
+dem Folgepatch eigene Seite). Beide: eine Datei, Hell/Dunkel, ohne CDN und ohne
+Webfont. `img/` wird nach `docs/img/` kopiert (Vorschau ist das PNG, weil ein
+SVG in `<img>` keine Schrift nachladen kann), `fonts/` nach `docs/fonts/` (damit
+das geöffnete SVG Fira Sans findet) und die Downloads nach `docs/data/` (CSV und
+`.tex` je Tabelle). Grafiken erscheinen mit Caption (eingeklappt), Alt-Text,
+Quellen und Lizenz aus `captions.yaml`; fehlt der Eintrag, steht „No caption yet".
+Die Tabellen sind sortier- und filterbar. Platzhalter in Captions füllt
+`model_data.caption_facts()`: `n_props`, `n_classes`, `n_kernel`, `n_pack`,
+`n_review`, `n_topics`, `n_codemeta_terms`, `n_crosswalked`, `n_codemeta_only`,
+`n_wikidata_only`, `n_chublets_addition`, `n_no_status`, `n_kernel_classes`,
+`n_pack_classes`, `n_stub_classes`, `n_twin`, `n_close_match`, `n_with_codemeta`,
+`n_schema_org`, `n_datacite`.
 
 **Prüfung.** Im Headless-Browser: keine JS-Fehler, Sortieren (Summenzeile bleibt
 unten), Filter, keine horizontale Seitenscroll bei 390 px Breite.
+
+## S10 — Modell-Grafiken (in Arbeit)
+
+**Ziel.** Dreizehn Grafiken des Datenmodells, flach unter `img/`, ohne Titel,
+Header oder Footer, jede im Paper allein lesbar.
+
+**Werkzeug.** `py/model_graphics.py`: Text mit gemessener Breite (Pillow, die
+vendorte Fira Sans), Boxen, Chips, Umbruch, `Canvas` (zuschneiden auf Inhalt plus
+10 px) und `save()` (SVG und PNG). Koordinaten auf zwei Stellen gerundet, damit
+das SVG auf jeder Plattform dieselben Bytes hat. Zwei Paletten: Hausfarben für
+die Herkunft einer Property, Semantik-Schema nur für Modell-Elemente.
+`visuals_utils.font_face_css(rel_prefix)` bekam einen Parameter (`../fonts` für
+flache Grafiken).
+
+**Gebaut (2026-10-24).**
+- `class-tree` (`py/step_class_tree.py`): 13 Klassen, Unterklassen (P1),
+  Wikidata-Äquivalent (P4), CIDOC-CRM-Klasse (eigene oder geerbte);
+  built-in / für chublets definiert / aus Wikidata übernommen (Stub) durch
+  Füllung und Rand. Layout-Annahmen (eine Wurzel Q3, Q106 als einziges
+  Zwei-Eltern-Kind) werden geprüft; ändert sich das Modell, bricht der Schritt ab,
+  statt falsch zu zeichnen.
+- `property-origin` (`py/step_property_origin.py`): ein Balken über die 168
+  Properties nach Herkunft im Crosswalk, darunter je Gruppe, wie viele ein
+  Wikidata-Pendant (P4), einen Close Match (P100), einen CodeMeta-Term, einen
+  schema.org-Term (P102) und ein DataCite-Element (gestrichelt, über CodeMeta
+  abgeleitet) haben.
+
+**Prüfung.** Zwei Läufe ändern nichts; Zahlen stimmen mit `table-property-evidence`
+überein (114 / 22 / 83 / 71 / 34); Captions rendern mit den Fakten aus
+`caption_facts()`. Noch zu bauen: Entities-Übersicht, Herkunftsfluss, Themen,
+Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz,
+Bootstrap, static vs. federation, Evidenzbasis.
 
 # Teil D — Offene Punkte
 

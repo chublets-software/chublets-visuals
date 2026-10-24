@@ -267,3 +267,40 @@ def load() -> Model:
         wikiproject_groups=wp_group,
         crm=crm_rows,
     )
+
+
+def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
+    """Numbers a caption in captions.yaml may use as `{placeholder}`.
+
+    One place, so a number in a caption is the number in the graphic: the graphic
+    steps and the overview page both call this."""
+    if n_topics is None:
+        import topics as _topics  # local: topics imports this module
+
+        n_topics = len(_topics.load())
+    sets = model.by_set()
+    st = Counter(p.pack_status for p in model.props.values())
+    cls = Counter(c.origin or "kernel" for c in model.classes.values())
+    props = model.props.values()
+    return {
+        "n_props": len(model.props),
+        "n_classes": len(model.classes),
+        "n_kernel": sets["kernel"],
+        "n_pack": sets["pack"],
+        "n_review": sets["review"],
+        "n_topics": n_topics,
+        "n_codemeta_terms": model.mapping_summary["codemeta_terms_total"],
+        "n_crosswalked": st["crosswalked"],
+        "n_codemeta_only": st["codemeta-only"],
+        "n_wikidata_only": st["wikidata-only"],
+        "n_chublets_addition": st["chublets-addition"],
+        "n_no_status": st[""],
+        "n_kernel_classes": cls["kernel"],
+        "n_pack_classes": cls["starter-pack"],
+        "n_stub_classes": cls["wikidata-stub"],
+        "n_twin": sum(1 for p in props if p.twin),
+        "n_close_match": sum(1 for p in props if p.close_match),
+        "n_with_codemeta": sum(1 for p in props if p.codemeta_terms),
+        "n_schema_org": sum(1 for p in props if p.schema_org),
+        "n_datacite": sum(1 for p in props if p.datacite),
+    }

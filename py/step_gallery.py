@@ -1,20 +1,22 @@
 """S9c -- HTML overview for GitHub Pages (docs/).
 
-Writes one self-contained page, `docs/index.html`, that shows
+Writes two self-contained pages:
 
-  * every graphic under img/ (SVG, PNG download) with its entry from
-    captions.yaml (caption, alt text, sources, licence), grouped by folder, and
-  * every table of the data model (the same `tables_data` objects the LaTeX
-    appendix is built from) as a sortable, filterable HTML table, with CSV and
-    `.tex` downloads.
+  * `docs/index.html`  every graphic under img/ (SVG and PNG download) with its
+    entry from captions.yaml (caption, alt text, sources, licence), grouped by
+    folder;
+  * `docs/tables.html`  every table of the data model (the same `tables_data`
+    objects the LaTeX appendix is built from) as a sortable, filterable HTML
+    table, with CSV and `.tex` downloads.
 
-The page needs no network: no CDN, no web font, no tracking. Graphics are copied
+The pages need no network: no CDN, no web font, no tracking. Graphics are copied
 to docs/img/ and the downloads to docs/data/, because GitHub Pages serves only
 the folder it is pointed at (Settings -> Pages -> Deploy from a branch -> main,
 /docs). Everything is deterministic (no clock, sorted order, copied bytes), so a
 second run changes nothing.
 
-Produces: docs/index.html, docs/.nojekyll, docs/img/**, docs/data/*.csv, docs/data/*.tex
+Produces: docs/index.html, docs/tables.html, docs/.nojekyll, docs/img/**, docs/fonts/*.ttf,
+          docs/data/*.csv, docs/data/*.tex
 Runnable standalone: `python py/step_gallery.py`
 """
 
@@ -36,20 +38,6 @@ from visuals_utils import IMG_DIR, ROOT  # noqa: E402
 DOCS = ROOT / "docs"
 TEX_DIR = ROOT / "tex"
 DEFAULT_LICENCE = captions.DEFAULT_LICENCE
-
-
-def facts(M: model_data.Model, n_topics: int) -> dict[str, object]:
-    """Numbers a caption in captions.yaml may use as `{placeholder}`."""
-    sets = M.by_set()
-    return {
-        "n_props": len(M.props),
-        "n_classes": len(M.classes),
-        "n_kernel": sets["kernel"],
-        "n_pack": sets["pack"],
-        "n_review": sets["review"],
-        "n_topics": n_topics,
-        "n_codemeta_terms": M.mapping_summary["codemeta_terms_total"],
-    }
 
 
 # --------------------------------------------------------------------------
@@ -145,12 +133,15 @@ def _graphics(fact: dict[str, object]) -> tuple[str, int, int]:
             lic = entry.get("licence") or DEFAULT_LICENCE
             srcs = ", ".join(entry.get("sources") or [])
             png = (IMG_DIR / rel).with_suffix(".png").is_file()
+            # an SVG shown through <img> cannot load fonts, so the PNG (rendered with Fira Sans) is the thumbnail
+            thumb = Path(rel).with_suffix(".png").as_posix() if png else rel
             links = f'<a href="img/{_e(rel)}" download>SVG</a>' + (f' <a href="img/{_e(Path(rel).with_suffix(".png").as_posix())}" download>PNG</a>' if png else "")
             parts.append(
                 f'<figure class="card" data-name="{_e(stem)} {_e(cap)}">'
-                f'<a class="thumb" href="img/{_e(rel)}"><img loading="lazy" src="img/{_e(rel)}" alt="{_e(alt)}"></a>'
-                f'<figcaption><strong>{_e(stem)}</strong><span class="cap{" missing" if not entry else ""}">{_e(cap)}</span>'
-                f'<span class="meta">{_e(lic)}{" · " + _e(srcs) if srcs else ""} · {links}</span></figcaption></figure>'
+                f'<a class="thumb" href="img/{_e(rel)}"><img loading="lazy" src="img/{_e(thumb)}" alt="{_e(alt)}"></a>'
+                f'<figcaption><strong>{_e(stem)}</strong>'
+                + (f'<details class="cap"><summary>Caption</summary><p>{_e(cap)}</p></details>' if entry else f'<span class="cap missing">{_e(cap)}</span>')
+                + f'<span class="meta">{_e(lic)}{" · " + _e(srcs) if srcs else ""} · {links}</span></figcaption></figure>'
             )
         parts.append("</div>")
     return "\n".join(parts), len(svgs), with_caption
@@ -165,15 +156,16 @@ a{color:var(--acc)}header,main,footer{max-width:1200px;margin:0 auto;padding:0 1
 header{padding-top:28px}h1{margin:0 0 4px;font-size:1.7rem}header p{margin:0;color:var(--mut);max-width:70ch}
 nav{position:sticky;top:0;background:var(--bg);border-bottom:1px solid var(--line);margin-top:16px;z-index:5}
 nav .in{max-width:1200px;margin:0 auto;padding:8px 16px;display:flex;gap:16px;align-items:center;flex-wrap:wrap}
+nav a[aria-current=page]{font-weight:700;color:var(--fg);text-decoration:none;border-bottom:2px solid var(--acc)}
 nav input{flex:1;min-width:180px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
 nav button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:6px 10px;cursor:pointer}
 h2{margin:32px 0 4px;font-size:1.3rem}h3{margin:20px 0 6px;font-size:1.05rem}h3.grp{color:var(--mut);font-weight:600;text-transform:none}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
 .card{margin:0;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
 .card .thumb{display:flex;align-items:center;justify-content:center;background:#fff;min-height:160px;padding:8px;border-bottom:1px solid var(--line)}
 .card img{max-width:100%;height:auto;max-height:260px}
 figcaption{padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-size:.9rem}
-.cap.missing{color:var(--mut);font-style:italic}.meta,.src,.count{color:var(--mut);font-size:.82rem}
+.cap summary{cursor:pointer;color:var(--acc)}.cap p{margin:6px 0 0}.cap.missing{color:var(--mut);font-style:italic}.meta,.src,.count{color:var(--mut);font-size:.82rem}
 .caption{max-width:90ch;font-size:.92rem;margin:0 0 8px}
 .tools{display:flex;gap:12px;align-items:center;margin:6px 0;flex-wrap:wrap}.tools .filter{padding:5px 8px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg);min-width:200px}
 .scroll{overflow:auto;border:1px solid var(--line);border-radius:6px;max-height:70vh}
@@ -216,17 +208,56 @@ JS = """
 """
 
 
+def _page(*, title: str, active: str, intro: str, body: str, search: str) -> str:
+    def nav(href: str, label: str, key: str) -> str:
+        cur = ' aria-current="page"' if key == active else ""
+        return f'<a href="{href}"{cur}>{label}</a>'
+
+    return f"""<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>{_e(title)}</title>
+<meta name="description" content="Graphics and tables of the chublets Wikibase data model: classes, properties and their origin in Wikidata, CodeMeta, DataCite and chublets additions.">
+<style>{CSS}</style>
+</head>
+<body>
+<header>
+  <h1>chublets visuals</h1>
+  <p>{intro}</p>
+</header>
+<nav><div class="in">{nav("index.html", "Graphics", "graphics")}{nav("tables.html", "Tables", "tables")}
+<input id="q" type="search" placeholder="{_e(search)}" aria-label="{_e(search)}">
+<button id="theme" type="button" aria-label="Toggle light and dark">Light / dark</button></div></nav>
+<main>
+{body}
+</main>
+<footer>Graphics and tables: {DEFAULT_LICENCE}. Code: MIT. Built by <code>python main.py</code> from the snapshot recorded in <code>data/raw/SNAPSHOT.md</code>.</footer>
+<script>{JS}</script>
+</body>
+</html>
+"""
+
+
 def run(strict: bool = False) -> list[str]:
     M = model_data.load()
     import topics as topics_mod
 
-    n_topics = len(topics_mod.load())
-    fact = facts(M, n_topics)
+    fact = model_data.caption_facts(M, len(topics_mod.load()))
     tables = tables_data.build()
 
     DOCS.mkdir(exist_ok=True)
     (DOCS / ".nojekyll").write_text("", encoding="utf-8")
     graphics_html, n_gfx, n_cap = _graphics(fact)
+
+    # the SVGs refer to ../fonts/ (or ../../fonts/) next to them, so the fonts go to docs/fonts/
+    fonts_out = DOCS / "fonts"
+    if fonts_out.exists():
+        shutil.rmtree(fonts_out)
+    fonts_out.mkdir(parents=True)
+    for ttf in sorted((ROOT / "fonts").glob("*.ttf")):
+        shutil.copyfile(ttf, fonts_out / ttf.name)
 
     data_out = DOCS / "data"
     if data_out.exists():
@@ -238,41 +269,31 @@ def run(strict: bool = False) -> list[str]:
             raise RuntimeError(f"{src} is missing; run the 'tables' step first")
         shutil.copyfile(src, data_out / f"{t.name}.tex")
 
+    intro = (
+        f"Graphics and tables of the chublets Wikibase data model: {fact['n_classes']} classes and {fact['n_props']} properties, "
+        f"grouped into {fact['n_topics']} topics, with their origin in Wikidata, CodeMeta, DataCite (as supporting evidence) "
+        f"and chublets additions. Every number is read from the vendored model tables."
+    )
+    gfx_body = (
+        f'<h2 id="graphics">Graphics <small class="count">{n_gfx} graphics, {n_cap} with a caption</small></h2>\n'
+        f"{graphics_html}"
+    )
     toc = " &middot; ".join(f'<a href="#{_e(t.name)}">{_e(t.title)}</a>' for t in tables)
-    page = f"""<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>chublets visuals</title>
-<meta name="description" content="Graphics and tables of the chublets Wikibase data model: classes, properties and their origin in Wikidata, CodeMeta, DataCite and chublets additions.">
-<style>{CSS}</style>
-</head>
-<body>
-<header>
-  <h1>chublets visuals</h1>
-  <p>Graphics and tables of the chublets Wikibase data model: {fact['n_classes']} classes and {fact['n_props']} properties, grouped into {fact['n_topics']} topics,
-  with their origin in Wikidata, CodeMeta, DataCite (as supporting evidence) and chublets additions. Every number is read from the vendored model tables.</p>
-</header>
-<nav><div class="in"><a href="#graphics">Graphics</a><a href="#tables">Tables</a>
-<input id="q" type="search" placeholder="Search graphics and tables" aria-label="Search graphics and tables">
-<button id="theme" type="button" aria-label="Toggle light and dark">Light / dark</button></div></nav>
-<main>
-<h2 id="graphics">Graphics <small class="count">{n_gfx} graphics, {n_cap} with a caption</small></h2>
-{graphics_html}
-<h2 id="tables">Tables</h2>
-<p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; the filter above searches graphics and all tables at once. {toc}</p>
-{"".join(_table_html(t) for t in tables)}
-</main>
-<footer>Graphics and tables: {DEFAULT_LICENCE}. Code: MIT. Built by <code>python main.py</code> from the snapshot recorded in <code>data/raw/SNAPSHOT.md</code>.</footer>
-<script>{JS}</script>
-</body>
-</html>
-"""
-    (DOCS / "index.html").write_text(page, encoding="utf-8", newline="\n")
+    tbl_body = (
+        f'<h2 id="tables">Tables <small class="count">{len(tables)} tables</small></h2>\n'
+        f'<p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; '
+        f"the search above filters all tables at once. {toc}</p>\n"
+        + "".join(_table_html(t) for t in tables)
+    )
+    (DOCS / "index.html").write_text(
+        _page(title="chublets visuals", active="graphics", intro=intro, body=gfx_body, search="Search graphics"),
+        encoding="utf-8", newline="\n")
+    (DOCS / "tables.html").write_text(
+        _page(title="chublets visuals: tables", active="tables", intro=intro, body=tbl_body, search="Search all tables"),
+        encoding="utf-8", newline="\n")
     return [
-        f"docs/index.html: {n_gfx} graphics ({n_cap} with a caption), {len(tables)} tables",
-        f"docs/data: {len(tables)} CSV and {len(tables)} LaTeX downloads",
+        f"docs/index.html: {n_gfx} graphics ({n_cap} with a caption)",
+        f"docs/tables.html: {len(tables)} tables; docs/data: {len(tables)} CSV and {len(tables)} LaTeX downloads",
     ]
 
 

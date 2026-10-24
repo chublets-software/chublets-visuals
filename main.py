@@ -55,6 +55,8 @@ STEPS = [
     ("oa-python-route", "S6b (2/3): the Python route session", "step_open_archaeo_python_route"),
     ("oa-openrefine-route", "S6b (3/3): the OpenRefine route", "step_open_archaeo_openrefine_route"),
     ("talk-closing", "Talk closing slide: 8 badges as a ring around the logo", "step_talk_closing"),
+    ("class-tree", "S10: class tree of the chublets Wikibase (13 classes)", "step_class_tree"),
+    ("property-origin", "S10: origin of the 168 properties by Starter Pack status", "step_property_origin"),
     ("tables", "S9b: LaTeX tables for the paper appendix (tex/)", "step_latex_tables"),
     ("captions", "S8: captions.yaml against the graphics on disk", "step_captions_check"),
     ("gallery", "S9c: HTML overview of graphics and tables for GitHub Pages (docs/)", "step_gallery"),

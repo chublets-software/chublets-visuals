@@ -9,161 +9,161 @@ Property description,P4,Wikidata equivalent,external id,kernel,chublets addition
 Property description,P5,formatter URL,string,kernel,--,P1630,--,--,--
 Property description,P9,domain,item,kernel,--,--,--,--,--
 Property description,P10,range,item,kernel,--,--,--,--,--
-Property description,P100,close match Wikidata property,external id,pack,chublets addition,--,--,--,--
-Property description,P101,equivalent CodeMeta term,external id,pack,chublets addition,--,--,--,--
-Property description,P102,equivalent schema.org term,external id,pack,chublets addition,--,--,--,--
-Identity and naming,P106,collection,item,pack,chublets addition,P195,--,--,--
-Identity and naming,P112,description,string,pack,CodeMeta only,"≈ P973, P1343",description,=,description
-Identity and naming,P114,DOI,external id,pack,crosswalked,P356,identifier,=,identifier
-Identity and naming,P115,exact match,url,pack,crosswalked,P2888,sameAs,=,"relatedItem, relatedItemIdentifier"
-Identity and naming,P116,inventory number,string,pack,chublets addition,P217,--,--,--
-Identity and naming,P118,maintained by WikiProject,item,pack,chublets addition,P6104,--,--,--
-Identity and naming,P119,name,mono. text,pack,crosswalked,P2561,name,=,title
-Identity and naming,P121,open-archaeo ID,external id,pack,chublets addition,--,--,--,--
-Identity and naming,P127,Wikidata item,external id,pack,chublets addition,--,--,--,--
-Identity and naming,P247,title,mono. text,pack,Wikidata only,P1476,--,--,--
-Registry and catalogue IDs,P108,CRAN project,external id,pack,chublets addition,P5565,--,--,--
-Registry and catalogue IDs,P124,PyPI project,external id,pack,chublets addition,P5568,--,--,--
-Registry and catalogue IDs,P147,SoftWare Hash IDentifier,external id,pack,chublets addition,P6138,--,--,--
-Registry and catalogue IDs,P174,DistroWatch ID,external id,pack,Wikidata only,P3112,--,--,--
-Registry and catalogue IDs,P175,Google Play Store app ID,external id,pack,Wikidata only,P3418,--,--,--
-Registry and catalogue IDs,P176,Debian stable package,external id,pack,Wikidata only,P3442,--,--,--
-Registry and catalogue IDs,P177,Arch Linux package,external id,pack,Wikidata only,P3454,--,--,--
-Registry and catalogue IDs,P178,Fedora package,external id,pack,Wikidata only,P3463,--,--,--
-Registry and catalogue IDs,P179,Ubuntu package,external id,pack,Wikidata only,P3473,--,--,--
-Registry and catalogue IDs,P180,Gentoo package,external id,pack,Wikidata only,P3499,--,--,--
-Registry and catalogue IDs,P181,F-Droid package,external id,pack,Wikidata only,P3597,--,--,--
-Registry and catalogue IDs,P197,Framalibre ID,external id,pack,Wikidata only,P4107,--,--,--
-Registry and catalogue IDs,P198,Free Software Directory entry,external id,pack,Wikidata only,P2537,--,--,--
-Registry and catalogue IDs,P217,Open Hub ID,external id,pack,Wikidata only,P1972,--,--,--
-Registry and catalogue IDs,P241,SourceForge project,external id,pack,Wikidata only,P2209,--,--,--
-Registry and catalogue IDs,P246,swMATH work ID,external id,pack,Wikidata only,P6830,--,--,--
-Source code and development,P123,programmed in,item,pack,crosswalked,P277,programmingLanguage,=,--
-Source code and development,P125,source code repository URL,url,pack,crosswalked,P1324,codeRepository,=,--
-Source code and development,P126,version control system,item,pack,chublets addition,P8423,--,--,--
-Source code and development,P138,issue tracker URL,url,pack,crosswalked,P1401,issueTracker,--,--
-Source code and development,P161,build instructions,url,pack,CodeMeta only,--,buildInstructions,--,--
-Source code and development,P163,code sample type,string,pack,CodeMeta only,--,codeSampleType,=,--
-Source code and development,P165,cont integration,url,pack,CodeMeta only,--,contIntegration,--,--
-Source code and development,P166,continuous integration,url,pack,CodeMeta only,--,continuousIntegration,--,--
-Source code and development,P203,has source code,item,pack,CodeMeta only,≈ P527,hasSourceCode,--,--
-Source code and development,P210,is source code of,item,pack,CodeMeta only,≈ P361,isSourceCodeOf,--,--
-Source code and development,P231,readme,url,pack,CodeMeta only,≈ P973,readme,--,--
-"Platform, requirements and dependencies",P109,depends on software,item,pack,crosswalked,P1547,softwareRequirements,=,--
-"Platform, requirements and dependencies",P142,operating system,item,pack,crosswalked,P306,operatingSystem,=,--
-"Platform, requirements and dependencies",P143,platform,item,pack,crosswalked,P400,runtimePlatform,=,--
-"Platform, requirements and dependencies",P158,available on device,string,pack,CodeMeta only,≈ P400,availableOnDevice,=,--
-"Platform, requirements and dependencies",P160,binding of software library,item,pack,Wikidata only,P1372,--,--,--
-"Platform, requirements and dependencies",P169,countries not supported,string,pack,CodeMeta only,--,countriesNotSupported,=,--
-"Platform, requirements and dependencies",P170,countries supported,string,pack,CodeMeta only,--,countriesSupported,=,--
-"Platform, requirements and dependencies",P201,GUI toolkit or framework,item,pack,Wikidata only,P1414,--,--,--
-"Platform, requirements and dependencies",P206,input device,item,pack,Wikidata only,P479,--,--,--
-"Platform, requirements and dependencies",P214,memory requirements,string,pack,CodeMeta only,--,memoryRequirements,=,--
-"Platform, requirements and dependencies",P218,output device,item,pack,Wikidata only,P5196,--,--,--
-"Platform, requirements and dependencies",P219,package management system,item,pack,Wikidata only,P3033,--,--,--
-"Platform, requirements and dependencies",P221,permissions,string,pack,CodeMeta only,--,permissions,=,--
-"Platform, requirements and dependencies",P224,port,quantity,pack,Wikidata only,P1641,--,--,--
-"Platform, requirements and dependencies",P227,processor requirements,string,pack,CodeMeta only,--,processorRequirements,=,--
-"Platform, requirements and dependencies",P237,software add on,item,pack,CodeMeta only,--,softwareAddOn,=,--
-"Platform, requirements and dependencies",P238,software engine,item,pack,Wikidata only,P408,--,--,--
-"Platform, requirements and dependencies",P240,software suggestions,item,pack,CodeMeta only,--,softwareSuggestions,--,--
-"Platform, requirements and dependencies",P245,storage requirements,string,pack,CodeMeta only,--,storageRequirements,=,--
-"Platform, requirements and dependencies",P248,web interface software,item,pack,chublets addition,P10627,--,--,--
-"Files, formats and standards",P145,readable file format,item,pack,Wikidata only,P1072,--,--,--
-"Files, formats and standards",P154,writable file format,item,pack,Wikidata only,P1073,--,--,--
-"Files, formats and standards",P172,data size,quantity,pack,crosswalked,P3575,fileSize,=,size
-"Files, formats and standards",P173,distribution format,item,pack,Wikidata only,P437,--,--,--
-"Files, formats and standards",P187,encoding,item,pack,CodeMeta only,≈ P10,encoding,=,--
-"Files, formats and standards",P194,file format,item,pack,crosswalked,P2701,"encodingFormat, fileFormat",encodingFormat,format
-"Files, formats and standards",P212,media type,string,pack,Wikidata only,P1163,--,--,--
+Property description,P100,close match Wikidata property,external id,initial,chublets addition,--,--,--,--
+Property description,P101,equivalent CodeMeta term,external id,initial,chublets addition,--,--,--,--
+Property description,P102,equivalent schema.org term,external id,initial,chublets addition,--,--,--,--
+Identity and naming,P106,collection,item,initial,chublets addition,P195,--,--,--
+Identity and naming,P112,description,string,initial,CodeMeta only,"≈ P973, P1343",description,=,description
+Identity and naming,P114,DOI,external id,initial,crosswalked,P356,identifier,=,identifier
+Identity and naming,P115,exact match,url,initial,crosswalked,P2888,sameAs,=,"relatedItem, relatedItemIdentifier"
+Identity and naming,P116,inventory number,string,initial,chublets addition,P217,--,--,--
+Identity and naming,P118,maintained by WikiProject,item,initial,chublets addition,P6104,--,--,--
+Identity and naming,P119,name,mono. text,initial,crosswalked,P2561,name,=,title
+Identity and naming,P121,open-archaeo ID,external id,initial,chublets addition,--,--,--,--
+Identity and naming,P127,Wikidata item,external id,initial,chublets addition,--,--,--,--
+Identity and naming,P247,title,mono. text,initial,Wikidata only,P1476,--,--,--
+Registry and catalogue IDs,P108,CRAN project,external id,initial,chublets addition,P5565,--,--,--
+Registry and catalogue IDs,P124,PyPI project,external id,initial,chublets addition,P5568,--,--,--
+Registry and catalogue IDs,P147,SoftWare Hash IDentifier,external id,initial,chublets addition,P6138,--,--,--
+Registry and catalogue IDs,P174,DistroWatch ID,external id,initial,Wikidata only,P3112,--,--,--
+Registry and catalogue IDs,P175,Google Play Store app ID,external id,initial,Wikidata only,P3418,--,--,--
+Registry and catalogue IDs,P176,Debian stable package,external id,initial,Wikidata only,P3442,--,--,--
+Registry and catalogue IDs,P177,Arch Linux package,external id,initial,Wikidata only,P3454,--,--,--
+Registry and catalogue IDs,P178,Fedora package,external id,initial,Wikidata only,P3463,--,--,--
+Registry and catalogue IDs,P179,Ubuntu package,external id,initial,Wikidata only,P3473,--,--,--
+Registry and catalogue IDs,P180,Gentoo package,external id,initial,Wikidata only,P3499,--,--,--
+Registry and catalogue IDs,P181,F-Droid package,external id,initial,Wikidata only,P3597,--,--,--
+Registry and catalogue IDs,P197,Framalibre ID,external id,initial,Wikidata only,P4107,--,--,--
+Registry and catalogue IDs,P198,Free Software Directory entry,external id,initial,Wikidata only,P2537,--,--,--
+Registry and catalogue IDs,P217,Open Hub ID,external id,initial,Wikidata only,P1972,--,--,--
+Registry and catalogue IDs,P241,SourceForge project,external id,initial,Wikidata only,P2209,--,--,--
+Registry and catalogue IDs,P246,swMATH work ID,external id,initial,Wikidata only,P6830,--,--,--
+Source code and development,P123,programmed in,item,initial,crosswalked,P277,programmingLanguage,=,--
+Source code and development,P125,source code repository URL,url,initial,crosswalked,P1324,codeRepository,=,--
+Source code and development,P126,version control system,item,initial,chublets addition,P8423,--,--,--
+Source code and development,P138,issue tracker URL,url,initial,crosswalked,P1401,issueTracker,--,--
+Source code and development,P161,build instructions,url,initial,CodeMeta only,--,buildInstructions,--,--
+Source code and development,P163,code sample type,string,initial,CodeMeta only,--,codeSampleType,=,--
+Source code and development,P165,cont integration,url,initial,CodeMeta only,--,contIntegration,--,--
+Source code and development,P166,continuous integration,url,initial,CodeMeta only,--,continuousIntegration,--,--
+Source code and development,P203,has source code,item,initial,CodeMeta only,≈ P527,hasSourceCode,--,--
+Source code and development,P210,is source code of,item,initial,CodeMeta only,≈ P361,isSourceCodeOf,--,--
+Source code and development,P231,readme,url,initial,CodeMeta only,≈ P973,readme,--,--
+"Platform, requirements and dependencies",P109,depends on software,item,initial,crosswalked,P1547,softwareRequirements,=,--
+"Platform, requirements and dependencies",P142,operating system,item,initial,crosswalked,P306,operatingSystem,=,--
+"Platform, requirements and dependencies",P143,platform,item,initial,crosswalked,P400,runtimePlatform,=,--
+"Platform, requirements and dependencies",P158,available on device,string,initial,CodeMeta only,≈ P400,availableOnDevice,=,--
+"Platform, requirements and dependencies",P160,binding of software library,item,initial,Wikidata only,P1372,--,--,--
+"Platform, requirements and dependencies",P169,countries not supported,string,initial,CodeMeta only,--,countriesNotSupported,=,--
+"Platform, requirements and dependencies",P170,countries supported,string,initial,CodeMeta only,--,countriesSupported,=,--
+"Platform, requirements and dependencies",P201,GUI toolkit or framework,item,initial,Wikidata only,P1414,--,--,--
+"Platform, requirements and dependencies",P206,input device,item,initial,Wikidata only,P479,--,--,--
+"Platform, requirements and dependencies",P214,memory requirements,string,initial,CodeMeta only,--,memoryRequirements,=,--
+"Platform, requirements and dependencies",P218,output device,item,initial,Wikidata only,P5196,--,--,--
+"Platform, requirements and dependencies",P219,package management system,item,initial,Wikidata only,P3033,--,--,--
+"Platform, requirements and dependencies",P221,permissions,string,initial,CodeMeta only,--,permissions,=,--
+"Platform, requirements and dependencies",P224,port,quantity,initial,Wikidata only,P1641,--,--,--
+"Platform, requirements and dependencies",P227,processor requirements,string,initial,CodeMeta only,--,processorRequirements,=,--
+"Platform, requirements and dependencies",P237,software add on,item,initial,CodeMeta only,--,softwareAddOn,=,--
+"Platform, requirements and dependencies",P238,software engine,item,initial,Wikidata only,P408,--,--,--
+"Platform, requirements and dependencies",P240,software suggestions,item,initial,CodeMeta only,--,softwareSuggestions,--,--
+"Platform, requirements and dependencies",P245,storage requirements,string,initial,CodeMeta only,--,storageRequirements,=,--
+"Platform, requirements and dependencies",P248,web interface software,item,initial,chublets addition,P10627,--,--,--
+"Files, formats and standards",P145,readable file format,item,initial,Wikidata only,P1072,--,--,--
+"Files, formats and standards",P154,writable file format,item,initial,Wikidata only,P1073,--,--,--
+"Files, formats and standards",P172,data size,quantity,initial,crosswalked,P3575,fileSize,=,size
+"Files, formats and standards",P173,distribution format,item,initial,Wikidata only,P437,--,--,--
+"Files, formats and standards",P187,encoding,item,initial,CodeMeta only,≈ P10,encoding,=,--
+"Files, formats and standards",P194,file format,item,initial,crosswalked,P2701,"encodingFormat, fileFormat",encodingFormat,format
+"Files, formats and standards",P212,media type,string,initial,Wikidata only,P1163,--,--,--
 "Files, formats and standards",P250,ISO standard,external id,review,--,P503,--,--,--
 "Files, formats and standards",P254,RfC ID,external id,review,--,P892,--,--,--
 "Files, formats and standards",P256,TeX string,string,review,--,P1993,--,--,--
 "Files, formats and standards",P257,Unicode character,string,review,--,P487,--,--,--
-"Versions, releases and dates",P132,development status,string,pack,CodeMeta only,≈ P548,developmentStatus,--,--
-"Versions, releases and dates",P137,inception,time,pack,crosswalked,P571,dateCreated,=,date
-"Versions, releases and dates",P139,last update,time,pack,crosswalked,P5017,dateModified,=,date
-"Versions, releases and dates",P144,publication date,time,pack,crosswalked,P577,datePublished,=,date
-"Versions, releases and dates",P148,software version identifier,string,pack,crosswalked,P348,softwareVersion,=,version
-"Versions, releases and dates",P152,version,string,pack,CodeMeta only,≈ P348,version,=,--
-"Versions, releases and dates",P153,version type,item,pack,Wikidata only,P548,--,--,--
-"Versions, releases and dates",P182,"version, edition or translation of",item,pack,Wikidata only,P629,--,--,--
-"Versions, releases and dates",P188,end date,time,pack,CodeMeta only,≈ P582,endDate,=,--
-"Versions, releases and dates",P189,end time,time,pack,Wikidata only,P582,--,--,--
-"Versions, releases and dates",P195,followed by,item,pack,Wikidata only,P156,--,--,--
-"Versions, releases and dates",P196,follows,item,pack,Wikidata only,P155,--,--,--
-"Versions, releases and dates",P220,part of the series,item,pack,Wikidata only,P179,--,--,--
-"Versions, releases and dates",P223,point in time,time,pack,Wikidata only,P585,--,--,--
-"Versions, releases and dates",P232,release notes,string,pack,CodeMeta only,≈ P973,releaseNotes,=,--
-"Versions, releases and dates",P243,start date,time,pack,CodeMeta only,≈ P580,startDate,=,--
-"Versions, releases and dates",P244,start time,time,pack,Wikidata only,P580,--,--,--
+"Versions, releases and dates",P132,development status,string,initial,CodeMeta only,≈ P548,developmentStatus,--,--
+"Versions, releases and dates",P137,inception,time,initial,crosswalked,P571,dateCreated,=,date
+"Versions, releases and dates",P139,last update,time,initial,crosswalked,P5017,dateModified,=,date
+"Versions, releases and dates",P144,publication date,time,initial,crosswalked,P577,datePublished,=,date
+"Versions, releases and dates",P148,software version identifier,string,initial,crosswalked,P348,softwareVersion,=,version
+"Versions, releases and dates",P152,version,string,initial,CodeMeta only,≈ P348,version,=,--
+"Versions, releases and dates",P153,version type,item,initial,Wikidata only,P548,--,--,--
+"Versions, releases and dates",P182,"version, edition or translation of",item,initial,Wikidata only,P629,--,--,--
+"Versions, releases and dates",P188,end date,time,initial,CodeMeta only,≈ P582,endDate,=,--
+"Versions, releases and dates",P189,end time,time,initial,Wikidata only,P582,--,--,--
+"Versions, releases and dates",P195,followed by,item,initial,Wikidata only,P156,--,--,--
+"Versions, releases and dates",P196,follows,item,initial,Wikidata only,P155,--,--,--
+"Versions, releases and dates",P220,part of the series,item,initial,Wikidata only,P179,--,--,--
+"Versions, releases and dates",P223,point in time,time,initial,Wikidata only,P585,--,--,--
+"Versions, releases and dates",P232,release notes,string,initial,CodeMeta only,≈ P973,releaseNotes,=,--
+"Versions, releases and dates",P243,start date,time,initial,CodeMeta only,≈ P580,startDate,=,--
+"Versions, releases and dates",P244,start time,time,initial,Wikidata only,P580,--,--,--
 "Versions, releases and dates",P253,removed feature,item,review,--,P756,--,--,--
-"Links, media and web presence",P104,archive date,time,pack,chublets addition,P2960,--,--,--
-"Links, media and web presence",P105,archive URL,url,pack,chublets addition,P1065,--,--,--
-"Links, media and web presence",P110,described at URL,url,pack,crosswalked,P973,relatedLink,=,relatedIdentifier
-"Links, media and web presence",P120,official website,url,pack,crosswalked,P856,url,=,"relatedItem, relatedItemIdentifier"
-"Links, media and web presence",P133,download URL,url,pack,crosswalked,P4945,downloadUrl,=,relatedIdentifier
-"Links, media and web presence",P141,official demo URL,url,pack,crosswalked,P11201,relatedLink,=,relatedIdentifier
-"Links, media and web presence",P151,user manual URL,url,pack,crosswalked,P2078,softwareHelp,=,--
-"Links, media and web presence",P204,image,media,pack,crosswalked,P18,screenshot,=,--
-"Links, media and web presence",P207,install URL,url,pack,CodeMeta only,≈ P4945,installUrl,=,--
-"Links, media and web presence",P208,IRC channel URL,url,pack,Wikidata only,P1613,--,--,--
-"Links, media and web presence",P211,logo image,media,pack,Wikidata only,P154,--,--,--
-"Links, media and web presence",P216,official blog URL,url,pack,Wikidata only,P1581,--,--,--
+"Links, media and web presence",P104,archive date,time,initial,chublets addition,P2960,--,--,--
+"Links, media and web presence",P105,archive URL,url,initial,chublets addition,P1065,--,--,--
+"Links, media and web presence",P110,described at URL,url,initial,crosswalked,P973,relatedLink,=,relatedIdentifier
+"Links, media and web presence",P120,official website,url,initial,crosswalked,P856,url,=,"relatedItem, relatedItemIdentifier"
+"Links, media and web presence",P133,download URL,url,initial,crosswalked,P4945,downloadUrl,=,relatedIdentifier
+"Links, media and web presence",P141,official demo URL,url,initial,crosswalked,P11201,relatedLink,=,relatedIdentifier
+"Links, media and web presence",P151,user manual URL,url,initial,crosswalked,P2078,softwareHelp,=,--
+"Links, media and web presence",P204,image,media,initial,crosswalked,P18,screenshot,=,--
+"Links, media and web presence",P207,install URL,url,initial,CodeMeta only,≈ P4945,installUrl,=,--
+"Links, media and web presence",P208,IRC channel URL,url,initial,Wikidata only,P1613,--,--,--
+"Links, media and web presence",P211,logo image,media,initial,Wikidata only,P154,--,--,--
+"Links, media and web presence",P216,official blog URL,url,initial,Wikidata only,P1581,--,--,--
 "Links, media and web presence",P255,Stack Exchange tag,url,review,--,P1482,--,--,--
-Agent roles,P113,developer,item,pack,crosswalked,P178,author,=,creator
-Agent roles,P131,contributor to the creative work or subject,item,pack,crosswalked,P767,contributor,=,contributor
-Agent roles,P134,funder,item,pack,crosswalked,P8324,funder,=,"fundingReference, funderName"
-Agent roles,P140,maintained by,item,pack,crosswalked,P126,maintainer,=,contributor
-Agent roles,P146,series ordinal,string,pack,chublets addition,P1545,--,--,--
-Agent roles,P171,creator,item,pack,Wikidata only,P170,--,--,--
-Agent roles,P183,editor,item,pack,CodeMeta only,≈ P98,editor,=,contributor
-Agent roles,P225,position,string,pack,CodeMeta only,≈ P1545,position,=,--
-Agent roles,P228,producer,item,pack,crosswalked,P162,producer,=,contributor
-Agent roles,P229,provider,item,pack,CodeMeta only,--,provider,=,contributor
-Agent roles,P230,publisher,item,pack,crosswalked,P123,publisher,=,publisher
-Agent roles,P236,role name,string,pack,CodeMeta only,--,roleName,=,--
-Agent roles,P242,sponsor,item,pack,crosswalked,P859,sponsor,=,contributor
-Person and organisation,P135,GitHub account,external id,pack,Wikidata only,P2037,--,--,--
-Person and organisation,P155,address,string,pack,CodeMeta only,--,address,=,--
-Person and organisation,P156,affiliation,item,pack,CodeMeta only,≈ P1416,affiliation,=,--
-Person and organisation,P157,archives at,item,pack,Wikidata only,P485,--,--,--
-Person and organisation,P159,award received,item,pack,Wikidata only,P166,--,--,--
-Person and organisation,P184,email address,url,pack,crosswalked,P968,email,=,--
-Person and organisation,P191,family name,item,pack,crosswalked,P734,familyName,=,--
-Person and organisation,P193,field of work,item,pack,Wikidata only,P101,--,--,--
-Person and organisation,P200,given name,item,pack,crosswalked,P735,givenName,=,--
-Person and organisation,P213,member of,item,pack,Wikidata only,P463,--,--,--
-Person and organisation,P215,notable work,item,pack,Wikidata only,P800,--,--,--
-Person and organisation,P222,person identifier,url,pack,CodeMeta only,"≈ P496, P2037",identifier (Person),identifier,--
-"Rights, funding and access",P107,copyright license,item,pack,crosswalked,P275,license,=,rights
-"Rights, funding and access",P167,copyright holder,item,pack,CodeMeta only,≈ P123,copyrightHolder,=,contributor
-"Rights, funding and access",P168,copyright year,quantity,pack,CodeMeta only,--,copyrightYear,=,date
-"Rights, funding and access",P185,embargo date,time,pack,CodeMeta only,--,embargoDate,--,date
-"Rights, funding and access",P186,embargo end date,time,pack,CodeMeta only,--,embargoEndDate,--,date
-"Rights, funding and access",P199,funding,string,pack,CodeMeta only,≈ P8324,funding,=,fundingReference
-"Rights, funding and access",P209,is accessible for free,string,pack,CodeMeta only,--,isAccessibleForFree,=,--
-"Rights, funding and access",P226,price,quantity,pack,Wikidata only,P2284,--,--,--
+Agent roles,P113,developer,item,initial,crosswalked,P178,author,=,creator
+Agent roles,P131,contributor to the creative work or subject,item,initial,crosswalked,P767,contributor,=,contributor
+Agent roles,P134,funder,item,initial,crosswalked,P8324,funder,=,"fundingReference, funderName"
+Agent roles,P140,maintained by,item,initial,crosswalked,P126,maintainer,=,contributor
+Agent roles,P146,series ordinal,string,initial,chublets addition,P1545,--,--,--
+Agent roles,P171,creator,item,initial,Wikidata only,P170,--,--,--
+Agent roles,P183,editor,item,initial,CodeMeta only,≈ P98,editor,=,contributor
+Agent roles,P225,position,string,initial,CodeMeta only,≈ P1545,position,=,--
+Agent roles,P228,producer,item,initial,crosswalked,P162,producer,=,contributor
+Agent roles,P229,provider,item,initial,CodeMeta only,--,provider,=,contributor
+Agent roles,P230,publisher,item,initial,crosswalked,P123,publisher,=,publisher
+Agent roles,P236,role name,string,initial,CodeMeta only,--,roleName,=,--
+Agent roles,P242,sponsor,item,initial,crosswalked,P859,sponsor,=,contributor
+Person and organisation,P135,GitHub account,external id,initial,Wikidata only,P2037,--,--,--
+Person and organisation,P155,address,string,initial,CodeMeta only,--,address,=,--
+Person and organisation,P156,affiliation,item,initial,CodeMeta only,≈ P1416,affiliation,=,--
+Person and organisation,P157,archives at,item,initial,Wikidata only,P485,--,--,--
+Person and organisation,P159,award received,item,initial,Wikidata only,P166,--,--,--
+Person and organisation,P184,email address,url,initial,crosswalked,P968,email,=,--
+Person and organisation,P191,family name,item,initial,crosswalked,P734,familyName,=,--
+Person and organisation,P193,field of work,item,initial,Wikidata only,P101,--,--,--
+Person and organisation,P200,given name,item,initial,crosswalked,P735,givenName,=,--
+Person and organisation,P213,member of,item,initial,Wikidata only,P463,--,--,--
+Person and organisation,P215,notable work,item,initial,Wikidata only,P800,--,--,--
+Person and organisation,P222,person identifier,url,initial,CodeMeta only,"≈ P496, P2037",identifier (Person),identifier,--
+"Rights, funding and access",P107,copyright license,item,initial,crosswalked,P275,license,=,rights
+"Rights, funding and access",P167,copyright holder,item,initial,CodeMeta only,≈ P123,copyrightHolder,=,contributor
+"Rights, funding and access",P168,copyright year,quantity,initial,CodeMeta only,--,copyrightYear,=,date
+"Rights, funding and access",P185,embargo date,time,initial,CodeMeta only,--,embargoDate,--,date
+"Rights, funding and access",P186,embargo end date,time,initial,CodeMeta only,--,embargoEndDate,--,date
+"Rights, funding and access",P199,funding,string,initial,CodeMeta only,≈ P8324,funding,=,fundingReference
+"Rights, funding and access",P209,is accessible for free,string,initial,CodeMeta only,--,isAccessibleForFree,=,--
+"Rights, funding and access",P226,price,quantity,initial,Wikidata only,P2284,--,--,--
 "Rights, funding and access",P249,digital rights management system,item,review,--,P1032,--,--,--
-"Classification, features and relations",P103,application category,string,pack,CodeMeta only,≈ P31,applicationCategory,=,--
-"Classification, features and relations",P117,main subject,item,pack,crosswalked,P921,keywords,=,subject
-"Classification, features and relations",P122,part of,item,pack,crosswalked,P361,isPartOf,=,relatedItem
-"Classification, features and relations",P128,application sub category,string,pack,CodeMeta only,≈ P921,applicationSubCategory,=,--
-"Classification, features and relations",P129,application suite,string,pack,CodeMeta only,≈ P361,applicationSuite,=,--
-"Classification, features and relations",P130,based on,item,pack,Wikidata only,P144,--,--,--
-"Classification, features and relations",P136,has part(s),item,pack,crosswalked,P527,hasPart,=,relatedItem
-"Classification, features and relations",P149,supporting data,item,pack,CodeMeta only,--,supportingData,=,--
-"Classification, features and relations",P150,target product,item,pack,CodeMeta only,≈ P1547,targetProduct,=,--
-"Classification, features and relations",P164,computes solution to,item,pack,Wikidata only,P2159,--,--,--
-"Classification, features and relations",P190,facet of,item,pack,Wikidata only,P1269,--,--,--
-"Classification, features and relations",P192,feature list,string,pack,CodeMeta only,--,featureList,=,--
-"Classification, features and relations",P202,has characteristic,item,pack,Wikidata only,P1552,--,--,--
-"Classification, features and relations",P205,influenced by,item,pack,Wikidata only,P737,--,--,--
+"Classification, features and relations",P103,application category,string,initial,CodeMeta only,≈ P31,applicationCategory,=,--
+"Classification, features and relations",P117,main subject,item,initial,crosswalked,P921,keywords,=,subject
+"Classification, features and relations",P122,part of,item,initial,crosswalked,P361,isPartOf,=,relatedItem
+"Classification, features and relations",P128,application sub category,string,initial,CodeMeta only,≈ P921,applicationSubCategory,=,--
+"Classification, features and relations",P129,application suite,string,initial,CodeMeta only,≈ P361,applicationSuite,=,--
+"Classification, features and relations",P130,based on,item,initial,Wikidata only,P144,--,--,--
+"Classification, features and relations",P136,has part(s),item,initial,crosswalked,P527,hasPart,=,relatedItem
+"Classification, features and relations",P149,supporting data,item,initial,CodeMeta only,--,supportingData,=,--
+"Classification, features and relations",P150,target product,item,initial,CodeMeta only,≈ P1547,targetProduct,=,--
+"Classification, features and relations",P164,computes solution to,item,initial,Wikidata only,P2159,--,--,--
+"Classification, features and relations",P190,facet of,item,initial,Wikidata only,P1269,--,--,--
+"Classification, features and relations",P192,feature list,string,initial,CodeMeta only,--,featureList,=,--
+"Classification, features and relations",P202,has characteristic,item,initial,Wikidata only,P1552,--,--,--
+"Classification, features and relations",P205,influenced by,item,initial,Wikidata only,P737,--,--,--
 "Classification, features and relations",P251,language of work or name,item,review,--,P407,--,--,--
 "Classification, features and relations",P252,movement,item,review,--,P135,--,--,--
-"Publication, citation and review",P111,described by source,item,pack,crosswalked,P1343,referencePublication,--,relatedItem
-"Publication, citation and review",P162,cites work,item,pack,crosswalked,P2860,citation,=,relatedItem
-"Publication, citation and review",P233,review,item,pack,CodeMeta only,--,review,=,--
-"Publication, citation and review",P234,review aspect,string,pack,CodeMeta only,--,reviewAspect,=,--
-"Publication, citation and review",P235,review body,string,pack,CodeMeta only,--,reviewBody,=,--
-"Publication, citation and review",P239,software quality assurance,item,pack,Wikidata only,P2992,--,--,--
+"Publication, citation and review",P111,described by source,item,initial,crosswalked,P1343,referencePublication,--,relatedItem
+"Publication, citation and review",P162,cites work,item,initial,crosswalked,P2860,citation,=,relatedItem
+"Publication, citation and review",P233,review,item,initial,CodeMeta only,--,review,=,--
+"Publication, citation and review",P234,review aspect,string,initial,CodeMeta only,--,reviewAspect,=,--
+"Publication, citation and review",P235,review body,string,initial,CodeMeta only,--,reviewBody,=,--
+"Publication, citation and review",P239,software quality assurance,item,initial,Wikidata only,P2992,--,--,--

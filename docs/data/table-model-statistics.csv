@@ -1,18 +1,18 @@
 Measure,Value,Composition
-Properties in the Wikibase model,168,10 kernel + 149 pack + 9 review
-Rows of the Starter Pack property set,153,149 pack rows + 4 kernel rows
-Properties of the demo import,158,149 pack + 9 review (P100 to P257)
-Classes,13,"3 kernel, 7 Starter Pack, 3 importer stubs"
+Properties in the Wikibase model,168,10 kernel + 149 initial + 9 review
+Properties of the initial modelling set,153,149 initial + 4 kernel properties
+Properties of the demo import,158,149 initial + 9 review (P100 to P257)
+Classes,13,"3 kernel, 7 chublets, 3 Wikidata stubs"
 CodeMeta terms (distinct),83,84 crosswalk rows; relatedLink has two
   in the reviewed crosswalk workbook,68,15 terms are not in it
   crosswalked to a Wikidata property,37,37 distinct Wikidata properties
   without a Wikidata property,46,new CodeMeta-only properties
 Wikidata properties of the crosswalk in the WikiProject list,17,20 are not in it
 WikiProject Software properties known,63,46 without a CodeMeta term
-Starter Pack status: crosswalked,37,"CodeMeta term and Wikidata property, one Wikibase property"
-Starter Pack status: CodeMeta only,46,new property for a CodeMeta term
-Starter Pack status: Wikidata only,52,Wikidata property without CodeMeta term
-Starter Pack status: chublets addition,18,in neither vocabulary
+Origin class: crosswalked,37,"CodeMeta term and Wikidata property, one Wikibase property"
+Origin class: CodeMeta only,46,new property for a CodeMeta term
+Origin class: Wikidata only,52,Wikidata property without CodeMeta term
+Origin class: chublets addition,18,in neither vocabulary
 Properties with a close match (P100),22,loose Wikidata match of a CodeMeta-only property
 Properties with a schema.org term (P102),71,term of the property in schema.org
 Properties with a DataCite element,34,"derived via the CodeMeta hub, not published"
