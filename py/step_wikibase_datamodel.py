@@ -1,166 +1,88 @@
-"""Block 1 (4/4) -- chublets.software federated datamodel.
+"""Block 1 (4/4) -- chublets.software Wikibase data model (S11: redrawn on the model).
 
-The concept the other three Block 1 diagrams build up to: the chublets
-Wikibase does not invent its own software schema. Its property set is the
-union of two sources, read live from this repo's own other two sources so
-the three diagrams can never quietly disagree (A3, one source per fact):
+Where the 168 properties come from: Wikidata properties and CodeMeta terms, joined
+by the crosswalk, plus what chublets added. All numbers come from the model.
 
-  - the Wikidata software properties (WikiProject Informatics/Software/
-    Properties), reused as-is via Wikibase federation -- count from
-    data/raw/wikidata-software-properties.csv;
-  - the CodeMeta properties that data/raw/codemeta-wikidata-crosswalk.xlsx
-    records as NOT mapped to any Wikidata property -- these need a new
-    chublets-only property, minted once and then reused.
-
-Produces:
-  img/chublets-wikibase-datamodel.svg / .png (transparent)
+Reads: py/model_data.py. Produces: img/chublets-wikibase-datamodel.svg / .png
 
 Runnable standalone: `python py/step_wikibase_datamodel.py`
 """
 
 from __future__ import annotations
 
-import csv
 import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from visuals_utils import (  # noqa: E402
-    DATA_RAW,
-    BLOCK1_DIR,
-    ROOT,
-    INK,
-    MUTED,
-    CHUBLETS_PURPLE,
-    CATEGORY_COLORS,
-    arrow_marker,
-    ensure_dirs,
-    esc,
-    font_face_css,
-    render_svg_to_png,
-    tint,
-    trim_transparent_border,
-)
-import crosswalk_data  # noqa: E402
+import captions  # noqa: E402
+import model_data  # noqa: E402
+import model_graphics as g  # noqa: E402
+from visuals_utils import INK, MUTED, tint  # noqa: E402
 
-W = 1500
-BOX_W = 560
-BOX_H = 190
-TOP_Y = 70
-BOTTOM_Y = 560
-GAP_X = 100
-MARGIN = 60
-
-SRC_WIKIDATA_COLOR = CATEGORY_COLORS[4]  # slate blue -- "external, reused"
-SRC_CODEMETA_COLOR = CATEGORY_COLORS[1]  # gold -- "CodeMeta-derived, new"
-
-OVERSAMPLE = 1.8
+NAME = "chublets-wikibase-datamodel"
+SC = g.STATUS_COLORS
+BOX_W, GAP, TOP_H = 640, 100, 190
 
 
-def _source_box(x: float, y: float, title: str, lines: list[str], count_label: str, color: str) -> str:
-    fill = tint(color, 0.9)
-    out = f'<rect x="{x}" y="{y}" width="{BOX_W}" height="{BOX_H}" rx="10" fill="{fill}" stroke="{color}" stroke-width="3.5"/>'
-    out += (
-        f'<text x="{x+BOX_W/2}" y="{y+42}" text-anchor="middle" font-family="Fira Sans" '
-        f'font-weight="700" font-size="25" fill="{INK}">{esc(title)}</text>'
-    )
-    fy = y + 82
-    for line in lines:
-        out += (
-            f'<text x="{x+BOX_W/2}" y="{fy}" text-anchor="middle" font-family="Fira Sans" '
-            f'font-weight="400" font-size="18" fill="{INK}">{esc(line)}</text>'
-        )
-        fy += 26
-    out += (
-        f'<text x="{x+BOX_W/2}" y="{y+BOX_H-22}" text-anchor="middle" font-family="Fira Sans" '
-        f'font-weight="700" font-size="22" fill="{color}">{esc(count_label)}</text>'
-    )
-    return out
+def _source(cv, x, title, lines, big, col):
+    out = g.rect(x, 0, BOX_W, TOP_H, fill=tint(col, 0.92), stroke=col, sw=3, rx=12)
+    out += g.text(x + BOX_W / 2, 40, title, 23, bold=True, fill=INK, anchor="middle")
+    yy = 74
+    for ln in lines:
+        out += g.text(x + BOX_W / 2, yy, ln, 16, fill=INK, anchor="middle")
+        yy += 24
+    out += g.text(x + BOX_W / 2, TOP_H - 22, big, 21, bold=True, fill=col, anchor="middle")
+    cv.add(out, x, 0, x + BOX_W, TOP_H)
 
 
-def _build_svg(n_wikidata: int, n_codemeta_only: int) -> tuple[str, float, float]:
-    left_x = MARGIN
-    right_x = MARGIN + BOX_W + GAP_X
-    center_x = (left_x + right_x + BOX_W) / 2
-
-    result_w = BOX_W + GAP_X + 0  # same total footprint as the two sources combined
-    result_x = left_x
-    result_y = BOTTOM_Y
-    result_h = 220
-
-    H = result_y + result_h + MARGIN
-    Wsvg = right_x + BOX_W + MARGIN
-
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{Wsvg}" height="{H}" viewBox="0 0 {Wsvg} {H}">']
-    p.append(font_face_css())
-    p.append("<defs>")
-    p.append(arrow_marker("arrow", MUTED))
-    p.append("</defs>")
-
-    p.append(_source_box(
-        left_x, TOP_Y, "Wikidata software properties",
-        ["WikiProject Informatics/", "Software/Properties", "reused via Wikibase federation"],
-        f"{n_wikidata}+ properties, 0 new", SRC_WIKIDATA_COLOR,
-    ))
-    p.append(_source_box(
-        right_x, TOP_Y, "CodeMeta-only fields",
-        ["CodeMeta terms with no", "matching Wikidata property", "(see chublets-codemeta-wikidata-crosswalk)"],
-        f"{n_codemeta_only} new chublets properties", SRC_CODEMETA_COLOR,
-    ))
-
-    # two converging connectors into the result box
-    p.append(f'<line x1="{left_x+BOX_W/2}" y1="{TOP_Y+BOX_H}" x2="{center_x-10}" y2="{result_y}" '
-              f'stroke="{MUTED}" stroke-width="3.5" marker-end="url(#arrow)"/>')
-    p.append(f'<line x1="{right_x+BOX_W/2}" y1="{TOP_Y+BOX_H}" x2="{center_x+10}" y2="{result_y}" '
-              f'stroke="{MUTED}" stroke-width="3.5" marker-end="url(#arrow)"/>')
-
-    fill = tint(CHUBLETS_PURPLE, 0.88)
-    p.append(f'<rect x="{result_x}" y="{result_y}" width="{right_x+BOX_W-result_x}" height="{result_h}" '
-              f'rx="12" fill="{fill}" stroke="{CHUBLETS_PURPLE}" stroke-width="4"/>')
-    p.append(
-        f'<text x="{Wsvg/2}" y="{result_y+50}" text-anchor="middle" font-family="Fira Sans" '
-        f'font-weight="700" font-size="30" fill="{INK}">chublets.software Wikibase datamodel</text>'
-    )
-    for i, line in enumerate([
-        f"{n_wikidata}+ Wikidata properties, reused as-is",
-        f"+ {n_codemeta_only} chublets-only properties for the CodeMeta-only fields",
-        "= one federated schema, not a schema invented from scratch",
-    ]):
-        p.append(
-            f'<text x="{Wsvg/2}" y="{result_y+95+i*32}" text-anchor="middle" font-family="Fira Sans" '
-            f'font-weight="400" font-size="19" fill="{INK}">{esc(line)}</text>'
-        )
-
-    p.append("</svg>")
-    return "\n".join(p), Wsvg, H
+def build(M: model_data.Model) -> g.Canvas:
+    f = model_data.caption_facts(M)
+    cv = g.Canvas()
+    total_w = 2 * BOX_W + GAP
+    _source(cv, 0, "Wikidata properties",
+            ["software properties of the WikiProject", "and further properties used for software"],
+            f"{f['n_twin']} properties with an equivalent in Wikidata (P4)", SC["wikidata-only"])
+    _source(cv, BOX_W + GAP, "CodeMeta terms",
+            ["the CodeMeta vocabulary for software metadata", "mapped to Wikidata in the crosswalk"],
+            f"{f['n_with_codemeta']} terms, {f['n_crosswalked']} with a Wikidata property", SC["codemeta-only"])
+    ry, rh = TOP_H + 110, 290
+    cx = total_w / 2
+    import math
+    for sx, ex in ((BOX_W / 2, BOX_W / 2 + 150), (BOX_W + GAP + BOX_W / 2, BOX_W + GAP + BOX_W / 2 - 150)):
+        sy, ey = TOP_H + 6, ry - 4
+        d = math.hypot(ex - sx, ey - sy)
+        ux, uy = (ex - sx) / d, (ey - sy) / d
+        cv.add(g.line([(sx, sy), (ex - ux * 14, ey - uy * 14)], MUTED, sw=3) + g.arrowhead(ex, ey, ux, uy, 18),
+               min(sx, ex), sy, max(sx, ex), ey)
+    col = SC["crosswalked"]
+    out = g.rect(0, ry, total_w, rh, fill=tint(col, 0.9), stroke=col, sw=3.5, rx=14)
+    out += g.text(cx, ry + 46, f"Wikibase of chublets: {f['n_props']} properties", 26, bold=True, fill=INK, anchor="middle")
+    out += g.text(cx, ry + 76, "all of them local properties; each states its equivalents (Wikidata P4, CodeMeta P101, schema.org P102)", 15.5, fill=INK, anchor="middle")
+    parts = [(f["n_crosswalked"], "crosswalked", SC["crosswalked"]), (f["n_codemeta_only"], "CodeMeta only", SC["codemeta-only"]),
+             (f["n_wikidata_only"], "Wikidata only", SC["wikidata-only"]), (f["n_chublets_addition"], "chublets addition", SC["chublets-addition"]),
+             (f["n_no_status"], "built-in and later added", SC[""])]
+    assert sum(n for n, *_ in parts) == f["n_props"], "the five origins must add up to all properties"
+    bw = total_w - 80
+    x = 40
+    for n, label, c in parts:
+        w = bw * n / f["n_props"]
+        out += g.rect(x, ry + 110, w - 3, 44, fill=c, rx=6) + g.text(x + (w - 3) / 2, ry + 140, str(n), 20, bold=True, fill="#ffffff", anchor="middle")
+        lines = g.wrap(label, 14, max(w - 8, 70))
+        for k, ln in enumerate(lines):
+            out += g.text(x + (w - 3) / 2, ry + 180 + 18 * k, ln, 14, fill=INK, anchor="middle")
+        x += w
+    out += g.text(cx, ry + rh - 26, "The model is not invented from scratch: it starts from the crosswalk between the two vocabularies.", 14.5, italic=True, fill=MUTED, anchor="middle")
+    cv.add(out, 0, ry, total_w, ry + rh)
+    return cv
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs(BLOCK1_DIR)
-    log: list[str] = []
-
-    with open(DATA_RAW / "wikidata-software-properties.csv", encoding="utf-8", newline="") as f:
-        rows = list(csv.DictReader(f))
-    n_wikidata = sum(1 for r in rows if r["pid"] != "-")
-    log.append(f"read {n_wikidata} named Wikidata properties from CSV (plus an unitemised dozen registry IDs)")
-
-    sections = crosswalk_data.load(DATA_RAW / "codemeta-wikidata-crosswalk.xlsx")
-    counts = crosswalk_data.counts(sections)
-    total_all = sum(t for t, _ in counts.values())
-    mapped_all = sum(m for _, m in counts.values())
-    n_codemeta_only = total_all - mapped_all
-    log.append(f"read crosswalk: {n_codemeta_only} of {total_all} CodeMeta properties are unmapped (CodeMeta-only)")
-
-    svg_text, w, h = _build_svg(n_wikidata, n_codemeta_only)
-    svg_path = BLOCK1_DIR / "chublets-wikibase-datamodel.svg"
-    svg_path.write_text(svg_text, encoding="utf-8")
-    png_path = svg_path.with_suffix(".png")
-    render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
-    final_w, final_h = trim_transparent_border(png_path, margin_px=10)
-    log.append(
-        f"wrote {svg_path.relative_to(ROOT)} + .png "
-        f"({final_w}x{final_h}, transparent, <=10px border)"
-    )
+    M = model_data.load()
+    facts = model_data.caption_facts(M)
+    log = [g.save(NAME, build(M))]
+    if NAME in captions.load():
+        captions.render(NAME, **facts)
+    log.append(f"{facts['n_props']} properties from {facts['n_twin']} Wikidata equivalents and {facts['n_with_codemeta']} CodeMeta terms")
     return log
 
 

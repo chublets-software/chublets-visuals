@@ -1,138 +1,91 @@
-"""Block 1 (2/4) -- Wikidata software-properties overview.
+"""Block 1 (2/4) -- Wikidata software-properties overview (S11: redrawn on the model).
 
-Companion piece to chublets-codemeta-overview: same visual language, same
-box vocabulary, but Wikidata has no type hierarchy to draw (WikiProject
-Informatics/Software/Properties is a flat property list), so this is five
-category boxes side by side rather than a class tree. Categories and
-membership are an editorial grouping (not sourced from the WikiProject
-page itself, which lists properties in publication order); the property
-set itself is manually transcribed from
-Wikidata_WikiProject_Informatics_Software_Properties-Wikidata.pdf into
-data/raw/wikidata-software-properties.csv, geprueft 2026-09-10 -- the PDF
-has no machine-readable table export, so re-scraping it on every build
-would be fragile for no benefit; the CSV is the versioned source of
-record instead (PRIMER.md A3).
+The Wikidata properties of the WikiProject Informatics software list, in the groups
+of that page. Every property is also a property of the chublets Wikibase; a coloured
+square tells whether it has a CodeMeta term (crosswalked) or not (Wikidata only).
 
-Produces:
-  img/chublets-wikidata-properties-overview.svg / .png (transparent)
+Reads: py/model_data.py (vendored list). Produces: img/chublets-wikidata-properties-overview.svg / .png
 
 Runnable standalone: `python py/step_wikidata_properties_overview.py`
 """
 
 from __future__ import annotations
 
-import csv
 import sys
+from collections import OrderedDict
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from visuals_utils import (  # noqa: E402
-    DATA_RAW,
-    BLOCK1_DIR,
-    ROOT,
-    INK,
-    MUTED,
-    CATEGORY_COLORS,
-    ensure_dirs,
-    esc,
-    font_face_css,
-    render_svg_to_png,
-    tint,
-    trim_transparent_border,
-)
+import captions  # noqa: E402
+import model_data  # noqa: E402
+import model_graphics as g  # noqa: E402
+from visuals_utils import INK, MUTED, tint  # noqa: E402
 
-BOX_W = 400
-FIELD_H = 26
-HEADER_H = 48
-PAD_V = 16
-H_GAP = 36
-MARGIN = 60
-
-OVERSAMPLE = 1.7
-
-CATEGORY_ORDER = [
-    "Identity & people",
-    "Technical",
-    "Relations",
-    "Links & registries",
-    "Versioning & rights",
-]
+NAME = "chublets-wikidata-properties-overview"
+GROUPS = {"technical": "Technical", "registries": "Registries and identifiers", "versioning": "Versioning",
+          "relations": "Relations", "links": "Links", "rights": "Rights", "identity": "Identity", "people": "People"}
+BOX_W, ROW_H, HEAD_H, GAP, N_COL = 400, 25, 50, 36, 4
+SC = g.STATUS_COLORS
 
 
-def _load(csv_path: Path) -> dict[str, list[tuple[str, str]]]:
-    out: dict[str, list[tuple[str, str]]] = {c: [] for c in CATEGORY_ORDER}
-    with open(csv_path, encoding="utf-8", newline="") as f:
-        for row in csv.DictReader(f):
-            out[row["category"]].append((row["label"], row["pid"]))
-    return out
-
-
-def _box_height(n: int) -> float:
-    return HEADER_H + n * FIELD_H + 2 * PAD_V
-
-
-def _render_box(x: float, y: float, title: str, rows: list[tuple[str, str]], color: str) -> str:
-    h = _box_height(len(rows))
-    fill = tint(color, 0.9)
-    out = f'<rect x="{x}" y="{y}" width="{BOX_W}" height="{h}" rx="6" fill="{fill}" stroke="{color}" stroke-width="3"/>'
-    out += (
-        f'<text x="{x+BOX_W/2}" y="{y+30}" text-anchor="middle" font-family="Fira Sans" '
-        f'font-weight="700" font-size="21" fill="{INK}">{esc(title)}</text>'
-    )
-    out += f'<line x1="{x}" y1="{y+HEADER_H}" x2="{x+BOX_W}" y2="{y+HEADER_H}" stroke="{color}" stroke-width="2.5"/>'
-    fy = y + HEADER_H + 20
-    for label, pid in rows:
-        out += (
-            f'<text x="{x+14}" y="{fy}" text-anchor="start" font-family="Fira Sans" '
-            f'font-weight="400" font-size="15.5" fill="{INK}">+ {esc(label)}</text>'
-        )
-        if pid and pid != "-":
-            out += (
-                f'<text x="{x+BOX_W-14}" y="{fy}" text-anchor="end" font-family="Fira Sans" '
-                f'font-weight="400" font-size="14" fill="{MUTED}">{esc(pid)}</text>'
-            )
-        fy += FIELD_H
-    return out
-
-
-def _build_svg(data: dict[str, list[tuple[str, str]]]) -> tuple[str, float, float]:
-    n = len(CATEGORY_ORDER)
-    W = MARGIN * 2 + n * BOX_W + (n - 1) * H_GAP
-    top = MARGIN + 30  # room for the "Wikidata Software Properties" caption above the row
-    tallest = max(_box_height(len(data[c])) for c in CATEGORY_ORDER)
-    H = top + tallest + MARGIN
-
-    p = [f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}" height="{H}" viewBox="0 0 {W} {H}">']
-    p.append(font_face_css())
-    p.append(
-        f'<text x="{MARGIN}" y="{MARGIN}" text-anchor="start" font-family="Fira Sans" '
-        f'font-weight="700" font-size="24" fill="{INK}">Wikidata: WikiProject Informatics/Software/Properties</text>'
-    )
-    for i, cat in enumerate(CATEGORY_ORDER):
-        x = MARGIN + i * (BOX_W + H_GAP)
-        p.append(_render_box(x, top, cat, data[cat], CATEGORY_COLORS[i]))
-    p.append("</svg>")
-    return "\n".join(p), W, H
+def build(M: model_data.Model) -> g.Canvas:
+    rows = model_data.wikiproject_software_list()
+    groups: OrderedDict[str, list[dict]] = OrderedDict((k, []) for k in GROUPS)
+    for r in rows:
+        assert r["group"] in GROUPS, f"unknown group {r['group']!r} on the WikiProject list"
+        groups[r["group"]].append(r)
+    for v in groups.values():
+        v.sort(key=lambda r: r["label_en"].lower())
+    # a few entries of the list have no label yet; the Wikibase property with that twin has one
+    by_twin = {p.twin: p.label for p in M.props.values() if p.twin}
+    for v in groups.values():
+        for r in v:
+            if "label to be filled" in r["label_en"]:
+                r["label_en"] = by_twin[r["pid"]]
+        v.sort(key=lambda r: r["label_en"].lower())
+    cv = g.Canvas()
+    heights = [0.0] * N_COL
+    order = sorted(groups, key=lambda k: -len(groups[k]))
+    for key in order:
+        rs = groups[key]
+        c = min(range(N_COL), key=lambda i: heights[i])
+        x, y = c * (BOX_W + GAP), heights[c]
+        h = HEAD_H + len(rs) * ROW_H + 14
+        col = "#475569"
+        out = g.rect(x, y, BOX_W, h, fill="#ffffff", stroke=col, sw=2.2, rx=8)
+        out += g.text(x + 16, y + 31, GROUPS[key], 17, bold=True, fill=INK)
+        out += g.text(x + BOX_W - 16, y + 31, str(len(rs)), 15, bold=True, fill=MUTED, anchor="end")
+        out += g.line([(x, y + HEAD_H - 6), (x + BOX_W, y + HEAD_H - 6)], col, sw=1.4)
+        yy = y + HEAD_H + 12
+        for r in rs:
+            status = r["wikibase_status"]
+            assert status in ("crosswalked", "wikidata-only"), f"{r['pid']}: unexpected status {status!r}"
+            out += g.rect(x + 14, yy - 11, 12, 12, fill=SC[status], rx=3)
+            out += g.text(x + 36, yy, r["label_en"], 14.5, fill=INK)
+            out += g.text(x + BOX_W - 16, yy, r["pid"], 13.5, fill=MUTED, anchor="end")
+            yy += ROW_H
+        cv.add(out, x, y, x + BOX_W, y + h)
+        heights[c] += h + 30
+    # legend
+    ly = max(heights) + 10
+    n_cw = sum(1 for r in rows if r["wikibase_status"] == "crosswalked")
+    out, x = "", 0.0
+    for label, col in ((f"also a CodeMeta term (crosswalked): {n_cw}", SC["crosswalked"]),
+                       (f"Wikidata only: {len(rows) - n_cw}", SC["wikidata-only"])):
+        out += g.rect(x, ly, 14, 14, fill=col, rx=3) + g.text(x + 24, ly + 12, label, 14, fill=INK)
+        x += 24 + g.text_w(label, 14) + 40
+    out += g.text(x, ly + 12, "Pn = Wikidata property ID", 14, italic=True, fill=MUTED)
+    cv.add(out, 0, ly - 2, x + 260, ly + 20)
+    return cv
 
 
 def run(strict: bool = False) -> list[str]:
-    ensure_dirs(BLOCK1_DIR)
-    log: list[str] = []
-
-    data = _load(DATA_RAW / "wikidata-software-properties.csv")
-    total = sum(len(v) for v in data.values())
-    log.append(f"read {total} Wikidata properties across {len(data)} categories from CSV")
-
-    svg_text, w, h = _build_svg(data)
-    svg_path = BLOCK1_DIR / "chublets-wikidata-properties-overview.svg"
-    svg_path.write_text(svg_text, encoding="utf-8")
-    png_path = svg_path.with_suffix(".png")
-    render_svg_to_png(svg_path, png_path, int(w * OVERSAMPLE), int(h * OVERSAMPLE))
-    final_w, final_h = trim_transparent_border(png_path, margin_px=10)
-    log.append(
-        f"wrote {svg_path.relative_to(ROOT)} + .png "
-        f"({final_w}x{final_h}, transparent, <=10px border)"
-    )
+    M = model_data.load()
+    facts = {**model_data.caption_facts(M), "n_wikiproject": len(model_data.wikiproject_software_list())}
+    log = [g.save(NAME, build(M))]
+    if NAME in captions.load():
+        captions.render(NAME, **facts)
+    log.append(f"{facts['n_wikiproject']} Wikidata software properties in {len(GROUPS)} groups")
     return log
 
 

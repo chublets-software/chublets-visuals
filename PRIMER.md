@@ -362,7 +362,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
 | S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | gebaut 2026-10-24: alle 13 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base`); Feinschliff nach Durchsicht im Paper |
-| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
+| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | in Arbeit: Gruppe A (Block 1) und B (vier Schritte als Collage `chublets-four-steps` + vier Einzelbilder) fertig; offen: C (FAIR-Collage), D (Architektur, open-archaeo, Talk) |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
 Alle Schritte aus dem ursprünglichen Plan (bis S7b) sind erledigt; S8 bis S12 sind die Neubasis auf Starter Pack, Demo, `wikibase-static` und `wikibase-federation`.

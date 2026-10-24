@@ -20,15 +20,16 @@ img/<block>/*.svg         source, versioned, grouped by block
 img/<block>/*.png         final graphics for slides, papers, READMEs — transparent background
 ```
 
-Every graphic lives under a block subfolder, never directly in `img/`:
+The model graphics (S10) and the redrawn Block 1 and Block 3 graphics (S11) sit directly in `img/`; the older ones are still in subfolders until S11 is finished:
 
 ```
 img/
-├── block-1-codemeta-wikidata-datamodel/
-│   ├── chublets-codemeta-overview.svg/.png
-│   ├── chublets-wikidata-properties-overview.svg/.png
-│   ├── chublets-codemeta-wikidata-crosswalk.svg/.png
-│   └── chublets-wikibase-datamodel.svg/.png
+├── chublets-codemeta-overview.svg/.png
+├── chublets-codemeta-wikidata-crosswalk.svg/.png
+├── chublets-wikidata-properties-overview.svg/.png
+├── chublets-wikibase-datamodel.svg/.png
+├── chublets-four-steps.svg/.png                  (collage of the four steps)
+├── chublets-step-ingest / -model / -curate-link / -export-publish .svg/.png
 ├── block-2-fair4rs-chain/
 │   ├── chublets-fair4rs-chain.svg/.png           (banner)
 │   ├── fair-findable-badge.svg/.png
@@ -39,16 +40,6 @@ img/
 │   ├── fair-interoperable-detail.svg/.png        (CodeMeta hub diagram)
 │   ├── fair-reusable-badge.svg/.png
 │   └── fair-reusable-detail.svg/.png
-├── block-3-four-step-pattern/
-│   ├── chublets-four-step-pattern.svg/.png       (banner)
-│   ├── step-1-ingest-badge.svg/.png              (icon only, S4)
-│   ├── step-1-ingest-detail.svg/.png             (explainer, S4b)
-│   ├── step-2-model-badge.svg/.png
-│   ├── step-2-model-detail.svg/.png
-│   ├── step-3-curate-link-badge.svg/.png
-│   ├── step-3-curate-link-detail.svg/.png
-│   ├── step-4-export-publish-badge.svg/.png
-│   └── step-4-export-publish-detail.svg/.png
 ├── system-architecture/
 │   ├── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
 │   ├── open-archaeo-wikidata-pipeline.svg/.png   (S6, `main.py all`'s 8 real steps)

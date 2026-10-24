@@ -171,3 +171,79 @@ model-evidence-base:
   alt: >-
     Six source boxes on the left with arrows to boxes for properties, classes and items on the right.
   sources: [chublets-wikibase-demo]
+
+chublets-codemeta-overview:
+  caption: >-
+    The {n_codemeta_terms} CodeMeta terms of the chublets model, grouped by the CodeMeta type they belong to
+    (Thing, CreativeWork, SoftwareSourceCode, SoftwareApplication, and the types for people, roles and reviews).
+    Subclass relations between the types are drawn as open triangles; terms marked with an asterisk are defined on
+    SoftwareSourceCode or SoftwareApplication and shown together.
+  alt: >-
+    Boxes for the CodeMeta types arranged by their class hierarchy, each listing its terms.
+  sources: [chublets-wikibase-demo]
+
+chublets-codemeta-wikidata-crosswalk:
+  caption: >-
+    The same {n_codemeta_terms} CodeMeta terms with the Wikidata property each one is mapped to in the crosswalk
+    ({n_crosswalked} of the properties of the chublets Wikibase are crosswalked). Terms without a Wikidata
+    property are CodeMeta only.
+  alt: >-
+    CodeMeta types as boxes; each term is shown with its Wikidata property identifier where the crosswalk has one.
+  sources: [chublets-wikibase-demo]
+
+chublets-wikidata-properties-overview:
+  caption: >-
+    The {n_wikiproject} Wikidata properties of the software list of WikiProject Informatics in eight groups.
+    Coloured squares are properties that the crosswalk links to a CodeMeta term; the others exist in Wikidata only.
+    Each label is the label of the corresponding property in the chublets Wikibase.
+  alt: >-
+    Eight boxes, one per property group, each with squares for its Wikidata properties and their labels, and a legend with the counts.
+  sources: [chublets-wikibase-demo]
+
+chublets-wikibase-datamodel:
+  caption: >-
+    Where the {n_props} properties of the chublets Wikibase come from: {n_twin} have an equivalent in Wikidata (P4)
+    and {n_with_codemeta} CodeMeta terms are mapped, {n_crosswalked} of them to a Wikidata property. The bar splits the properties by origin:
+    {n_crosswalked} crosswalked, {n_codemeta_only} CodeMeta only, {n_wikidata_only} Wikidata only,
+    {n_chublets_addition} chublets additions and {n_no_status} built-in or later added properties.
+  alt: >-
+    Two source boxes, Wikidata properties and CodeMeta terms, with arrows into one box for the Wikibase and a five-part bar of property origins.
+  sources: [chublets-wikibase-demo]
+
+chublets-four-steps:
+  caption: >-
+    The four steps of the chublets pipeline. Ingest brings Wikidata items, FDOx objects and Git repositories into
+    the Wikibase ({n_items} items, {n_statements} statements). Model fixes the schema of {n_props} properties and
+    {n_classes} classes. Curate and link creates items, adds statements, merges duplicates ({n_merges} merges in the
+    demo) and checks quality. Export and publish maps the data to CodeMeta, DCAT and DataCite for the software marketplaces.
+  alt: >-
+    Four coloured panels in a row, numbered 1 to 4, each with the boxes of one step and arrows between the steps.
+  sources: [chublets-wikibase-demo]
+
+chublets-step-ingest:
+  caption: >-
+    Step 1, Ingest: Wikidata items, FDOx objects and Git repositories (CITATION.cff) enter the same Wikibase
+    schema ({n_items} items, {n_statements} statements in the demo).
+  alt: Three source boxes above one box for the Wikibase of chublets.
+  sources: [chublets-wikibase-demo]
+
+chublets-step-model:
+  caption: >-
+    Step 2, Model: {n_twin} properties with a Wikidata equivalent and {n_with_codemeta} CodeMeta terms give the
+    schema of {n_props} properties and {n_classes} classes.
+  alt: Three boxes in a chain from Wikidata properties and CodeMeta terms to the schema.
+  sources: [chublets-wikibase-demo]
+
+chublets-step-curate-link:
+  caption: >-
+    Step 3, Curate and link: items are created ({n_items}), statements added ({n_statements}), duplicates merged
+    ({n_merges} in the demo) and the result is checked before publishing.
+  alt: Four boxes in a chain, create items, add statements, manual curation, quality control.
+  sources: [chublets-wikibase-demo]
+
+chublets-step-export-publish:
+  caption: >-
+    Step 4, Export and publish: the Wikibase is read with SPARQL, the properties are mapped, and CodeMeta, DCAT
+    and DataCite files are produced for nfdi.software, find.software and the KGE4RSE knowledge graph.
+  alt: A read box, a property mapping box, three mapper boxes with their files and a box for the marketplaces.
+  sources: [chublets-wikibase-demo]

@@ -324,6 +324,12 @@ def entity_facts() -> dict[str, int]:
     }
 
 
+def wikiproject_software_list() -> list[dict[str, str]]:
+    """The Wikidata properties of the WikiProject Informatics software list (rows of wikidata-properties.csv)."""
+    rows = read_csv(PACK / "wikidata-properties.csv")
+    return [r for r in rows if r["in_wikiproject_software_list"] == "yes"]
+
+
 def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
     """Numbers a caption in captions.yaml may use as `{placeholder}`.
 
@@ -358,5 +364,6 @@ def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
         "n_with_codemeta": sum(1 for p in props if p.codemeta_terms),
         "n_schema_org": sum(1 for p in props if p.schema_org),
         "n_datacite": sum(1 for p in props if p.datacite),
+        "n_wikiproject": len(wikiproject_software_list()),
         **entity_facts(),
     }
