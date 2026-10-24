@@ -183,6 +183,14 @@ nicht auf ihn beschränkt.
     kann `class-tree` und `property-origin` daher geringfügig ändern; das ist
     kein inhaltlicher Fehler. Patches enthalten nur Grafiken, die sie wirklich
     ändern; bei Bedarf in S12 Breiten auf ganze Pixel runden.
+    **Befund 2026-10-24 (Windows-Lauf, Patch 6):** Die Textbreiten sind auf
+    Windows größer als hier; die feste Boxhöhe in `static-vs-federation` reichte
+    nicht („text needs 356px, the box has 330“), der Build brach ab und die
+    Schritte danach (u. a. `model-evidence-base`, Tabellen, Seiten) liefen nicht.
+    Regel ab Patch 7: Boxen werden aus der gemessenen Textbreite berechnet, nie
+    gegen eine feste Höhe geprüft; `assert` nur für Modellannahmen (Anzahl,
+    Eindeutigkeit), nicht für Pixelmaße. Offen: `class-tree` (Chip-Passprobe)
+    und `property-vocabulary-overlap` (Legendenzeile) haben noch Pixel-Asserts.
 17. **Die „generic topics" der Properties sind eigene Themenfelder**, kein
     Feld der Quellen: Die elf Gruppen der WikiProject-Seite sind uneinheitlich
     (Preis und DOI unter „rights", „has characteristic" unter „versioning"),

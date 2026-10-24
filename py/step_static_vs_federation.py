@@ -25,7 +25,7 @@ from visuals_utils import CATEGORY_COLORS, INK, MUTED, tint  # noqa: E402
 NAME = "static-vs-federation"
 GREY = "#64748b"
 PURPLE, TEAL = CATEGORY_COLORS[0], CATEGORY_COLORS[2]
-W, H = 430, 330
+W = 430
 GAP = 120
 
 ROUTES = [
@@ -46,6 +46,15 @@ def build(M: model_data.Model) -> g.Canvas:
     f = model_data.caption_facts(M)
     n_ent = f["n_classes"] + f["n_props"] + f["n_items"]
     cv = g.Canvas()
+
+    def needed(rows) -> float:
+        """Height of a route box for its text; measured, so it holds on every platform."""
+        h = 102.0
+        for _k, v in rows:
+            h += 20 + 19 * len(g.wrap(v, 14.5, W - 48)) + 20
+        return h - 20 + 24
+
+    H = max(needed(r[4]) for r in ROUTES)
     # source box, centred over the two routes
     total = 2 * W + GAP
     sw = 520
@@ -72,7 +81,6 @@ def build(M: model_data.Model) -> g.Canvas:
             for j, ln in enumerate(lines):
                 out += g.text(x + 24, yy + 20 + 19 * j, ln, 14.5, fill=INK)
             yy += 20 + 19 * len(lines) + 20
-        assert yy - 20 <= y + H, f"{title}: text needs {yy - 20 - y}px, the box has {H}"
         cv.add(out, x, y, x + W, y + H)
     return cv
 
