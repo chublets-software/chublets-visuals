@@ -1,0 +1,102 @@
+# Topics ("generic topics") of the chublets Wikibase properties.
+#
+# DRAFT for review (S9): every property of the model sits in exactly one topic.
+# The topics are chosen by subject matter, so that one catalogue plate holds
+# properties a reader would look for together. They follow the groups of the
+# WikiProject Informatics/Software/Properties page where those are sensible and
+# the CodeMeta / schema.org type where a term has one; neither is used as the
+# rule, because the WikiProject groups are uneven (price and DOI sit under
+# "rights", "has characteristic" under "versioning") and 67 of 168 properties
+# have no WikiProject twin at all.
+#
+# Read at build time by py/topics.py; the `model-data` step fails if a property
+# is missing, listed twice, or unknown to the model. `basis` is a note for the
+# reader of this file, it is not drawn.
+#
+# Order is the order of the plates in the catalogue graphic.
+
+topics:
+
+  - id: kernel
+    label: Kernel
+    description: Classes, instances and the provenance of every statement
+    basis: Kernel of wikibase-static; subclass of / instance of / subproperty of and the three reference properties have Wikidata twins (P279, P31, P1647, P854, P813, P248), no CodeMeta term.
+    members: [P1, P2, P3, P6, P7, P8]
+
+  - id: property-description
+    label: Property description
+    description: How a property is described in the Wikibase itself
+    basis: Property metadata of the chublets model (Starter Pack phase 0) plus domain and range of the kernel; no Wikidata or CodeMeta counterpart, schema.org term and CodeMeta term are themselves recorded here.
+    members: [P4, P5, P9, P10, P100, P101, P102]
+
+  - id: identity
+    label: Identity and naming
+    description: What a chublet is called, where it belongs and how it is identified
+    basis: WikiProject group "identity"; CodeMeta Thing (name, description, identifier, sameAs); the identity block of the open-archaeo pipeline.
+    members: [P106, P112, P114, P115, P116, P118, P119, P121, P127, P247]
+
+  - id: registry-ids
+    label: Registry and catalogue IDs
+    description: Identifiers in package registries, distributions and software catalogues
+    basis: WikiProject group "registries" (external-id properties, 15 of them named there plus the SWHID).
+    members: [P108, P124, P147, P174, P175, P176, P177, P178, P179, P180, P181, P197, P198, P217, P241, P246]
+
+  - id: source-code
+    label: Source code and development
+    description: Repository, build and the language a program is written in
+    basis: CodeMeta SoftwareSourceCode (codeRepository, programmingLanguage, codeSampleType) and the CodeMeta additions for development (issueTracker, buildInstructions, continuousIntegration, readme, hasSourceCode); WikiProject groups "links" and "technical".
+    members: [P123, P125, P126, P138, P161, P163, P165, P166, P203, P210, P231]
+
+  - id: platform-dependencies
+    label: Platform, requirements and dependencies
+    description: What software needs to run, and what it is built on or works with
+    basis: CodeMeta / schema.org SoftwareApplication (operatingSystem, memoryRequirements, processorRequirements, storageRequirements, permissions, softwareRequirements, softwareAddOn, availableOnDevice, countriesSupported) and runtimePlatform; WikiProject group "technical".
+    members: [P109, P142, P143, P158, P160, P169, P170, P201, P206, P214, P218, P219, P221, P224, P227, P237, P238, P240, P245, P248]
+
+  - id: formats
+    label: Files, formats and standards
+    description: File formats, encodings, size and the standards behind them
+    basis: CodeMeta fileSize and fileFormat / encodingFormat, schema.org encoding; WikiProject group "technical" (readable and writable file format, distribution format, media type) and the review additions for standards and characters.
+    members: [P145, P154, P172, P173, P187, P194, P212, P250, P254, P256, P257]
+
+  - id: versions-dates
+    label: Versions, releases and dates
+    description: Versions, release history, succession and the dates of a chublet
+    basis: CodeMeta softwareVersion, version, releaseNotes, dateCreated / dateModified / datePublished and the schema.org Role dates; WikiProject group "versioning" and "relations" (follows, followed by, part of the series).
+    members: [P132, P137, P139, P144, P148, P152, P153, P182, P188, P189, P195, P196, P220, P223, P232, P243, P244, P253]
+
+  - id: web-presence
+    label: Links, media and web presence
+    description: Websites, demos, documentation, downloads, images and the archive copy of them
+    basis: CodeMeta url, relatedLink, softwareHelp, downloadUrl, installUrl, screenshot; WikiProject group "links" and "media" (archive URL and date are qualifiers of the repository statement).
+    members: [P104, P105, P110, P120, P133, P141, P151, P204, P207, P208, P211, P216, P255]
+
+  - id: agent-roles
+    label: Agent roles
+    description: The roles a person or organisation has towards a chublet
+    basis: CodeMeta / schema.org author, contributor, creator-like and funding roles (maintainer, producer, provider, publisher, sponsor, funder, editor) and Role (roleName, position); WikiProject group "people".
+    members: [P113, P131, P134, P140, P146, P171, P183, P225, P228, P229, P230, P236, P242]
+
+  - id: agent-attributes
+    label: Person and organisation
+    description: What is said about a person or organisation itself
+    basis: schema.org / CodeMeta Person (givenName, familyName, email, address, affiliation, identifier); WikiProject group "people" (member of, award received, notable work, field of work, GitHub account).
+    members: [P135, P155, P156, P157, P159, P184, P191, P193, P200, P213, P215, P222]
+
+  - id: rights-funding
+    label: Rights, funding and access
+    description: Licence, copyright, price, embargo and funding
+    basis: CodeMeta license, copyrightHolder, copyrightYear, embargoDate, embargoEndDate, funding, isAccessibleForFree; WikiProject group "rights".
+    members: [P107, P167, P168, P185, P186, P199, P209, P226, P249]
+
+  - id: classification-relations
+    label: Classification, features and relations
+    description: What a chublet is about, what it can do and how it relates to other software
+    basis: CodeMeta / schema.org applicationCategory, applicationSubCategory, applicationSuite, keywords, featureList, isPartOf, hasPart, targetProduct, supportingData; WikiProject groups "classification" and "relations".
+    members: [P103, P117, P122, P128, P129, P130, P136, P149, P150, P164, P190, P192, P202, P205, P251, P252]
+
+  - id: publication-review
+    label: Publication, citation and review
+    description: Publications about a chublet, what it cites, and its review
+    basis: CodeMeta referencePublication, citation, review, reviewAspect, reviewBody; WikiProject group "publication".
+    members: [P111, P162, P233, P234, P235, P239]

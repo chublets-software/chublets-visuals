@@ -13,8 +13,10 @@ Step modules are imported lazily so `--list` and `--dry-run` stay instant
 and free of resvg-py/Pillow/openpyxl.
 
 Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7,
-S7b) is built. New work gets a fresh id appended to STEPS; existing ids
-never change, since PATCH-README.md and PRIMER.md refer to them by id.
+S7b) is built; S8 onwards (the graphics of the Wikibase data model) is under
+way, see PRIMER.md. New work gets a fresh id; existing ids never change, since
+PATCH-README.md and PRIMER.md refer to them by id. `model-data` runs first and
+`captions` last because they check, they do not draw.
 """
 
 from __future__ import annotations
@@ -30,6 +32,7 @@ sys.path.insert(0, str(ROOT / "py"))
 
 # (id, description, module name under py/)
 STEPS = [
+    ("model-data", "S8: verify the vendored model sources and the numbers drawn from them", "step_model_data_check"),
     ("codemeta", "Block 1 (1/4): CodeMeta term overview (class tree)", "step_codemeta_overview"),
     ("wikidata", "Block 1 (2/4): Wikidata software-properties overview", "step_wikidata_properties_overview"),
     ("crosswalk", "Block 1 (3/4): CodeMeta <-> Wikidata crosswalk", "step_codemeta_wikidata_crosswalk"),
@@ -50,6 +53,7 @@ STEPS = [
     ("oa-python-route", "S6b (2/3): the Python route session", "step_open_archaeo_python_route"),
     ("oa-openrefine-route", "S6b (3/3): the OpenRefine route", "step_open_archaeo_openrefine_route"),
     ("talk-closing", "Talk closing slide: 8 badges as a ring around the logo", "step_talk_closing"),
+    ("captions", "S8: captions.yaml against the graphics on disk", "step_captions_check"),
 ]
 
 

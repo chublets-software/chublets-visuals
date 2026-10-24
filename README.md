@@ -145,6 +145,24 @@ python main.py --strict               warnings become errors (what CI would run)
 Running it twice produces byte-identical output; `git status` stays clean
 after the second run.
 
+## Wikibase data model graphics (in progress, S8 onwards)
+
+The graphics of the chublets Wikibase data model are built on the Starter Pack,
+[`chublets-wikibase-demo`](https://github.com/n4o-rse/chublets-wikibase-demo),
+[`wikibase-static`](https://github.com/n4o-rse/wikibase-static) and
+[`wikibase-federation`](https://github.com/n4o-rse/wikibase-federation). Their
+model tables are vendored unchanged under `data/raw/<repo>/` (SHA-256 manifest in
+`data/raw/vendor-manifest.csv`, commits in `data/raw/SNAPSHOT.md`); refresh with
+`python py/vendor_sources.py --demo ... --static ... --federation ... --retrieved
+YYYY-MM-DD`. `py/model_data.py` is the one place that reads them, and
+`python main.py --only model-data` checks the files against the manifest and the
+numbers against the Starter Pack's own summary before anything is drawn.
+
+New and migrated graphics sit flat in `img/`, carry no title, header or footer,
+and have their caption, alt text, sources and licence in `captions.yaml`
+(`py/captions.py`). The properties are grouped into topics in `data/topics.yaml`
+(`python py/topics.py` prints the review table).
+
 ## Design
 
 Colour and type live in one place, `py/visuals_utils.py` — every step

@@ -1,0 +1,999 @@
+source,key,id
+open-archaeo,entry:00d66c,Q107
+open-archaeo,identity:wikiproject,Q108
+open-archaeo,identity:platform,Q109
+open-archaeo,identity:collection,Q110
+open-archaeo,language:R,Q111
+open-archaeo,tag:Palaeobotany,Q112
+open-archaeo,person:WeedEco,Q113
+open-archaeo,vcs:Git,Q114
+open-archaeo,entry:01b8e7,Q115
+open-archaeo,tag:Statistical analysis,Q116
+open-archaeo,person:jbuxeda,Q117
+open-archaeo,entry:021f63,Q118
+open-archaeo,tag:Spatial analysis,Q119
+open-archaeo,person:taphocoenose,Q120
+open-archaeo,entry:0265e1,Q121
+open-archaeo,host:ArcGIS,Q122
+open-archaeo,tag:Viewshed analysis,Q123
+open-archaeo,person:gianmarcoalberti,Q124
+open-archaeo,entry:039166,Q125
+open-archaeo,tag:Chronological modelling,Q126
+open-archaeo,person:jgregoriods,Q127
+open-archaeo,entry:03c958,Q128
+open-archaeo,tag:Photogrammetry,Q129
+open-archaeo,person:anatolian,Q130
+open-archaeo,entry:043735,Q131
+open-archaeo,tag:Bits and bobs,Q132
+open-archaeo,person:ropensci,Q133
+open-archaeo,entry:04a3e8,Q134
+open-archaeo,host:QGIS,Q135
+open-archaeo,tag:Site mapping,Q136
+open-archaeo,person:L-P Archaeology,Q137
+open-archaeo,entry:05364e,Q138
+open-archaeo,language:Python,Q139
+open-archaeo,"tag:Radiocarbon dating, calibration and sequencing",Q140
+open-archaeo,person:demjanp,Q141
+open-archaeo,work:https://doi.org/10.1017/RDC.2020.129,Q142
+open-archaeo,entry:053d46,Q143
+open-archaeo,tag:Drivers and IO,Q144
+open-archaeo,person:WiseLabCMU,Q145
+open-archaeo,entry:068b7e,Q146
+open-archaeo,entry:082396,Q147
+open-archaeo,tag:Data management,Q148
+open-archaeo,person:andredebuisne,Q149
+open-archaeo,entry:0900f8,Q150
+open-archaeo,person:f-silva-archaeo,Q151
+open-archaeo,work:https://doi.org/10.1016/j.jas.2014.04.021,Q152
+open-archaeo,entry:090cea,Q153
+open-archaeo,tag:Diagrams and visualizations,Q154
+open-archaeo,person:davidcorton,Q155
+open-archaeo,entry:092e36,Q156
+open-archaeo,tag:API interfaces and web scrapers,Q157
+open-archaeo,person:ISAAKiel,Q158
+open-archaeo,work:https://doi.org/10.21105/joss.01914,Q159
+open-archaeo,entry:09f20e,Q160
+open-archaeo,tag:Geophysical survey,Q161
+open-archaeo,person:Maarten14C,Q162
+open-archaeo,entry:0a45b9,Q163
+open-archaeo,tag:Educational resources and practical guides,Q164
+open-archaeo,person:ajupton,Q165
+open-archaeo,entry:0c49d4,Q166
+open-archaeo,person:mpeeples2008,Q167
+open-archaeo,entry:0d2b48,Q168
+open-archaeo,tag:Augmented reality,Q169
+open-archaeo,person:zacharyliu,Q170
+open-archaeo,entry:0d30dc,Q171
+open-archaeo,person:oeai-dac,Q172
+open-archaeo,person:Archaeotux,Q173
+open-archaeo,entry:0de83e,Q174
+open-archaeo,tag:Zooarchaeology,Q175
+open-archaeo,person:Leif Isaksen,Q176
+open-archaeo,entry:0e104a,Q177
+open-archaeo,tag:Dendrochronology,Q178
+open-archaeo,person:hanecakr,Q179
+open-archaeo,entry:0e2cc5,Q180
+open-archaeo,tag:Shape recognition,Q181
+open-archaeo,person:steko,Q182
+open-archaeo,person:iosa,Q183
+open-archaeo,entry:0e90b8,Q184
+open-archaeo,tag:Harris matrix,Q185
+open-archaeo,person:shawngraham,Q186
+open-archaeo,entry:0ed54f,Q187
+open-archaeo,person:opencontext,Q188
+open-archaeo,entry:106d3a,Q189
+open-archaeo,tag:Seriation,Q190
+open-archaeo,person:clipo,Q191
+open-archaeo,entry:111a42,Q192
+open-archaeo,tag:Schemas and ontologies,Q193
+open-archaeo,person:zalmoxes-laran,Q194
+open-archaeo,person:Bruno Fanini,Q195
+open-archaeo,person:Enzo Cocca,Q196
+open-archaeo,work:https://doi.org/10.3390/heritage6020069,Q197
+open-archaeo,entry:119b60,Q198
+open-archaeo,person:zoran-cuckovic,Q199
+open-archaeo,entry:11d9ca,Q200
+open-archaeo,tag:X-Ray Fluorescence,Q201
+open-archaeo,person:paleolimbot,Q202
+open-archaeo,entry:122259,Q203
+open-archaeo,tag:3D modelling,Q204
+open-archaeo,person:apalmisano82,Q205
+open-archaeo,entry:1286ad,Q206
+open-archaeo,tag:Datasets,Q207
+open-archaeo,tag:Bibliography,Q208
+open-archaeo,tag:Platforms and publications,Q209
+open-archaeo,person:watrall,Q210
+open-archaeo,entry:13bafb,Q211
+open-archaeo,tag:Simulation,Q212
+open-archaeo,tag:Cultural evolution,Q213
+open-archaeo,person:masonyoungblood,Q214
+open-archaeo,entry:13e033,Q215
+open-archaeo,person:Eythan Levy,Q216
+open-archaeo,person:Frédéric Pluquet,Q217
+open-archaeo,person:Gilles Geeraerts,Q218
+open-archaeo,entry:143eb9,Q219
+open-archaeo,person:MartinHinz,Q220
+open-archaeo,entry:178871,Q221
+open-archaeo,tag:Ceramic analysis,Q222
+open-archaeo,entry:180534,Q223
+open-archaeo,person:wccarleton,Q224
+open-archaeo,entry:18a657,Q225
+open-archaeo,person:Eythan31,Q226
+open-archaeo,entry:19c6c4,Q227
+open-archaeo,tag:Artefact morphology,Q228
+open-archaeo,person:Johanna-Mestorf-Academy,Q229
+open-archaeo,entry:1a76ef,Q230
+open-archaeo,person:nfrerebeau,Q231
+open-archaeo,entry:1b8a46,Q232
+open-archaeo,entry:1b98b6,Q233
+open-archaeo,host:Meshlab,Q234
+open-archaeo,person:KevinCain,Q235
+open-archaeo,entry:1d0313,Q236
+open-archaeo,person:jwilczek-dotcom,Q237
+open-archaeo,entry:1d3f71,Q238
+open-archaeo,tag:Machine learning,Q239
+open-archaeo,person:lrncrd,Q240
+open-archaeo,entry:1dcba9,Q241
+open-archaeo,person:JGravier,Q242
+open-archaeo,entry:1e0423,Q243
+open-archaeo,tag:Stable isotope analysis,Q244
+open-archaeo,person:archmetalDBM,Q245
+open-archaeo,entry:1e8a76,Q246
+open-archaeo,tag:Archaeogenetics,Q247
+open-archaeo,person:MichaelHoltonPrice,Q248
+open-archaeo,entry:1eea7e,Q249
+open-archaeo,person:samclin,Q250
+open-archaeo,entry:1fc02b,Q251
+open-archaeo,entry:21238f,Q252
+open-archaeo,tag:Luminescence dating,Q253
+open-archaeo,person:dstreble,Q254
+open-archaeo,entry:21cac6,Q255
+open-archaeo,tag:Public archaeology,Q256
+open-archaeo,person:openhistorymap,Q257
+open-archaeo,entry:21eb18,Q258
+open-archaeo,tag:Archaeoastronomy,Q259
+open-archaeo,person:marcfrincu,Q260
+open-archaeo,entry:227de1,Q261
+open-archaeo,person:Bruno Desachy,Q262
+open-archaeo,entry:22f8da,Q263
+open-archaeo,person:frederic-santos,Q264
+open-archaeo,entry:23248f,Q265
+open-archaeo,person:bocinsky,Q266
+open-archaeo,entry:235c48,Q267
+open-archaeo,entry:2392a4,Q268
+open-archaeo,person:CWWhitney,Q269
+open-archaeo,entry:23d624,Q270
+open-archaeo,language:MATLAB,Q271
+open-archaeo,tag:Biological anthropology,Q272
+open-archaeo,person:pr0m1th3as,Q273
+open-archaeo,entry:2415f1,Q274
+open-archaeo,person:marchaeologist,Q275
+open-archaeo,entry:251be2,Q276
+open-archaeo,language:NetLogo,Q277
+open-archaeo,person:ABMArchaeologists,Q278
+open-archaeo,person:RonaldVisser,Q279
+open-archaeo,person:drocks13,Q280
+open-archaeo,entry:25d7a1,Q281
+open-archaeo,person:iggdrasil,Q282
+open-archaeo,entry:27197c,Q283
+open-archaeo,entry:272bf9,Q284
+open-archaeo,entry:27d735,Q285
+open-archaeo,person:semerj,Q286
+open-archaeo,entry:289126,Q287
+open-archaeo,person:archeos,Q288
+open-archaeo,entry:28f33d,Q289
+open-archaeo,person:josephlewis,Q290
+open-archaeo,entry:2a8ef4,Q291
+open-archaeo,person:willismonroe,Q292
+open-archaeo,entry:2c7895,Q293
+open-archaeo,entry:2c86ca,Q294
+open-archaeo,person:joeroe,Q295
+open-archaeo,entry:2eb608,Q296
+open-archaeo,person:kafetzakid,Q297
+open-archaeo,entry:3020b6,Q298
+open-archaeo,tag:Iconography,Q299
+open-archaeo,entry:302a51,Q300
+open-archaeo,person:josempozo,Q301
+open-archaeo,person:Silvia Valenzuela-Lamas,Q302
+open-archaeo,person:Angela Trentacoste,Q303
+open-archaeo,person:Ariadne Nieto-Espinet,Q304
+open-archaeo,person:Silvia Guimarães Chiarelli,Q305
+open-archaeo,entry:30828e,Q306
+open-archaeo,language:Lisp,Q307
+open-archaeo,person:tsdye,Q308
+open-archaeo,entry:31c693,Q309
+open-archaeo,entry:3304c8,Q310
+open-archaeo,person:nevrome,Q311
+open-archaeo,person:dirkseidensticker,Q312
+open-archaeo,entry:33adc9,Q313
+open-archaeo,person:archaeothommy,Q314
+open-archaeo,entry:33f422,Q315
+open-archaeo,person:g33k5p34k,Q316
+open-archaeo,entry:34aa15,Q317
+open-archaeo,person:vanderbilt-data-science,Q318
+open-archaeo,entry:34b392,Q319
+open-archaeo,entry:34cd53,Q320
+open-archaeo,person:benmarwick,Q321
+open-archaeo,entry:35e246,Q322
+open-archaeo,entry:36074e,Q323
+open-archaeo,host:Microsoft Excel,Q324
+open-archaeo,entry:365985,Q325
+open-archaeo,entry:367fc2,Q326
+open-archaeo,person:isakro,Q327
+open-archaeo,entry:36ae82,Q328
+open-archaeo,tag:Data collection,Q329
+open-archaeo,person:surf3s,Q330
+open-archaeo,entry:370c78,Q331
+open-archaeo,person:ahb108,Q332
+open-archaeo,entry:37290d,Q333
+open-archaeo,entry:37c0d3,Q334
+open-archaeo,entry:37f7aa,Q335
+open-archaeo,person:R-Lum,Q336
+open-archaeo,entry:3838a3,Q337
+open-archaeo,entry:387609,Q338
+open-archaeo,entry:399062,Q339
+open-archaeo,person:alexbrandsen,Q340
+open-archaeo,entry:39d5ae,Q341
+open-archaeo,person:ElaineYChu,Q342
+open-archaeo,entry:3aa615,Q343
+open-archaeo,person:sfsheath,Q344
+open-archaeo,entry:3b4587,Q345
+open-archaeo,person:bischrob,Q346
+open-archaeo,entry:3bea01,Q347
+open-archaeo,entry:3cace6,Q348
+open-archaeo,host:Piwigo,Q349
+open-archaeo,entry:3fd5ca,Q350
+open-archaeo,entry:44d440,Q351
+open-archaeo,person:Renato Hermoza,Q352
+open-archaeo,person:Ivan Sipiran,Q353
+open-archaeo,work:https://doi.org/10.1145/3208159.3208173,Q354
+open-archaeo,entry:487d83,Q355
+open-archaeo,tag:Aerial and satellite imagery,Q356
+open-archaeo,entry:4f99b3,Q357
+open-archaeo,entry:2f00c7,Q381
+open-archaeo,person:florianthiery,Q382
+open-archaeo,person:Allard Mees,Q383
+open-archaeo,entry:388f6a,Q384
+open-archaeo,entry:38c9e3,Q385
+open-archaeo,person:rybesh,Q386
+open-archaeo,entry:3b55cd,Q387
+open-archaeo,entry:3cb78d,Q388
+open-archaeo,entry:3e3d3f,Q389
+open-archaeo,person:people3k,Q390
+open-archaeo,entry:403337,Q391
+open-archaeo,person:eweaverdyck,Q392
+open-archaeo,entry:40d0f6,Q393
+open-archaeo,person:situx,Q394
+open-archaeo,entry:414271,Q395
+open-archaeo,tag:LiDAR,Q396
+open-archaeo,person:stefaneichert,Q397
+open-archaeo,entry:437007,Q398
+open-archaeo,entry:43f21c,Q399
+open-archaeo,entry:443df7,Q400
+open-archaeo,person:CropPro-package,Q401
+open-archaeo,entry:4702d5,Q402
+open-archaeo,entry:4805e1,Q403
+open-archaeo,person:markhubbe,Q404
+open-archaeo,entry:48091f,Q405
+open-archaeo,language:JavaScript,Q406
+open-archaeo,person:heripo lab,Q407
+open-archaeo,work:https://doi.org/10.22755/kjchs.2025.58.3.34,Q408
+open-archaeo,entry:487b74,Q409
+open-archaeo,person:MikeJJohnson,Q410
+open-archaeo,entry:49eaab,Q411
+open-archaeo,entry:4d450f,Q412
+open-archaeo,entry:4e3b63,Q413
+open-archaeo,tag:Geoarchaeology,Q414
+open-archaeo,entry:51aa23,Q415
+open-archaeo,entry:521c30,Q416
+open-archaeo,person:zoometh,Q417
+open-archaeo,person:Craig Alexander,Q418
+open-archaeo,entry:52b226,Q419
+open-archaeo,person:AlisJay,Q420
+open-archaeo,entry:531507,Q421
+open-archaeo,entry:53db77,Q422
+open-archaeo,person:philippe-a,Q423
+open-archaeo,entry:54198e,Q424
+open-archaeo,tag:Palaeoclimate modelling,Q425
+open-archaeo,person:EvolEcolGroup,Q426
+open-archaeo,person:Michela Leonardi,Q427
+open-archaeo,person:Emily Y. Hallet,Q428
+open-archaeo,person:Robert Beyer,Q429
+open-archaeo,person:Mario Krapp,Q430
+open-archaeo,person:Andrea Manica,Q431
+open-archaeo,entry:54a4e8,Q432
+open-archaeo,tag:Lithic analysis,Q433
+open-archaeo,person:zackbatist,Q434
+open-archaeo,person:dcontre,Q435
+open-archaeo,person:Ciara Zogheib,Q436
+open-archaeo,entry:551976,Q437
+open-archaeo,entry:55405a,Q438
+open-archaeo,entry:55b790,Q439
+open-archaeo,person:cl379,Q440
+open-archaeo,entry:56fd39,Q441
+open-archaeo,person:David L. Carlson,Q442
+open-archaeo,person:Georg Roth,Q443
+open-archaeo,entry:5700bb,Q444
+open-archaeo,entry:57d10d,Q445
+open-archaeo,entry:584689,Q446
+open-archaeo,entry:58585b,Q447
+open-archaeo,tag:Literary analysis and epigraphy,Q448
+open-archaeo,entry:587555,Q449
+open-archaeo,person:omendoza83,Q450
+open-archaeo,entry:58fa91,Q451
+open-archaeo,person:poseidon-framework,Q452
+open-archaeo,entry:5991ee,Q453
+open-archaeo,entry:5a0925,Q454
+open-archaeo,person:paleocore,Q455
+open-archaeo,entry:5a7b2e,Q456
+open-archaeo,person:jfpalomeque,Q457
+open-archaeo,work:10.1016/j.jasrep.2017.03.033,Q458
+open-archaeo,entry:5c354b,Q459
+open-archaeo,entry:5c52b6,Q460
+open-archaeo,entry:5c93f2,Q461
+open-archaeo,entry:5d0215,Q462
+open-archaeo,tag:Writing,Q463
+open-archaeo,entry:5d026e,Q464
+open-archaeo,person:keeeal,Q465
+open-archaeo,entry:5d4a00,Q466
+open-archaeo,entry:5ef689,Q467
+open-archaeo,person:fradeve,Q468
+open-archaeo,entry:5ef7cd,Q469
+open-archaeo,entry:5f2abc,Q470
+open-archaeo,person:kserkcho,Q471
+open-archaeo,person:Hannah Chazin,Q472
+open-archaeo,person:Soudeep Deb,Q473
+open-archaeo,person:Joshua Falk,Q474
+open-archaeo,person:Arun Srinivasan,Q475
+open-archaeo,entry:5f424c,Q476
+open-archaeo,work:https://doi.org/10.21105/joss.06210,Q477
+open-archaeo,entry:5fd269,Q478
+open-archaeo,entry:61292c,Q479
+open-archaeo,person:kintigh,Q480
+open-archaeo,entry:634a7f,Q481
+open-archaeo,entry:6350fb,Q482
+open-archaeo,person:acortell3,Q483
+open-archaeo,entry:652808,Q484
+open-archaeo,entry:655002,Q485
+open-archaeo,person:maciejkasinski,Q486
+open-archaeo,entry:657581,Q487
+open-archaeo,entry:663341,Q488
+open-archaeo,entry:67484c,Q489
+open-archaeo,person:sebastien-plutniak,Q490
+open-archaeo,entry:6790eb,Q491
+open-archaeo,person:marieannevibet,Q492
+open-archaeo,entry:67fab8,Q493
+open-archaeo,person:lsteinmann,Q494
+open-archaeo,person:Barbora Weissova,Q495
+open-archaeo,entry:692e63,Q496
+open-archaeo,entry:695909,Q497
+open-archaeo,entry:6a9896,Q498
+open-archaeo,person:HeuristNetwork,Q499
+open-archaeo,entry:6add1a,Q500
+open-archaeo,entry:6b0b33,Q501
+open-archaeo,person:philriris,Q502
+open-archaeo,entry:6bbf5b,Q503
+open-archaeo,person:jerryratcliffe,Q504
+open-archaeo,entry:6cf2ef,Q505
+open-archaeo,entry:6d42f5,Q506
+open-archaeo,person:iberganzo,Q507
+open-archaeo,entry:6d814d,Q508
+open-archaeo,entry:6dfd3a,Q509
+open-archaeo,entry:6ebfa5,Q510
+open-archaeo,person:ercrema,Q511
+open-archaeo,entry:6ecfcf,Q512
+open-archaeo,person:SCSchmidt,Q513
+open-archaeo,entry:70f317,Q514
+open-archaeo,person:vicrucann,Q515
+open-archaeo,entry:70f615,Q516
+open-archaeo,entry:7113a4,Q517
+open-archaeo,entry:711da6,Q518
+open-archaeo,person:potafu,Q519
+open-archaeo,entry:7149ff,Q520
+open-archaeo,person:sslarch,Q521
+open-archaeo,entry:71bfd0,Q522
+open-archaeo,entry:71d5d1,Q523
+open-archaeo,person:bryonymoody,Q524
+open-archaeo,entry:73296f,Q525
+open-archaeo,person:Archaeological-Museum-Hamburg,Q526
+open-archaeo,person:chris-jan-trapp,Q527
+open-archaeo,entry:7379b0,Q528
+open-archaeo,entry:73dc55,Q529
+open-archaeo,entry:742567,Q530
+open-archaeo,entry:7436b4,Q531
+open-archaeo,person:lschunk,Q532
+open-archaeo,person:Ivan Calandra,Q533
+open-archaeo,person:Konstantin Bob,Q534
+open-archaeo,entry:74852f,Q535
+open-archaeo,person:xronos-ch,Q536
+open-archaeo,entry:74e390,Q537
+open-archaeo,tag:Lists,Q538
+open-archaeo,person:stark1tty,Q539
+open-archaeo,entry:7512c2,Q540
+open-archaeo,entry:752115,Q541
+open-archaeo,entry:764279,Q542
+open-archaeo,person:geanes,Q543
+open-archaeo,entry:76b0f8,Q544
+open-archaeo,person:renevoorburg,Q545
+open-archaeo,entry:78afae,Q546
+open-archaeo,person:deepmind,Q547
+open-archaeo,entry:78e461,Q548
+open-archaeo,tag:Photography,Q549
+open-archaeo,person:mrecos,Q550
+open-archaeo,entry:797d72,Q551
+open-archaeo,person:jeffblackadar,Q552
+open-archaeo,entry:79c05f,Q553
+open-archaeo,person:tonydoss,Q554
+open-archaeo,entry:7a4843,Q555
+open-archaeo,entry:7ae71f,Q556
+open-archaeo,person:adammertel,Q557
+open-archaeo,entry:7ba458,Q558
+open-archaeo,person:RLumSK,Q559
+open-archaeo,entry:7be2bb,Q560
+open-archaeo,entry:7c02a1,Q561
+open-archaeo,work:https://doi.org/10.21105/joss.01821,Q562
+open-archaeo,entry:7c2f58,Q563
+open-archaeo,entry:7c887e,Q564
+open-archaeo,person:archesproject,Q565
+open-archaeo,entry:7dd27b,Q566
+open-archaeo,entry:7e3258,Q567
+open-archaeo,tag:Instrumental Neutron activation analysis,Q568
+open-archaeo,person:arf-berkeley,Q569
+open-archaeo,entry:7ea44d,Q570
+open-archaeo,entry:7eacdd,Q571
+open-archaeo,entry:7ec5f1,Q572
+open-archaeo,person:julienmoeys,Q573
+open-archaeo,entry:7ed510,Q574
+open-archaeo,entry:7f84bd,Q575
+open-archaeo,entry:8017cb,Q576
+open-archaeo,tag:Drones,Q577
+open-archaeo,person:maltaweel,Q578
+open-archaeo,entry:80b195,Q579
+open-archaeo,language:Java,Q580
+open-archaeo,person:lz1asl,Q581
+open-archaeo,entry:813015,Q582
+open-archaeo,entry:8240ac,Q583
+open-archaeo,person:chrinne,Q584
+open-archaeo,person:capsizingHR,Q585
+open-archaeo,person:AnKaLoy,Q586
+open-archaeo,person:FrankSiegmund,Q587
+open-archaeo,entry:8495d9,Q588
+open-archaeo,person:mhahsler,Q589
+open-archaeo,person:Christian Buchta,Q590
+open-archaeo,person:Kurt Hornik,Q591
+open-archaeo,person:Fionn Murtagh,Q592
+open-archaeo,"person:Michael Brusco, Stephanie Stahl, and Hans-Friedrich Koehn",Q593
+open-archaeo,entry:84bc83,Q594
+open-archaeo,person:oblarquez,Q595
+open-archaeo,entry:865f49,Q596
+open-archaeo,person:andrewcparnell,Q597
+open-archaeo,entry:869033,Q598
+open-archaeo,entry:8698d7,Q599
+open-archaeo,person:arklab,Q600
+open-archaeo,entry:86a287,Q601
+open-archaeo,entry:87f130,Q602
+open-archaeo,person:Arothron,Q603
+open-archaeo,entry:87f3d9,Q604
+open-archaeo,entry:88d662,Q605
+open-archaeo,person:leedrake5,Q606
+open-archaeo,entry:89fd11,Q607
+open-archaeo,person:rekrei,Q608
+open-archaeo,entry:8b17f4,Q609
+open-archaeo,entry:8b67ab,Q610
+open-archaeo,entry:8d4f6c,Q611
+open-archaeo,person:Swedish-Rock-Art-Research-Archives,Q612
+open-archaeo,entry:8d6546,Q613
+open-archaeo,entry:8d92a1,Q614
+open-archaeo,entry:8da698,Q615
+open-archaeo,work:10.5284/1000354,Q616
+open-archaeo,entry:8e5d7c,Q617
+open-archaeo,person:gsnitker,Q618
+open-archaeo,entry:8ec389,Q619
+open-archaeo,person:Chronomodel,Q620
+open-archaeo,entry:911bb0,Q621
+open-archaeo,person:scollinselliott,Q622
+open-archaeo,entry:91be4c,Q623
+open-archaeo,entry:927552,Q624
+open-archaeo,entry:95a02d,Q625
+open-archaeo,tag:Games,Q626
+open-archaeo,person:carlosfhernandez,Q627
+open-archaeo,entry:968b29,Q628
+open-archaeo,entry:970c93,Q629
+open-archaeo,person:pofatu,Q630
+open-archaeo,entry:9a80a4,Q631
+open-archaeo,person:carlsun98,Q632
+open-archaeo,entry:9b30eb,Q633
+open-archaeo,work:https://doi.org/10.1016/j.quageo.2018.05.009,Q634
+open-archaeo,entry:9baa7a,Q635
+open-archaeo,person:daiinst,Q636
+open-archaeo,entry:9baf3a,Q637
+open-archaeo,tag:Museums,Q638
+open-archaeo,person:stefanieschneider,Q639
+open-archaeo,person:Hubertus Kohle,Q640
+open-archaeo,person:Severin Burg,Q641
+open-archaeo,person:Helmut Küchenhoff,Q642
+open-archaeo,entry:9f0a9f,Q643
+open-archaeo,entry:9f286e,Q644
+open-archaeo,host:LibreOffice Calc,Q645
+open-archaeo,entry:9f3483,Q646
+open-archaeo,entry:9fc18d,Q647
+open-archaeo,entry:9fcb07,Q648
+open-archaeo,person:Lise Bellanger,Q649
+open-archaeo,person:Philippe Husi,Q650
+open-archaeo,person:Arthur Coulon,Q651
+open-archaeo,person:Benjamin Martineau,Q652
+open-archaeo,entry:a000a4,Q653
+open-archaeo,person:yesdavid,Q654
+open-archaeo,person:nmueller18,Q655
+open-archaeo,person:whamer,Q656
+open-archaeo,person:dakni,Q657
+open-archaeo,entry:a050c0,Q658
+open-archaeo,entry:a35572,Q659
+open-archaeo,work:https://doi.org/10.1073/pnas.2218375120,Q660
+open-archaeo,entry:a3efe1,Q661
+open-archaeo,entry:a48c38,Q662
+open-archaeo,person:bbartholdy,Q663
+open-archaeo,entry:a58971,Q664
+open-archaeo,person:culturalheritageimaging,Q665
+open-archaeo,entry:a749d1,Q666
+open-archaeo,person:seanbergin,Q667
+open-archaeo,entry:a92091,Q668
+open-archaeo,person:thegetty,Q669
+open-archaeo,entry:a9a5a7,Q670
+open-archaeo,entry:a9b0fa,Q671
+open-archaeo,entry:aa1f20,Q672
+open-archaeo,entry:aa5650,Q673
+open-archaeo,entry:aa7d94,Q674
+open-archaeo,entry:aa8087,Q675
+open-archaeo,entry:aa94c0,Q676
+open-archaeo,work:https://doi.org/10.1016/j.jas.2021.105501,Q677
+open-archaeo,entry:aab333,Q678
+open-archaeo,language:Ruby,Q679
+open-archaeo,entry:ac73d9,Q680
+open-archaeo,entry:ad12f6,Q681
+open-archaeo,entry:ad1367,Q682
+open-archaeo,person:wolfhagenj,Q683
+open-archaeo,entry:adaf1b,Q684
+open-archaeo,entry:adccba,Q685
+open-archaeo,person:sefy76,Q686
+open-archaeo,entry:af7d6d,Q687
+open-archaeo,entry:b08aaa,Q688
+open-archaeo,entry:b0aa7d,Q689
+open-archaeo,person:alessandrobattisti,Q690
+open-archaeo,entry:b24bfe,Q691
+open-archaeo,person:lab-archeologia-digitale,Q692
+open-archaeo,entry:b288d5,Q693
+open-archaeo,person:Adrian Timpson,Q694
+open-archaeo,person:Ramiro Barberena,Q695
+open-archaeo,person:Mark G. Thomas,Q696
+open-archaeo,person:César Méndez,Q697
+open-archaeo,person:Katie Manning,Q698
+open-archaeo,work:https://doi.org/10.1098/rstb.2019.0723,Q699
+open-archaeo,entry:b315d7,Q700
+open-archaeo,entry:b3ee1c,Q701
+open-archaeo,person:kevin-klein,Q702
+open-archaeo,entry:b4e306,Q703
+open-archaeo,person:Erik Otarola-Castillo,Q704
+open-archaeo,person:Jesse Wolfhagen,Q705
+open-archaeo,person:Max D. Price,Q706
+open-archaeo,person:zooaRch,Q707
+open-archaeo,entry:b5110c,Q708
+open-archaeo,person:WerthersEchte,Q709
+open-archaeo,entry:b58272,Q710
+open-archaeo,person:oliver.nakoinz,Q711
+open-archaeo,entry:b72a68,Q712
+open-archaeo,entry:b82653,Q713
+open-archaeo,person:roset,Q714
+open-archaeo,entry:b82fe7,Q715
+open-archaeo,entry:b83eed,Q716
+open-archaeo,host:Open Data Kit,Q717
+open-archaeo,person:UNMOCA,Q718
+open-archaeo,entry:b868ea,Q719
+open-archaeo,person:zooaRchGUI,Q720
+open-archaeo,entry:b86dfb,Q721
+open-archaeo,person:barak-itkin,Q722
+open-archaeo,entry:b92ab5,Q723
+open-archaeo,entry:b95090,Q724
+open-archaeo,host:Blender,Q725
+open-archaeo,entry:bb1577,Q726
+open-archaeo,person:kmartinez,Q727
+open-archaeo,entry:bb8f06,Q728
+open-archaeo,entry:bc1b31,Q729
+open-archaeo,entry:bd36c2,Q730
+open-archaeo,person:sohinimallick16,Q731
+open-archaeo,entry:bd6679,Q732
+open-archaeo,person:Big-Ancient-Mediterranean,Q733
+open-archaeo,entry:bdef8b,Q734
+open-archaeo,entry:be53c8,Q735
+open-archaeo,person:antonio-schettino,Q736
+open-archaeo,work:https://doi.org/10.4430/bgta0296,Q737
+open-archaeo,entry:be9d58,Q738
+open-archaeo,work:https://doi.org/10.26034/la.atl.2020.544,Q739
+open-archaeo,entry:bf29c1,Q740
+open-archaeo,entry:bf55a7,Q741
+open-archaeo,entry:c09a33,Q742
+open-archaeo,entry:c0aaa0,Q743
+open-archaeo,entry:c0c714,Q744
+open-archaeo,person:cbinding,Q745
+open-archaeo,entry:c1d21f,Q746
+open-archaeo,entry:c24b6c,Q747
+open-archaeo,entry:c2e98c,Q748
+open-archaeo,person:aksel-blaise,Q749
+open-archaeo,entry:c2ec2e,Q750
+open-archaeo,person:Gerrit Bette,Q751
+open-archaeo,person:Moritz Mennenga,Q752
+open-archaeo,entry:c35dc1,Q753
+open-archaeo,entry:c3aaa8,Q754
+open-archaeo,entry:c3bd2b,Q755
+open-archaeo,entry:c52425,Q756
+open-archaeo,entry:c5ce19,Q757
+open-archaeo,person:pete-jacobsson,Q758
+open-archaeo,entry:c64d11,Q759
+open-archaeo,entry:c68acc,Q760
+open-archaeo,person:Landesamt-fuer-Archaeologie-Sachsen,Q761
+open-archaeo,entry:c7002c,Q762
+open-archaeo,entry:c78bd5,Q763
+open-archaeo,entry:c7c4e7,Q764
+open-archaeo,entry:c7e68d,Q765
+open-archaeo,person:weberjavi,Q766
+open-archaeo,entry:c7fcd5,Q767
+open-archaeo,work:https://doi.org/10.1111/arcm.12984,Q768
+open-archaeo,entry:c82170,Q769
+open-archaeo,entry:c90141,Q770
+open-archaeo,person:archie,Q771
+open-archaeo,entry:c9dcac,Q772
+open-archaeo,person:cwickham,Q773
+open-archaeo,entry:ca6801,Q774
+open-archaeo,entry:ca88a6,Q775
+open-archaeo,person:Angela Kreuz,Q776
+open-archaeo,entry:caea30,Q777
+open-archaeo,entry:cbc1c2,Q778
+open-archaeo,entry:ccacfe,Q779
+open-archaeo,entry:ccf10d,Q780
+open-archaeo,person:DRAC-calculator,Q781
+open-archaeo,entry:cd91f3,Q782
+open-archaeo,person:TJHeaton,Q783
+open-archaeo,person:sara-amira-alassam,Q784
+open-archaeo,work:https://doi.org/10.1111/rssc.12599,Q785
+open-archaeo,entry:cf37ff,Q786
+open-archaeo,entry:cf734f,Q787
+open-archaeo,entry:d1a2b8,Q788
+open-archaeo,entry:d1e319,Q789
+open-archaeo,person:cornelmpop,Q790
+open-archaeo,entry:d22b64,Q791
+open-archaeo,entry:d23f4c,Q792
+open-archaeo,entry:d43c52,Q793
+open-archaeo,person:stschiff,Q794
+open-archaeo,work:https://doi.org/10.21105/joss.03092,Q795
+open-archaeo,entry:d60b20,Q796
+open-archaeo,person:ctietze91,Q797
+open-archaeo,entry:d6593e,Q798
+open-archaeo,entry:d7584e,Q799
+open-archaeo,host:Stellarium,Q800
+open-archaeo,person:stellarium,Q801
+open-archaeo,entry:d7c158,Q802
+open-archaeo,entry:d84fe7,Q803
+open-archaeo,entry:d8d5f8,Q804
+open-archaeo,person:gaigutherz,Q805
+open-archaeo,person:arielazary,Q806
+open-archaeo,person:ARomach,Q807
+open-archaeo,person:ireman,Q808
+open-archaeo,entry:d91f07,Q809
+open-archaeo,entry:d932d6,Q810
+open-archaeo,entry:d956c6,Q811
+open-archaeo,entry:d9ad5d,Q812
+open-archaeo,entry:daa8c0,Q813
+open-archaeo,person:Lugal-PCZ,Q814
+open-archaeo,entry:dacb1e,Q815
+open-archaeo,entry:db2819,Q816
+open-archaeo,entry:db7cee,Q817
+open-archaeo,tag:Harrix matrix,Q818
+open-archaeo,entry:db97ae,Q819
+open-archaeo,entry:db9c8d,Q820
+open-archaeo,work:https://doi.org/10.18637/jss.v093.c01,Q821
+open-archaeo,entry:dc92d8,Q822
+open-archaeo,entry:dcd82c,Q823
+open-archaeo,person:LimesLimits,Q824
+open-archaeo,entry:dcf933,Q825
+open-archaeo,tag:Textile archaeology,Q826
+open-archaeo,entry:dd3f07,Q827
+open-archaeo,entry:df8b07,Q828
+open-archaeo,person:lili0824,Q829
+open-archaeo,entry:dfb4a7,Q830
+open-archaeo,person:AndyBunn,Q831
+open-archaeo,entry:e0b40c,Q832
+open-archaeo,person:Benedict-Dyson,Q833
+open-archaeo,entry:e0c120,Q834
+open-archaeo,entry:e0dfee,Q835
+open-archaeo,entry:e1488e,Q836
+open-archaeo,person:renderpci,Q837
+open-archaeo,entry:e1dadc,Q838
+open-archaeo,entry:e2667b,Q839
+open-archaeo,entry:e4f96c,Q840
+open-archaeo,entry:e50a0f,Q841
+open-archaeo,person:AurelienRoyer,Q842
+open-archaeo,entry:e513d8,Q843
+open-archaeo,entry:e56c2f,Q844
+open-archaeo,entry:e5a69b,Q845
+open-archaeo,entry:e5b5dd,Q846
+open-archaeo,entry:e838ed,Q847
+open-archaeo,entry:e8919e,Q848
+open-archaeo,person:Rozenn Colleter,Q849
+open-archaeo,person:Jean-Baptiste Romain,Q850
+open-archaeo,person:Jean-Baptiste Barreau,Q851
+open-archaeo,work:https://polipapers.upv.es/index.php/var/article/view/13422,Q852
+open-archaeo,entry:ea0ba7,Q853
+open-archaeo,entry:ea75da,Q854
+open-archaeo,person:lakillo,Q855
+open-archaeo,entry:ea7dbf,Q856
+open-archaeo,person:lucaarcteam,Q857
+open-archaeo,entry:eabdf3,Q858
+open-archaeo,person:ArchiScn,Q859
+open-archaeo,entry:ebda77,Q860
+open-archaeo,entry:ec9989,Q861
+open-archaeo,person:enzococca,Q862
+open-archaeo,entry:edfac4,Q863
+open-archaeo,entry:ee172e,Q864
+open-archaeo,entry:ee2288,Q865
+open-archaeo,entry:eea061,Q866
+open-archaeo,entry:eec153,Q867
+open-archaeo,entry:eef828,Q868
+open-archaeo,entry:ef3100,Q869
+open-archaeo,person:isaacullah,Q870
+open-archaeo,entry:ef534f,Q871
+open-archaeo,entry:efa4ec,Q872
+open-archaeo,person:marcelocardillo,Q873
+open-archaeo,entry:efc456,Q874
+open-archaeo,person:CRAWS,Q875
+open-archaeo,entry:efe096,Q876
+open-archaeo,entry:f06676,Q877
+open-archaeo,language:C,Q878
+open-archaeo,person:Joop Stakenborg,Q879
+open-archaeo,entry:f08f30,Q880
+open-archaeo,person:garynobles,Q881
+open-archaeo,person:Canan Cakirlar,Q882
+open-archaeo,person:Nynke de Boer,Q883
+open-archaeo,entry:f0dbab,Q884
+open-archaeo,person:Anne Kandler,Q885
+open-archaeo,entry:f10327,Q886
+open-archaeo,person:pyarchinit,Q887
+open-archaeo,entry:f1159e,Q888
+open-archaeo,language:LaTeX,Q889
+open-archaeo,tag:Templates,Q890
+open-archaeo,person:latex-ninja,Q891
+open-archaeo,entry:f17272,Q892
+open-archaeo,entry:f279f8,Q893
+open-archaeo,person:jallison7,Q894
+open-archaeo,entry:f2f7fa,Q895
+open-archaeo,person:cconsta1,Q896
+open-archaeo,entry:f32468,Q897
+open-archaeo,entry:f39248,Q898
+open-archaeo,person:ekansa,Q899
+open-archaeo,entry:f4ee6d,Q900
+open-archaeo,entry:f59dcc,Q901
+open-archaeo,entry:f5cfcb,Q902
+open-archaeo,entry:f5f13a,Q903
+open-archaeo,person:jisunjang19,Q904
+open-archaeo,work:https://doi.org/10.1016/j.jas.2024.106080,Q905
+open-archaeo,entry:f62661,Q906
+open-archaeo,entry:f676b7,Q907
+open-archaeo,person:rbbristow,Q908
+open-archaeo,entry:f6e3fc,Q909
+open-archaeo,person:atiro,Q910
+open-archaeo,entry:f8f2e8,Q911
+open-archaeo,entry:f9a0d1,Q912
+open-archaeo,person:kotdijian,Q913
+open-archaeo,entry:f9d4db,Q914
+open-archaeo,entry:fa0f53,Q915
+open-archaeo,entry:fa39c4,Q916
+open-archaeo,entry:fbe694,Q917
+open-archaeo,entry:fc9bf1,Q918
+open-archaeo,entry:fcc967,Q919
+open-archaeo,host:AutoCAD,Q920
+open-archaeo,entry:fd129f,Q921
+open-archaeo,entry:fde811,Q922
+open-archaeo,work:https://doi.org/10.1016/j.daach.2025.e00435,Q923
+open-archaeo,entry:fdf7f8,Q924
+open-archaeo,entry:fe3ab4,Q925
+open-archaeo,entry:ff217a,Q926
+open-archaeo,entry:ff43e4,Q927
+open-archaeo,person:emanuelhuber,Q928
+open-archaeo,entry:ff888f,Q929
+open-archaeo,person:KIM Hongyeon,Q930
+open-archaeo,work:https://files.heripo.org/archaelogical-informatization-poc/(Eng._Version)_KIM_Hongyeon_2025_A_Study_on_Archaeological_Informatization_Using_Large_Language_Models.pdf,Q931
+open-archaeo,entry:ffa635,Q932
+starter-pack,class:Q7397,Q100
+starter-pack,class:Q95001953,Q101
+starter-pack,class:Q166142,Q102
+starter-pack,class:Q188860,Q103
+starter-pack,class:Q1070421,Q104
+starter-pack,class:Q73899440,Q105
+starter-pack,class:Q141115627,Q106
+starter-pack,property:subclass of,P1
+starter-pack,property:instance of,P2
+starter-pack,property:equivalent Wikidata property,P4
+starter-pack,property:retrieved,P7
+starter-pack,property:close match Wikidata property,P100
+starter-pack,property:equivalent CodeMeta term,P101
+starter-pack,property:equivalent schema.org term,P102
+starter-pack,property:application category,P103
+starter-pack,property:archive date,P104
+starter-pack,property:archive URL,P105
+starter-pack,property:collection,P106
+starter-pack,property:copyright license,P107
+starter-pack,property:CRAN project,P108
+starter-pack,property:depends on software,P109
+starter-pack,property:described at URL,P110
+starter-pack,property:described by source,P111
+starter-pack,property:description,P112
+starter-pack,property:developer,P113
+starter-pack,property:DOI,P114
+starter-pack,property:exact match,P115
+starter-pack,property:inventory number,P116
+starter-pack,property:main subject,P117
+starter-pack,property:maintained by WikiProject,P118
+starter-pack,property:name,P119
+starter-pack,property:official website,P120
+starter-pack,property:open-archaeo ID,P121
+starter-pack,property:part of,P122
+starter-pack,property:programmed in,P123
+starter-pack,property:PyPI project,P124
+starter-pack,property:source code repository URL,P125
+starter-pack,property:version control system,P126
+starter-pack,property:Wikidata item,P127
+starter-pack,property:application sub category,P128
+starter-pack,property:application suite,P129
+starter-pack,property:based on,P130
+starter-pack,property:contributor to the creative work or subject,P131
+starter-pack,property:development status,P132
+starter-pack,property:download link,P133
+starter-pack,property:funder,P134
+starter-pack,property:GitHub username,P135
+starter-pack,property:has part(s),P136
+starter-pack,property:inception,P137
+starter-pack,property:issue tracker URL,P138
+starter-pack,property:last update,P139
+starter-pack,property:maintained by,P140
+starter-pack,property:official demo URL,P141
+starter-pack,property:operating system,P142
+starter-pack,property:platform,P143
+starter-pack,property:publication date,P144
+starter-pack,property:readable file format,P145
+starter-pack,property:series ordinal,P146
+starter-pack,property:SoftWare Hash IDentifier (SWHID),P147
+starter-pack,property:software version identifier,P148
+starter-pack,property:supporting data,P149
+starter-pack,property:target product,P150
+starter-pack,property:user manual URL,P151
+starter-pack,property:version,P152
+starter-pack,property:version type,P153
+starter-pack,property:writable file format,P154
+starter-pack,property:address,P155
+starter-pack,property:affiliation,P156
+starter-pack,property:archives at,P157
+starter-pack,property:available on device,P158
+starter-pack,property:award received,P159
+starter-pack,property:binding of software library,P160
+starter-pack,property:build instructions,P161
+starter-pack,property:cites work,P162
+starter-pack,property:code sample type,P163
+starter-pack,property:computes solution to,P164
+starter-pack,property:cont integration,P165
+starter-pack,property:continuous integration,P166
+starter-pack,property:copyright holder,P167
+starter-pack,property:copyright year,P168
+starter-pack,property:countries not supported,P169
+starter-pack,property:countries supported,P170
+starter-pack,property:creator,P171
+starter-pack,property:data size,P172
+starter-pack,property:distribution format,P173
+starter-pack,property:distribution package ID P3112 (label to be filled),P174
+starter-pack,property:distribution package ID P3418 (label to be filled),P175
+starter-pack,property:distribution package ID P3442 (label to be filled),P176
+starter-pack,property:distribution package ID P3454 (label to be filled),P177
+starter-pack,property:distribution package ID P3463 (label to be filled),P178
+starter-pack,property:distribution package ID P3473 (label to be filled),P179
+starter-pack,property:distribution package ID P3499 (label to be filled),P180
+starter-pack,property:distribution package ID P3597 (label to be filled),P181
+starter-pack,property:edition or translation of,P182
+starter-pack,property:editor,P183
+starter-pack,property:email address,P184
+starter-pack,property:embargo date,P185
+starter-pack,property:embargo end date,P186
+starter-pack,property:encoding,P187
+starter-pack,property:end date,P188
+starter-pack,property:end time,P189
+starter-pack,property:facet of,P190
+starter-pack,property:family name,P191
+starter-pack,property:feature list,P192
+starter-pack,property:field of work,P193
+starter-pack,property:file format,P194
+starter-pack,property:followed by,P195
+starter-pack,property:follows,P196
+starter-pack,property:Framalibre ID,P197
+starter-pack,property:Free Software Directory entry,P198
+starter-pack,property:funding,P199
+starter-pack,property:given name,P200
+starter-pack,property:GUI toolkit or framework,P201
+starter-pack,property:has characteristic,P202
+starter-pack,property:has source code,P203
+starter-pack,property:image,P204
+starter-pack,property:influenced by,P205
+starter-pack,property:input device,P206
+starter-pack,property:install URL,P207
+starter-pack,property:IRC channel URL,P208
+starter-pack,property:is accessible for free,P209
+starter-pack,property:is source code of,P210
+starter-pack,property:logo image,P211
+starter-pack,property:media type,P212
+starter-pack,property:member of,P213
+starter-pack,property:memory requirements,P214
+starter-pack,property:notable work,P215
+starter-pack,property:official blog URL,P216
+starter-pack,property:Open Hub ID,P217
+starter-pack,property:output device,P218
+starter-pack,property:package management system,P219
+starter-pack,property:part of the series,P220
+starter-pack,property:permissions,P221
+starter-pack,property:person identifier,P222
+starter-pack,property:point in time,P223
+starter-pack,property:port,P224
+starter-pack,property:position,P225
+starter-pack,property:price,P226
+starter-pack,property:processor requirements,P227
+starter-pack,property:producer,P228
+starter-pack,property:provider,P229
+starter-pack,property:publisher,P230
+starter-pack,property:readme,P231
+starter-pack,property:release notes,P232
+starter-pack,property:review,P233
+starter-pack,property:review aspect,P234
+starter-pack,property:review body,P235
+starter-pack,property:role name,P236
+starter-pack,property:software add on,P237
+starter-pack,property:software engine,P238
+starter-pack,property:software quality assurance,P239
+starter-pack,property:software suggestions,P240
+starter-pack,property:SourceForge project,P241
+starter-pack,property:sponsor,P242
+starter-pack,property:start date,P243
+starter-pack,property:start time,P244
+starter-pack,property:storage requirements,P245
+starter-pack,property:swMATH work ID,P246
+starter-pack,property:title,P247
+starter-pack,property:web interface software,P248
+wikidata,Q74003194,Q358
+wikidata,Q74004218,Q359
+wikidata,Q74005133,Q360
+wikidata,Q74823867,Q361
+wikidata,Q74824570,Q362
+wikidata,Q364,Q363
+wikidata,Q2013,Q364
+wikidata,Q66606154,Q365
+wikidata,Q47213994,Q366
+wikidata,Q98229157,Q367
+wikidata,Q115755098,Q368
+wikidata,Q334661,Q369
+wikidata,Q28865,Q370
+wikidata,Q2005,Q371
+wikidata,Q312466,Q372
+wikidata,Q1860,Q373
+wikidata,Q88865971,Q374
+wikidata,Q2804309,Q375
+wikidata,Q67624599,Q376
+wikidata,Q73901970,Q377
+wikidata,Q123054280,Q378
+wikidata,Q184148,Q379
+wikidata,Q58529575,Q380
+wikidata,Q141818802,Q933
+wikidata,Q10513450,Q934
+wikidata,Q125400678,Q935
+wikiproject-page,property:digital rights management system,P249
+wikiproject-page,property:ISO standard,P250
+wikiproject-page,property:language of work or name,P251
+wikiproject-page,property:movement,P252
+wikiproject-page,property:removed feature,P253
+wikiproject-page,property:RfC ID,P254
+wikiproject-page,property:Stack Exchange tag,P255
+wikiproject-page,property:TeX string,P256
+wikiproject-page,property:Unicode character,P257

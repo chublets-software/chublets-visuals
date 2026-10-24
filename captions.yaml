@@ -1,0 +1,17 @@
+# Captions for the graphics of chublets-visuals.
+#
+# One entry per graphic, keyed by the file stem (img/<stem>.svg). The graphics
+# themselves carry no title, header, footer or citation; everything a paper or
+# slide needs next to a graphic is here. See py/captions.py for the rules.
+#
+#   <stem>:
+#     caption: English (British); {placeholders} are filled from the facts the
+#              step passes to captions.render(), so numbers cannot drift
+#     alt:     alternative text, one or two sentences
+#     sources: [optional list of source repositories / tables]
+#     licence: optional; left empty until the licence question is decided
+#              (Starter Pack open point 7: Wikidata CC0, crosswalk CC BY,
+#              chublets-visuals MIT)
+#
+# Entries are added with the graphic they belong to (S10, S11).
+{}

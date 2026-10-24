@@ -150,6 +150,41 @@ nicht auf ihn beschränkt.
     Höhe gerechnet: `LOGO_W` von 560 auf 440 reduziert (`step_talk_closing.py`,
     S7b).
 
+14. **Neue Grundlage ab 2026-10-24: Starter Pack, `chublets-wikibase-demo`,
+    `wikibase-static`, `wikibase-federation`** — die Grafiken aus Block 1 und
+    S4b/S5 entstanden vor diesen Repos und zählen noch mit den Workbook-Zahlen
+    (68 Zeilen / 33 gemappt / 35 ungemappt). Ground Truth ist jetzt das
+    Starter Pack (v1.1, Crosswalk: 83 CodeMeta-Terme = 37 gemappt + 46 nur
+    CodeMeta), die Demo (`data/csv/`), der Kernel von `wikibase-static` und
+    der Push-Usecase `chublets` aus `wikibase-federation`. Die benötigten
+    Dateien liegen unverändert unter `data/raw/<repo>/` (Manifest mit SHA-256
+    in `data/raw/vendor-manifest.csv`, Stand in `data/raw/SNAPSHOT.md`:
+    Demo `a460d94`, static `7cd3047`, federation `12abb40`); aktualisieren
+    heißt `python py/vendor_sources.py ...`, nicht von Hand kopieren.
+15. **Das Property-Set hat 168 Properties, nicht 153 und nicht 158**: 10
+    Kernel (P1–P10; P1, P2, P4, P7 stehen auch im Pack) + 149 weitere Zeilen
+    des Starter Packs (P100–P248) + 9 Zeilen aus dem WikiProject-Review vom
+    2026-10-22 (P249–P257). Die 153 des Packs sind „149 + die vier
+    Kernel-Zeilen"; sie behalten ihren `pack_status` (37 crosswalked / 46
+    codemeta-only / 52 wikidata-only / 18 chublets-addition). Die neun
+    Review-Zeilen und die sechs übrigen Kernel-Properties (P3, P5, P6, P8,
+    P9, P10) haben keinen Pack-Status und bekommen keinen erfundenen
+    (`py/model_data.py`, Feld `origin_set`). Der Schritt `model-data` prüft
+    diese Zahlen gegen `mapping-summary.csv` und bricht bei Abweichung ab.
+16. **Plattformunterschied im Bestand:** `python main.py` auf Linux ändert
+    genau eine Datei des Bestands, `img/talk/chublets-talk-closing.svg`, in
+    der letzten Dezimalstelle einer `sin`/`cos`-Koordinate
+    (`410.5887450304572` gegen `410.58874503045723`). Die Datei ist
+    unangetastet geblieben. Neue Steps runden Koordinaten (`:.2f`), damit sie
+    auf jeder Plattform byte-gleich sind; der Bestand wird in S12 angeglichen.
+17. **Die „generic topics" der Properties sind eigene Themenfelder**, kein
+    Feld der Quellen: Die elf Gruppen der WikiProject-Seite sind uneinheitlich
+    (Preis und DOI unter „rights", „has characteristic" unter „versioning"),
+    und 67 von 168 Properties haben keinen WikiProject-Zwilling. Deshalb
+    gibt es `data/topics.yaml` (14 Themen, jede Property in genau einem),
+    mit WikiProject-Gruppe, CodeMeta-Typ und schema.org-Term als
+    Gegenprobe in `python py/topics.py`.
+
 ## A2. Zielbild
 
 ```
@@ -227,6 +262,29 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   README, Commit-Messages) Englisch. Windows ist Referenzplattform, Befehle
   einzeilig für `cmd`.
 
+- **Regeln ab S8 (Wikibase-Datenmodell-Grafiken), 2026-10-24:**
+  - Jede neue oder migrierte Grafik liegt **flach** unter `img/<name>.svg`
+    und `.png`, ohne `block-N`-Ordner; sie steht für sich allein und trägt
+    **keinen Header, keinen Footer, kein Step-Badge und keine Quellenzeile**.
+  - Caption, Alt-Text, Quellen und Lizenz stehen in `captions.yaml` (Schlüssel
+    = Dateiname ohne Endung, Regeln in `py/captions.py`); Zahlen in Captions
+    kommen als `{platzhalter}` aus denselben Daten wie die Grafik. Fehlt eine
+    Caption, ist das bis S12 ein Hinweis, danach ein Fehler (`REQUIRE_ALL`).
+  - Grafiktexte sind britisches Englisch, auf den Inhalt zugeschnitten (Rand
+    ≤ 10 px), transparenter Hintergrund wie bisher.
+  - Farben: die vier Herkunfts-Status aus der Hauspalette; das Semantik-Schema
+    (Klasse dunkelorange `#9a3412`, Term dunkellila `#4c1d95`, Property-
+    Metadaten amber `#fbbf24`, Instanz grau `#e2e8f0`, reales Objekt
+    dunkelgrün `#166534`, OWL weiß) nur für Modellelemente. Die Status-
+    Farben des Starter Packs sind ausdrücklich nicht übernommen.
+  - DataCite erscheint nur als Zusatzevidenz (Kästchen am Property, Element
+    und bei Many-to-one `contributorType`/`dateType`), mit dem Hinweis
+    „über CodeMeta abgeleitet, nicht publiziert"; schema.org-Term (P102) als
+    zweites Kästchen.
+  - Koordinaten werden auf zwei Dezimalstellen gerundet (Befund 16).
+  - Quellen der Modell-Grafiken kommen nur über `py/model_data.py` aus
+    `data/raw/<repo>/`; ein Step liest keine CSV selbst.
+
 ## A4. Beschlusslage
 
 | Frage | Beschluss | seit |
@@ -241,6 +299,13 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | bestätigt 2026-09-10 (S4) |
 | FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | übernommen für S3, 2026-09-10 (bleibt Referenz — Paper zieht bei Bedarf nach, nicht umgekehrt, bestätigt 2026-09-10) |
 | Curate & Link / Export & Publish | F28-Konzept-Stand bleibt, keine Prüfung gegen echten Code vor Existenz einer chublets-Wikibase | bestätigt 2026-09-10 |
+| Ground Truth für die Modell-Grafiken | Starter Pack v1.1 + `chublets-wikibase-demo` + `wikibase-static` (Kernel) + `wikibase-federation` (Push), vendort mit SHA-256-Manifest | 2026-10-24 |
+| Struktur und Texte | flach unter `img/`, kein Block, kein Header/Footer; Captions in `captions.yaml`, nur EN (britisch), zugeschnitten | 2026-10-24 |
+| Farben der Modell-Grafiken | Hausfarben für Herkunft, Semantik-Schema nur für Klasse/Term/Property-Metadaten; Pack-Status-Farben nicht übernommen | 2026-10-24 |
+| DataCite | nur Kästchen als Zusatzevidenz (abgeleitet über CodeMeta), keine eigene Hub-Grafik | 2026-10-24 |
+| Bestandsgrafiken | alle 20 Schritte bleiben und werden gegen den neuen Stand geprüft und aktualisiert (ohne Header, flach); Step-IDs ändern sich nicht | 2026-10-24 |
+| Pack-Grafiken | alle neun Mermaid-Diagramme und die Balkenabbildung werden in Python neu gezeichnet (keine Mermaid-CLI), Titel entfallen | 2026-10-24 |
+| Themenfelder der Properties | eigene Themen (`data/topics.yaml`), Entwurf mit 14 Themen, **Freigabe offen** | 2026-10-24 |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -248,7 +313,7 @@ Zu Beginn jedes Chats: `PRIMER.md` plus ein Bundle aus Quellen und Code (kein
 `img/`, kein `.venv/`). Unter Windows:
 
 ```cmd
-powershell -Command "Compress-Archive -Path PRIMER.md,py,data\raw,fonts,main.py,requirements.txt,CITATION.cff,LICENSE,README.md,.gitignore -DestinationPath chublets-visuals-bundle.zip -Force"
+powershell -Command "Compress-Archive -Path PRIMER.md,captions.yaml,py,data,fonts,main.py,requirements.txt,CITATION.cff,LICENSE,README.md,.gitignore -DestinationPath chublets-visuals-bundle.zip -Force"
 ```
 
 Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
@@ -273,8 +338,13 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S6c | S6 auf den echten Repo-Stand gebracht, aus einer vendorten Quelldatei statt Literalen | chublets-visuals | S6b | erledigt 2026-09-10 |
 | S7 | Talk-Closing-Folie: 8 Badges als Ring um das chublets-Logo | chublets-visuals | S3, S4b | erledigt 2026-09-10 |
 | S7b | S7-Logo als eingebettetes SVG statt PNG-Komposit, Nuggets-Kollision behoben | chublets-visuals | S7 | erledigt 2026-09-10 |
+| S8 | Datenschicht: Quellen vendort (Demo, static, federation, Starter Pack), `model_data.py`, `captions.yaml`, Prüfschritte `model-data` und `captions` | chublets-visuals | S1 | erledigt 2026-10-24 |
+| S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | Entwurf fertig 2026-10-24, **wartet auf Freigabe** |
+| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | offen |
+| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
+| S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
-Alle Schritte aus dem ursprünglichen Plan sind jetzt erledigt.
+Alle Schritte aus dem ursprünglichen Plan (bis S7b) sind erledigt; S8 bis S12 sind die Neubasis auf Starter Pack, Demo, `wikibase-static` und `wikibase-federation`.
 
 ---
 
@@ -768,6 +838,42 @@ bestätigt. Determinismus-Check über alle 20 Schritte bestanden.
 
 ---
 
+## S8 — Datenschicht und Captions
+
+**Ziel.** Die Modell-Grafiken lesen ihre Zahlen aus einer einzigen, geprüften
+Schicht, nicht aus je eigenen CSV-Lesern.
+
+**Gebaut (2026-10-24).**
+- `py/vendor_sources.py` kopiert 38 Dateien unverändert aus den vier
+  Quell-Checkouts nach `data/raw/<repo>/` und schreibt
+  `data/raw/vendor-manifest.csv` (SHA-256, Zeilenenden normalisiert) und
+  `data/raw/SNAPSHOT.md`. `--check` prüft ohne Netz.
+- `py/model_data.py`: `load()` liefert 168 `Prop`, 13 `Cls`, die DataCite-
+  Bridge und die Pack-Zusammenfassung; Felder siehe Befund 15.
+- `py/captions.py` + `captions.yaml`: Captions außerhalb der Grafiken.
+- Schritt `model-data` (zuerst) und `captions` (zuletzt) in `main.py`.
+
+**Prüfung.** `python main.py --only model-data` muss „vendored files match",
+„168 properties: 10 kernel + 149 pack + 9 review", „14 topics cover all 168
+properties exactly once" melden. Zweimal laufen lassen ändert nichts.
+
+## S9 — Themen-Taxonomie
+
+**Ziel.** Jede der 168 Properties in genau einem Themenfeld, für die
+Katalog-Grafik `property-topics` und die Spalten der Herkunfts-Grafiken.
+
+**Stand.** `data/topics.yaml` ist ein **Entwurf** mit 14 Themen (Kernel;
+Property-Beschreibung; Identität und Namen; Registry-IDs; Quellcode und
+Entwicklung; Plattform, Anforderungen und Abhängigkeiten; Dateien, Formate
+und Standards; Versionen, Releases und Daten; Links, Medien und Web;
+Agenten-Rollen; Person und Organisation; Rechte, Förderung und Zugang;
+Klassifikation, Features und Relationen; Publikation, Zitation und Review).
+`python py/topics.py` druckt die Review-Tabelle (Thema × Herkunft,
+WikiProject-Gruppe, CodeMeta-Typ). Änderungen am Zuschnitt sind eine
+Änderung an dieser einen Datei; die Grafiken folgen automatisch.
+
+**Offen.** Freigabe durch Flo (siehe Teil D).
+
 # Teil D — Offene Punkte
 
 - **Curate & Link / Export & Publish bleiben auf F28-Konzept-Stand** —
@@ -793,3 +899,19 @@ bestätigt. Determinismus-Check über alle 20 Schritte bestanden.
 - **Repo-Anlage:** `chublets-software/chublets-visuals` existiert jetzt auf
   GitHub und S1+S2 sind committet (bestätigt 2026-09-10) — Rest dieses Punkts
   erledigt.
+
+- **Themenfelder warten auf Freigabe** (S9) — Entwurf liegt vor, S10 baut erst
+  darauf auf, wenn er bestätigt oder geändert ist.
+- **Lizenz der Grafiken offen** — Starter-Pack-Open-Point 7 (Wikidata CC0,
+  Crosswalk CC BY, chublets-visuals MIT). `captions.yaml` lässt `licence`
+  leer, die Grafik „Reusable" (FAIR) darf keine Lizenz-Statements
+  behaupten, die es im Modell nicht gibt.
+- **Klassenhierarchie unverifiziert** — der Klassenbaum des Packs (06) trennt
+  „belegt" (durchgezogen) und „erwartet" (gestrichelt). Die Verifikation der
+  Demo (S11 dort) prüfte nur Label und Datentyp, nicht die Hierarchie; die
+  gestrichelten Kanten bleiben gestrichelt.
+- **Demo-README zählt 63 Properties mit Item-Werten und Range**, die Tabellen
+  zählen 66 (`step model-data`, NOTE). Wahrscheinlich Stand vor den neun
+  Review-Zeilen; bei Gelegenheit in der Demo nachziehen.
+- **Zahlen im Paper** — 153 (Pack), 158 (Demo, P100–P257), 168 (mit Kernel):
+  im Text immer sagen, welche Menge gemeint ist (Befund 15).
