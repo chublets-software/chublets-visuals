@@ -185,8 +185,12 @@ own, with a legend for colours, shapes and identifiers.
 `class-tree` shows the 13 classes with their subclass relations, Wikidata
 equivalents and CIDOC CRM class; `property-origin` shows where the 168 properties
 come from in the CodeMeta-Wikidata crosswalk and which of them have an equivalent
-in Wikidata, CodeMeta, schema.org and DataCite. Build one with
-`python main.py --only class-tree` (or `property-origin`).
+in Wikidata, CodeMeta, schema.org and DataCite. `property-topics` groups the
+properties into 14 topics, `property-vocabulary-overlap` shows how the Wikidata and
+CodeMeta vocabularies overlap, and `entity-overview` counts classes, items and
+properties. Build one with `python main.py --only class-tree` (or
+`property-origin`, `property-topics`, `property-vocabulary-overlap`,
+`entity-overview`).
 
 ## Design
 

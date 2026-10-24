@@ -19,6 +19,7 @@ Colours. Two palettes, never mixed in one element:
 
 from __future__ import annotations
 
+import re
 from functools import lru_cache
 
 from PIL import ImageFont
@@ -131,6 +132,17 @@ def line(points: list[tuple[float, float]], stroke: str = MUTED, sw: float = 1.6
     )
 
 
+def arrowhead(x: float, y: float, dx: float, dy: float, size: float = 11, fill: str = MUTED) -> str:
+    """Filled arrowhead with its tip at (x, y), pointing along the unit vector (dx, dy)."""
+    nx, ny = -dy, dx
+    bx, by = x - dx * size, y - dy * size
+    w = size * 0.45
+    return (
+        f'<path d="M{f(x)},{f(y)} L{f(bx + nx * w)},{f(by + ny * w)} L{f(bx - nx * w)},{f(by - ny * w)} z" '
+        f'fill="{fill}"/>'
+    )
+
+
 def triangle_left(x: float, y: float, size: float = 13, fill: str = "#ffffff", stroke: str = MUTED) -> str:
     """Open triangle whose tip is at (x, y), pointing left (towards a parent to the left)."""
     h = size / 2
@@ -177,10 +189,18 @@ class Canvas:
         return head + font_face_css(FONT_REL) + body + "</svg>", w, h
 
 
+# A graphic has to be readable in the paper without the code (PRIMER.md A4): the starting set the
+# model was begun from is not named in any graphic.
+_FORBIDDEN = re.compile(r"starter[ -]?(pack|kit)|\bthe pack\b", re.IGNORECASE)
+
+
 def save(name: str, canvas: Canvas) -> str:
     """Write img/<name>.svg and .png (transparent, 10 px border); returns a log line."""
     ensure_dirs(IMG_DIR)
     svg, w, h = canvas.svg()
+    hit = _FORBIDDEN.search(svg)
+    if hit:
+        raise ValueError(f"{name}: the graphic contains {hit.group(0)!r}, which must not appear in a graphic")
     svg_path = IMG_DIR / f"{name}.svg"
     svg_path.write_text(svg + "\n", encoding="utf-8", newline="\n")
     png_path = svg_path.with_suffix(".png")

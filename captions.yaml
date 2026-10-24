@@ -42,3 +42,41 @@ property-origin:
     Stacked bar of 168 properties in five coloured groups with five rows of evidence bars beneath
     showing how many properties of each group have a Wikidata, CodeMeta, schema.org or DataCite counterpart.
   sources: [chublets-wikibase-demo]
+
+property-topics:
+  caption: >-
+    The {n_props} properties of the chublets Wikibase in {n_topics} topics. Each square is one property,
+    coloured by its origin in the CodeMeta-Wikidata crosswalk: {n_crosswalked} crosswalked,
+    {n_codemeta_only} CodeMeta only, {n_wikidata_only} Wikidata only, {n_chublets_addition} chublets
+    additions and {n_no_status} unclassified built-in and later added properties. The topics were derived
+    from the Wikidata WikiProject Informatics property groups, CodeMeta and schema.org; the examples are
+    the first properties of each topic.
+  alt: >-
+    Fourteen rows, one per topic, each with a bar of coloured squares for its properties, the number of
+    properties and a few example property names.
+  sources: [chublets-wikibase-demo]
+
+property-vocabulary-overlap:
+  caption: >-
+    Overlap of the two source vocabularies among the {n_props} properties. {n_twin} properties have an
+    equivalent Wikidata property (P4) and {n_with_codemeta} have an equivalent CodeMeta term; the
+    {n_crosswalked} crosswalked properties are in both. {n_codemeta_only} properties come from CodeMeta
+    only and {n_wikidata_only} from Wikidata only; the remaining properties are chublets additions or
+    built-in properties, some of them with a Wikidata property and some in neither vocabulary.
+  alt: >-
+    One bar of 168 properties in six coloured groups with a bracket above for the Wikidata properties
+    and a bracket below for the CodeMeta terms, overlapping in the crosswalked properties.
+  sources: [chublets-wikibase-demo]
+
+entity-overview:
+  caption: >-
+    Contents of the chublets Wikibase: {n_classes} classes, {n_items} items and {n_props} properties.
+    Items are instances of classes (P2) and carry statements that use the properties. Of the items,
+    {n_chublet_items} are chublets, {n_other_items} are other items (topics, accounts, DOIs, URLs) and
+    {n_items_no_class} have no class. {n_items_open_archaeo} items were imported from the open-archaeo
+    list, {n_items_wikidata} were taken over from Wikidata and {n_items_stub} are stubs for Wikidata
+    entities. In total the entities carry {n_statements} statements.
+  alt: >-
+    Three boxes for classes, items and properties, connected by arrows for instance of and statements,
+    with the items split by class and by origin.
+  sources: [chublets-wikibase-demo, wikibase-static]

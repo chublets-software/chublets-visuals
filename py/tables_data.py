@@ -15,6 +15,7 @@ that disagrees with the model.
 
 from __future__ import annotations
 
+import re
 import sys
 from collections import Counter
 from dataclasses import dataclass, field
@@ -110,6 +111,33 @@ def _wikidata_cell(p: model_data.Prop) -> str:
     if p.close_match:
         return "≈ " + ", ".join(p.close_match)
     return DASH
+
+
+# Wording of the vendored source lists that does not belong in a paper: the starting set the
+# model was begun from is not mentioned anywhere (PRIMER.md A4). The replacements are explicit;
+# `_check_wording()` fails the build if any such phrase is left in a table.
+_PLAIN = (
+    ("of the pack against live Wikidata", "of the model against live Wikidata"),
+    ("of the Starter Pack", "of the modelling repository"),
+)
+_FORBIDDEN = re.compile(r"starter[ -]?(pack|kit)|\bthe pack\b", re.IGNORECASE)
+
+
+def _plain(text: str) -> str:
+    for old, new in _PLAIN:
+        text = text.replace(old, new)
+    return text
+
+
+def _check_wording(tables: list["Table"]) -> None:
+    bad: list[str] = []
+    for t in tables:
+        texts = [t.title, t.caption] + [c.title for c in t.cols]
+        for r in t.rows:
+            texts += [r.text] if isinstance(r, Sub) else list(r.cells)
+        bad += [f"{t.name}: {x[:80]!r}" for x in texts if _FORBIDDEN.search(x)]
+    if bad:
+        raise RuntimeError("words that must not appear in a table:\n  " + "\n  ".join(bad))
 
 
 def _verification() -> Counter:
@@ -378,7 +406,7 @@ def t_sources() -> Table:
     bg = model_data.DEMO / "background"
     rows_in = model_data.read_csv(bg / "sources.csv") + model_data.read_csv(bg / "demo-sources.csv")
     rows_in.sort(key=lambda r: _scode(r["code"]))
-    rows = [_r(r["code"], r["description"], r["origin"], r["retrieved"]) for r in rows_in]
+    rows = [_r(r["code"], _plain(r["description"]), _plain(r["origin"]), r["retrieved"]) for r in rows_in]
     cap = (
         f"The {len(rows)} sources on which the model and its crosswalk rest "
         f"(S = source, R = assistant recall, which is unchecked)."
@@ -394,10 +422,12 @@ def build() -> list[Table]:
     problems = topics_mod.validate(ts, M)
     if problems:
         raise RuntimeError("; ".join(problems))
-    return [
+    tables = [
         t_statistics(M), t_origin(M), t_evidence(M), t_topics(M, ts), t_topics_status(M, ts), t_catalogue(M, ts),
         t_codemeta(M), t_groups(M), t_datacite(M), t_classes(M), t_sources(),
     ]
+    _check_wording(tables)
+    return tables
 
 
 if __name__ == "__main__":

@@ -9,6 +9,6 @@ S7,"Earlier chats with Flo (Wikidata Properties fuer Software, 2026-08-25; chubl
 S8,"CodeMeta terms page (all terms with ranges, v2 and v3)",https://codemeta.github.io/terms/,2026-10-21
 S9,"Official ConnOSS crosswalk 'Crosswalks of Research Software Metadata Schemas to CodeMeta', v1.2.0 (2026-08-14), CC BY 4.0; 21 schemas incl. Wikidata and DataCite 4.6; 68 properties",https://doi.org/10.5281/zenodo.21935688,2026-10-21
 S10,"Wikidata:WikiProject Informatics/Software/Properties (page id 31817518; created 10 June 2017, last edited 8 May 2024 22:11 by LiberatorG, 27 edits, fewer than 30 watchers)",https://www.wikidata.org/wiki/Wikidata:WikiProject_Informatics/Software/Properties,2026-10-22
-S11,"Label and datatype of the 137 Wikidata properties, classes and items of the pack against live Wikidata (246 checks, 14 differences)",tools/verify_wikidata.py of the Starter Pack,2026-10-21
+S11,"Label and datatype of the 137 Wikidata properties, classes and items of the model against live Wikidata (246 checks, 14 differences)",tools/verify_wikidata.py of the modelling repository,2026-10-21
 S12,"Decision tables for domain/range and schema.org terms, filled in by Florian Thiery; schema.org terms checked by Claude against schema.ttl of github.com/schemaorg/schemaorg",decisions of 2026-10-22,2026-10-22
 R,Assistant recall,-,2026-10-21

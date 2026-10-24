@@ -269,6 +269,33 @@ def load() -> Model:
     )
 
 
+def entity_facts() -> dict[str, int]:
+    """Counts of the entities and statements of the demo Wikibase (kernel included)."""
+    ents = read_csv(DEMO / "data" / "csv" / "entities.csv") + read_csv(STATIC_KERNEL / "entities.csv")
+    stm = read_csv(DEMO / "data" / "csv" / "statements.csv") + read_csv(STATIC_KERNEL / "statements.csv")
+    kind = {e["id"]: e["kind"] for e in ents}
+    items = [e for e in ents if e["kind"] == "item"]
+    inst: dict[str, set[str]] = {}
+    for st in stm:
+        if st["property"] == "P2":
+            inst.setdefault(st["subject"], set()).add(st["value"])
+    n_chub = sum(1 for e in items if "Q106" in inst.get(e["id"], ()))
+    n_none = sum(1 for e in items if not inst.get(e["id"]))
+    origin = Counter(e["origin"] for e in items)
+    by_kind = Counter(kind.get(st["subject"], "") for st in stm)
+    return {
+        "n_items": len(items),
+        "n_chublet_items": n_chub,
+        "n_other_items": len(items) - n_chub - n_none,
+        "n_items_no_class": n_none,
+        "n_statements": len(stm),
+        "n_statements_items": by_kind["item"],
+        "n_items_open_archaeo": origin["open-archaeo"],
+        "n_items_wikidata": origin["wikidata"],
+        "n_items_stub": origin["wikidata-stub"],
+    }
+
+
 def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
     """Numbers a caption in captions.yaml may use as `{placeholder}`.
 
@@ -303,4 +330,5 @@ def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
         "n_with_codemeta": sum(1 for p in props if p.codemeta_terms),
         "n_schema_org": sum(1 for p in props if p.schema_org),
         "n_datacite": sum(1 for p in props if p.datacite),
+        **entity_facts(),
     }

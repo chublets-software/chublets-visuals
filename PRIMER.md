@@ -177,6 +177,12 @@ nicht auf ihn beschränkt.
     (`410.5887450304572` gegen `410.58874503045723`). Die Datei ist
     unangetastet geblieben. Neue Steps runden Koordinaten (`:.2f`), damit sie
     auf jeder Plattform byte-gleich sind; der Bestand wird in S12 angeglichen.
+    **Nachtrag 2026-10-24:** Auch die gemessene Textbreite (Pillow/FreeType)
+    kann zwischen Rechnern um Bruchteile eines Pixels abweichen (z. B. Chipbreite
+    83,75 gegen 83,51 in `class-tree.svg`). Ein Neubau auf einem anderen Rechner
+    kann `class-tree` und `property-origin` daher geringfügig ändern; das ist
+    kein inhaltlicher Fehler. Patches enthalten nur Grafiken, die sie wirklich
+    ändern; bei Bedarf in S12 Breiten auf ganze Pixel runden.
 17. **Die „generic topics" der Properties sind eigene Themenfelder**, kein
     Feld der Quellen: Die elf Gruppen der WikiProject-Seite sind uneinheitlich
     (Preis und DOI unter „rights", „has characteristic" unter „versioning"),
@@ -347,7 +353,7 @@ Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
 | S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
 | S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
 | S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
-| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: `class-tree` und `property-origin` gebaut 2026-10-24, 11 offen |
+| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | in Arbeit: 5 von 13 gebaut 2026-10-24 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`), 8 offen |
 | S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | offen |
 | S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
 
@@ -949,11 +955,27 @@ flache Grafiken).
   Wikidata-Pendant (P4), einen Close Match (P100), einen CodeMeta-Term, einen
   schema.org-Term (P102) und ein DataCite-Element (gestrichelt, über CodeMeta
   abgeleitet) haben.
+- `property-topics` (`py/step_property_topics.py`): 14 Themen aus
+  `data/topics.yaml`, je Zeile Beschreibung, ein Quadrat je Property nach Herkunft
+  gefärbt, Anzahl und die ersten vier Properties als Beispiele.
+- `property-vocabulary-overlap` (`py/step_property_vocabulary_overlap.py`;
+  im Vorschlag „property-origin-flow"): ein Balken, sechs Gruppen (52 / 12 / 13 /
+  37 / 46 / 8); Klammer oben „Wikidata-Property (P4): 114", unten „CodeMeta-Term:
+  83", Überlappung 37, Vereinigung 160 von 168. Der Schritt prüft, dass die sechs
+  Gruppen die Properties lückenlos teilen.
+- `entity-overview` (`py/step_entity_overview.py`): 13 Klassen, 826 Items,
+  168 Properties; Items nach Klasse (444 chublets / 368 sonstige / 14 ohne Klasse)
+  und nach Herkunft (803 open-archaeo / 6 Wikidata / 17 Stubs); Pfeile
+  „instance of (P2)" und „statements". Die 6873 Aussagen zählen Demo und Kernel;
+  die 6852 in früheren Notizen waren ohne Kernel.
+
+**Wording.** Tabellen und Grafiken enthalten „Starter Pack" nirgends;
+`tables_data._check_wording` und `model_graphics.save` brechen sonst ab. In der
+Quellentabelle heißt es „modelling repository".
 
 **Prüfung.** Zwei Läufe ändern nichts; Zahlen stimmen mit `table-property-evidence`
 überein (114 / 22 / 83 / 71 / 34); Captions rendern mit den Fakten aus
-`caption_facts()`. Noch zu bauen: Entities-Übersicht, Herkunftsfluss, Themen,
-Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz,
+`caption_facts()`. Noch zu bauen: Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz,
 Bootstrap, static vs. federation, Evidenzbasis.
 
 # Teil D — Offene Punkte
