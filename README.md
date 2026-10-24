@@ -20,7 +20,7 @@ img/<block>/*.svg         source, versioned, grouped by block
 img/<block>/*.png         final graphics for slides, papers, READMEs — transparent background
 ```
 
-The model graphics (S10) and the redrawn Block 1 and Block 3 graphics (S11) sit directly in `img/`; the older ones are still in subfolders until S11 is finished:
+The model graphics (S10) and the redrawn Block 1, Block 2 and Block 3 graphics (S11) sit directly in `img/`; the older ones are still in subfolders until S11 is finished:
 
 ```
 img/
@@ -30,16 +30,8 @@ img/
 ├── chublets-wikibase-datamodel.svg/.png
 ├── chublets-four-steps.svg/.png                  (collage of the four steps)
 ├── chublets-step-ingest / -model / -curate-link / -export-publish .svg/.png
-├── block-2-fair4rs-chain/
-│   ├── chublets-fair4rs-chain.svg/.png           (banner)
-│   ├── fair-findable-badge.svg/.png
-│   ├── fair-findable-detail.svg/.png
-│   ├── fair-accessible-badge.svg/.png
-│   ├── fair-accessible-detail.svg/.png
-│   ├── fair-interoperable-badge.svg/.png
-│   ├── fair-interoperable-detail.svg/.png        (CodeMeta hub diagram)
-│   ├── fair-reusable-badge.svg/.png
-│   └── fair-reusable-detail.svg/.png
+├── chublets-fair.svg/.png                        (collage of F, A, I, R)
+├── chublets-fair-findable / -accessible / -interoperable / -reusable .svg/.png
 ├── system-architecture/
 │   ├── chublets-software-architecture.svg/.png   (S5, consolidates Block 1 + Block 3)
 │   ├── open-archaeo-wikidata-pipeline.svg/.png   (S6, `main.py all`'s 8 real steps)

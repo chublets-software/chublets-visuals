@@ -136,11 +136,9 @@ def body_export(f, col):
 BODIES = [body_ingest, body_model, body_curate, body_export]
 
 
-def panel(idx, f, height=None):
-    """(svg, width, height) of the panel of step idx (0..3)."""
-    step = FOUR_STEPS[idx]
+def frame(step, body, bh, height=None):
+    """(svg, width, height): a panel with the coloured header of `step` around `body`."""
     col = step["color"]
-    body, bh = BODIES[idx](f, col)
     total = max(bh + HEAD, height or 0)
     out = g.rect(0, 0, PW, total, fill=tint(col, 0.96), stroke=col, sw=3, rx=14)
     out += f'<path d="M0,{HEAD} L0,14 Q0,0 14,0 L{PW - 14},0 Q{PW},0 {PW},14 L{PW},{HEAD} z" fill="{col}"/>'
@@ -149,6 +147,13 @@ def panel(idx, f, height=None):
     out += g.text(70, 42, " ".join(step["title"]), 25, bold=True, fill="#ffffff")
     out += f'<g transform="translate(0,{HEAD})">{body}</g>'
     return out, PW, total
+
+
+def panel(idx, f, height=None):
+    """(svg, width, height) of the panel of step idx (0..3)."""
+    step = FOUR_STEPS[idx]
+    body, bh = BODIES[idx](f, step["color"])
+    return frame(step, body, bh, height)
 
 
 def heights(f):

@@ -247,3 +247,42 @@ chublets-step-export-publish:
     and DataCite files are produced for nfdi.software, find.software and the KGE4RSE knowledge graph.
   alt: A read box, a property mapping box, three mapper boxes with their files and a box for the marketplaces.
   sources: [chublets-wikibase-demo]
+
+chublets-fair:
+  caption: >-
+    How the chublets Wikibase meets the four FAIR principles. Findable: each of the {n_items} items has a
+    persistent Q-ID and is indexed by nfdi.software and find.software. Accessible: the Wikibase API and SPARQL
+    endpoint are open for reading. Interoperable: CodeMeta ({n_with_codemeta} terms mapped) is the pivot
+    between Wikidata, DCAT, DataCite and CFF. Reusable: licence and provenance are stated, {n_with_ref} of
+    {n_statements} statements carry a reference.
+  alt: >-
+    Four coloured panels labelled F, A, I and R, each with the boxes for one principle; the Interoperable panel shows CodeMeta with four arrows to the other vocabularies.
+  sources: [chublets-wikibase-demo]
+
+chublets-fair-findable:
+  caption: >-
+    Findable: each of the {n_items} items has a persistent Q-ID; the registries nfdi.software and find.software
+    index the chublets.
+  alt: Three boxes in a chain, persistent identifiers, registries and how the items are found.
+  sources: [chublets-wikibase-demo]
+
+chublets-fair-accessible:
+  caption: >-
+    Accessible: the Wikibase API and the SPARQL endpoint can be read without a login; a login only gates writing.
+    The same CSV model is also published as static pages.
+  alt: Three boxes in a chain, API and endpoint, no login for reading, static pages.
+  sources: [chublets-wikibase-demo]
+
+chublets-fair-interoperable:
+  caption: >-
+    Interoperable: CodeMeta ({n_with_codemeta} terms mapped to properties of the Wikibase) is the pivot between
+    Wikidata, DCAT, DataCite and CFF, so the vocabularies are not mapped pair by pair.
+  alt: One box for CodeMeta with arrows to four boxes for Wikidata, DCAT, DataCite and CFF.
+  sources: [chublets-wikibase-demo]
+
+chublets-fair-reusable:
+  caption: >-
+    Reusable: the copyright licence (P107) is stated on the chublet items, and {n_with_ref} of {n_statements}
+    statements carry a reference ({n_with_qual} a qualifier, for example a date).
+  alt: Three boxes in a chain, licence, provenance and attribution.
+  sources: [chublets-wikibase-demo]
