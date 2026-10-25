@@ -1,0 +1,10 @@
+class,label,wikidata,parent_class,parent_label,parent_wikidata,relation_in_wikidata,direct_parents_in_wikidata
+Q101,research software,Q95001953,Q100,software,Q7397,direct,Q7397 software
+Q102,application software,Q166142,Q100,software,Q7397,direct,Q17537576 creative work; Q7397 software
+Q103,software library,Q188860,Q100,software,Q7397,direct,Q1077784 programming tool; Q17176533 software component; Q7397 software
+Q104,script file,Q1070421,Q100,software,Q7397,indirect,Q40056 computer program; Q86920 text file
+Q106,chublet,Q141115627,Q105,Little Minion,Q73899440,direct,Q73899440 Little Minion
+Q106,chublet,Q141115627,Q101,research software,Q95001953,none,Q73899440 Little Minion
+Q372,utility software,Q312466,Q100,software,Q7397,indirect,Q40056 computer program; Q676202 system software
+Q378,QGIS plugin,Q123054280,Q100,software,Q7397,indirect,Q184148 plug-in
+Q379,plug-in,Q184148,Q100,software,Q7397,indirect,Q117670709 add-on; Q17176533 software component; Q40056 computer program

@@ -9,7 +9,8 @@ copies, never re-typed as literals).
         --demo ../chublets-wikibase-demo \\
         --static ../wikibase-static \\
         --federation ../wikibase-federation \\
-        --retrieved 2026-10-24
+        --open-archaeo ../open-archaeo \\
+        --retrieved 2026-10-25
 
 Writes, below data/raw/:
     chublets-wikibase-demo/...   the model tables, the Starter Pack tables and
@@ -81,6 +82,14 @@ SOURCES: dict[str, tuple[str, str, list[str]]] = {
             "starter-pack/data/sources.csv",
             "starter-pack/data/identity-block-variants.csv",
             "starter-pack/data/open-archaeo-columns.csv",
+        ],
+    ),
+    "open-archaeo": (
+        "https://github.com/n4o-rse/open-archaeo",
+        "open-archaeo",
+        [
+            "open-archaeo.csv",
+            "py/wikidata/main.py",
         ],
     ),
     "static": (
@@ -189,6 +198,7 @@ def main() -> int:
     ap.add_argument("--demo", type=Path, help="checkout of n4o-rse/chublets-wikibase-demo")
     ap.add_argument("--static", type=Path, help="checkout of n4o-rse/wikibase-static")
     ap.add_argument("--federation", type=Path, help="checkout of n4o-rse/wikibase-federation")
+    ap.add_argument("--open-archaeo", type=Path, dest="oa", help="checkout of n4o-rse/open-archaeo")
     ap.add_argument("--retrieved", help="retrieval date, YYYY-MM-DD (no clock is read)")
     ap.add_argument("--check", action="store_true", help="verify the vendored files against the manifest")
     args = ap.parse_args()
@@ -200,9 +210,9 @@ def main() -> int:
         print("vendored files match the manifest" if not problems else f"{len(problems)} problem(s)")
         return 1 if problems else 0
 
-    if not (args.demo and args.static and args.federation and args.retrieved):
-        ap.error("--demo, --static, --federation and --retrieved are all required (or use --check)")
-    for line in vendor({"demo": args.demo, "static": args.static, "federation": args.federation}, args.retrieved):
+    if not (args.demo and args.static and args.federation and args.oa and args.retrieved):
+        ap.error("--demo, --static, --federation, --open-archaeo and --retrieved are all required (or use --check)")
+    for line in vendor({"demo": args.demo, "static": args.static, "federation": args.federation, "open-archaeo": args.oa}, args.retrieved):
         print(line)
     return 0
 

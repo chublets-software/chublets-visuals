@@ -1,4 +1,4 @@
-"""Parses data/raw/open-archaeo/wikidata-main.py -- a vendored snapshot of
+"""Parses data/raw/open-archaeo/py/wikidata/main.py -- a vendored snapshot of
 github.com/n4o-rse/open-archaeo's py/wikidata/main.py -- for the real
 ALL_STEPS pipeline that `python py/wikidata/main.py all` runs.
 
@@ -7,7 +7,7 @@ network access confined to one step nobody runs by default (there isn't
 one here yet), and a snapshot is exactly what PRIMER.md Befund 10 needed
 -- something S6 can be checked against without re-cloning an external
 repo on every build. Refreshing it is one file copy: replace
-data/raw/open-archaeo/wikidata-main.py with the current
+data/raw/open-archaeo/py/wikidata/main.py with the current
 py/wikidata/main.py from the real repo, dated in a PRIMER.md Befund, and
 step_open_archaeo_pipeline.py picks up whatever ALL_STEPS says without
 any code change here -- that is the "weiterfuehren, wenn sich im Repo was

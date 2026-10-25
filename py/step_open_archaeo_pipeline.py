@@ -1,6 +1,6 @@
 """S11 -- the steps of the open-archaeo Wikidata pipeline (`all`).
 
-Reads: py/open_archaeo_data.py, data/raw/open-archaeo/wikidata-main.py. Produces: img/open-archaeo-wikidata-pipeline.svg / .png
+Reads: py/open_archaeo_data.py, data/raw/open-archaeo/py/wikidata/main.py. Produces: img/open-archaeo-wikidata-pipeline.svg / .png
 
 Runnable standalone: `python py/step_open_archaeo_pipeline.py`
 """
@@ -28,7 +28,7 @@ NOTE = "Left out of the run of all steps on purpose: reconcile is slow (added wi
 def build(M: model_data.Model) -> g.Canvas:
     f = model_data.caption_facts(M)
     cv = g.Canvas()
-    steps = open_archaeo_data.load(DATA_RAW / "open-archaeo" / "wikidata-main.py")["all_steps"]
+    steps = open_archaeo_data.load(DATA_RAW / "open-archaeo" / "py" / "wikidata" / "main.py")["all_steps"]
     bw, gap, vgap = 290, 50, 56
     items = [(name, ["reads Wikidata" if needs else "offline", desc]) for name, needs, desc in steps]
     h = max(oa.box_height(bw, t, ls) for t, ls in items)

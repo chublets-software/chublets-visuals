@@ -1,12 +1,13 @@
 """S11 -- how open-archaeo is split into an OpenRefine and a Python slice.
 
-Reads: py/model_data.py. Produces: img/open-archaeo-two-routes.svg / .png
+Reads: py/model_data.py, data/raw/open-archaeo/open-archaeo.csv. Produces: img/open-archaeo-two-routes.svg / .png
 
 Runnable standalone: `python py/step_open_archaeo_two_routes.py`
 """
 
 from __future__ import annotations
 
+import csv
 import sys
 from pathlib import Path
 
@@ -16,11 +17,16 @@ import model_data  # noqa: E402
 import model_graphics as g  # noqa: E402
 import oa_graphics as oa  # noqa: E402
 import four_steps as fs  # noqa: E402
-from visuals_utils import CATEGORY_COLORS, MUTED  # noqa: E402
+from visuals_utils import CATEGORY_COLORS, DATA_RAW, MUTED  # noqa: E402
 
 NAME = "open-archaeo-two-routes"
 GREY, TEAL, PURPLE = CATEGORY_COLORS[5], CATEGORY_COLORS[2], CATEGORY_COLORS[0]
-N_CSV = 562  # entries of open-archaeo.csv, read from the repository (PRIMER.md S6b)
+
+
+def _csv_entries() -> int:
+    """Entries of the vendored open-archaeo.csv (one row per entry, header excluded)."""
+    with (DATA_RAW / "open-archaeo" / "open-archaeo.csv").open(encoding="utf-8", newline="") as f:
+        return sum(1 for _ in csv.DictReader(f))
 
 
 def build(M: model_data.Model) -> g.Canvas:
@@ -30,7 +36,7 @@ def build(M: model_data.Model) -> g.Canvas:
     assert n % 2 == 0, "the split gives two equal halves"
     half = n // 2
     bw, gap = 300, 56
-    top = [("open-archaeo.csv", [f"{N_CSV} entries"]), ("transform", [f"{n} software entries"]), ("split", ["stratified, deterministic"])]
+    top = [("open-archaeo.csv", [f"{_csv_entries()} entries"]), ("transform", [f"{n} software entries"]), ("split", ["stratified, deterministic"])]
     h1, cs = oa.row(cv, 0, 0, top, bw, gap, GREY)
     total = 3 * bw + 2 * gap
     two = [("OpenRefine slice", [f"{half} entries", "out/OpenRefine/"], TEAL), ("Python slice", [f"{half} entries", "out/Python/"], PURPLE)]

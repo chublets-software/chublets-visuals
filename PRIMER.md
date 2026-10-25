@@ -17,7 +17,7 @@ Hausmuster, eigene Palette).
 Übersicht: <https://chublets-software.github.io/chublets-visuals/>
 
 **So wird es benutzt.** Dieses Dokument wird zu Beginn jedes Arbeitschats
-hochgeladen; danach genügt „wir machen S14“. Teil A gilt immer, Teil B ist die
+hochgeladen; danach genügt „wir machen S15“. Teil A gilt immer, Teil B ist die
 Übersicht, Teil C beschreibt die Schritte, Teil D sammelt offene Punkte.
 Es ist ein internes Arbeitsdokument (deutsch); Code, README und alles, was das
 Repository nach außen zeigt, ist britisches Englisch.
@@ -38,7 +38,7 @@ Grafiken mit Caption, elf Tabellen und zwei Übersichtsseiten.
 | `n4o-rse/chublets-wikibase-demo` (Modell, Starter-Pack-Tabellen, Review) | `data/raw/chublets-wikibase-demo/` | `a460d94` |
 | `n4o-rse/wikibase-static` (Kernel-Tabellen) | `data/raw/wikibase-static/` | `7cd3047` |
 | `n4o-rse/wikibase-federation` (Use Case `chublets`) | `data/raw/wikibase-federation/` | `12abb40` |
-| `n4o-rse/open-archaeo`, `py/wikidata/main.py` | `data/raw/open-archaeo/wikidata-main.py` | Kopie vom 2026-09-10 |
+| `n4o-rse/open-archaeo`: `open-archaeo.csv` (562 Einträge) und `py/wikidata/main.py` | `data/raw/open-archaeo/` | `51d23b1` |
 | Logo (Vektororiginal) | `img/source/chublets-logo.svg` | — |
 
 Prüfsummen aller vendorten Dateien: `data/raw/vendor-manifest.csv`; Commits und
@@ -91,8 +91,8 @@ Wikidata), 416 open-archaeo-Einträge im Modell.
 11. **S6 liest seitdem die vendorte `wikidata-main.py`** (`py/open_archaeo_data.py`,
     `ast.literal_eval` auf `ALL_STEPS`/`STEPS`/`RECONCILE_STEP`). Aktualisieren
     heißt Datei ersetzen, mit Datum in einem neuen Befund; im Step ändert sich nichts.
-    Die Konstante 562 (Einträge der `open-archaeo.csv`) steht nicht in den
-    vendorten Dateien; sie wurde 2026-09-10 aus dem Repo gelesen.
+    Seit S14 ist auch `open-archaeo.csv` vendort, die 562 wird zur Laufzeit gezählt
+    (2026-10-25 gegen das Live-Repo geprüft; `main.py` byteidentisch zur früheren Kopie).
 12. **Das Logo-SVG braucht Namespace-Bereinigung**, nicht nur Extraktion: jedes
     `sodipodi:*`- und `inkscape:*`-Attribut wird aus dem eingebetteten Markup
     entfernt, sonst meldet resvg-py „unknown namespace prefix“.
@@ -257,6 +257,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S11 | Bestandsgrafiken neu gezeichnet: flach, ohne Header, Zahlen aus dem Modell | S10 | erledigt 2026-10-25 |
 | S12 | Abschluss: Captions Pflicht, Pixel-Asserts weg, Evidenzbasis geprüft, Altlasten und PRIMER aufgeräumt | S11 | erledigt 2026-10-25 |
 | S13 | Politur: alle Icons einheitlich, Übersichtsseiten nach Themen mit Filter-Chips | S12 | erledigt 2026-10-25 |
+| S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | Skript fertig, Lauf durch Flo offen |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -507,6 +508,14 @@ Versätze in `chain_banner.CENTRE` sind null, die alten Funktionen in `visuals_u
 `TABLE_THEME`) mit Chips als Filter. **Abnahme:** `python main.py --strict` zweimal ohne Änderung;
 in `docs/index.html` zeigt ein Klick auf „FAIR4RS“ nur die zehn FAIR-Grafiken.
 
+## S14 — Belege
+
+`vendor_sources.py` kennt jetzt vier Quellen (`--open-archaeo`); `open-archaeo.csv` und
+`py/wikidata/main.py` liegen unter `data/raw/open-archaeo/`, `step_open_archaeo_two_routes`
+zählt die Einträge. In `SNAPSHOT.md` standen noch Platzhalter statt Datum (jetzt
+2026-10-25). `CITATION.cff` führt beide Lizenzen. Offen: Lauf von
+`py/check_class_hierarchy.py` durch Flo.
+
 ---
 
 # Teil D — Offene Punkte
@@ -514,20 +523,18 @@ in `docs/index.html` zeigt ein Klick auf „FAIR4RS“ nur die zehn FAIR-Grafike
 - **Windows-Lauf der letzten Patches.** Die SVGs wurden auf Linux gebaut und geprüft; ein
   Lauf auf Windows (Referenzplattform) kann Breiten ändern (Befund 16). Flo prüft beim
   nächsten Lauf.
-- **Konstante 562** (Einträge von `open-archaeo.csv`) steht in
-  `py/step_open_archaeo_two_routes.py`, nicht in den vendorten Dateien; beim nächsten
-  Snapshot von `open-archaeo` aus der Quelle belegen (Befund 11).
 - **Zweite Variante des Talk-Closings** (Ring plus angebundene externe Hubs wie
   Wikidata/nfdi.software) nur auf Zuruf.
-- **`CITATION.cff`** nennt nur MIT; ob dort beide Lizenzen stehen sollen (`license` als
-  Liste), entscheidet Flo. Die Tabellen gelten als CC BY 4.0 (abgeleitet aus Wikidata CC0
+- **Lizenz-Hinweis:** `CITATION.cff` nennt seit S14 MIT und CC-BY-4.0. Die Tabellen gelten als CC BY 4.0 (abgeleitet aus Wikidata CC0
   und dem ConnOSS-Crosswalk CC BY 4.0).
 - **Annahmen in den Tabellen.** Klassen Q372, Q378, Q379 heißen „importer stub“, weil ihr
   `origin` im Modell `wikidata-stub` lautet; der DataCite-Wert einer Property ist über
   CodeMeta abgeleitet, nicht veröffentlicht (Spaltenüberschrift und Caption sagen das).
 - **Klassenhierarchie unverifiziert.** Die Verifikation der Demo prüfte nur Label und
   Datentyp, nicht die Hierarchie; der Klassenbaum zeigt das Modell, nicht eine geprüfte
-  Wikidata-Hierarchie (Caption sagt das).
+  Wikidata-Hierarchie (Caption sagt das). `py/check_class_hierarchy.py` (von Hand, braucht
+  Netz) schreibt `data/raw/wikidata-class-hierarchy.csv`; Flo führt es lokal aus, danach
+  Ergebnis ins Repo, Caption und `model-evidence-base` anpassen.
 - **Demo-README** zählt 63 Properties mit Item-Werten und Range, die Tabellen zählen 66
   (`model-data`, NOTE); wahrscheinlich Stand vor den neun Review-Zeilen, bei Gelegenheit in
   der Demo nachziehen.
