@@ -330,6 +330,24 @@ def wikiproject_software_list() -> list[dict[str, str]]:
     return [r for r in rows if r["in_wikiproject_software_list"] == "yes"]
 
 
+def hierarchy_check(model: Model) -> dict[str, int]:
+    """Counts from data/raw/wikidata-class-hierarchy.csv (written by py/check_class_hierarchy.py).
+
+    Every model edge between two classes that both have a Wikidata equivalent must be in the file,
+    so a changed hierarchy fails the build until the check is run again."""
+    path = DATA_RAW / "wikidata-class-hierarchy.csv"
+    with path.open(encoding="utf-8", newline="") as f:
+        rows = list(csv.DictReader(f))
+    have = {(r["class"], r["parent_class"]) for r in rows}
+    want = {(c.id, p) for c in model.classes.values() for p in c.parents if c.twin and model.classes[p].twin}
+    if have != want:
+        raise ValueError(f"{path.name} does not match the model's class edges "
+                         f"(missing {sorted(want - have)}, extra {sorted(have - want)}); run py/check_class_hierarchy.py")
+    n = Counter(r["relation_in_wikidata"] for r in rows)
+    return {"n_edges_checked": len(rows), "n_edges_direct": n["direct"],
+            "n_edges_indirect": n["indirect"], "n_edges_none": n["none"]}
+
+
 def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
     """Numbers a caption in captions.yaml may use as `{placeholder}`.
 
@@ -367,4 +385,5 @@ def caption_facts(model: Model, n_topics: int | None = None) -> dict[str, int]:
         "n_wikiproject": len(wikiproject_software_list()),
         "n_oa_half": entity_facts()["n_oa_entries"] // 2,
         **entity_facts(),
+        **hierarchy_check(model),
     }

@@ -23,7 +23,11 @@ class-tree:
     Wikidata as stubs. Each class shows its Wikidata equivalent (P4). The CIDOC CRM class
     crmdig:D14 (software) is stated for software (Q100) and Little Minion (Q105) and inherited by the
     classes below them. Chublet (Q106) has two parents, Little Minion and research software. The
-    hierarchy is the one recorded in the model (P1); it has not been checked against Wikidata.
+    hierarchy is the one recorded in the model (P1). Of the {n_edges_checked} parent links whose two
+    classes both have a Wikidata equivalent, {n_edges_direct} are also direct subclass-of (P279) links in
+    Wikidata and {n_edges_indirect} hold indirectly, through intermediate classes; one does not exist in
+    Wikidata: chublet is not a subclass of research software there, because that second parent is a
+    chublets decision.
   alt: >-
     Left-to-right tree of the 13 classes with Instance as root, software with seven subclasses,
     Little Minion with the chublet class, and the built-in classes Class and Property.

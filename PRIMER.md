@@ -257,7 +257,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S11 | Bestandsgrafiken neu gezeichnet: flach, ohne Header, Zahlen aus dem Modell | S10 | erledigt 2026-10-25 |
 | S12 | Abschluss: Captions Pflicht, Pixel-Asserts weg, Evidenzbasis geprüft, Altlasten und PRIMER aufgeräumt | S11 | erledigt 2026-10-25 |
 | S13 | Politur: alle Icons einheitlich, Übersichtsseiten nach Themen mit Filter-Chips | S12 | erledigt 2026-10-25 |
-| S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | Skript fertig, Lauf durch Flo offen |
+| S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | erledigt 2026-10-25 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -513,8 +513,8 @@ in `docs/index.html` zeigt ein Klick auf „FAIR4RS“ nur die zehn FAIR-Grafike
 `vendor_sources.py` kennt jetzt vier Quellen (`--open-archaeo`); `open-archaeo.csv` und
 `py/wikidata/main.py` liegen unter `data/raw/open-archaeo/`, `step_open_archaeo_two_routes`
 zählt die Einträge. In `SNAPSHOT.md` standen noch Platzhalter statt Datum (jetzt
-2026-10-25). `CITATION.cff` führt beide Lizenzen. Offen: Lauf von
-`py/check_class_hierarchy.py` durch Flo.
+2026-10-25). `CITATION.cff` führt beide Lizenzen. `py/check_class_hierarchy.py` ist gelaufen (9 Kanten: 4 direkt, 4 indirekt, 1 nicht in Wikidata);
+`model_data.hierarchy_check` liest das Ergebnis, die Caption von `class-tree` nennt es.
 
 ---
 
@@ -530,11 +530,12 @@ zählt die Einträge. In `SNAPSHOT.md` standen noch Platzhalter statt Datum (jet
 - **Annahmen in den Tabellen.** Klassen Q372, Q378, Q379 heißen „importer stub“, weil ihr
   `origin` im Modell `wikidata-stub` lautet; der DataCite-Wert einer Property ist über
   CodeMeta abgeleitet, nicht veröffentlicht (Spaltenüberschrift und Caption sagen das).
-- **Klassenhierarchie unverifiziert.** Die Verifikation der Demo prüfte nur Label und
-  Datentyp, nicht die Hierarchie; der Klassenbaum zeigt das Modell, nicht eine geprüfte
-  Wikidata-Hierarchie (Caption sagt das). `py/check_class_hierarchy.py` (von Hand, braucht
-  Netz) schreibt `data/raw/wikidata-class-hierarchy.csv`; Flo führt es lokal aus, danach
-  Ergebnis ins Repo, Caption und `model-evidence-base` anpassen.
+- **Klassenhierarchie gegen Wikidata geprüft (2026-10-25).** Von 9 Kanten zwischen Klassen mit
+  Wikidata-Äquivalent sind 4 direkte und 4 indirekte Unterklassen-Beziehungen (P279);
+  chublet → research software gibt es in Wikidata nicht (zweiter Elternteil ist eine
+  chublets-Entscheidung). Ergebnis: `data/raw/wikidata-class-hierarchy.csv`, Caption von
+  `class-tree` nennt die Zahlen; ändert sich die Hierarchie, bricht `model_data.hierarchy_check`
+  ab, bis `py/check_class_hierarchy.py` neu gelaufen ist.
 - **Demo-README** zählt 63 Properties mit Item-Werten und Range, die Tabellen zählen 66
   (`model-data`, NOTE); wahrscheinlich Stand vor den neun Review-Zeilen, bei Gelegenheit in
   der Demo nachziehen.
