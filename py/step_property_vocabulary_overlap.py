@@ -88,17 +88,24 @@ def build(M: model_data.Model) -> g.Canvas:
     # legend
     y = BAR_Y + BAR_H + 100
     col_w = W / 2
+    rows_y = []  # the legend grows with its text: an entry that does not fit one line wraps
+    cy = y
+    for r in range((len(segs) + 1) // 2):
+        h = max(len(g.wrap(f"{t}: {len(ps)}", 14, col_w - 60)) for _, t, _, _, ps in segs[2 * r:2 * r + 2])
+        rows_y.append((cy, h))
+        cy += max(34, 18 * h + 16)
     for i, (key, text_, col, dash, ps) in enumerate(segs):
         cx = (i % 2) * col_w
-        cy = y + (i // 2) * 34
-        out = g.rect(cx, cy, 34, 20, fill=col, stroke=MUTED if dash else "none", sw=1.6, rx=5, dash=dash)
+        cy_i, _ = rows_y[i // 2]
+        out = g.rect(cx, cy_i, 34, 20, fill=col, stroke=MUTED if dash else "none", sw=1.6, rx=5, dash=dash)
         lines = g.wrap(f"{text_}: {len(ps)}", 14, col_w - 60)
-        assert len(lines) == 1, f"legend entry too long: {text_}"
-        out += g.text(cx + 46, cy + 15, lines[0], 14, fill=INK)
-        cv.add(out, cx, cy, cx + col_w - 10, cy + 22)
+        for k, ln in enumerate(lines):
+            out += g.text(cx + 46, cy_i + 15 + 18 * k, ln, 14, fill=INK)
+        cv.add(out, cx, cy_i, cx + col_w - 10, cy_i + 22 + 18 * (len(lines) - 1))
     union = n_wd + n_cm - n_both
-    cv.add(g.text(0, y + 3 * 34 + 20, f"Together the two vocabularies cover {union} of the {total} properties.",
-                  14, italic=True, fill=MUTED), 0, y + 3 * 34, W, y + 3 * 34 + 26)
+    legend_end = cy
+    cv.add(g.text(0, legend_end + 20, f"Together the two vocabularies cover {union} of the {total} properties.",
+                  14, italic=True, fill=MUTED), 0, legend_end, W, legend_end + 26)
     return cv
 
 

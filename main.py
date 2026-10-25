@@ -10,15 +10,13 @@
     python main.py --strict            warnings become errors (this is what CI runs)
 
 Step modules are imported lazily so `--list` and `--dry-run` stay instant
-and free of resvg-py/Pillow/openpyxl.
+and free of resvg-py/Pillow.
 
-Every planned step (Block 1, Block 2, S4, S4b, S4c, S5, S6, S6b, S6c, S7,
-S7b) is built; S8 onwards (the graphics of the Wikibase data model) is under
-way, see PRIMER.md. New work gets a fresh id; existing ids never change, since
-PATCH-README.md and PRIMER.md refer to them by id. `model-data` runs first and
-`captions` checks the finished graphics; `tables` writes tex/ (paper appendix) and
-`gallery` last writes docs/ (the GitHub Pages overview), because it shows everything
-the steps before it produced.
+All steps S0 to S12 are built, see PRIMER.md. New work gets a fresh id; existing ids
+never change, since PATCH-README.md and PRIMER.md refer to them by id. `model-data`
+runs first and `captions` checks the finished graphics; `tables` writes tex/ (paper
+appendix) and `gallery` last writes docs/ (the GitHub Pages overview), because it
+shows everything the steps before it produced.
 """
 
 from __future__ import annotations
@@ -35,26 +33,26 @@ sys.path.insert(0, str(ROOT / "py"))
 # (id, description, module name under py/)
 STEPS = [
     ("model-data", "S8: verify the vendored model sources and the numbers drawn from them", "step_model_data_check"),
-    ("codemeta", "Block 1 (1/4): CodeMeta term overview (class tree)", "step_codemeta_overview"),
-    ("wikidata", "Block 1 (2/4): Wikidata software-properties overview", "step_wikidata_properties_overview"),
-    ("crosswalk", "Block 1 (3/4): CodeMeta <-> Wikidata crosswalk", "step_codemeta_wikidata_crosswalk"),
-    ("datamodel", "Block 1 (4/4): chublets.software federated datamodel", "step_wikibase_datamodel"),
+    ("codemeta", "S11: CodeMeta term overview (one box per type)", "step_codemeta_overview"),
+    ("wikidata", "S11: Wikidata software properties by group", "step_wikidata_properties_overview"),
+    ("crosswalk", "S11: CodeMeta <-> Wikidata crosswalk", "step_codemeta_wikidata_crosswalk"),
+    ("datamodel", "S11: how the 168 properties arise from Wikidata and CodeMeta", "step_wikibase_datamodel"),
     ("pattern", "S11: the four steps as a chain with badges, and as one collage", "step_pattern"),
     ("ingest", "S11: step 1, Ingest", "step_ingest_inputs"),
     ("model", "S11: step 2, Model", "step_model_datamodel"),
     ("curate", "S11: step 3, Curate and link", "step_curate_workflow"),
     ("export", "S11: step 4, Export and publish", "step_export_pipeline"),
-    ("architecture", "S5: chublets.software system architecture (5 stages)", "step_architecture"),
+    ("architecture", "S11: system architecture, sources to marketplaces", "step_architecture"),
     ("fair-pattern", "S11: the four FAIR principles as a chain with badges, and as one collage", "step_fair_pattern"),
     ("fair-findable", "S11: F, Findable", "step_fair_findable"),
     ("fair-accessible", "S11: A, Accessible", "step_fair_accessible"),
     ("fair-interoperable", "S11: I, Interoperable", "step_fair_interoperable"),
     ("fair-reusable", "S11: R, Reusable", "step_fair_reusable"),
-    ("open-archaeo", "S6: open-archaeo to Wikidata import pipeline", "step_open_archaeo_pipeline"),
-    ("oa-two-routes", "S6b (1/3): open-archaeo two routes overview", "step_open_archaeo_two_routes"),
-    ("oa-python-route", "S6b (2/3): the Python route session", "step_open_archaeo_python_route"),
-    ("oa-openrefine-route", "S6b (3/3): the OpenRefine route", "step_open_archaeo_openrefine_route"),
-    ("talk-closing", "Talk closing slide: 8 badges as a ring around the logo", "step_talk_closing"),
+    ("open-archaeo", "S11: open-archaeo to Wikidata pipeline", "step_open_archaeo_pipeline"),
+    ("oa-two-routes", "S11: open-archaeo, the two routes", "step_open_archaeo_two_routes"),
+    ("oa-python-route", "S11: open-archaeo, the Python route", "step_open_archaeo_python_route"),
+    ("oa-openrefine-route", "S11: open-archaeo, the OpenRefine route", "step_open_archaeo_openrefine_route"),
+    ("talk-closing", "S11: talk closing slide, eight badges around the logo", "step_talk_closing"),
     ("class-tree", "S10: class tree of the chublets Wikibase (13 classes)", "step_class_tree"),
     ("property-origin", "S10: origin of the 168 properties by origin in the crosswalk", "step_property_origin"),
     ("property-topics", "S10: the 168 properties by topic and origin", "step_property_topics"),

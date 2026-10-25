@@ -59,7 +59,7 @@ def build(M: model_data.Model) -> g.Canvas:
          "published, read in full", PUR, "p"),
         ("CodeMeta terms page", f"{f['n_terms_outside_workbook']} further terms that have no row in the crosswalk",
          "published, read in full", PUR, "p"),
-        ("Wikidata WikiProject Informatics, software properties", f"{f['n_wikiproject_pids']} Wikidata properties for software; after review {cf['n_review']} properties were added to the model",
+        ("Wikidata WikiProject Informatics, software properties", f"{f['n_wikiproject_pids']} Wikidata properties for software (the registry identifiers are not all listed); after review {cf['n_review']} properties were added to the model",
          "transcribed by hand", TEAL, "p"),
         ("Live Wikidata check", f"label and datatype of {f['n_wd_checked']} Wikidata entities: {f['n_checks']} checks, {f['n_checks_diff']} differences",
          "checked against Wikidata", SLATE, "pc"),

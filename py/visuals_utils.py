@@ -2,7 +2,7 @@
 
 Adapted from FDOx-squirrel/fdox-visuals' visuals_utils.py (same author, same
 house pattern): identical render pipeline (resvg-py, vendored Fira Sans,
-trim-to-content), different palette. No step imports rdflib/openpyxl/Pillow
+trim-to-content), different palette. No step imports rdflib/Pillow
 at module level -- this stays light on purpose so `python main.py --list`
 and `--dry-run` are instant.
 """
@@ -19,13 +19,9 @@ DATA_RAW = ROOT / "data" / "raw"
 # Block subfolders under img/ (Flo, 2026-09-10: "die 'bloecke' im img
 # folder in einzelne subfolder stecken"). Every step writes into exactly
 # one of these -- nothing is written directly into IMG_DIR any more.
-BLOCK1_DIR = IMG_DIR / "block-1-codemeta-wikidata-datamodel"
-BLOCK2_DIR = IMG_DIR / "block-2-fair4rs-chain"
-BLOCK3_DIR = IMG_DIR / "block-3-four-step-pattern"
 # Not one of the three numbered "blocks" -- system-level diagrams that sit
 # above them (the consolidated architecture, and later the open-archaeo
 # pipeline), so they get their own, non-numbered folder.
-SYSTEM_ARCH_DIR = IMG_DIR / "system-architecture"
 # Composited, talk-specific slides (real assets like the logo pasted onto
 # a generated ring/banner) -- distinct from the generic, reusable badges
 # in the block-N folders, same distinction fdox-visuals draws with its
@@ -40,12 +36,8 @@ FONT_REGULAR = FONTS_DIR / "FiraSans-Regular.ttf"
 FONT_BOLD = FONTS_DIR / "FiraSans-Bold.ttf"
 FONT_FAMILY = "Fira Sans"
 
-# Every generated SVG now lives one level under img/ (img/<block>/*.svg),
-# so the relative path back to fonts/ is two levels up, not one. Changed
-# 2026-09-10 together with the block-subfolder move -- see the comment on
-# BLOCK1_DIR/BLOCK3_DIR above. If a step ever writes its SVG at a
-# different depth, this constant has to move with it.
-_FONT_REL_PREFIX = "../../fonts"
+# All graphics sit directly in img/, so the relative path back to fonts/ is one level up.
+_FONT_REL_PREFIX = "../fonts"
 
 INK = "#1E1425"
 MUTED = "#5B5568"
@@ -168,29 +160,6 @@ def esc(text: str) -> str:
     return text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
 
 
-def wrap_text(text: str, max_chars: int = 26) -> list[str]:
-    words, lines, cur = text.split(" "), [], ""
-    for w in words:
-        trial = (cur + " " + w).strip()
-        if len(trial) > max_chars and cur:
-            lines.append(cur)
-            cur = w
-        else:
-            cur = trial
-    if cur:
-        lines.append(cur)
-    return lines
-
-
-def shade(hex_color: str, factor: float) -> str:
-    """Darken (factor<1) or lighten-toward-white (factor>1, capped) a hex colour."""
-    r = int(hex_color[1:3], 16)
-    g = int(hex_color[3:5], 16)
-    b = int(hex_color[5:7], 16)
-    r, g, b = (min(255, max(0, int(c * factor))) for c in (r, g, b))
-    return f"#{r:02X}{g:02X}{b:02X}"
-
-
 def tint(hex_color: str, white_ratio: float) -> str:
     """Mix a colour toward white by `white_ratio` (0 = unchanged, 1 = white)."""
     r = int(hex_color[1:3], 16)
@@ -252,17 +221,6 @@ def trim_transparent_border(png_path: Path, margin_px: int = 10) -> tuple[int, i
     out.paste(cropped, (margin_px, margin_px))
     out.save(png_path)
     return out.size
-
-
-def flatten_to_jpg(png_path: Path, jpg_path: Path, quality: int = 95) -> None:
-    """Flatten a (possibly transparent) PNG onto white and save as JPEG."""
-    from PIL import Image  # lazy, same reasoning as above
-
-    with Image.open(png_path) as im:
-        im = im.convert("RGBA")
-        bg = Image.new("RGB", im.size, (255, 255, 255))
-        bg.paste(im, mask=im.split()[3])
-        bg.save(jpg_path, "JPEG", quality=quality, subsampling=0)
 
 
 def paste_raster(base_png_path: Path, asset_path: Path, x: int, y: int, w: int, h: int,
@@ -333,71 +291,6 @@ def load_logo_inner_svg(svg_path: Path) -> tuple[str, float, float]:
 
 
 # --- generic SVG primitives ---------------------------------------------
-
-
-def arrow_marker(marker_id: str = "arrow", color: str = MUTED) -> str:
-    return (
-        f'<marker id="{marker_id}" viewBox="0 0 10 10" refX="8" refY="5" '
-        f'markerWidth="6" markerHeight="6" orient="auto-start-reverse">'
-        f'<path d="M0,0 L10,5 L0,10 z" fill="{color}"/></marker>'
-    )
-
-
-def arrow_line(x1: float, y1: float, x2: float, y2: float, color: str = MUTED,
-               width: float = 4, marker_id: str = "arrow") -> str:
-    return (
-        f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{color}" '
-        f'stroke-width="{width}" marker-end="url(#{marker_id})"/>'
-    )
-
-
-def elbow_path(points: list[tuple[float, float]], color: str = MUTED,
-               width: float = 4, marker_id: str = "arrow") -> str:
-    """A multi-segment orthogonal/angled connector ending in an arrowhead."""
-    pts = " ".join(f"{x},{y}" for x, y in points)
-    return (
-        f'<polyline points="{pts}" fill="none" stroke="{color}" stroke-width="{width}" '
-        f'stroke-linejoin="round" marker-end="url(#{marker_id})"/>'
-    )
-
-
-def open_triangle(x1: float, y1: float, x2: float, y2: float, color: str = "white",
-                   width: float = 12) -> str:
-    """An open (unfilled) chevron arrowhead pointing from (x1,y1) toward
-    (x2,y2), used for inheritance-style connectors (UML "is-a").
-    """
-    import math
-
-    ang = math.atan2(y2 - y1, x2 - x1)
-    size = 26
-    spread = 0.5
-    ax1 = x2 - size * math.cos(ang - spread)
-    ay1 = y2 - size * math.sin(ang - spread)
-    ax2 = x2 - size * math.cos(ang + spread)
-    ay2 = y2 - size * math.sin(ang + spread)
-    return (
-        f'<line x1="{x1}" y1="{y1}" x2="{x2}" y2="{y2}" stroke="{color}" stroke-width="3"/>'
-        f'<polyline points="{ax1:.1f},{ay1:.1f} {x2},{y2} {ax2:.1f},{ay2:.1f}" '
-        f'fill="white" stroke="{color}" stroke-width="3" stroke-linejoin="round"/>'
-    )
-
-
-def label_box(x: float, y: float, w: float, h: float, lines: list[tuple[str, int, float]],
-              fill: str = "white", stroke: str = INK, text_color: str = INK, radius: float = 10) -> str:
-    """A rounded rectangle centred on (x + w/2, y + h/2) holding one or more
-    text lines, each given as (text, font-weight, font-size), vertically
-    centred as a block. Used by flow-style diagrams (S4b curate/export).
-    """
-    out = f'<rect x="{x}" y="{y}" width="{w}" height="{h}" rx="{radius}" fill="{fill}" stroke="{stroke}" stroke-width="3"/>'
-    n = len(lines)
-    line_h = 30
-    start_y = y + h / 2 - (n - 1) * line_h / 2 + 8
-    for i, (text, weight, size) in enumerate(lines):
-        out += (
-            f'<text x="{x + w/2}" y="{start_y + i*line_h}" text-anchor="middle" font-family="{FONT_FAMILY}" '
-            f'font-weight="{weight}" font-size="{size}" fill="{text_color}">{esc(text)}</text>'
-        )
-    return out
 
 
 def four_step_icon(step_idx: int, color: str) -> str:
@@ -486,36 +379,3 @@ def fair4rs_icon(idx: int, color: str) -> str:
     return arc1 + arc2
 
 
-def step_header(step_idx: int, step: dict, x: float, y: float, r: float = 45,
-                 icon_fn=None, prefix: str = "Step ") -> tuple[str, float]:
-    """A small version of an S4/Block-2 badge (icon only, no number tag --
-    the text next to it already says which step) plus a "Step N -- Title"
-    or "F -- Title" label, used as a consistent header on every detail
-    diagram (Flo, 2026-09-10: "ich verstehe bei der Bezeichnung nicht
-    welcher step es ist" / fdox-visuals keeps its step badge visible
-    everywhere). Reuses the badge's own icon function at a smaller scale
-    rather than drawing a second icon set (A3).
-
-    `icon_fn` defaults to four_step_icon (Block 3); pass fair4rs_icon for
-    Block 2 diagrams. `prefix` goes in front of `step["num"]` in the
-    label -- "Step " for Block 3 (numeric), "" for Block 2 (the FAIR
-    letters read fine on their own, "Step F" would not).
-
-    Returns (svg_markup, y) where y is the top of the first content row
-    below the header, so a step file can do
-    `header_svg, content_y = step_header(...)` and lay out from there.
-    """
-    if icon_fn is None:
-        icon_fn = four_step_icon
-    color = step["color"]
-    scale = r / 150
-    fill = tint(color, 0.88)
-    cx, cy = x + r, y + r
-    out = f'<circle cx="{cx}" cy="{cy}" r="{r}" fill="{fill}" stroke="{color}" stroke-width="4"/>'
-    out += f'<g transform="translate({cx},{cy}) scale({scale:.4f})">{icon_fn(step_idx, color)}</g>'
-    title = " ".join(step["title"])
-    out += (
-        f'<text x="{x + 2*r + 22}" y="{cy+9}" text-anchor="start" font-family="{FONT_FAMILY}" '
-        f'font-weight="700" font-size="26" fill="{INK}">{prefix}{step["num"]} \u2014 {esc(title)}</text>'
-    )
-    return out, y + 2 * r + 34

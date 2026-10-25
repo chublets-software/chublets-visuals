@@ -1,20 +1,29 @@
 # PRIMER — chublets-visuals
 
-Arbeitsplan für `chublets-visuals`: die Grafik-Werkstatt für chublets.software.
-Ein `main.py`, das reine Python-Skripte fährt und SVG/PNG für Vorträge (aktuell:
-CAA JCM DE-NL/FL, 16.–18.09.2026, Münster, Slot "Code is Data, Too — Nuggets,
-Minions and Crows in a FAIR4RS Marketplace for Computational Archaeology"),
-Paper-Abbildungen (deRSE26/ECEASST) und READMEs erzeugt — deterministisch, ohne
-externe CLI-Tools, damit `pip install -r requirements.txt` reicht. Schwesterrepo
-zu `FDOx-squirrel/fdox-visuals` (gleicher Autor, gleiches Hausmuster), eigene
-Palette.
+Arbeitsplan und Beschlusslage für `chublets-visuals`: die Grafik-Werkstatt für
+chublets.software. Ein `main.py` baut aus vendorten Modelldaten (Starter-Pack-
+Crosswalk, `chublets-wikibase-demo`, `wikibase-static`, `wikibase-federation`)
+und einer vendorten `open-archaeo`-Quelle deterministisch alle Grafiken (SVG und
+PNG), die Tabellen für den Paper-Appendix (LaTeX) und eine HTML-Übersicht für
+GitHub Pages — nur mit Python, ohne externe Kommandozeilenwerkzeuge.
 
-**Ort.** `https://github.com/chublets-software/chublets-visuals/blob/main/PRIMER.md`
-(Vorschlag, Repo noch nicht angelegt — siehe A4).
+Die Grafiken dienen dem Paper (deRSE26/ECEASST), Vorträgen (aktuell CAA JCM
+DE-NL/FL, 16.–18.09.2026, Münster, „Code is Data, Too — Nuggets, Minions and
+Crows in a FAIR4RS Marketplace for Computational Archaeology“) und READMEs.
+Schwesterrepo von `FDOx-squirrel/fdox-visuals` (gleicher Autor, gleiches
+Hausmuster, eigene Palette).
 
-**So wird es benutzt.** Wird vollständig zu Beginn jedes Chats hochgeladen.
-Danach genügt "wir machen S4". Teil A gilt immer, Teil B ist die Übersicht,
-Teil C beschreibt den einzelnen Schritt.
+**Ort.** <https://github.com/chublets-software/chublets-visuals> ·
+Übersicht: <https://chublets-software.github.io/chublets-visuals/>
+
+**So wird es benutzt.** Dieses Dokument wird zu Beginn jedes Arbeitschats
+hochgeladen; danach genügt „wir machen S13“. Teil A gilt immer, Teil B ist die
+Übersicht, Teil C beschreibt die Schritte, Teil D sammelt offene Punkte.
+Es ist ein internes Arbeitsdokument (deutsch); Code, README und alles, was das
+Repository nach außen zeigt, ist britisches Englisch.
+
+**Stand 2026-10-25.** Alle Schritte S0 bis S12 sind erledigt. Es gibt 43
+Grafiken mit Caption, elf Tabellen und zwei Übersichtsseiten.
 
 ---
 
@@ -22,309 +31,190 @@ Teil C beschreibt den einzelnen Schritt.
 
 ## A1. Ausgangslage
 
-Ausgangspunkt war die bestehende 29-Folien-Präsentation
-`JCM2026_Muenster_chublets.software.pdf`: F1–F24 (Framing, Historie,
-open-archaeo, RSE-Stack, FDOx, chublets-Konzept) bleiben unverändert bestehen.
-Ab F25 wird neu strukturiert und alles als eigenständige, paper-taugliche
-Grafik-Bibliothek neu per Python erzeugt statt als Google-Slides-Screenshot
-wiederverwendet — die Grafiken werden zufällig auch im Talk benutzt, sind aber
-nicht auf ihn beschränkt.
+**Quellen (alle vendort, nie von Hand abgetippt).**
 
-**Befunde (geprüft 2026-09-10):**
+| Quelle | Wo | Stand |
+|---|---|---|
+| `n4o-rse/chublets-wikibase-demo` (Modell, Starter-Pack-Tabellen, Review) | `data/raw/chublets-wikibase-demo/` | `a460d94` |
+| `n4o-rse/wikibase-static` (Kernel-Tabellen) | `data/raw/wikibase-static/` | `7cd3047` |
+| `n4o-rse/wikibase-federation` (Use Case `chublets`) | `data/raw/wikibase-federation/` | `12abb40` |
+| `n4o-rse/open-archaeo`, `py/wikidata/main.py` | `data/raw/open-archaeo/wikidata-main.py` | Kopie vom 2026-09-10 |
+| Logo (Vektororiginal) | `img/source/chublets-logo.svg` | — |
 
-1. **Die Crosswalk-xlsx hat Sub-Header-Zeilen, die kein neues CodeMeta-Type-
-   Segment einleiten.** Neben den vier echten Abschnittsmarkierungen
-   ("Properties from Thing -> CreativeWork -> SoftwareApplication" etc., deren
-   letztes Segment einer der vier Typnamen ist) stehen im `Thing`-Abschnitt
-   zwei weitere Zeilen mit demselben `Range`-leer-Muster, aber einem Tail, der
-   kein CodeMeta-Typ ist ("... -> WebPage", "... -> Codemeta:Software"). Erster
-   Parser-Versuch hat diese als Property-Zeilen mitgezählt (sichtbar als
-   Fließtext-Zeile mitten in der `Thing`-Box). Fix: nur Header, deren
-   `->`-Tail einer von `{Thing, CreativeWork, SoftwareSourceCode,
-   SoftwareApplication}` ist, wechselt den aktuellen Abschnitt; jede andere
-   Zeile mit leerem `Range` wird als Sub-Divider übersprungen, ohne den
-   Abschnitt zu wechseln (`py/crosswalk_data.py`).
-2. **CodeMeta-Crosswalk, gezählt aus der xlsx:** 68 Property-Zeilen über die
-   vier Typen (`Thing` 20, `CreativeWork` 22, `SoftwareSourceCode` 5,
-   `SoftwareApplication` 21), davon 33 mit einer erkennbaren Wikidata-PID in
-   Spalte F (Regex `P\d+`, auch aus "corrected: P178 - developer"-Freitext
-   extrahiert), 35 ungemappt. `relatedLink` kommt als CodeMeta-Property-Name
-   zweimal vor (zwei unterschiedliche Wikidata-Korrekturen, P973 und P11201) —
-   das ist echte Quelldatenlage, kein Duplikat-Bug.
-3. **Die Wikidata-WikiProject-Properties-Seite liegt nur als PDF vor, keine
-   maschinenlesbare Tabelle.** Neu-Scrapen bei jedem Build wäre fragil für
-   keinen Gewinn (mehrseitiges PDF, keine stabile Struktur). Stattdessen von
-   Hand in `data/raw/wikidata-software-properties.csv` übertragen (47 Zeilen,
-   5 Kategorien, davon 46 mit echter PID + 1 Sammelzeile "12 more
-   package-registry IDs" für nicht einzeln aufgeführte Registry-Properties)
-   und als versionierte Quelle behandelt wie jede andere `data/raw`-Datei.
-4. **Hausfarben aus dem chublets-Logo gesampelt** (`chublets_software_logo.png`,
-   `PIL.Image.getcolors`): dominantes Lila clustert um `#32173D`/`#341A3F`,
-   dominantes Gold um `#D7A141`/`#B8862E`. Gewählt: `CHUBLETS_PURPLE =
-   #3B1F4A`, `CHUBLETS_GOLD = #B8862E` — beide leicht Richtung Lesbarkeit auf
-   hellem Grund nachjustiert, nicht die reinen Pixelwerte.
-5. **Ein Force-Directed-Graph ist als Diagrammtyp verworfen worden.** Die
-   ursprüngliche F25-Grafik (codemeta.github.io-Term-Graph) ist ein
-   Screenshot eines externen, physik-basierten Layouts — nicht Byte-für-Byte
-   reproduzierbar und damit unvereinbar mit der Determinismus-Regel unten.
-   Ersetzt durch ein Klassendiagramm (Thing → CreativeWork →
-   {SoftwareSourceCode, SoftwareApplication}), das exakt dieselbe
-   Eigenschaftsliste zeigt, aber deterministisch layoutet.
-6. **Font- und Renderpipeline von `fdox-visuals` 1:1 übernommen**, ohne
-   erneute Prüfung der dort bereits dokumentierten Befunde (resvg-py statt
-   cairosvg wegen fehlender System-libcairo unter Windows, Fira Sans
-   vendored, `trim_transparent_border`, Google-Slides-25-Megapixel-Grenze) —
-   siehe `fdox-visuals/PRIMER.md` A1.1–A1.6 für die Herleitung.
-7. **Drei der vier S4b-Detailgrafiken hatten keinen Icon-Bezug zum
-   zugehörigen S4-Badge** (nur `chublets-model-datamodel` hatte ein Icon,
-   `ingest`/`curate`/`export` waren reine Flussdiagramme ohne jeden
-   Hinweis, zu welchem Schritt sie gehören) — Flo, 2026-09-10: "ich
-   verstehe bei der Bezeichnung nicht welcher step es ist", zusätzlich
-   Hinweis, dass `fdox-visuals` sein Schritt-Icon konsequent überall
-   mitführt. Behoben durch `step_header()` (S4c).
-8. **`_FONT_REL_PREFIX` war für die alte flache `img/`-Struktur berechnet**
-   (`../fonts`, ein Verzeichnis hoch). Mit dem Umzug auf
-   `img/<block>/*.svg` (S4c) liegen alle SVGs jetzt eine Ebene tiefer —
-   der Pfad musste auf `../../fonts` korrigiert werden, sonst findet eine
-   direkt geöffnete `.svg`-Datei (Browser/Inkscape) die Schrift nicht mehr
-   (die PNG-Rasterung selbst war nie betroffen, die läuft über
-   `font_files=`, nicht über das `@font-face`-CSS).
-9. **Der open-archaeo-Pipeline-Code selbst liegt nicht in diesem Repo** —
-   die sechs Identity-Statements, `enrich.py` mit ETag-Caching, die
-   Kategorien-Reconciliation und `push --create`/`--skip-blocked` sind alle
-   aus echter, bereits gebauter und getesteter Arbeit (eigener
-   Chat-Verlauf), aber `chublets-visuals` hat keinen Zugriff auf das
-   `n4o-rse/open-archaeo`-Pipeline-Repo selbst. S6 ist deshalb wie
-   `chublets-wikidata-properties-overview` behandelt: eine kuratierte,
-   von Hand gepflegte Beschreibung statt eines Live-Parse aus einer
-   externen Quelle, die dieses Repo nicht enthält — nicht dasselbe wie
-   S4b's "aus dem Talk-Chat, ungeprüft", weil der Pipeline-Code real
-   existiert und läuft, nur eben anderswo.
-10. **S6 (Befund 9) war veraltet gegenüber dem echten Repo-Stand.** Geprüft
-    2026-09-10 durch Klonen von `github.com/n4o-rse/open-archaeo`: die
-    Pipeline hat sich seit dem Wissensstand, aus dem S6 gebaut wurde,
-    spürbar weiterentwickelt. Drei konkrete Abweichungen: (a) nur **zwei**
-    Pflicht-Statements (`P31` + `P6104`), nicht sechs — `P361`/`P195`/`P217`/
-    `P2888` aus S6 kommen in `docs/MAPPING.md` so nicht vor; (b) kein
-    `enrich.py` mehr, stattdessen ein deterministischer, stratifizierter
-    `split`-Schritt, der den 416-Eintrags-Datensatz in zwei nicht
-    überlappende 208er-Hälften teilt — eine für OpenRefine
-    (`out/OpenRefine/`), eine für Python (`out/Python/`); (c) die
-    Python-Seite hat acht CLI-Schritte (`check`/`preview`/`reconcile`/
-    `vocab`/`categories`/`subjects`/`push`/`sparql`/`site`, siehe
-    `py/wikidata/main.py`), nicht die vier aus S6. S6 selbst wurde zunächst
-    nicht angefasst (Flo: "das was wir haben passt") — mit S6c dann doch
-    korrigiert, siehe Befund 11.
-11. **S6 neu gebaut, diesmal aus einer vendorten Quelldatei statt aus
-    Literalen im Skript** (S6c, 2026-09-10). `data/raw/open-archaeo/
-    wikidata-main.py` ist eine unveränderte Kopie von
-    `py/wikidata/main.py` aus dem geklonten Repo; `py/open_archaeo_data.py`
-    liest `ALL_STEPS`/`STEPS`/`RECONCILE_STEP` daraus per
-    `ast.literal_eval` (Klammern-Matching, kein Regex über mehrzeilige
-    Literale). Damit S6 nicht zur vierten Wiederholung von S6b(1–3) wird,
-    zeigt es etwas inhaltlich anderes: nicht den Zwei-Team-Split (S6b 1/3)
-    und nicht die interaktive Session mit `reconcile`/`push` (S6b 2/3),
-    sondern genau das, was `python py/wikidata/main.py all` automatisiert
-    durchläuft — acht rein lesende Schritte, `reconcile` und `push` bewusst
-    ausgeschlossen (Kommentar im Quellcode: "writing to Wikidata is a
-    decision and a step named 'all' is a bad place to keep one"). Aktualisieren
-    heißt ab jetzt: `wikidata-main.py` durch eine frische Kopie ersetzen,
-    mit Datum in einem neuen A1-Befund — kein Code in
-    `step_open_archaeo_pipeline.py` muss sich dafür ändern.
-12. **Das Logo-SVG braucht Namespace-Bereinigung, nicht nur Extraktion.**
-    Der erste Versuch, `chublets-logo.svg` als verschachteltes `<svg>`
-    einzubetten, scheiterte an `resvg-py`: `sodipodi:nodetypes`-Attribute
-    (Inkscape-Editor-Metadaten, 15 Vorkommen auf einzelnen `<path>`-
-    Elementen, nicht nur im bereits entfernten `<sodipodi:namedview>`-Block)
-    lösten "unknown namespace prefix" aus, weil der Wurzel-`<svg>` dieses
-    Repos `xmlns:sodipodi` nie deklariert. Behoben durch eine zweite,
-    generische Regex, die jedes `sodipodi:*`/`inkscape:*`-Attribut überall
-    im inneren Markup entfernt, nicht nur das eine Element.
-13. **Die erste Logo-Größe (S7) ließ die Nuggets die Nachbar-Badges
-    berühren** — Flo, 2026-09-10: "schau dass die nuggets nichts
-    beruehren", nach einem hochgeladenen Screenshot. Ursache: die
-    Abstandsrechnung prüfte nur die halbe Logo-Höhe gegen den Ring-
-    Freiraum, nicht die halbe Bilddiagonale — die Ecken der (rechteckigen)
-    Logo-Box zeigen aber genau in Richtung der diagonal stehenden Badges
-    (Export & Publish bei 45°, Findable bei 225° usw.). Mit Diagonale statt
-    Höhe gerechnet: `LOGO_W` von 560 auf 440 reduziert (`step_talk_closing.py`,
-    S7b).
+Prüfsummen aller vendorten Dateien: `data/raw/vendor-manifest.csv`; Commits und
+Zeitpunkt: `data/raw/SNAPSHOT.md`. Aktualisieren heißt
+`python py/vendor_sources.py ...`, nicht von Hand kopieren. Am 2026-10-25 standen
+die drei Modell-Repos live auf denselben Commits wie der Snapshot.
 
-14. **Neue Grundlage ab 2026-10-24: Starter Pack, `chublets-wikibase-demo`,
-    `wikibase-static`, `wikibase-federation`** — die Grafiken aus Block 1 und
-    S4b/S5 entstanden vor diesen Repos und zählen noch mit den Workbook-Zahlen
-    (68 Zeilen / 33 gemappt / 35 ungemappt). Ground Truth ist jetzt das
-    Starter Pack (v1.1, Crosswalk: 83 CodeMeta-Terme = 37 gemappt + 46 nur
-    CodeMeta), die Demo (`data/csv/`), der Kernel von `wikibase-static` und
-    der Push-Usecase `chublets` aus `wikibase-federation`. Die benötigten
-    Dateien liegen unverändert unter `data/raw/<repo>/` (Manifest mit SHA-256
-    in `data/raw/vendor-manifest.csv`, Stand in `data/raw/SNAPSHOT.md`:
-    Demo `a460d94`, static `7cd3047`, federation `12abb40`); aktualisieren
-    heißt `python py/vendor_sources.py ...`, nicht von Hand kopieren.
-15. **Das Property-Set hat 168 Properties, nicht 153 und nicht 158**: 10
-    Kernel (P1–P10; P1, P2, P4, P7 stehen auch im Pack) + 149 weitere Zeilen
-    des Starter Packs (P100–P248) + 9 Zeilen aus dem WikiProject-Review vom
-    2026-10-22 (P249–P257). Die 153 des Packs sind „149 + die vier
-    Kernel-Zeilen"; sie behalten ihren `pack_status` (37 crosswalked / 46
-    codemeta-only / 52 wikidata-only / 18 chublets-addition). Die neun
-    Review-Zeilen und die sechs übrigen Kernel-Properties (P3, P5, P6, P8,
-    P9, P10) haben keinen Pack-Status und bekommen keinen erfundenen
-    (`py/model_data.py`, Feld `origin_set`). Der Schritt `model-data` prüft
-    diese Zahlen gegen `mapping-summary.csv` und bricht bei Abweichung ab.
-16. **Plattformunterschied im Bestand:** `python main.py` auf Linux ändert
-    genau eine Datei des Bestands, `img/talk/chublets-talk-closing.svg`, in
-    der letzten Dezimalstelle einer `sin`/`cos`-Koordinate
-    (`410.5887450304572` gegen `410.58874503045723`). Die Datei ist
-    unangetastet geblieben. **Nachtrag 2026-10-25 (S11):** `chublets-talk-closing` rundet jetzt auf zwei Dezimalstellen und liegt flach unter `img/`. Neue Steps runden Koordinaten (`:.2f`), damit sie
-    auf jeder Plattform byte-gleich sind; der Bestand wird in S12 angeglichen.
-    **Nachtrag 2026-10-24:** Auch die gemessene Textbreite (Pillow/FreeType)
-    kann zwischen Rechnern um Bruchteile eines Pixels abweichen (z. B. Chipbreite
-    83,75 gegen 83,51 in `class-tree.svg`). Ein Neubau auf einem anderen Rechner
-    kann `class-tree` und `property-origin` daher geringfügig ändern; das ist
-    kein inhaltlicher Fehler. Patches enthalten nur Grafiken, die sie wirklich
-    ändern; bei Bedarf in S12 Breiten auf ganze Pixel runden.
-    **Befund 2026-10-24 (Windows-Lauf, Patch 6):** Die Textbreiten sind auf
-    Windows größer als hier; die feste Boxhöhe in `static-vs-federation` reichte
-    nicht („text needs 356px, the box has 330“), der Build brach ab und die
-    Schritte danach (u. a. `model-evidence-base`, Tabellen, Seiten) liefen nicht.
-    Regel ab Patch 7: Boxen werden aus der gemessenen Textbreite berechnet, nie
-    gegen eine feste Höhe geprüft; `assert` nur für Modellannahmen (Anzahl,
-    Eindeutigkeit), nicht für Pixelmaße. Offen: `class-tree` (Chip-Passprobe)
-    und `property-vocabulary-overlap` (Legendenzeile) haben noch Pixel-Asserts.
-17. **Die „generic topics" der Properties sind eigene Themenfelder**, kein
-    Feld der Quellen: Die elf Gruppen der WikiProject-Seite sind uneinheitlich
-    (Preis und DOI unter „rights", „has characteristic" unter „versioning"),
-    und 67 von 168 Properties haben keinen WikiProject-Zwilling. Deshalb
-    gibt es `data/topics.yaml` (14 Themen, jede Property in genau einem),
-    mit WikiProject-Gruppe, CodeMeta-Typ und schema.org-Term als
-    Gegenprobe in `python py/topics.py`.
+**Die Zahlen des Modells** (`py/model_data.py`, im Schritt `model-data` gegen
+`mapping-summary.csv` geprüft): 168 Properties, 13 Klassen, 826 Items, 6873
+Aussagen, 83 CodeMeta-Terme (37 mit Wikidata-Property, 46 nur CodeMeta), 63
+bekannte Software-Properties der WikiProject-Liste (17 davon im Crosswalk, 46 nur
+Wikidata), 416 open-archaeo-Einträge im Modell.
+
+**Befunde.** Die Nummern bleiben, weil Teil C und Commits auf sie verweisen;
+überholte Befunde sind kurz gehalten und als solche markiert.
+
+1. **Crosswalk-Parser (überholt).** Die erste Fassung las die Crosswalk-xlsx und
+   zählte Zwischenüberschriften als Property-Zeilen. Der Parser (`crosswalk_data.py`)
+   und die xlsx sind seit S12 entfernt; die Crosswalk-Zahlen kommen aus den
+   vendorten Tabellen (Befund 14).
+2. **Zählung des Crosswalks (überholt).** 68 Zeilen, 33 gemappt, 35 ungemappt
+   galt für die Workbook-Fassung. Heute: 83 Terme, 37 gemappt, 46 nur CodeMeta
+   (Befund 14); `relatedLink` hat weiterhin zwei Zeilen (P973, P11201) und zählt
+   als ein Term.
+3. **WikiProject-Properties (überholt).** Die Seite liegt nur als PDF vor; die
+   früher von Hand übertragene CSV (47 Zeilen) ist ersetzt durch die Liste im
+   vendorten Starter-Pack (63 bekannte Properties, plus Registry-IDs, die nicht
+   alle einzeln gelistet sind).
+4. **Hausfarben aus dem Logo gesampelt** (`PIL.Image.getcolors`): Lila um
+   `#32173D`, Gold um `#D7A141`/`#B8862E`; gewählt `CHUBLETS_PURPLE #3B1F4A` und
+   `CHUBLETS_GOLD #B8862E`, leicht Richtung Lesbarkeit nachjustiert.
+5. **Force-Directed-Graph verworfen.** Ein physikbasiertes Layout ist nicht
+   byte-genau reproduzierbar; ersetzt durch ein deterministisches Diagramm mit
+   einem Kasten je CodeMeta-Typ.
+6. **Font- und Renderpipeline von `fdox-visuals` übernommen** (resvg-py statt
+   cairosvg wegen fehlender libcairo unter Windows, Fira Sans vendort,
+   `trim_transparent_border`, 25-Megapixel-Grenze von Google Slides); Herleitung
+   in `fdox-visuals/PRIMER.md` A1.1–A1.6.
+7. **Schritt-Header in Detailgrafiken (überholt).** 2026-09-10 eingeführt, damit
+   man sieht, zu welchem Schritt eine Grafik gehört; seit S11 tragen Grafiken
+   keinen Header mehr, die Zuordnung leisten Kette, Collage und Caption.
+8. **Schriftpfad in SVGs.** Das `@font-face` braucht den relativen Pfad zu
+   `fonts/`; seit S11 liegen alle SVGs direkt in `img/`, der Pfad ist `../fonts`.
+   Die PNG-Rasterung ist davon nie betroffen (sie nutzt `font_files=`).
+9. **Der open-archaeo-Pipeline-Code liegt nicht in diesem Repo.** Die Grafiken zu
+   open-archaeo beschreiben ihn, sie führen ihn nicht aus.
+10. **Erste Fassung von S6 war veraltet** (geprüft 2026-09-10 am echten Repo):
+    nur zwei Pflicht-Statements (P31, P6104), ein stratifizierter `split` teilt
+    416 Einträge in zwei Hälften zu je 208 (OpenRefine/Python), acht CLI-Schritte.
+11. **S6 liest seitdem die vendorte `wikidata-main.py`** (`py/open_archaeo_data.py`,
+    `ast.literal_eval` auf `ALL_STEPS`/`STEPS`/`RECONCILE_STEP`). Aktualisieren
+    heißt Datei ersetzen, mit Datum in einem neuen Befund; im Step ändert sich nichts.
+    Die Konstante 562 (Einträge der `open-archaeo.csv`) steht nicht in den
+    vendorten Dateien; sie wurde 2026-09-10 aus dem Repo gelesen.
+12. **Das Logo-SVG braucht Namespace-Bereinigung**, nicht nur Extraktion: jedes
+    `sodipodi:*`- und `inkscape:*`-Attribut wird aus dem eingebetteten Markup
+    entfernt, sonst meldet resvg-py „unknown namespace prefix“.
+13. **Logo-Größe im Talk-Closing** wird gegen die halbe Bilddiagonale gerechnet,
+    nicht gegen die halbe Höhe (die Ecken zeigen auf die diagonal stehenden
+    Badges); `LOGO_W = 440`.
+14. **Grundlage seit 2026-10-24:** Starter-Pack v1.1 (Crosswalk: 83 CodeMeta-Terme
+    = 37 gemappt + 46 nur CodeMeta), `chublets-wikibase-demo` (`data/csv/`), Kernel
+    von `wikibase-static`, Push-Use-Case `chublets` aus `wikibase-federation`; vendort
+    mit SHA-256-Manifest.
+15. **Das Property-Set hat 168 Properties**, nicht 153 und nicht 158: 10 Kernel
+    (P1–P10; P1, P2, P4, P7 stehen auch im Pack) + 149 weitere Zeilen des Packs
+    (P100–P248) + 9 Review-Zeilen vom 2026-10-22 (P249–P257). Die 153 des Packs
+    sind „149 + vier Kernel-Zeilen“ und behalten ihren `pack_status` (37 / 46 / 52 /
+    18); Review-Zeilen und die übrigen sechs Kernel-Properties haben keinen
+    Pack-Status und bekommen keinen erfundenen (`origin_set` in `model_data.py`).
+16. **Plattformunterschiede.** (a) `sin`/`cos` unterscheiden sich in der letzten
+    Dezimalstelle: neue Steps runden Koordinaten auf zwei Stellen; der Bestand
+    wurde in S11/S12 angeglichen (Talk-Closing rundet seit 2026-10-25). (b) Die
+    gemessene Textbreite (Pillow/FreeType) ist auf Windows größer als auf Linux;
+    ein Neubau auf einem anderen Rechner kann SVGs im Bruchteil eines Pixels
+    ändern. Regel (seit Patch 7): Boxen, Spalten und Legenden werden aus der
+    gemessenen Breite berechnet, nie gegen eine feste Größe geprüft; `assert` nur
+    für Modellannahmen (Anzahl, Eindeutigkeit). Die letzten zwei Pixel-Asserts
+    (`class-tree`, `property-vocabulary-overlap`) sind in S12 entfernt.
+17. **Die Themenfelder der Properties sind eigene Themenfelder** (`data/topics.yaml`,
+    14 Themen, jede Property in genau einem): Die elf Gruppen der WikiProject-Seite
+    sind uneinheitlich, und 67 von 168 Properties haben dort keinen Zwilling.
+18. **Evidenzbasis geprüft (S12, 2026-10-25).** 68 Terme des Crosswalks + 15 nur
+    auf der CodeMeta-Terms-Seite = 83; die 63 WikiProject-Properties sind „bekannt“,
+    die Registry-IDs sind nicht alle einzeln gelistet (Grafik sagt das); die
+    Prüfung gegen Wikidata hat 246 Checks an 137 Entitäten, 14 Abweichungen.
 
 ## A2. Zielbild
 
 ```
-data/raw/*.xlsx, *.csv   echte Quelldaten (Crosswalk, Property-Listen)
-      |
-      v  py/step_*.py    Geometrie + Text, keine Renderlogik
-      |
-      v  main.py
-img/*.svg                 Quelle, versioniert
-      |
-      v  resvg-py (in-process)
-img/*.png                 fertige Grafik fuer Folien/Paper/README, transparenter Hintergrund
+data/raw/<repo>/…          vendorte Quellen, unverändert (Manifest mit SHA-256)
+      │
+      ▼  py/model_data.py   die eine Stelle, die sie liest (168 Props, 13 Klassen, 826 Items, …)
+      │
+      ▼  py/step_*.py       Geometrie + Text, Zahlen nur aus model_data / caption_facts
+      │
+      ▼  py/model_graphics.py   Text mit gemessener Breite, Boxen, Chips, Zuschnitt, save()
+img/<name>.svg + .png       flach, ohne Header/Footer, transparent, Rand 10 px, CC BY 4.0 in den Metadaten
+captions.yaml               Caption, Alt-Text, Quellen, Lizenz je Grafik
+tex/*.tex                   elf Tabellen für den Appendix (longtable)
+docs/                       index.html (Grafiken), tables.html (Tabellen), GitHub Pages
 ```
 
 Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 
-- Zweimal `python main.py` hintereinander → `git status` bleibt leer.
-- Jede PNG hat transparenten Hintergrund, exakt ≤10px Rand, und bleibt unter
-  Google Slides' 25-Megapixel-Grenze.
-- Farbe und Typografie kommen ausschließlich aus `py/visuals_utils.py` — kein
-  Hex-Code wiederholt sich hart codiert in einem `step_*.py`.
-- Jede Zahl, die in einer Grafik auftaucht (Property-Anzahl, Mapping-Quote),
-  ist zur Laufzeit aus `data/raw/` gelesen, nicht von Hand eingetragen — die
-  Grafik kann also nie stillschweigend von ihrer eigenen Quelle abweichen.
+- Zweimal `python main.py` hintereinander → `git status` bleibt leer (auf demselben Rechner).
+- Jede Grafik hat transparenten Hintergrund, ≤ 10 px Rand, bleibt unter Google Slides’ 25-Megapixel-Grenze und hat einen Eintrag in `captions.yaml` (`REQUIRE_ALL`).
+- Jede Zahl in einer Grafik oder Caption kommt zur Laufzeit aus den vendorten Daten.
+- Farbe und Schrift kommen aus `py/visuals_utils.py` und `py/model_graphics.py`.
+- Jede Grafik ist im Paper ohne Kenntnis des Codes lesbar (Legende erklärt Farben, Formen, Chips, IDs).
 
 ## A3. Querschnittsregeln
 
-- Rohdaten liegen unverändert unter `data/raw/`, read-only. Was ein Skript
-  daraus macht, geht nach `img/`.
-- **Jede Grafik liegt unter einem Block-Unterordner** (`img/block-1-.../`,
-  `img/block-3-.../`), nie direkt unter `img/` — seit 2026-09-10 (vorher lag
-  alles flach in `img/`). Neue Blöcke bekommen ihren eigenen Unterordner.
-- **Namensschema in `block-3-four-step-pattern/`:** `step-<n>-<slug>-badge`
-  (das reine Icon, transparent, für Folienecken) und `step-<n>-<slug>-
-  detail` (die Grafik, die den Schritt tatsächlich erklärt). Jede
-  `-detail`-Grafik trägt denselben Icon-Badge plus "Step N — Titel" als
-  Kopfzeile wie die zugehörige `-badge`-Datei — seit 2026-09-10 Pflicht
-  (Befund unten), damit nie unklar ist, zu welchem Schritt eine Grafik
-  gehört.
-- **System-Diagramme, die über den drei nummerierten Blöcken stehen**
-  (die konsolidierte Architektur, künftig die open-archaeo-Pipeline)
-  bekommen einen eigenen, unnummerierten Unterordner
-  (`img/system-architecture/`), keinen `block-N`-Ordner.
-- **Namensschema in `block-2-fair4rs-chain/`:** analog zu Block 3,
-  `fair-<slug>-badge` / `fair-<slug>-detail` statt `step-<n>-...`, weil die
-  vier FAIR4RS-Prinzipien keine Sequenz sind, sondern gleichrangig
-  nebeneinanderstehen — die Buchstaben F/A/I/R ersetzen die Nummer 1–4 im
-  Badge-Tag (`step_header()` bekommt dafür einen `prefix=""`-Parameter statt
-  des festen "Step "-Präfixes).
-- **Externe Quell-Repos, aus denen ein Diagramm gebaut wird, werden als
-  unveränderte Datei-Kopie unter `data/raw/<repo-name>/` vendort**, nicht
-  als Literal im `step_*.py` nachgebaut — Beispiel `data/raw/open-archaeo/
-  wikidata-main.py`, gelesen von `py/open_archaeo_data.py`. Aktualisieren
-  bei einer neuen Repo-Version heißt: Datei ersetzen, neuen A1-Befund mit
-  Datum, kein Codeänderung im Step nötig.
-- **Echte, nicht regenerierbare Assets** (das Logo) liegen unter
-  `img/source/`, nicht unter `data/raw/` — Vektor-Originale werden per
-  `load_logo_inner_svg()` als verschachteltes `<svg>` direkt ins generierte
-  Markup eingebettet (ein Renderdurchlauf, `.svg` und `.png` bleiben
-  beweisbar identisch); nur echte Rasterbilder ohne Vektororiginal
-  (Screenshots) nutzen weiterhin `paste_raster()` auf das schon gerenderte
-  PNG. Talk-spezifische, komponierte Folien liegen in einem eigenen
-  `img/talk/`-Ordner, getrennt von den generischen, wiederverwendbaren
-  Badges in den `block-N`-Ordnern.
-- Wiederverwendung heißt Kopieren, nicht Referenzieren — Ausnahme: die
-  Fira-Sans-Schriftdateien, 1:1 aus `fdox-visuals/fonts/` übernommen (gleiche
-  SIL-OFL-Lizenz, gleicher Zweck).
-- **Keine Uhr im Ergebnis.** Kein `datetime.now()` in einem Generator.
-- **Zweimal laufen lassen, `git status` muss leer bleiben.**
-- Netzwerkzugriff ist in diesem Repo aktuell nirgends nötig (alle Quellen sind
-  bereits lokale Dateien unter `data/raw/`) — sollte ein späterer Schritt live
-  von einer URL lesen (z. B. eine aktuelle Wikidata-Abfrage), bekommt er einen
-  eigenen, nicht im Default-Lauf enthaltenen Schritt.
-- Sprache/Plattform: PRIMER.md Deutsch, alles andere (Code, Kommentare,
-  README, Commit-Messages) Englisch. Windows ist Referenzplattform, Befehle
-  einzeilig für `cmd`.
-
-- **Regeln ab S8 (Wikibase-Datenmodell-Grafiken), 2026-10-24:**
-  - Jede neue oder migrierte Grafik liegt **flach** unter `img/<name>.svg`
-    und `.png`, ohne `block-N`-Ordner; sie steht für sich allein und trägt
-    **keinen Header, keinen Footer, kein Step-Badge und keine Quellenzeile**.
-  - Caption, Alt-Text, Quellen und Lizenz stehen in `captions.yaml` (Schlüssel
-    = Dateiname ohne Endung, Regeln in `py/captions.py`); Zahlen in Captions
-    kommen als `{platzhalter}` aus denselben Daten wie die Grafik. Fehlt eine
-    Caption, ist das bis S12 ein Hinweis, danach ein Fehler (`REQUIRE_ALL`).
-  - Grafiktexte sind britisches Englisch, auf den Inhalt zugeschnitten (Rand
-    ≤ 10 px), transparenter Hintergrund wie bisher.
-  - Farben: die vier Herkunfts-Status aus der Hauspalette; das Semantik-Schema
-    (Klasse dunkelorange `#9a3412`, Term dunkellila `#4c1d95`, Property-
-    Metadaten amber `#fbbf24`, Instanz grau `#e2e8f0`, reales Objekt
-    dunkelgrün `#166534`, OWL weiß) nur für Modellelemente. Die Status-
-    Farben des Starter Packs sind ausdrücklich nicht übernommen.
-  - DataCite erscheint nur als Zusatzevidenz (Kästchen am Property, Element
-    und bei Many-to-one `contributorType`/`dateType`), mit dem Hinweis
-    „über CodeMeta abgeleitet, nicht publiziert"; schema.org-Term (P102) als
-    zweites Kästchen.
-  - Koordinaten werden auf zwei Dezimalstellen gerundet (Befund 16).
-  - Quellen der Modell-Grafiken kommen nur über `py/model_data.py` aus
-    `data/raw/<repo>/`; ein Step liest keine CSV selbst.
+- **Rohdaten** liegen unverändert unter `data/raw/<repo>/`; ein Step liest nie selbst
+  eine CSV, sondern geht über `py/model_data.py`. Externe Quellen werden vendort
+  (`py/vendor_sources.py`), nicht als Literal nachgebaut.
+- **Ausgabe flach:** `img/<name>.svg` und `.png`, kein `block-N`-Ordner, kein Header,
+  Footer, Titel, Step-Badge im Bild und keine Quellenzeile. Nur `img/source/` (das
+  Logo, ein nicht regenerierbares Asset) ist ein Unterordner.
+- **Captions** stehen in `captions.yaml` (Schlüssel = Dateiname ohne Endung;
+  Regeln in `py/captions.py`), Zahlen als `{platzhalter}` aus
+  `model_data.caption_facts()`. Seit S12 ist eine fehlende Caption ein Fehler
+  (`REQUIRE_ALL`).
+- **Texte** in Grafiken: britisches Englisch, auf den Inhalt zugeschnitten.
+  Modell-Bezeichner (P4, P100, Q-IDs, `crmdig:D14`) bleiben; Code-Begriffe
+  (kernel, pack, importer stub) und „Starter Pack/Kit“ kommen in keiner Grafik,
+  Caption oder Tabelle vor (`model_graphics.save` und `tables_data._check_wording`
+  brechen sonst ab).
+- **Farben:** Hauspalette für die Herkunft einer Property (crosswalked, CodeMeta
+  only, Wikidata only, chublets addition, unclassified); Semantik-Schema (Klasse
+  `#9a3412`, Term `#4c1d95`, Property-Metadaten `#fbbf24`, Instanz `#e2e8f0`,
+  reales Objekt `#166534`, OWL weiß) nur für Modellelemente; beide nie im selben Element.
+- **DataCite** nur als Zusatzevidenz (Kästchen, „über CodeMeta abgeleitet, nicht publiziert“).
+- **Layout aus gemessenem Text:** Boxhöhen, Spaltenbreiten und Legenden folgen der
+  gemessenen Textbreite; kein `assert` auf Pixelmaße (Befund 16).
+- **Koordinaten** auf zwei Dezimalstellen gerundet, damit SVGs auf jeder Plattform
+  dieselben Bytes haben.
+- **Icons** (Schritte und FAIR) kommen aus `py/icons.py` (Redraws) und
+  `py/visuals_utils.py` (Lupe, Verzweigung, Dreieck, Haken); Zentrierung in
+  `py/chain_banner.py`.
+- **Lizenz:** Grafiken, Tabellen, Captions und Übersichtsseiten immer CC BY 4.0
+  von Florian Thiery, Code MIT (`LICENSE-GRAPHICS.md`; Konstanten `CREATOR`,
+  `LICENCE` in `visuals_utils.py`).
+- **Keine Uhr im Ergebnis**; **zweimal laufen lassen, `git status` bleibt leer.**
+- **Netzwerk** ist nirgends nötig; ein Schritt, der live liest, bekäme einen eigenen
+  Verb außerhalb des Default-Laufs.
+- **Sprache/Plattform:** PRIMER deutsch, alles andere englisch; Windows ist
+  Referenzplattform, Befehle einzeilig für `cmd`.
+- **Auslieferung** als Patch-ZIP mit `PATCH-README.md` (Contents, Applying, What to run,
+  How to verify, Verified here, Commit mit `git add`/`git commit -m … -m …`/`git push`);
+  nur Quellen, Grafiken werden neu gebaut; Flo spielt ein und pusht selbst.
 
 ## A4. Beschlusslage
 
 | Frage | Beschluss | seit |
 |---|---|---|
-| Renderpipeline | resvg-py + vendored Fira Sans, identisch zu fdox-visuals | 2026-09-10 |
-| Hausfarben | `CHUBLETS_PURPLE #3B1F4A`, `CHUBLETS_GOLD #B8862E`, aus dem Logo gesampelt | 2026-09-10 |
-| Kategorie-Palette | 6 Farben (purple, gold, teal, rust, slate blue, neutral grau) für gruppierte Diagramme | 2026-09-10 |
-| CodeMeta-Übersicht | Klassendiagramm statt Force-Directed-Graph (Determinismus) | 2026-09-10 |
-| Wikidata-Property-Quelle | von Hand kuratierte CSV statt Live-PDF-Scraping | 2026-09-10 |
-| Namensschema | `chublets-<thema>` je Grafik, `img/chublets-<thema>.svg/.png` | 2026-09-10 |
-| Repo-Ziel | `chublets-software/chublets-visuals` | 2026-09-10 (angelegt, S1+S2 committet) |
-| Vier-Schritte-Namen (Block 3) | Ingest → Model → Curate & Link → Export & Publish | bestätigt 2026-09-10 (S4) |
-| FAIR4RS-Mechanismen (Block 2) | Findable: Q-IDs + nfdi.software-Indexierung; Accessible: Wikibase-API/SPARQL; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements | übernommen für S3, 2026-09-10 (bleibt Referenz — Paper zieht bei Bedarf nach, nicht umgekehrt, bestätigt 2026-09-10) |
-| Curate & Link / Export & Publish | F28-Konzept-Stand bleibt, keine Prüfung gegen echten Code vor Existenz einer chublets-Wikibase | bestätigt 2026-09-10 |
-| Ground Truth für die Modell-Grafiken | Starter Pack v1.1 + `chublets-wikibase-demo` + `wikibase-static` (Kernel) + `wikibase-federation` (Push), vendort mit SHA-256-Manifest | 2026-10-24 |
-| Struktur und Texte | flach unter `img/`, kein Block, kein Header/Footer; Captions in `captions.yaml`, nur EN (britisch), zugeschnitten | 2026-10-24 |
-| Farben der Modell-Grafiken | Hausfarben für Herkunft, Semantik-Schema nur für Klasse/Term/Property-Metadaten; Pack-Status-Farben nicht übernommen | 2026-10-24 |
-| DataCite | nur Kästchen als Zusatzevidenz (abgeleitet über CodeMeta), keine eigene Hub-Grafik | 2026-10-24 |
-| Bestandsgrafiken | alle 20 Schritte bleiben und werden gegen den neuen Stand geprüft und aktualisiert (ohne Header, flach); Step-IDs ändern sich nicht | 2026-10-24 |
-| Pack-Grafiken | alle neun Mermaid-Diagramme und die Balkenabbildung werden in Python neu gezeichnet (keine Mermaid-CLI), Titel entfallen | 2026-10-24 |
-| Themenfelder der Properties | eigene Themen (`data/topics.yaml`), 14 Themen, von Flo freigegeben („Die Themen passen zunächst") | 2026-10-24 |
-| Lizenz | Grafiken, Tabellen, Captions und Übersichtsseite **immer CC BY 4.0 von Florian Thiery**, Code **MIT** (`LICENSE-GRAPHICS.md`); Konstanten `CREATOR`, `LICENCE` in `visuals_utils.py`; stehen in SVG-Metadaten, `.tex`-Kopf und Übersichtsseiten | 2026-10-24 |
-| Tabellen für das Paper | LaTeX-`longtable` unter `tex/` (nur `longtable` und `array`), Appendix; dieselben Tabellen (`py/tables_data.py`) als HTML in `docs/` | 2026-10-24 |
-| Übersichtsseiten | `docs/index.html` (Grafiken) und `docs/tables.html` (Tabellen), GitHub Pages aus `main` / `/docs` (läuft, bestätigt 2026-10-24), ohne Netz | 2026-10-24 |
-| Grafiken stehen allein | Jede Grafik ist im Paper ohne Wissen aus dem Code lesbar: Legende erklärt Farben, Formen, Chips und IDs; Modell-Bezeichner (P4, P100, P102, Q-IDs, `crmdig:D14`) bleiben, Code-Begriffe (kernel, pack, importer stub, Starter Pack) kommen nicht vor | 2026-10-24 |
-| Basis der Modellierung | Der CodeMeta-Wikidata-Crosswalk. „Starter Pack/Kit" war nur der Startpunkt und steht in keiner Grafik, Caption oder Tabelle. Herkunftsklassen: crosswalked, CodeMeta only, Wikidata only, chublets addition, unclassified; Mengen: kernel, initial, review. Interne Feldnamen (`pack`, `starter-pack`) und vendorte Pfade bleiben | 2026-10-24 |
+| Renderpipeline | resvg-py + vendorte Fira Sans, wie `fdox-visuals` | 2026-09-10 |
+| Hausfarben | `CHUBLETS_PURPLE #3B1F4A`, `CHUBLETS_GOLD #B8862E`, aus dem Logo gesampelt; sechs Kategoriefarben (Lila, Gold, Türkis, Rost, Schieferblau, Grau) | 2026-09-10 |
+| CodeMeta-Übersicht | Diagramm mit einem Kasten je CodeMeta-Typ statt Force-Directed-Graph (Determinismus) | 2026-09-10 |
+| Namen der vier Schritte | Ingest → Model → Curate & Link → Export & Publish | 2026-09-10 |
+| FAIR-Mechanismen | Findable: Q-IDs + Indexierung durch nfdi.software und find.software; Accessible: Wikibase-API/SPARQL ohne Login zum Lesen; Interoperable: CodeMeta als Pivot; Reusable: Lizenz-/Provenienz-Statements. Die Grafiken sind die Referenz, das Paper zieht bei Bedarf nach | 2026-09-10 |
+| Curate & Link, Export & Publish | bleiben auf Konzeptstand, solange es keinen echten chublets-Wikibase-Code gibt | 2026-09-10 |
+| Repo | `chublets-software/chublets-visuals` | 2026-09-10 |
+| Ground Truth der Modell-Grafiken | Starter-Pack v1.1 + `chublets-wikibase-demo` + `wikibase-static` (Kernel) + `wikibase-federation` (Push), vendort mit SHA-256-Manifest | 2026-10-24 |
+| Form der Grafiken | flach unter `img/`, kein Block, kein Header/Footer; Captions in `captions.yaml` (nur EN, britisch) | 2026-10-24 |
+| Herkunftsklassen | crosswalked, CodeMeta only, Wikidata only, chublets addition, unclassified; Mengen: kernel, initial, review; „Starter Pack“ nirgends in Grafik/Caption/Tabelle, interne Feldnamen und vendorte Pfade bleiben | 2026-10-24 |
+| Grafiken stehen allein | Legende in jeder Grafik; Modell-Bezeichner bleiben, Code-Begriffe nicht | 2026-10-24 |
+| Themenfelder | eigene Themen (`data/topics.yaml`, 14), von Flo freigegeben | 2026-10-24 |
+| Lizenz | CC BY 4.0 von Florian Thiery für Grafiken, Tabellen, Captions, Seiten; Code MIT | 2026-10-24 |
+| Tabellen und Seiten | LaTeX-`longtable` unter `tex/`; `docs/index.html` und `docs/tables.html`, GitHub Pages aus `main` / `/docs` (läuft) | 2026-10-24 |
+| Bestandsgrafiken | alle bleiben, flach und ohne Header; Step-IDs ändern sich nicht; Ketten (`chublets-four-step-pattern`, `chublets-fair4rs-chain`) und Einzel-Badges bleiben erhalten, dazu je eine Collage (`chublets-four-steps`, `chublets-fair`) und Einzelbilder | 2026-10-25 |
+| Icons | Schloss, Verknüpfungsglied (Interoperable), Kreislauf und Export-Pfeil in `py/icons.py` neu gezeichnet, alle Icons zentriert | 2026-10-25 |
+| Layout | Maße aus gemessenem Text, keine Pixel-Asserts | 2026-10-24 |
+| Captions Pflicht | `REQUIRE_ALL = True`: eine Grafik ohne Eintrag ist ein Fehler | 2026-10-25 |
+| Altlasten | `crosswalk_data.py`, die Crosswalk-xlsx, die 47-Zeilen-CSV und ungenutzte Helfer in `visuals_utils.py` entfernt | 2026-10-25 |
+| Auslieferung | Patch-ZIP mit voller `PATCH-README.md` und Commit-Block, immer; Flo pusht selbst | 2026-10-24 |
 
 ## A5. Was in welchem Chat hochgeladen wird
 
@@ -332,532 +222,66 @@ Zu Beginn jedes Chats: `PRIMER.md` plus ein Bundle aus Quellen und Code (kein
 `img/`, kein `.venv/`). Unter Windows:
 
 ```cmd
-powershell -Command "Compress-Archive -Path PRIMER.md,captions.yaml,py,data,fonts,main.py,requirements.txt,CITATION.cff,LICENSE,README.md,.gitignore -DestinationPath chublets-visuals-bundle.zip -Force"
+powershell -Command "Compress-Archive -Path PRIMER.md,captions.yaml,py,data,fonts,main.py,requirements.txt,CITATION.cff,LICENSE,LICENSE-GRAPHICS.md,README.md,.gitignore -DestinationPath chublets-visuals-bundle.zip -Force"
 ```
 
-Nicht hochladen: `img/*.png`/`img/*.svg` (werden neu gebaut), `__pycache__/`,
-`.git/`, `img/pipeline_report.txt`.
+Nicht hochladen: `img/*.png`/`img/*.svg`, `docs/`, `tex/` (werden neu gebaut),
+`__pycache__/`, `.git/`, `img/pipeline_report.txt`. Nach jedem Push klont Claude das
+Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 
 ---
 
 # Teil B — Schrittübersicht
 
-| ID | Schritt | Repo | hängt ab von | Status |
-|---|---|---|---|---|
-| S0 | Festlegungen: Palette, Font, Namensschema | chublets-visuals | — | erledigt 2026-09-10 |
-| S1 | Skeleton: `main.py`, `visuals_utils.py`, Lizenz/Citation/README | chublets-visuals | S0 | erledigt 2026-09-10 |
-| S2 | Block 1: CodeMeta / Wikidata / chublets-Datamodel (4 Grafiken) | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S3 | Block 2: FAIR4RS-Kette (Banner + 4 Detailgrafiken F/A/I/R) | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S4 | chublets.software Four-Step-Pattern: Banner + 4 Icon-Badges | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S4b | Four-Step-Pattern: 4 Detailgrafiken (Ingest/Model/Curate & Link/Export & Publish) | chublets-visuals | S4 | erledigt 2026-09-10 |
-| S4c | Ordnerstruktur (Block-Unterordner) + konsistente Step-Icons auf allen S4b-Grafiken | chublets-visuals | S4b | erledigt 2026-09-10 |
-| S5 | System Architecture (konsolidiertes Klassendiagramm/Workflow/Output) | chublets-visuals | S2, S4b | erledigt 2026-09-10 |
-| S6 | open-archaeo → Wikidata Pipeline (Standalone-Architekturdiagramm) | chublets-visuals | S1 | erledigt 2026-09-10 |
-| S6b | open-archaeo: die zwei echten Routen (Übersicht, Python-Route, OpenRefine-Route), aus dem echten Repo gebaut | chublets-visuals | S6 | erledigt 2026-09-10 |
-| S6c | S6 auf den echten Repo-Stand gebracht, aus einer vendorten Quelldatei statt Literalen | chublets-visuals | S6b | erledigt 2026-09-10 |
-| S7 | Talk-Closing-Folie: 8 Badges als Ring um das chublets-Logo | chublets-visuals | S3, S4b | erledigt 2026-09-10 |
-| S7b | S7-Logo als eingebettetes SVG statt PNG-Komposit, Nuggets-Kollision behoben | chublets-visuals | S7 | erledigt 2026-09-10 |
-| S8 | Datenschicht: Quellen vendort (Demo, static, federation, Starter Pack), `model_data.py`, `captions.yaml`, Prüfschritte `model-data` und `captions` | chublets-visuals | S1 | erledigt 2026-10-24 |
-| S9 | Themen-Taxonomie der 168 Properties (`data/topics.yaml`) | chublets-visuals | S8 | erledigt 2026-10-24 (von Flo freigegeben) |
-| S9b | LaTeX-Tabellen für den Appendix (`tex/`, Schritt `tables`) | chublets-visuals | S9 | erledigt 2026-10-24 |
-| S9c | HTML-Übersicht für GitHub Pages (`docs/`, Schritt `gallery`) | chublets-visuals | S9b | erledigt 2026-10-24 |
-| S10 | 13 neue Modell-Grafiken (Klassenbaum, Entities, Herkunft ×2, Themen, Metadaten-Ebene, CodeMeta-Abdeckung, Identity, Beispiel-Item, Provenienz, Bootstrap, static vs. federation, Evidenzbasis) | chublets-visuals | S9 | gebaut 2026-10-24: alle 13 (`class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base`); Feinschliff nach Durchsicht im Paper |
-| S11 | Bestandsgrafiken (20 Schritte) gegen den neuen Stand prüfen und aktualisieren, flach, ohne Header | chublets-visuals | S10 | fertig (Gruppen A bis D): alle Bestandsgrafiken flach unter `img/`, ohne Header, Zahlen aus dem Modell; Nachprüfung durch Flo auf Windows steht aus; 2026-10-25 auf Wunsch zurück: die Ketten `chublets-four-step-pattern` und `chublets-fair4rs-chain` und die acht einzelnen Badges (flach, neu gezeichnet; Schloss, Verknüpfungs-Glied, Kreislauf und Export-Pfeil in `py/icons.py` sauber neu gezeichnet, Icons zentriert) |
-| S12 | Abschluss: Captions vollständig (`REQUIRE_ALL`), Bestand auf gerundete Koordinaten, README | chublets-visuals | S11 | offen |
+| ID | Schritt | Hängt ab von | Status |
+|---|---|---|---|
+| S0 | Festlegungen: Palette, Font, Namensschema | — | erledigt 2026-09-10 |
+| S1 | Skeleton: `main.py`, `visuals_utils.py`, Lizenz, Citation, README | S0 | erledigt 2026-09-10 |
+| S2 | Block 1: CodeMeta / Wikidata / chublets-Datenmodell (vier Grafiken) | S1 | erledigt 2026-09-10, neu gezeichnet in S11 |
+| S3 | FAIR4RS-Kette (Kette, vier Badges, Collage, vier Einzelbilder) | S1 | erledigt 2026-09-10, neu gezeichnet in S11 |
+| S4 | Vier-Schritte-Muster (Kette, vier Badges) | S1 | erledigt 2026-09-10, neu gezeichnet in S11 |
+| S4b | Vier Detailgrafiken der Schritte | S4 | erledigt 2026-09-10, ersetzt durch Collage und Einzelbilder in S11 |
+| S4c | Block-Ordner und Schritt-Header | S4b | erledigt 2026-09-10, überholt durch S11 (flach, ohne Header) |
+| S5 | Systemarchitektur (fünf Stufen) | S2, S4b | erledigt 2026-09-10, neu gezeichnet in S11 |
+| S6 | open-archaeo → Wikidata-Pipeline | S1 | erledigt 2026-09-10 |
+| S6b | open-archaeo: zwei Routen, Python-Route, OpenRefine-Route | S6 | erledigt 2026-09-10 |
+| S6c | S6 aus vendorter Quelldatei auf den echten Stand gebracht | S6b | erledigt 2026-09-10 |
+| S7 | Talk-Closing: acht Badges als Ring um das Logo | S3, S4b | erledigt 2026-09-10 |
+| S7b | Logo als eingebettetes SVG, Nuggets-Kollision behoben | S7 | erledigt 2026-09-10 |
+| S8 | Datenschicht: Quellen vendort, `model_data.py`, `captions.yaml`, Prüfschritte | S1 | erledigt 2026-10-24 |
+| S9 | Themen-Taxonomie der 168 Properties | S8 | erledigt 2026-10-24 |
+| S9b | LaTeX-Tabellen für den Appendix | S9 | erledigt 2026-10-24 |
+| S9c | HTML-Übersicht für GitHub Pages | S9b | erledigt 2026-10-24 |
+| S10 | Dreizehn Modell-Grafiken | S9 | erledigt 2026-10-24 |
+| S11 | Bestandsgrafiken neu gezeichnet: flach, ohne Header, Zahlen aus dem Modell | S10 | erledigt 2026-10-25 |
+| S12 | Abschluss: Captions Pflicht, Pixel-Asserts weg, Evidenzbasis geprüft, Altlasten und PRIMER aufgeräumt | S11 | erledigt 2026-10-25 |
 
-Alle Schritte aus dem ursprünglichen Plan (bis S7b) sind erledigt; S8 bis S12 sind die Neubasis auf Starter Pack, Demo, `wikibase-static` und `wikibase-federation`.
+Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
+„hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
 
 ---
 
 # Teil C — Die Schritte
 
-## S0 — Festlegungen
-
-**Ziel:** Hausfarben, Font und Namensschema stehen fest, bevor der erste
-`step_*.py` geschrieben wird.
-
-**Substanz:** siehe A1 Befund 4 und A4. Keine eigene Codeänderung.
-
-**Abnahme:** A4-Zeilen zu Farbe/Font/Namensschema eingetragen.
-
-### Erledigt 2026-09-10
-
-Logo-Sampling durchgeführt, `#3B1F4A`/`#B8862E` festgelegt, Fira-Sans-Dateien
-aus `fdox-visuals/fonts/` kopiert (identische Lizenz, `fonts/LICENSE-FiraSans.txt`
-mitkopiert).
-
-## S1 — Skeleton
-
-**Ziel:** `python main.py --list` läuft und zeigt die geplanten Schritte;
-Lizenz/Citation/README stehen.
-
-**Substanz:** `py/visuals_utils.py` (Konstanten, Render-Helfer, Farbraum-Helfer
-`shade()`/`tint()`, generische SVG-Primitive), `main.py` (Orchestrator, aus
-`fdox-visuals/main.py` übernommen, `STEPS`-Tabelle angepasst),
-`requirements.txt` (resvg-py, pillow, **zusätzlich openpyxl** — liest
-`data/raw/*.xlsx`, `fdox-visuals` braucht das nicht), `.gitignore`, `LICENSE`
-(MIT), `CITATION.cff`, `README.md`.
-
-**Abnahme:** `python main.py --list` läuft ohne schwere Imports;
-`python main.py --dry-run` zeigt den Plan.
-
-### Erledigt 2026-09-10
-
-Wie geplant. `requirements.txt` weicht von `fdox-visuals` um die
-`openpyxl`-Zeile ab (Grund im Kommentar dort dokumentiert).
-
-## S2 — Block 1: CodeMeta / Wikidata / chublets-Datamodel
-
-**Ziel:** vier Grafiken, die zusammen zeigen, dass das chublets-Datenmodell
-kein neu erfundenes Schema ist, sondern eine Vereinigung aus wiederverwendeten
-Wikidata-Properties und neuen, nur für CodeMeta-Felder nötigen Properties.
-
-**Uploads:** `Crosswalk_-_Wikidata_-_Florian_Thiery_1_.xlsx` (→
-`data/raw/codemeta-wikidata-crosswalk.xlsx`),
-`Wikidata_WikiProject_Informatics_Software_Properties_-_Wikidata.pdf` (von
-Hand übertragen nach `data/raw/wikidata-software-properties.csv`),
-`chublets_software_logo.png` (Farbsampling für S0).
-
-**Substanz:**
-
-- `py/crosswalk_data.py` — gemeinsamer Parser für die xlsx, von
-  `step_codemeta_overview.py` und `step_codemeta_wikidata_crosswalk.py`
-  benutzt (eine Quelle, zwei Ansichten; siehe A1 Befund 1 für den Parser-Bug
-  unterwegs).
-- `py/step_codemeta_overview.py` → `img/chublets-codemeta-overview.svg/.png`
-- `py/step_wikidata_properties_overview.py` →
-  `img/chublets-wikidata-properties-overview.svg/.png`
-- `py/step_codemeta_wikidata_crosswalk.py` →
-  `img/chublets-codemeta-wikidata-crosswalk.svg/.png`
-- `py/step_wikibase_datamodel.py` → `img/chublets-wikibase-datamodel.svg/.png`
-  (liest die Zahlen live aus den beiden anderen Quellen, nicht aus den
-  bereits gebauten Grafiken der anderen Schritte — A2's "keine Zahl von Hand"
-  gilt auch schrittübergreifend)
-
-**Abnahme:** alle vier `img/chublets-*.png` existieren, transparenter
-Hintergrund, ≤10px Rand; zweimal `python main.py --only codemeta --only
-wikidata --only crosswalk --only datamodel` (bzw. einzeln) hintereinander →
-`git status` leer.
-
-### Erledigt 2026-09-10
-
-68 CodeMeta-Properties / 33 gemappt (Befund 2), 47 Wikidata-Property-Zeilen
-über 5 Kategorien (Befund 3). Parser-Bug aus Befund 1 während S2 gefunden und
-gefixt, bevor die erste Grafik final gerendert wurde. Determinismus-Check:
-siehe unten im Chat-Protokoll dieses Schritts (zweiter Lauf, `git status`
-sauber).
-
-## S4 — chublets.software Four-Step-Pattern: Banner + Icon-Badges
-
-**Ziel:** das eigene Vier-Schritte-Muster von chublets.software als
-Banner-Grafik (alle vier Schritte in einer Reihe) und als vier einzelne,
-transparente Icon-Badges — analog zu `fdox-four-step-pattern` in
-`fdox-visuals`, gleiche Geometrie/Renderpfad, eigene Icons und Farben.
-
-**Uploads:** keine neuen (nutzt nur `py/visuals_utils.py` aus S1).
-
-**Substanz:**
-
-- `FOUR_STEPS` in `py/visuals_utils.py` — die vier Schritte als einzige
-  Quelle (Titel, Beschreibung, Farbe), damit S4b und S5 dieselbe Definition
-  lesen statt sie zu wiederholen (A3). Die Namen (**Ingest → Model → Curate
-  & Link → Export & Publish**) waren seit S0 ein Vorschlag (A4) und werden
-  mit diesem Schritt bestätigt.
-- `py/step_pattern.py` — vier neue, eigens gezeichnete Icons (kein
-  Icon-Font, reine SVG-Primitive wie der Rest des Repos): Ingest = drei
-  Quellpunkte, die in einen Punkt zusammenlaufen; Model = ein Dreiecksgraph
-  (drei Knoten, drei Kanten); Curate & Link = ein Häkchen; Export & Publish
-  = ein Pfeil, der einen offenen Container verlässt. Farbreihenfolge bewusst
-  nicht linear durch die Kategorie-Palette, sondern mit den beiden
-  Hausfarben (Lila, Gold) in der Mitte für die chublets-spezifischen
-  Schritte (Model, Curate & Link) und Teal/Blaugrau außen für die Schritte,
-  die nach außen zeigen (Ingest kommt rein, Export & Publish geht raus).
-
-**Abnahme:** `img/chublets-four-step-pattern.png` + vier
-`img/chublets-step-<n>-<slug>.png` existieren, transparenter Hintergrund,
-≤10px Rand; zweimal `python main.py --only pattern` hintereinander →
-identische Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Vier-Schritte-Namen aus dem Vorschlag in A4 bestätigt (keine Einwände im
-Talk-Chat). Banner + 4 Badges gerendert, visuell geprüft (Icons lesbar auch
-im kleinen Badge-Format), Determinismus-Check bestanden (zweiter Lauf,
-identische SHA-256).
-
-## S4b — Four-Step-Pattern: die vier Detailgrafiken
-
-**Ziel:** zu jedem der vier Schritte aus S4 eine eigene Grafik, die den
-Schritt tatsächlich erklärt statt nur zu betiteln.
-
-**Uploads:** keine neuen.
-
-**Substanz:**
-
-- `four_step_icon()` aus `_node_icon` in `py/step_pattern.py` nach
-  `py/visuals_utils.py` verschoben (A3: eine Quelle) — wird jetzt sowohl
-  von S4 (Badges) als auch von S4b (`chublets-model-datamodel`) benutzt.
-  `label_box()` (zentrierte Box mit 1–2 Textzeilen) ebenfalls aus
-  `fdox-visuals` übernommen für die S4b-Flussdiagramme.
-- `py/step_ingest_inputs.py` → `chublets-ingest-inputs`: dieselbe
-  Drei-Quellen-Konvergenz wie `chublets-wikibase-datamodel` (S2), jetzt für
-  die drei Eingangswege statt für die zwei Property-Hälften.
-- `py/step_model_datamodel.py` → `chublets-model-datamodel`: kompakte Karte
-  (Icon + Zahlen), liest dieselben zwei Quellen wie S2 live neu ein —
-  bewusst keine dritte, eigene Zählung.
-- `py/step_curate_workflow.py` → `chublets-curate-workflow`: vierstufige
-  Kette Create → Statements → Curation → QC.
-- `py/step_export_pipeline.py` → `chublets-export-pipeline`: SPARQL-Kette
-  plus 1-zu-3-Verzweigung (drei Mapper) plus 3-zu-1-Konvergenz (ein
-  Marketplace-Ziel) — komplexeste Grafik des Repos bisher.
-
-**Abnahme:** alle vier `img/chublets-{ingest-inputs,model-datamodel,
-curate-workflow,export-pipeline}.png` existieren, transparenter
-Hintergrund, ≤10px Rand; zweimal `python main.py --from ingest`
-hintereinander → identische Prüfsummen; `python main.py` (alle 9 Schritte)
-läuft weiterhin fehlerfrei durch.
-
-### Erledigt 2026-09-10
-
-Wie geplant, alle vier Grafiken visuell geprüft. Inhalt für Curate & Link
-und Export & Publish stammt weiterhin nur aus dem alten F28-Workflow
-(Talk-Chat), nicht aus echtem Code — siehe Teil D, dieser Punkt bleibt
-offen. Determinismus-Check bestanden (zweiter Lauf, identische SHA-256 über
-alle 9 Schritte / 22 Dateien).
-
-## S4c — Ordnerstruktur + konsistente Step-Icons
-
-**Ziel:** zwei Korrekturen aus dem Talk-Chat: (1) jede der vier S4b-
-Detailgrafiken trägt sichtbar dasselbe Icon wie ihr S4-Badge, nicht nur
-`chublets-model-datamodel`; (2) `img/` ist nach Block gegliedert statt
-flach.
-
-**Uploads:** keine neuen.
-
-**Substanz:**
-
-- `visuals_utils.py`: `BLOCK1_DIR`, `BLOCK3_DIR` ergänzt; `ensure_dirs()`
-  nimmt jetzt einen Pfad; `_FONT_REL_PREFIX` von `../fonts` auf
-  `../../fonts` korrigiert (Befund 8); neue Funktion `step_header()`
-  (kleines Badge ohne Nummern-Tag + "Step N — Titel", nutzt
-  `four_step_icon()` skaliert).
-- Alle acht Block-1/Block-3-Steps auf `BLOCK1_DIR`/`BLOCK3_DIR` und
-  `svg_path.relative_to(ROOT)` (statt `IMG_DIR.parent`) umgestellt.
-- `step_pattern.py`: Badges heißen jetzt `step-<n>-<slug>-badge.svg`
-  (vorher `chublets-step-<n>-<slug>.svg`).
-- Alle vier S4b-Steps: `step_header()` als erste Zeile jeder Grafik,
-  bestehender Inhalt entsprechend nach unten verschoben. Neue Dateinamen
-  `step-<n>-<slug>-detail.svg` (vorher `chublets-<thema>.svg`).
-  `step_model_datamodel.py` dabei umgebaut: das große freistehende Icon
-  ist durch denselben kompakten Header wie bei den anderen drei ersetzt,
-  die beiden Zahlen stehen jetzt in einer eigenen Content-Karte darunter.
-
-**Abnahme:** `python main.py` (alle 9 Schritte) läuft durch und schreibt
-ausschließlich unter `img/block-1-.../` bzw. `img/block-3-.../`, nichts
-mehr direkt unter `img/`; jede `-detail`-Datei zeigt sichtbar denselben
-Icon-Kreis wie ihre `-badge`-Datei; zweimal laufen lassen → identische
-Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Wie geplant. Alter, flacher Dateibestand (13 Dateipaare direkt unter
-`img/`) wurde beim Patch explizit als zu löschen markiert (ZIPs können
-kein Umbenennen/Löschen transportieren, siehe PATCH-README dieses
-Schritts). Determinismus-Check über alle 9 Schritte bestanden.
-
-## S5 — System Architecture
-
-**Ziel:** ein einziges, konsolidiertes Diagramm, das die drei alten
-F28-Panels (Wikibase-Klassendiagramm, Workflow, Output) ersetzt und dabei
-die Wikidata-Brücke als eigene, explizite erste Stufe zeigt statt sie
-stillschweigend unter "Data Sources" zu verstecken (F28 hatte "Wikidata
-IDs" bereits als Input gelistet, aber nie gezeigt, dass das ein separates,
-bereits aktives System ist).
-
-**Uploads:** keine neuen.
-
-**Substanz:**
-
-- `py/step_architecture.py` → `chublets-software-architecture` in einem
-  neuen, unnummerierten Ordner `img/system-architecture/` (`SYSTEM_ARCH_DIR`
-  in `visuals_utils.py`) — steht bewusst nicht unter `block-*`, weil es kein
-  eigener Block ist, sondern ein System-Überblick über mehrere Blöcke
-  hinweg.
-- Fünf Stufen in einer Reihe: **Wikidata bridge** (neutral) → **Data
-  sources** (Teal, = Ingest-Farbe) → **chublets.software Wikibase** (Lila,
-  = Model-Farbe) → **Export pipeline** (Blaugrau, = Export & Publish-Farbe)
-  → **Marketplaces & KG** (neutral). Die drei mittleren Farben sind absichtlich
-  identisch zu den Block-3-Badges, damit die Systemgrafik sich sichtbar auf
-  die Detailgrafiken bezieht, ohne sie zu wiederholen.
-- Zahlen in Stufe 3 kommen live aus denselben zwei Quellen wie S2 und
-  `chublets-model-datamodel` (S4b) — drei Grafiken, eine Zahl (A3).
-
-**Abnahme:** `img/system-architecture/chublets-software-architecture.png`
-existiert, transparenter Hintergrund, ≤10px Rand; zweimal `python main.py
---only architecture` hintereinander → identische Prüfsummen; `python
-main.py` (alle 10 Schritte) läuft weiterhin fehlerfrei durch.
-
-### Erledigt 2026-09-10
-
-Wie geplant, visuell geprüft. Determinismus-Check über alle 10 Schritte
-bestanden (23 Dateien + `pipeline_report.txt`).
-
-## S3 — Block 2: FAIR4RS-Kette
-
-**Ziel:** dieselbe Banner-plus-Badges-plus-Detailgrafiken-Struktur wie
-Block 3 (S4/S4b), jetzt für die vier FAIR4RS-Prinzipien statt für einen
-Prozess. `S3` war seit S0 als ID reserviert, aber erst jetzt gebaut — Block
-3 kam zuerst, weil die Talk-Reihenfolge das so vorgab.
-
-**Uploads:** keine neuen.
-
-**Substanz:**
-
-- `FAIR_PRINCIPLES` in `visuals_utils.py` — vier Einträge, `num` trägt den
-  Buchstaben (`F`/`A`/`I`/`R`) statt einer Zahl; Mechanismen aus A4
-  übernommen (Vorschlag, nicht gegen das deRSE26-Paper geprüft, s. Teil D).
-- `fair4rs_icon()` — vier neue Icons (Lupe, offenes Schloss, zwei
-  verschlungene Ringe, Kreispfeil), gleicher Stil/Strichstärke wie
-  `four_step_icon()`, aber eigene Funktion statt Wiederverwendung — Block 3
-  und Block 2 bedeuten unterschiedliche Dinge, ein gemeinsames Icon-Set
-  hätte das verwischt (dieselbe Trennung wie in `fdox-visuals` zwischen
-  `step_pattern.py` und `step_purpose.py`).
-- `step_header()` um `icon_fn`- und `prefix`-Parameter erweitert (Block 3
-  ruft weiterhin mit den Defaults `four_step_icon`/`"Step "`, Block 2 mit
-  `fair4rs_icon`/`""`) — Rückwärtskompatibilität geprüft: alle vier
-  S4b-Grafiken byte-identisch vor/nach der Signaturänderung.
-- `py/step_fair_pattern.py` → Banner `chublets-fair4rs-chain` + 4 Badges
-  `fair-<slug>-badge`.
-- `py/step_fair_findable.py`, `step_fair_accessible.py`,
-  `step_fair_reusable.py` → einfache Karten (Icon-Header + Textkarte, wie
-  `chublets-model-datamodel`).
-- `py/step_fair_interoperable.py` → statt einer Textkarte ein
-  Hub-Diagramm: CodeMeta in der Mitte, vier Speichen zu Wikidata/DCAT/
-  DataCite/CFF — "interoperabel" heißt konkret "verbindet mehrere
-  Vokabulare", das zeigt eine Grafik besser als ein Satz.
-- Alle fünf Grafiken landen in einem neuen Ordner `img/block-2-fair4rs-chain/`
-  (`BLOCK2_DIR`).
-
-**Abnahme:** `img/block-2-fair4rs-chain/` enthält Banner + 4 Badges + 4
-Detailgrafiken (10 Dateien × 2 Formate); jede `-detail`-Grafik trägt
-denselben Icon-Kreis wie ihre `-badge`-Datei; zweimal `python main.py`
-(alle 15 Schritte) → identische Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Wie geplant. Determinismus-Check über alle 15 Schritte bestanden.
-
-## S6 — open-archaeo → Wikidata Pipeline
-
-**Ziel:** das Detail hinter S5's "Wikidata bridge"-Stufe — die fünf realen
-Schritte, die aus der open-archaeo-CSV Wikidata-Items mit Identity-Block
-machen.
-
-**Uploads:** keine neuen (Inhalt aus eigenem Wissen über die bereits
-gebaute Pipeline, nicht aus einer Datei in diesem Repo — Befund 9).
-
-**Substanz:**
-
-- `py/step_open_archaeo_pipeline.py` → `open-archaeo-wikidata-pipeline` in
-  `img/system-architecture/`, neben `chublets-software-architecture` (S5),
-  nicht in einem `block-N`-Ordner (A3).
-- Fünf Stufen in neutralem Grau (`CATEGORY_COLORS[5]`) — dieselbe Farbe wie
-  S5's "Wikidata bridge"-Box, damit der Bezug sichtbar ist, ohne die Stufen
-  farblich mit einem der drei nummerierten Blöcke zu verwechseln:
-  **open-archaeo CSV** → **Transform + identity** (Slug-Logik, die sechs
-  Statements P31/P6104/P361/P195+Qualifier/P217/P2888) → **GitHub
-  enrichment** (ETag-gecacht) → **Category reconciliation**
-  (suggest/verify/apply) → **Push to Wikidata** (create/skip-blocked).
-- Fußzeile verweist explizit auf `chublets-ingest-inputs` (Block 3), da der
-  Output dieser Pipeline exakt deren "Wikidata items"-Input ist — schließt
-  den Kreis zwischen S6, S5 und Block 3.
-
-**Abnahme:** `img/system-architecture/open-archaeo-wikidata-pipeline.png`
-existiert, transparenter Hintergrund, ≤10px Rand; zweimal `python main.py
---only open-archaeo` hintereinander → identische Prüfsummen; `python
-main.py` (alle 16 Schritte) läuft fehlerfrei durch.
-
-### Erledigt 2026-09-10
-
-Wie geplant, visuell geprüft. Determinismus-Check über alle 16 Schritte
-bestanden. Damit sind alle in Teil B geplanten Schritte abgeschlossen —
-siehe Teil D für das, was als Nächstes anliegt.
-
-## S6b — open-archaeo: die zwei echten Routen
-
-**Ziel:** drei weitere Grafiken, diesmal direkt aus
-`github.com/n4o-rse/open-archaeo` geklont und gelesen (`py/`, `docs/`,
-`out/OpenRefine/README.md`, `out/Python/README.md`) statt aus Erinnerung —
-Flo: "es soll hier speziell um das verfahren gehen wie man daten von open
-archaeo reinbringt (da gibt es ja den py wikibase api weg und open refine
-etc.)".
-
-**Uploads:** keine neuen (Repo direkt geklont, `codeload.github.com`/
-`github.com` sind im Sandkasten-Netzwerk erlaubt).
-
-**Substanz:**
-
-- `py/step_open_archaeo_two_routes.py` → `open-archaeo-two-routes`: die
-  Aufteilung selbst — `open-archaeo.csv` (562) → `transform` (416er
-  Software-Subset) → `split` (stratifiziert, deterministisch) → zwei
-  nicht überlappende 208er-Hälften (`out/OpenRefine/`, `out/Python/`) →
-  gemeinsame Vokabular- und Concordance-Dateien. Farben (Teal/Lila)
-  bewusst an die beiden Routen-Grafiken darunter gekoppelt.
-- `py/step_open_archaeo_python_route.py` → `open-archaeo-python-route`:
-  die tatsächliche Sitzung aus `out/Python/README.md` — `check`
-  (Default-Schritt, schreibt nichts) → `preview` (`docs/preview.html`) →
-  `reconcile` (read-only, langsam) → `push` (Dry-Run per Default) →
-  `push --live` (der einzige Schritt, der wirklich schreibt, und nur für
-  bereits reconciliierte Zeilen — legt nie neue Items an).
-- `py/step_open_archaeo_openrefine_route.py` →
-  `open-archaeo-openrefine-route`: aus `out/OpenRefine/README.md` —
-  Setup → Split & Derive (GREL-Ausdrücke für VCS/Archivdatum/CRAN-PyPI) →
-  Reconcile (Name+Repository-Match, hält das gemeinsame Vokabular für
-  *beide* Routen) → Schema & Upload → Hand back (id,qid-CSV).
-- Alle drei in `img/system-architecture/`, neben `chublets-software-
-  architecture` und `open-archaeo-wikidata-pipeline` (S6) — kein eigener
-  Ordner, weil sie inhaltlich zu S6 gehören, nicht zu einem der drei
-  nummerierten Blöcke.
-
-**Abnahme:** drei neue PNG/SVG-Paare in `img/system-architecture/`;
-zweimal `python main.py` (alle 19 Schritte) → identische Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Wie geplant, visuell geprüft, direkt gegen den geklonten Repo-Inhalt
-verifiziert (Zahlen 562/416/208/208 und die acht CLI-Schritte stammen
-wörtlich aus dem Code, nicht aus Erinnerung). Dabei wurde entdeckt, dass
-S6 selbst veraltet ist (Befund 10) — bewusst nicht angefasst, siehe
-Teil D.
-
-## S6c — S6 auf den echten Stand gebracht
-
-**Ziel:** S6 (`open-archaeo-wikidata-pipeline`) korrigieren, ohne eine
-vierte Wiederholung von S6b zu werden, und so, dass ein künftiges Update
-des Quell-Repos keine Codeänderung hier braucht (Flo: "dann können wir es
-auch weiterführen, wenn sich in dem repo was tut").
-
-**Uploads:** keine neuen (Repo bereits für S6b geklont).
-
-**Substanz:**
-
-- `data/raw/open-archaeo/wikidata-main.py` — unveränderte Kopie von
-  `py/wikidata/main.py` aus dem geklonten Repo (neue Konvention, A3).
-- `py/open_archaeo_data.py` — liest `ALL_STEPS`, `STEPS` und
-  `RECONCILE_STEP` per klammern-gematchter Extraktion +
-  `ast.literal_eval`, kein Nachbau der Listen als Literal.
-- `py/step_open_archaeo_pipeline.py` komplett neu: zeigt jetzt, was
-  `python py/wikidata/main.py all` tatsächlich automatisiert durchläuft —
-  acht rein lesende Schritte (`transform → vocab → categories → subjects
-  → check → preview → sparql → site`), zwei Zeilen à vier Boxen mit
-  Zeilenumbruch-Pfeil. Bewusst **nicht** dasselbe wie S6b(1/3) (der
-  Zwei-Team-Split) oder S6b(2/3) (die interaktive Session mit
-  `reconcile`/`push`) — dritte, eigenständige Sicht auf dieselbe Pipeline.
-  Fußzeile erklärt, warum `reconcile` und `push` fehlen (Kommentar aus dem
-  Quellcode übernommen) und verweist auf `open-archaeo-python-route` für
-  die interaktive Session.
-- Dateiname/Output-Pfad unverändert
-  (`img/system-architecture/open-archaeo-wikidata-pipeline.svg/.png`) —
-  S5's Verweis "see S6" bleibt gültig, keine Folgeänderung dort nötig.
-
-**Abnahme:** `open-archaeo-wikidata-pipeline.png` zeigt die acht echten
-`ALL_STEPS`-Namen; zweimal `python main.py --only open-archaeo`
-hintereinander → identische Prüfsummen; `python main.py` (alle 19
-Schritte) läuft weiterhin fehlerfrei durch.
-
-### Erledigt 2026-09-10
-
-Wie geplant, visuell geprüft. Der Teil-D-Punkt "S6 widerspricht S6b" ist
-damit erledigt und aus Teil D entfernt. Determinismus-Check über alle 19
-Schritte bestanden.
-
-## S7 — Talk-Closing-Folie
-
-**Ziel:** eine Abschlussfolie für den CAA-Talk, analog zu
-`fdox-visuals`' S10 — die acht Badges (vier Four-Step-Pattern + vier
-FAIR4RS) als Ring, diesmal um das echte chublets-Logo statt um eine
-generische Sphäre. Flo, 2026-09-10: "wenn du talk spezifische grafiken
-(max. 1-2) vor allem für den Abschluss findest wäre das super."
-
-**Uploads:** `chublets_software_logo.png` (bereits zu Beginn des
-Talk-Chats hochgeladen, jetzt als `img/source/chublets-logo.png`
-vendort).
-
-**Substanz:**
-
-- `paste_raster()` aus `fdox-visuals/py/visuals_utils.py` übernommen —
-  komponiert ein echtes Raster-Asset auf eine bereits gerenderte PNG,
-  *vor* `trim_transparent_border`, solange die Pixelkoordinaten noch exakt
-  dem Design-Raster entsprechen.
-- `img/source/` (vendorte Assets, hier das Logo) und `img/talk/`
-  (komponierte Folien) als zwei neue, eigene Ordner (A3).
-- `py/step_talk_closing.py`: acht Badges auf einem Ring (Radius 480) um
-  das Logo (560×~593, Seitenverhältnis des Originals erhalten). Rechte
-  Hälfte (−90° bis 45°) die vier Four-Step-Badges in Reihenfolge, linke
-  Hälfte (90° bis 225°) die vier FAIR4RS-Badges in *umgekehrter*
-  Reihenfolge (Reusable → Interoperable → Accessible → Findable) — damit
-  der Ring als eine durchgehende Schleife liest statt als zwei
-  gegenläufige Halbkreise. Keine Kausalitätsbehauptung zwischen
-  benachbarten Badges (anders als bei fdox, wo Step→Purpose echt
-  Ursache→Wirkung ist) — nur eine bewusste, kommentierte Lesart am
-  Nahtpunkt Findable/Ingest.
-
-**Abnahme:** `img/talk/chublets-talk-closing.png` existiert, Logo mittig
-und unverdeckt von den acht Badges, transparenter Hintergrund, ≤10px Rand;
-zweimal `python main.py --only talk-closing` hintereinander → identische
-Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Wie geplant, visuell geprüft (Logo lesbar, alle acht Badges klar
-zugeordnet, keine Überlappung). Determinismus-Check bestanden. Nur eine
-Variante gebaut (fdox hat zwei) — zweite Variante mit echten externen
-Hubs (nfdi.software/find.software/Wikidata) ist Teil D, nicht angefragt.
-
-## S7b — S7-Logo eingebettet statt komponiert, Kollision behoben
-
-**Ziel:** zwei Korrekturen nach Flos Sichtung des ersten S7-Exports.
-(1) Das Logo fehlte, wenn er die `.svg`-Datei selbst öffnete — nur die
-`.png` hatte es, weil `paste_raster()` ausschließlich das schon
-gerenderte Raster verändert. (2) Die Nuggets am Fuß der Krähe berührten
-die Badges "Curate & Link" bzw. lagen zu nah an anderen.
-
-**Uploads:** `chublets-talk-closing.svg`, `chublets-talk-closing.png`
-(Flos eigener Export/Screenshot, zeigte beide Probleme), außerdem erneut
-das Logo — diesmal als `.svg` statt `.png`.
-
-**Substanz:**
-
-- `load_logo_inner_svg()` in `visuals_utils.py`: extrahiert `viewBox`
-  sowie den inneren Markup-Block einer Inkscape-exportierten SVG und
-  entfernt zwei Klassen von Editor-Metadaten, die `resvg-py` mit "unknown
-  namespace prefix" ablehnt — den `<sodipodi:namedview>`-Block *und*
-  einzelne `sodipodi:nodetypes="..."`-Attribute auf 15 verschiedenen
-  `<path>`-Elementen (Befund 12).
-- `step_talk_closing.py`: Logo jetzt als verschachteltes
-  `<svg x=".." y=".." width=".." height=".." viewBox="0 0 2016 2136">`
-  direkt im generierten Markup statt per `paste_raster()` nachträglich
-  aufs PNG geklebt — ein Renderdurchlauf zeichnet Logo und Badges
-  zusammen, `.svg`-Quelle und `.png` sind dadurch beweisbar identisch.
-  `paste_raster()` bleibt in `visuals_utils.py` für echte Rasterbilder
-  ohne Vektororiginal (Screenshots).
-- `LOGO_W` von 560 auf 440 reduziert, diesmal nach der Bild**diagonale**
-  gerechnet statt nach der halben Höhe (Befund 13) — 54px Sicherheitsabstand
-  zum nächsten Badge statt einer Überlappung.
-- `img/source/chublets-logo.png` durch `img/source/chublets-logo.svg`
-  ersetzt (die PNG-Version wird von keinem Step mehr gebraucht).
-
-**Abnahme:** `chublets-talk-closing.svg` enthält das Logo direkt (`grep
-sodipodi img/talk/chublets-talk-closing.svg` → 0 Treffer, `grep "<svg
-x="` → 1 Treffer); keine Nugget-Badge-Überlappung mehr, visuell geprüft;
-zweimal `python main.py --only talk-closing` → identische Prüfsummen.
-
-### Erledigt 2026-09-10
-
-Wie geplant. Beide von Flo gemeldeten Probleme behoben und visuell
-bestätigt. Determinismus-Check über alle 20 Schritte bestanden.
-
----
+## S0 bis S7b — der Ausgangsstand (September 2026)
+
+Die ersten Schritte haben die Grafik-Bibliothek aufgebaut. Ihre Inhalte gelten
+weiter, die Form wurde in S11 erneuert; die Tabelle sagt, was heute wo liegt.
+
+| Schritt | Inhalt | Grafiken heute (`img/…`) |
+|---|---|---|
+| S0, S1 | Palette, Font, Namen; `main.py`, `visuals_utils.py`, Lizenz | — (Code) |
+| S2 | CodeMeta-Typen, WikiProject-Properties, Crosswalk, Datenmodell | `chublets-codemeta-overview`, `chublets-wikidata-properties-overview`, `chublets-codemeta-wikidata-crosswalk`, `chublets-wikibase-datamodel` |
+| S3 | FAIR-Prinzipien | `chublets-fair4rs-chain`, `fair-{findable,accessible,interoperable,reusable}-badge`, `chublets-fair`, `chublets-fair-{findable,accessible,interoperable,reusable}` |
+| S4, S4b | vier Schritte | `chublets-four-step-pattern`, `step-{1-ingest,2-model,3-curate-link,4-export-publish}-badge`, `chublets-four-steps`, `chublets-step-{ingest,model,curate-link,export-publish}` |
+| S5 | Architektur | `chublets-software-architecture` |
+| S6, S6b, S6c | open-archaeo | `open-archaeo-wikidata-pipeline`, `open-archaeo-two-routes`, `open-archaeo-python-route`, `open-archaeo-openrefine-route` |
+| S7, S7b | Talk-Closing | `chublets-talk-closing` (Logo eingebettet aus `img/source/`) |
+
+Was die Schritte bei der Arbeit gelehrt haben, steht in den Befunden 1–13 (A1).
+Zwei Entscheidungen daraus: Das Logo wird als verschachteltes `<svg>` eingebettet
+(ein Renderlauf, SVG und PNG beweisbar identisch), und echte Rasterbilder ohne
+Vektororiginal würden weiterhin per `paste_raster()` auf das fertige PNG gelegt.
 
 ## S8 — Datenschicht und Captions
 
@@ -933,12 +357,14 @@ Die Tabellen sind sortier- und filterbar. Platzhalter in Captions füllt
 `n_review`, `n_topics`, `n_codemeta_terms`, `n_crosswalked`, `n_codemeta_only`,
 `n_wikidata_only`, `n_chublets_addition`, `n_no_status`, `n_kernel_classes`,
 `n_pack_classes`, `n_stub_classes`, `n_twin`, `n_close_match`, `n_with_codemeta`,
-`n_schema_org`, `n_datacite`.
+`n_schema_org`, `n_datacite`, `n_wikiproject`, `n_oa_half` sowie die Item- und
+Aussagezahlen aus `entity_facts()`; die vollständige Liste steht in
+`model_data.caption_facts()`.
 
 **Prüfung.** Im Headless-Browser: keine JS-Fehler, Sortieren (Summenzeile bleibt
 unten), Filter, keine horizontale Seitenscroll bei 390 px Breite.
 
-## S10 — Modell-Grafiken (in Arbeit)
+## S10 — Modell-Grafiken
 
 **Ziel.** Dreizehn Grafiken des Datenmodells, flach unter `img/`, ohne Titel,
 Header oder Footer, jede im Paper allein lesbar.
@@ -1010,7 +436,7 @@ flache Grafiken).
   WikiProject-Liste, Wikidata-Prüfung mit 246 Checks und 14 Abweichungen,
   Entscheidungstabellen, open-archaeo mit 416 Einträgen) und was sie speisen.
   Die Zahl 15 „Terme ohne Workbook-Zeile“ stammt aus `mapping-summary` (frühere
-  Notizen nannten 16).
+  Notizen nannten 16); 68 + 15 = 83 Terme, in S12 gegen die live Repos geprüft.
 - **Lizenz-Regel (2026-10-24, „immer“):** jede Grafik, Tabelle und Caption ist
   CC BY 4.0 von Florian Thiery. `visuals_utils.CREATOR` und `LICENCE` sind die
   einzige Quelle; sie stehen in den SVG-Metadaten (`<metadata>`), im Kopf jeder
@@ -1025,51 +451,79 @@ Quellentabelle heißt es „modelling repository".
 
 **Prüfung.** Zwei Läufe ändern nichts; Zahlen stimmen mit `table-property-evidence`
 überein (114 / 22 / 83 / 71 / 34); Captions rendern mit den Fakten aus
-`caption_facts()`. Alle 13 Grafiken sind gebaut; offen ist die Durchsicht im Paper und
-S11 (Bestandsgrafiken).
+`caption_facts()`. Alle 13 Grafiken sind gebaut und von Flo auf GitHub gegengelesen; die
+Durchsicht im Paper steht noch aus.
+
+## S11 — Bestandsgrafiken neu gezeichnet
+
+**Ziel.** Alle Grafiken aus S2–S7b im neuen Stil: flach unter `img/`, ohne Header,
+Footer und „Block“-Wort, Zahlen aus dem Modell, Captions in `captions.yaml`,
+Step-IDs unverändert.
+
+**Gebaut (2026-10-24 bis 2026-10-25, in zwölf Patches).**
+- Gruppe A (Block 1): `py/codemeta_diagram.py` baut beide CodeMeta-Diagramme
+  (Kasten je Typ, Hierarchie, Summe gegen `mapping-summary`); die WikiProject-Grafik
+  zeigt die 63 Properties in acht Gruppen; `chublets-wikibase-datamodel` zeigt, wie
+  die 168 Properties aus 114 Wikidata-Äquivalenten und 83 CodeMeta-Termen entstehen.
+- Gruppe B (vier Schritte): `py/four_steps.py` baut die Panels; Collage
+  `chublets-four-steps` und vier Einzelbilder.
+- Gruppe C (FAIR): `py/fair_panels.py`; Collage `chublets-fair` und vier Einzelbilder.
+- Gruppe D: `py/oa_graphics.py` (Reihen aus Kästen mit Pfeilen) für Architektur und die vier
+  open-archaeo-Grafiken; Talk-Closing flach und mit gerundeten Koordinaten.
+- Auf Wunsch zurückgebracht (2026-10-25): die Ketten `chublets-four-step-pattern`
+  und `chublets-fair4rs-chain` und die acht Einzel-Badges (`py/chain_banner.py`), mit
+  neu gezeichneten Icons (`py/icons.py`) und zentriert.
+- Weggefallen: Block-Ordner, Schrittköpfe, `chublets-…-detail`-Dateien, die alten
+  Zahlen („46+ / 35“).
+
+**Abnahme.** `python main.py --strict` ohne Fehler; keine Datei unter `img/block-*`,
+`img/system-architecture` oder `img/talk`; zwei Läufe ändern nichts; jede Grafik hat
+eine Caption.
+
+## S12 — Abschluss
+
+**Ziel.** Das Repository ist rund: nichts Halbes, nichts Überholtes.
+
+**Gebaut (2026-10-25).**
+- `captions.REQUIRE_ALL = True`; alle 43 Grafiken haben einen Eintrag.
+- `class-tree` berechnet Spaltenbreiten aus dem gemessenen Text, `property-vocabulary-overlap`
+  lässt Legendeneinträge umbrechen; es gibt keinen Pixel-Assert mehr.
+- `model-evidence-base` gegen die live Repos geprüft (Commits unverändert, 68 + 15 = 83;
+  63 WikiProject-Properties mit Hinweis auf nicht gelistete Registry-IDs).
+- Entfernt: `py/crosswalk_data.py`, `data/raw/codemeta-wikidata-crosswalk.xlsx`,
+  `data/raw/wikidata-software-properties.csv`, ungenutzte Helfer aus `visuals_utils.py`.
+- PRIMER und README neu geschrieben (Stand statt Chronik).
+
+**Abnahme.** `python main.py --strict` ohne Fehler und ohne Hinweis auf fehlende Captions;
+zwei Läufe ändern nichts; `grep -ril starter img/*.svg tex docs/*.html` ohne Treffer.
+
+---
 
 # Teil D — Offene Punkte
 
-- **Curate & Link / Export & Publish bleiben auf F28-Konzept-Stand** —
-  entschieden 2026-09-10 (Flo: "so lassen, da bis auf open-archaeo noch
-  nichts implementiert ist"). Keine weitere Prüfung ansteht, bis es echten
+- **Windows-Lauf der letzten Patches.** Die SVGs wurden auf Linux gebaut und geprüft; ein
+  Lauf auf Windows (Referenzplattform) kann Breiten ändern (Befund 16). Flo prüft beim
+  nächsten Lauf.
+- **Konstante 562** (Einträge von `open-archaeo.csv`) steht in
+  `py/step_open_archaeo_two_routes.py`, nicht in den vendorten Dateien; beim nächsten
+  Snapshot von `open-archaeo` aus der Quelle belegen (Befund 11).
+- **Dünne Icons.** Lupe, Verzweigung, Dreieck und Haken sind etwas dünner gezeichnet als
+  die neuen Icons; auf Zuruf angleichen.
+- **Zweite Variante des Talk-Closings** (Ring plus angebundene externe Hubs wie
+  Wikidata/nfdi.software) nur auf Zuruf.
+- **`CITATION.cff`** nennt nur MIT; ob dort beide Lizenzen stehen sollen (`license` als
+  Liste), entscheidet Flo. Die Tabellen gelten als CC BY 4.0 (abgeleitet aus Wikidata CC0
+  und dem ConnOSS-Crosswalk CC BY 4.0).
+- **Annahmen in den Tabellen.** Klassen Q372, Q378, Q379 heißen „importer stub“, weil ihr
+  `origin` im Modell `wikidata-stub` lautet; der DataCite-Wert einer Property ist über
+  CodeMeta abgeleitet, nicht veröffentlicht (Spaltenüberschrift und Caption sagen das).
+- **Klassenhierarchie unverifiziert.** Die Verifikation der Demo prüfte nur Label und
+  Datentyp, nicht die Hierarchie; der Klassenbaum zeigt das Modell, nicht eine geprüfte
+  Wikidata-Hierarchie (Caption sagt das).
+- **Demo-README** zählt 63 Properties mit Item-Werten und Range, die Tabellen zählen 66
+  (`model-data`, NOTE); wahrscheinlich Stand vor den neun Review-Zeilen, bei Gelegenheit in
+  der Demo nachziehen.
+- **Zahlen im Paper:** 153 (Pack), 158 (Demo, P100–P257), 168 (mit Kernel): im Text immer
+  sagen, welche Menge gemeint ist (Befund 15).
+- **Curate & Link, Export & Publish** bleiben auf Konzeptstand (A4), bis es echten
   chublets-Wikibase-Code gibt.
-- **FAIR4RS-Mechanismen bleiben der A4-Vorschlag** — entschieden
-  2026-09-10 (Flo: "lass das so, an das paper müssen wir eh noch ran zur
-  überarbeitung, im zweifel gleichen wir das paper dann an"). Die Grafiken
-  sind also die Referenz, das Paper zieht bei Bedarf nach.
-- **S6b liest weiterhin nicht aus einer Datei** — bewusst niedrige
-  Priorität, 2026-09-10 bestätigt. Bei Gelegenheit könnten
-  `open-archaeo-two-routes` und die beiden Routen-Grafiken denselben
-  Vendoring-Ansatz wie S6c übernehmen (aus `py/main.py`, `py/split.py` und
-  den beiden Slice-READMEs).
-- **Talk-Closing-Grafik (S7) hat noch keine zweite Variante** —
-  fdox-visuals hat für seine Abschlussfolie zwei Varianten (A: nur
-  Ring+Sphäre, B: Ring plus echte externe Hubs wie Wikidata/OpenStreetMap/
-  NFDI4Objects angebunden). Für chublets wäre eine Variante B mit
-  nfdi.software/find.software/Wikidata als angebundenen Knoten denkbar,
-  aber nur auf Zuruf — S7 Variante A allein deckt "1-2 Grafiken für den
-  Abschluss" schon ab.
-- **Repo-Anlage:** `chublets-software/chublets-visuals` existiert jetzt auf
-  GitHub und S1+S2 sind committet (bestätigt 2026-09-10) — Rest dieses Punkts
-  erledigt.
-
-- **Lizenz entschieden** (2026-10-24): Grafiken CC BY 4.0, Code MIT. Offen
-  daran: `CITATION.cff` nennt nur MIT; ob dort beide stehen sollen
-  (`license` als Liste), entscheidet Flo. Die Tabellen gelten ebenfalls als
-  CC BY 4.0 (abgeleitet aus Wikidata CC0 und dem ConnOSS-Crosswalk CC BY 4.0).
-  Die Grafik „Reusable" (FAIR) darf weiterhin keine Lizenz-Statements
-  behaupten, die es im Modell nicht gibt.
-- **Annahmen in den Tabellen** — Klassen Q372, Q378, Q379 heißen
-  „importer stub", weil ihr `origin` im Modell `wikidata-stub` lautet; mehr
-  behauptet die Tabelle nicht. Der DataCite-Wert einer Property ist über CodeMeta
-  abgeleitet, nicht veröffentlicht (Spaltenüberschrift und Caption sagen das).
-- **Klassenhierarchie unverifiziert** — der Klassenbaum des Packs (06) trennt
-  „belegt" (durchgezogen) und „erwartet" (gestrichelt). Die Verifikation der
-  Demo (S11 dort) prüfte nur Label und Datentyp, nicht die Hierarchie; die
-  gestrichelten Kanten bleiben gestrichelt.
-- **Demo-README zählt 63 Properties mit Item-Werten und Range**, die Tabellen
-  zählen 66 (`step model-data`, NOTE). Wahrscheinlich Stand vor den neun
-  Review-Zeilen; bei Gelegenheit in der Demo nachziehen.
-- **Zahlen im Paper** — 153 (Pack), 158 (Demo, P100–P257), 168 (mit Kernel):
-  im Text immer sagen, welche Menge gemeint ist (Befund 15).

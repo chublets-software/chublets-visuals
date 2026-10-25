@@ -15,6 +15,7 @@ Runnable standalone: `python py/step_class_tree.py`
 
 from __future__ import annotations
 
+import math
 import sys
 from pathlib import Path
 
@@ -27,7 +28,7 @@ from visuals_utils import INK, MUTED, tint  # noqa: E402
 NAME = "class-tree"
 CLS = g.SEM["class"]
 
-COL_W = [190, 300, 300, 300]
+MIN_COL_W = [190, 300, 300, 300]  # a column grows when its text needs more room (`_col_widths`)
 GAP = 70
 NODE_H = 62
 PITCH = 78
@@ -75,8 +76,29 @@ def _layout(M: model_data.Model) -> dict[str, tuple[int, float]]:
     return pos
 
 
-def _col_x(col: int) -> float:
-    return sum(COL_W[:col]) + GAP * col
+def _need(M: model_data.Model, cid: str) -> float:
+    """Width a class box needs for its label, chip and identifier line."""
+    c = M.classes[cid]
+    crm, frm = M.crm_of(cid)
+    ident = c.id + (f" \u00b7 Wikidata {c.twin}" if c.twin else "")
+    need = 12 + g.text_w(ident, 12.5) + 12
+    label = 12 + g.text_w(c.label, 16, True) + 10
+    if crm:
+        chip_label = crm if frm == cid else crm.split(":")[-1] + " inherited"
+        label += g.text_w(chip_label, 11.5) + 14 + 9
+    return max(need, label + 12)
+
+
+def _col_widths(M: model_data.Model, pos: dict[str, tuple[int, float]]) -> list[int]:
+    """Column widths computed from the measured text (they differ between platforms), never asserted."""
+    widths = list(MIN_COL_W)
+    for cid, (col, _) in pos.items():
+        widths[col] = max(widths[col], math.ceil(_need(M, cid)))
+    return widths
+
+
+def _col_x(col: int, widths: list[int]) -> float:
+    return sum(widths[:col]) + GAP * col
 
 
 def _box(M: model_data.Model, cid: str, x: float, y: float, w: float, cv: g.Canvas) -> None:
@@ -104,8 +126,6 @@ def _box(M: model_data.Model, cid: str, x: float, y: float, w: float, cv: g.Canv
             chip_fill, chip_stroke, chip_col = (CLS, "none", "#ffffff") if solid else ("none", CLS, CLS)
         svg, cw = g.chip(x + w - 9, y + 9, label, 11.5, fill=chip_fill, stroke=chip_stroke, color=chip_col,
                          dash=None if solid else "3 2", anchor_right=True)
-        need = 12 + g.text_w(c.label, 16, True) + 10 + cw + 9
-        assert need <= w, f"{cid}: label and chip need {need:.0f}px, the box has {w}px"
         out += svg
     cv.add(out, x, y, x + w, y + NODE_H)
 
@@ -113,9 +133,10 @@ def _box(M: model_data.Model, cid: str, x: float, y: float, w: float, cv: g.Canv
 def build(M: model_data.Model) -> g.Canvas:
     pos = _layout(M)
     cv = g.Canvas()
+    widths = _col_widths(M, pos)
     box: dict[str, tuple[float, float, float]] = {}  # id -> (x, y, w)
     for cid, (col, row) in pos.items():
-        box[cid] = (_col_x(col), row * PITCH, COL_W[col])
+        box[cid] = (_col_x(col, widths), row * PITCH, widths[col])
     # edges first (under the boxes)
     def mid(cid: str) -> float:
         return box[cid][1] + NODE_H / 2
@@ -150,7 +171,7 @@ def build(M: model_data.Model) -> g.Canvas:
 
     # legend, in the free area right of the chublets classes
     n = model_data.caption_facts(M)
-    lx = _col_x(3)
+    lx = _col_x(3, widths)
     ly = box["Q106"][1] + PITCH * 2.2
     items = [
         ("built-in class of the data model", n["n_kernel_classes"], tint(CLS, 0.88), CLS, None),

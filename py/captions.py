@@ -35,7 +35,7 @@ CAPTIONS_FILE = ROOT / "captions.yaml"
 
 # Becomes True when the last graphic has its entry (end of the S11 migration):
 # from then on a graphic without a caption is an error in --strict.
-REQUIRE_ALL = False
+REQUIRE_ALL = True
 
 # Graphics, tables and captions are CC BY 4.0, the code is MIT (decided 2026-10-24,
 # see LICENSE-GRAPHICS.md). An entry may name another licence; without one this applies.

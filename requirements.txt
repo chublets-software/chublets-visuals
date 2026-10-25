@@ -5,5 +5,4 @@
 # no known fragile API surface.
 resvg-py>=0.4     # tested 0.5.0 -- needs the font_files= / skip_system_fonts= kwargs
 pillow>=10.0      # tested 12.1.1 -- only RGBA-on-white JPEG flattening, alpha-bbox crop
-openpyxl>=3.1     # tested 3.1.5 -- reads data/raw/codemeta-wikidata-crosswalk.xlsx
 pyyaml>=6.0       # tested 6.0.3 -- reads captions.yaml
