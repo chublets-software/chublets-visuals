@@ -19,8 +19,7 @@ COL_W = 360
 TEXT_W = COL_W - 40
 ICON_K = 1.3   # the icons fill the badge (they were small in the circle)
 # Offsets (icon units) that centre each icon in its circle; measured from the rendered icons.
-CENTRE = {"step_icon": [(0, 16.5), (0, 10), (-4, 3), (0, 0)],
-          "fair_icon": [(-3.5, -3.5), (0, 0), (0, 0), (0, 0)]}
+CENTRE = {"step_icon": [(0, 0)] * 4, "fair_icon": [(0, 0)] * 4}  # icons are centred by their bounding box (py/icons.py)
 
 
 def _icon(icon_fn, idx, col, cx=0.0, cy=0.0, r=BR):

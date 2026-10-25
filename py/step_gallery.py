@@ -100,6 +100,70 @@ def _table_html(table: Table) -> str:
 
 
 # --------------------------------------------------------------------------
+# Themes of the overview pages: id -> (title, one-line description). Order = order on the page.
+THEMES = {
+    "vocabularies": ("Vocabularies and evidence", "CodeMeta, Wikidata properties and the evidence the model rests on."),
+    "model": ("Data model", "Classes, properties, statements and how a chublet is stored."),
+    "pipeline": ("Four-step pipeline", "Ingest, Model, Curate & Link, Export & Publish."),
+    "fair": ("FAIR4RS", "How the model meets Findable, Accessible, Interoperable and Reusable."),
+    "open-archaeo": ("open-archaeo workflow", "From the open-archaeo list to Wikidata."),
+    "architecture": ("Architecture and talk", "The whole system at a glance, and the closing slide."),
+}
+GRAPHIC_THEME = {
+    "chublets-codemeta-overview": "vocabularies", "chublets-wikidata-properties-overview": "vocabularies",
+    "chublets-codemeta-wikidata-crosswalk": "vocabularies", "property-vocabulary-overlap": "vocabularies",
+    "codemeta-coverage": "vocabularies", "model-evidence-base": "vocabularies",
+    "chublets-wikibase-datamodel": "model", "class-tree": "model", "property-origin": "model", "property-topics": "model",
+    "entity-overview": "model", "property-metadata-layer": "model", "chublet-item": "model",
+    "statement-provenance": "model", "chublet-identity": "model", "wikibase-bootstrap": "model",
+    "static-vs-federation": "model",
+    "chublets-software-architecture": "architecture", "chublets-talk-closing": "architecture",
+}
+TABLE_THEME = {
+    "table-codemeta-terms": "vocabularies", "table-wikidata-groups": "vocabularies",
+    "table-datacite-evidence": "vocabularies", "table-evidence-sources": "vocabularies",
+    "table-property-evidence": "vocabularies",
+}
+
+
+def theme_of_graphic(stem: str) -> str:
+    if stem in GRAPHIC_THEME:
+        return GRAPHIC_THEME[stem]
+    if stem.startswith(("chublets-step-", "chublets-four-step", "step-")):
+        return "pipeline"
+    if stem.startswith(("chublets-fair", "fair-")):
+        return "fair"
+    if stem.startswith("open-archaeo-"):
+        return "open-archaeo"
+    raise RuntimeError(f"graphic '{stem}' has no theme; add it to GRAPHIC_THEME in step_gallery.py")
+
+
+def _chips(counts: dict[str, int]) -> str:
+    out = ['<div class="chips" role="group" aria-label="Filter by theme">']
+    out.append(f'<button type="button" class="chip" data-theme="" aria-pressed="true">All <span>{sum(counts.values())}</span></button>')
+    for tid, (title, desc) in THEMES.items():
+        if counts.get(tid):
+            out.append(f'<button type="button" class="chip" data-theme="{tid}" aria-pressed="false" title="{_e(desc)}">{_e(title)} <span>{counts[tid]}</span></button>')
+    out.append("</div>")
+    return "".join(out)
+
+
+def _group_head(tid: str) -> str:
+    title, desc = THEMES[tid]
+    return f'<div class="grphead"><h3 class="grp" id="theme-{tid}">{_e(title)}</h3><p class="caption">{_e(desc)}</p></div>'
+
+
+def _tables_grouped(tables) -> str:
+    by: dict[str, list] = {t: [] for t in THEMES}
+    for t in tables:
+        by[TABLE_THEME.get(t.name, "model")].append(t)
+    out = [_chips({k: len(v) for k, v in by.items()})]
+    for tid, ts in by.items():
+        if ts:
+            out.append(f'<div class="grp" data-theme="{tid}">{_group_head(tid)}' + "".join(_table_html(t) for t in ts) + "</div>")
+    return "".join(out)
+
+
 def _graphics(fact: dict[str, object]) -> tuple[str, int, int]:
     """(HTML of the graphics section, number of graphics, number with a caption)."""
     entries = captions.load()
@@ -108,22 +172,23 @@ def _graphics(fact: dict[str, object]) -> tuple[str, int, int]:
     img_out = DOCS / "img"
     if img_out.exists():
         shutil.rmtree(img_out)
-    groups: dict[str, list[Path]] = {}
+    groups: dict[str, list[Path]] = {t: [] for t in THEMES}
     for p in svgs:
-        rel = p.relative_to(IMG_DIR)
-        groups.setdefault(rel.parent.as_posix() if rel.parent.as_posix() != "." else "", []).append(p)
+        groups[theme_of_graphic(p.stem)].append(p)
         for ext in (".svg", ".png"):
             src = p.with_suffix(ext)
             if src.is_file():
                 dst = img_out / src.relative_to(IMG_DIR)
                 dst.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(src, dst)
-    parts: list[str] = []
+    counts = {t: len(ps) for t, ps in groups.items()}
+    parts: list[str] = [_chips(counts)]
     with_caption = 0
-    for folder in sorted(groups, key=lambda g: (g != "", g)):
-        title = folder or "Main graphics"
-        parts.append(f'<h3 class="grp">{_e(title)}</h3><div class="grid">')
-        for p in groups[folder]:
+    for tid, ps in groups.items():
+        if not ps:
+            continue
+        parts.append(f'<div class="grp" data-theme="{tid}">{_group_head(tid)}<div class="grid">')
+        for p in ps:
             rel = p.relative_to(IMG_DIR).as_posix()
             stem = p.stem
             entry = captions.render(stem, **fact) if stem in entries else {}
@@ -143,7 +208,7 @@ def _graphics(fact: dict[str, object]) -> tuple[str, int, int]:
                 + (f'<details class="cap"><summary>Caption</summary><p>{_e(cap)}</p></details>' if entry else f'<span class="cap missing">{_e(cap)}</span>')
                 + f'<span class="meta">{_e(captions.CREATOR)}, {_e(lic)}{" · " + _e(srcs) if srcs else ""} · {links}</span></figcaption></figure>'
             )
-        parts.append("</div>")
+        parts.append("</div></div>")
     return "\n".join(parts), len(svgs), with_caption
 
 
@@ -159,7 +224,7 @@ nav .in{max-width:1200px;margin:0 auto;padding:8px 16px;display:flex;gap:16px;al
 nav a[aria-current=page]{font-weight:700;color:var(--fg);text-decoration:none;border-bottom:2px solid var(--acc)}
 nav input{flex:1;min-width:180px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
 nav button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:6px 10px;cursor:pointer}
-h2{margin:32px 0 4px;font-size:1.3rem}h3{margin:20px 0 6px;font-size:1.05rem}h3.grp{color:var(--mut);font-weight:600;text-transform:none}
+h2{margin:32px 0 4px;font-size:1.3rem}h3{margin:20px 0 6px;font-size:1.05rem}h3.grp{color:var(--fg);font-weight:600;text-transform:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
 .card{margin:0;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
 .card .thumb{display:flex;align-items:center;justify-content:center;background:#fff;min-height:160px;padding:8px;border-bottom:1px solid var(--line)}
@@ -172,6 +237,9 @@ figcaption{padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-siz
 table{border-collapse:collapse;width:100%;font-size:.86rem}th,td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 th{position:sticky;top:0;background:var(--card);cursor:pointer;white-space:nowrap;user-select:none}th[aria-sort=ascending]::after{content:" \\25B2";font-size:.7em}th[aria-sort=descending]::after{content:" \\25BC";font-size:.7em}
 .num{text-align:right;font-variant-numeric:tabular-nums}tr.total td{font-weight:700;background:var(--card)}tr:hover td{background:var(--hl)}tr[hidden]{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 12px;cursor:pointer;font:inherit;font-size:.9rem}
+.chip span{color:var(--mut);margin-left:4px}.chip[aria-pressed=true]{background:var(--acc);color:var(--bg);border-color:var(--acc)}.chip[aria-pressed=true] span{color:inherit}
+.grphead{margin-top:24px}.grphead h3{margin-bottom:0}.grphead .caption{margin:0 0 8px;color:var(--mut)}
 footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 """
 
@@ -183,9 +251,15 @@ JS = """
   var n=dark?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}});
  function norm(s){return s.toLowerCase()}
  var q=document.getElementById('q');
+ var theme='';
  function applyAll(){var v=norm(q.value);
   document.querySelectorAll('.card').forEach(function(c){c.hidden=v&&norm(c.dataset.name).indexOf(v)<0});
-  document.querySelectorAll('section.tbl').forEach(function(s){filterTable(s,v+' '+norm(s.querySelector('.filter').value))})}
+  document.querySelectorAll('section.tbl').forEach(function(s){filterTable(s,v+' '+norm(s.querySelector('.filter').value))});
+  document.querySelectorAll('div.grp').forEach(function(d){
+   var off=theme&&d.dataset.theme!==theme,any=d.querySelector('.card:not([hidden])')||d.querySelector('section.tbl');
+   d.hidden=off||!any})}
+ document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){
+  theme=b.dataset.theme;document.querySelectorAll('.chip').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false')});applyAll()})});
  function filterTable(s,extra){var terms=extra.split(/\\s+/).filter(Boolean),n=0,tot=0;
   s.querySelectorAll('tbody tr').forEach(function(r){var txt=norm(r.textContent),ok=terms.every(function(t){return txt.indexOf(t)>=0});r.hidden=!ok;tot++;if(ok)n++});
   s.querySelector('.count').textContent=n+' of '+tot+' rows'}
@@ -283,7 +357,7 @@ def run(strict: bool = False) -> list[str]:
         f'<h2 id="tables">Tables <small class="count">{len(tables)} tables</small></h2>\n'
         f'<p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; '
         f"the search above filters all tables at once. {toc}</p>\n"
-        + "".join(_table_html(t) for t in tables)
+        + _tables_grouped(tables)
     )
     (DOCS / "index.html").write_text(
         _page(title="chublets visuals", active="graphics", intro=intro, body=gfx_body, search="Search graphics"),

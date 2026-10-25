@@ -17,7 +17,7 @@ nav .in{max-width:1200px;margin:0 auto;padding:8px 16px;display:flex;gap:16px;al
 nav a[aria-current=page]{font-weight:700;color:var(--fg);text-decoration:none;border-bottom:2px solid var(--acc)}
 nav input{flex:1;min-width:180px;padding:6px 10px;border:1px solid var(--line);border-radius:6px;background:var(--card);color:var(--fg)}
 nav button{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:6px;padding:6px 10px;cursor:pointer}
-h2{margin:32px 0 4px;font-size:1.3rem}h3{margin:20px 0 6px;font-size:1.05rem}h3.grp{color:var(--mut);font-weight:600;text-transform:none}
+h2{margin:32px 0 4px;font-size:1.3rem}h3{margin:20px 0 6px;font-size:1.05rem}h3.grp{color:var(--fg);font-weight:600;text-transform:none}
 .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(420px,1fr));gap:16px}
 .card{margin:0;background:var(--card);border:1px solid var(--line);border-radius:8px;overflow:hidden;display:flex;flex-direction:column}
 .card .thumb{display:flex;align-items:center;justify-content:center;background:#fff;min-height:160px;padding:8px;border-bottom:1px solid var(--line)}
@@ -30,6 +30,9 @@ figcaption{padding:10px 12px;display:flex;flex-direction:column;gap:4px;font-siz
 table{border-collapse:collapse;width:100%;font-size:.86rem}th,td{padding:4px 8px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
 th{position:sticky;top:0;background:var(--card);cursor:pointer;white-space:nowrap;user-select:none}th[aria-sort=ascending]::after{content:" \25B2";font-size:.7em}th[aria-sort=descending]::after{content:" \25BC";font-size:.7em}
 .num{text-align:right;font-variant-numeric:tabular-nums}tr.total td{font-weight:700;background:var(--card)}tr:hover td{background:var(--hl)}tr[hidden]{display:none}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}.chip{border:1px solid var(--line);background:var(--card);color:var(--fg);border-radius:999px;padding:5px 12px;cursor:pointer;font:inherit;font-size:.9rem}
+.chip span{color:var(--mut);margin-left:4px}.chip[aria-pressed=true]{background:var(--acc);color:var(--bg);border-color:var(--acc)}.chip[aria-pressed=true] span{color:inherit}
+.grphead{margin-top:24px}.grphead h3{margin-bottom:0}.grphead .caption{margin:0 0 8px;color:var(--mut)}
 footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 </style>
 </head>
@@ -44,7 +47,216 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 <main>
 <h2 id="tables">Tables <small class="count">11 tables</small></h2>
 <p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; the search above filters all tables at once. <a href="#table-model-statistics">Model statistics</a> &middot; <a href="#table-property-origin">Properties by origin</a> &middot; <a href="#table-property-evidence">Evidence per status</a> &middot; <a href="#table-topics">Topics</a> &middot; <a href="#table-topics-by-status">Topics by origin class</a> &middot; <a href="#table-properties-by-topic">Properties by topic</a> &middot; <a href="#table-codemeta-terms">CodeMeta terms</a> &middot; <a href="#table-wikidata-groups">Wikidata groups</a> &middot; <a href="#table-datacite-evidence">DataCite evidence</a> &middot; <a href="#table-classes">Classes</a> &middot; <a href="#table-evidence-sources">Evidence sources</a></p>
-
+<div class="chips" role="group" aria-label="Filter by theme"><button type="button" class="chip" data-theme="" aria-pressed="true">All <span>11</span></button><button type="button" class="chip" data-theme="vocabularies" aria-pressed="false" title="CodeMeta, Wikidata properties and the evidence the model rests on.">Vocabularies and evidence <span>5</span></button><button type="button" class="chip" data-theme="model" aria-pressed="false" title="Classes, properties, statements and how a chublet is stored.">Data model <span>6</span></button></div><div class="grp" data-theme="vocabularies"><div class="grphead"><h3 class="grp" id="theme-vocabularies">Vocabularies and evidence</h3><p class="caption">CodeMeta, Wikidata properties and the evidence the model rests on.</p></div>
+<section class="tbl" id="table-property-evidence" data-title="Evidence per status">
+  <h3>Evidence per status</h3>
+  <p class="caption">Which external vocabularies the 168 properties point to, by origin class: a Wikidata twin (P4), a loose Wikidata close match (P100), a CodeMeta term, a schema.org term (P102), and a DataCite element (derived via the CodeMeta hub; DataCite itself is not published as a mapping).</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Evidence per status">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-property-evidence.csv" download>CSV</a> <a href="data/table-property-evidence.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">Status</th><th data-col="1" class="num" role="columnheader" tabindex="0" aria-sort="none">Properties</th><th data-col="2" class="num" role="columnheader" tabindex="0" aria-sort="none">Wikidata twin</th><th data-col="3" class="num" role="columnheader" tabindex="0" aria-sort="none">Close match</th><th data-col="4" class="num" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="5" class="num" role="columnheader" tabindex="0" aria-sort="none">schema.org</th><th data-col="6" class="num" role="columnheader" tabindex="0" aria-sort="none">DataCite</th></tr></thead><tbody>
+<tr><td class="">crosswalked</td><td class="num">37</td><td class="num">37</td><td class="num">--</td><td class="num">37</td><td class="num">35</td><td class="num">26</td></tr>
+<tr><td class="">CodeMeta only</td><td class="num">46</td><td class="num">--</td><td class="num">22</td><td class="num">46</td><td class="num">36</td><td class="num">8</td></tr>
+<tr><td class="">Wikidata only</td><td class="num">52</td><td class="num">52</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
+<tr><td class="">chublets addition</td><td class="num">18</td><td class="num">12</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
+<tr><td class="">unclassified</td><td class="num">15</td><td class="num">13</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
+<tr class="total"><td class="">total</td><td class="num">168</td><td class="num">114</td><td class="num">22</td><td class="num">83</td><td class="num">71</td><td class="num">34</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: chublets-wikibase-demo</p>
+</section>
+<section class="tbl" id="table-codemeta-terms" data-title="CodeMeta terms">
+  <h3>CodeMeta terms</h3>
+  <p class="caption">The 84 rows of the CodeMeta term crosswalk (83 distinct terms; relatedLink has two rows) with their CodeMeta type, status (38 crosswalked rows, 46 CodeMeta only), Wikidata property, the Wikibase property they became, the derived DataCite element, and where the term stands in the Wikidata/DataCite bridge (only the 68 terms of the ConnOSS crosswalk are classified).</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of CodeMeta terms">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-codemeta-terms.csv" download>CSV</a> <a href="data/table-codemeta-terms.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta type</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">Status</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">Wikidata</th><th data-col="4" class="" role="columnheader" tabindex="0" aria-sort="none">Wikibase property</th><th data-col="5" class="" role="columnheader" tabindex="0" aria-sort="none">DataCite</th><th data-col="6" class="" role="columnheader" tabindex="0" aria-sort="none">Bridge</th></tr></thead><tbody>
+<tr><td class="">codeRepository</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P1324</td><td class="">P125 source code repository URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">codeSampleType</td><td class="">SoftwareSourceCode</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P163 code sample type</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">programmingLanguage</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P277</td><td class="">P123 programmed in</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">runtimePlatform</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P400</td><td class="">P143 platform</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">targetProduct</td><td class="">SoftwareSourceCode</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P150 target product</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">applicationCategory</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P103 application category</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">applicationSubCategory</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P128 application sub category</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">applicationSuite</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P129 application suite</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">availableOnDevice</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P158 available on device</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">countriesNotSupported</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P169 countries not supported</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">countriesSupported</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P170 countries supported</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">downloadUrl</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P4945</td><td class="">P133 download URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
+<tr><td class="">featureList</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P192 feature list</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">fileSize</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P3575</td><td class="">P172 data size</td><td class="">size</td><td class="">both</td></tr>
+<tr><td class="">installUrl</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P207 install URL</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">memoryRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P214 memory requirements</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">operatingSystem</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P306</td><td class="">P142 operating system</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">permissions</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P221 permissions</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">processorRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P227 processor requirements</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">screenshot</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P18</td><td class="">P204 image</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">softwareAddOn</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P237 software add on</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">softwareHelp</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P2078</td><td class="">P151 user manual URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">softwareRequirements</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P1547</td><td class="">P109 depends on software</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">softwareVersion</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P348</td><td class="">P148 software version identifier</td><td class="">version</td><td class="">both</td></tr>
+<tr><td class="">storageRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P245 storage requirements</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">supportingData</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P149 supporting data</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">author</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P178</td><td class="">P113 developer</td><td class="">creator</td><td class="">both</td></tr>
+<tr><td class="">citation</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P2860</td><td class="">P162 cites work</td><td class="">relatedItem</td><td class="">both</td></tr>
+<tr><td class="">contributor</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P767</td><td class="">P131 contributor to the creative work or subject</td><td class="">contributor</td><td class="">both</td></tr>
+<tr><td class="">copyrightHolder</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P167 copyright holder</td><td class="">contributor</td><td class="">DataCite only</td></tr>
+<tr><td class="">copyrightYear</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P168 copyright year</td><td class="">date</td><td class="">DataCite only</td></tr>
+<tr><td class="">dateCreated</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P571</td><td class="">P137 inception</td><td class="">date</td><td class="">both</td></tr>
+<tr><td class="">dateModified</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P5017</td><td class="">P139 last update</td><td class="">date</td><td class="">both</td></tr>
+<tr><td class="">datePublished</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P577</td><td class="">P144 publication date</td><td class="">date</td><td class="">both</td></tr>
+<tr><td class="">editor</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P183 editor</td><td class="">contributor</td><td class="">DataCite only</td></tr>
+<tr><td class="">encoding</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P187 encoding</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">encodingFormat</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P2701</td><td class="">P194 file format</td><td class="">format</td><td class="">both</td></tr>
+<tr><td class="">funder</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P8324</td><td class="">P134 funder</td><td class="">fundingReference, funderName</td><td class="">both</td></tr>
+<tr><td class="">hasPart</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P527</td><td class="">P136 has part(s)</td><td class="">relatedItem</td><td class="">both</td></tr>
+<tr><td class="">isAccessibleForFree</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P209 is accessible for free</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">isPartOf</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P361</td><td class="">P122 part of</td><td class="">relatedItem</td><td class="">both</td></tr>
+<tr><td class="">keywords</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P921</td><td class="">P117 main subject</td><td class="">subject</td><td class="">both</td></tr>
+<tr><td class="">license</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P275</td><td class="">P107 copyright license</td><td class="">rights</td><td class="">both</td></tr>
+<tr><td class="">producer</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P162</td><td class="">P228 producer</td><td class="">contributor</td><td class="">both</td></tr>
+<tr><td class="">provider</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P229 provider</td><td class="">contributor</td><td class="">DataCite only</td></tr>
+<tr><td class="">publisher</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P123</td><td class="">P230 publisher</td><td class="">publisher</td><td class="">both</td></tr>
+<tr><td class="">review</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P233 review</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">sponsor</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P859</td><td class="">P242 sponsor</td><td class="">contributor</td><td class="">both</td></tr>
+<tr><td class="">description</td><td class="">Thing</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P112 description</td><td class="">description</td><td class="">DataCite only</td></tr>
+<tr><td class="">identifier</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P356</td><td class="">P114 DOI</td><td class="">identifier</td><td class="">both</td></tr>
+<tr><td class="">name</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P2561</td><td class="">P119 name</td><td class="">title</td><td class="">both</td></tr>
+<tr><td class="">sameAs</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P2888</td><td class="">P115 exact match</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">both</td></tr>
+<tr><td class="">url</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P856</td><td class="">P120 official website</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">both</td></tr>
+<tr><td class="">relatedLink</td><td class="">Thing (outside hierarchy)</td><td class="">crosswalked</td><td class="">P973</td><td class="">P110 described at URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
+<tr><td class="">relatedLink</td><td class="">Thing (outside hierarchy)</td><td class="">crosswalked</td><td class="">P11201</td><td class="">P141 official demo URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
+<tr><td class="">buildInstructions</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P161 build instructions</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">continuousIntegration</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P166 continuous integration</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">developmentStatus</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P132 development status</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">embargoDate</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P185 embargo date</td><td class="">date</td><td class="">DataCite only</td></tr>
+<tr><td class="">embargoEndDate</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P186 embargo end date</td><td class="">date</td><td class="">DataCite only</td></tr>
+<tr><td class="">funding</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P199 funding</td><td class="">fundingReference</td><td class="">DataCite only</td></tr>
+<tr><td class="">hasSourceCode</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P203 has source code</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">isSourceCodeOf</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P210 is source code of</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">issueTracker</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P1401</td><td class="">P138 issue tracker URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
+<tr><td class="">maintainer</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P126</td><td class="">P140 maintained by</td><td class="">contributor</td><td class="">both</td></tr>
+<tr><td class="">readme</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P231 readme</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">referencePublication</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P1343</td><td class="">P111 described by source</td><td class="">relatedItem</td><td class="">DataCite only</td></tr>
+<tr><td class="">softwareSuggestions</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P240 software suggestions</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">fileFormat</td><td class="">SoftwareSourceCode/SoftwareApplication (v2 term)</td><td class="">crosswalked</td><td class="">P2701</td><td class="">P194 file format</td><td class="">format</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">version</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P152 version</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">position</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P225 position</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">releaseNotes</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P232 release notes</td><td class="">--</td><td class="">neither</td></tr>
+<tr><td class="">contIntegration</td><td class="">CodeMeta (v2 only)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P165 cont integration</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">address</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P155 address</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">affiliation</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P156 affiliation</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">email</td><td class="">Person</td><td class="">crosswalked</td><td class="">P968</td><td class="">P184 email address</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">familyName</td><td class="">Person</td><td class="">crosswalked</td><td class="">P734</td><td class="">P191 family name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">givenName</td><td class="">Person</td><td class="">crosswalked</td><td class="">P735</td><td class="">P200 given name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">identifier (Person)</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P222 person identifier</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">reviewAspect</td><td class="">Review (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P234 review aspect</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">reviewBody</td><td class="">Review (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P235 review body</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">roleName</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P236 role name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">startDate</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P243 start date</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+<tr><td class="">endDate</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P188 end date</td><td class="">--</td><td class="">not in crosswalk</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: chublets-wikibase-demo</p>
+</section>
+<section class="tbl" id="table-wikidata-groups" data-title="Wikidata groups">
+  <h3>Wikidata groups</h3>
+  <p class="caption">The 109 Wikidata properties considered for the model, by WikiProject group and by what became of them in the Wikibase. Candidate only properties were considered but are not in the property set.</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Wikidata groups">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-wikidata-groups.csv" download>CSV</a> <a href="data/table-wikidata-groups.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">WikiProject group</th><th data-col="1" class="num" role="columnheader" tabindex="0" aria-sort="none">Wikidata only</th><th data-col="2" class="num" role="columnheader" tabindex="0" aria-sort="none">Crosswalked</th><th data-col="3" class="num" role="columnheader" tabindex="0" aria-sort="none">chublets addition</th><th data-col="4" class="num" role="columnheader" tabindex="0" aria-sort="none">Candidate only</th><th data-col="5" class="num" role="columnheader" tabindex="0" aria-sort="none">Total</th></tr></thead><tbody>
+<tr><td class="">people</td><td class="num">6</td><td class="num">10</td><td class="num">1</td><td class="num">5</td><td class="num">22</td></tr>
+<tr><td class="">technical</td><td class="num">11</td><td class="num">6</td><td class="num">--</td><td class="num">--</td><td class="num">17</td></tr>
+<tr><td class="">registries</td><td class="num">13</td><td class="num">--</td><td class="num">3</td><td class="num">--</td><td class="num">16</td></tr>
+<tr><td class="">links</td><td class="num">2</td><td class="num">6</td><td class="num">4</td><td class="num">--</td><td class="num">12</td></tr>
+<tr><td class="">identity</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">11</td></tr>
+<tr><td class="">versioning</td><td class="num">6</td><td class="num">5</td><td class="num">--</td><td class="num">--</td><td class="num">11</td></tr>
+<tr><td class="">relations</td><td class="num">8</td><td class="num">1</td><td class="num">--</td><td class="num">--</td><td class="num">9</td></tr>
+<tr><td class="">media</td><td class="num">2</td><td class="num">1</td><td class="num">--</td><td class="num">1</td><td class="num">4</td></tr>
+<tr><td class="">rights</td><td class="num">2</td><td class="num">2</td><td class="num">--</td><td class="num">--</td><td class="num">4</td></tr>
+<tr><td class="">publication</td><td class="num">--</td><td class="num">2</td><td class="num">--</td><td class="num">--</td><td class="num">2</td></tr>
+<tr><td class="">classification</td><td class="num">--</td><td class="num">1</td><td class="num">--</td><td class="num">--</td><td class="num">1</td></tr>
+<tr class="total"><td class="">total</td><td class="num">52</td><td class="num">37</td><td class="num">12</td><td class="num">8</td><td class="num">109</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: chublets-wikibase-demo</p>
+</section>
+<section class="tbl" id="table-datacite-evidence" data-title="DataCite evidence">
+  <h3>DataCite evidence</h3>
+  <p class="caption">The 34 properties that carry a DataCite element. The element is derived via the CodeMeta hub (CodeMeta term to DataCite element in the ConnOSS crosswalk); a mapping from DataCite to Wikidata is not published. Qualifiers in square brackets tell apart properties that map to the same element (for example the relation or contributor type).</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of DataCite evidence">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-datacite-evidence.csv" download>CSV</a> <a href="data/table-datacite-evidence.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">ID</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">Label</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">DataCite element [qualifiers]</th></tr></thead><tbody>
+<tr><td class="">P107</td><td class="">copyright license</td><td class="">license</td><td class="">rights</td></tr>
+<tr><td class="">P110</td><td class="">described at URL</td><td class="">relatedLink</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]</td></tr>
+<tr><td class="">P111</td><td class="">described by source</td><td class="">referencePublication</td><td class="">relatedItem [relatedItemType=JournalArticle, relationType=IsDocumentedBy]</td></tr>
+<tr><td class="">P112</td><td class="">description</td><td class="">description</td><td class="">description</td></tr>
+<tr><td class="">P113</td><td class="">developer</td><td class="">author</td><td class="">creator</td></tr>
+<tr><td class="">P114</td><td class="">DOI</td><td class="">identifier</td><td class="">identifier</td></tr>
+<tr><td class="">P115</td><td class="">exact match</td><td class="">sameAs</td><td class="">relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]</td></tr>
+<tr><td class="">P117</td><td class="">main subject</td><td class="">keywords</td><td class="">subject</td></tr>
+<tr><td class="">P119</td><td class="">name</td><td class="">name</td><td class="">title</td></tr>
+<tr><td class="">P120</td><td class="">official website</td><td class="">url</td><td class="">relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]</td></tr>
+<tr><td class="">P122</td><td class="">part of</td><td class="">isPartOf</td><td class="">relatedItem [relationType=IsPartOf]</td></tr>
+<tr><td class="">P131</td><td class="">contributor to the creative work or subject</td><td class="">contributor</td><td class="">contributor [contributorType=Contributor]</td></tr>
+<tr><td class="">P133</td><td class="">download URL</td><td class="">downloadUrl</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsIdenticalTo]</td></tr>
+<tr><td class="">P134</td><td class="">funder</td><td class="">funder</td><td class="">fundingReference; funderName</td></tr>
+<tr><td class="">P136</td><td class="">has part(s)</td><td class="">hasPart</td><td class="">relatedItem [relationType=HasPart]</td></tr>
+<tr><td class="">P137</td><td class="">inception</td><td class="">dateCreated</td><td class="">date [dateType=Created]</td></tr>
+<tr><td class="">P139</td><td class="">last update</td><td class="">dateModified</td><td class="">date [dateType=Updated]</td></tr>
+<tr><td class="">P140</td><td class="">maintained by</td><td class="">maintainer</td><td class="">contributor [contributorType=ContactPerson]</td></tr>
+<tr><td class="">P141</td><td class="">official demo URL</td><td class="">relatedLink</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]</td></tr>
+<tr><td class="">P144</td><td class="">publication date</td><td class="">datePublished</td><td class="">date [dateType=Issued]</td></tr>
+<tr><td class="">P148</td><td class="">software version identifier</td><td class="">softwareVersion</td><td class="">version</td></tr>
+<tr><td class="">P162</td><td class="">cites work</td><td class="">citation</td><td class="">relatedItem [relatedItemType=JournalArticle, relationType=Cites]</td></tr>
+<tr><td class="">P167</td><td class="">copyright holder</td><td class="">copyrightHolder</td><td class="">contributor [contributorType=RightsHolder]</td></tr>
+<tr><td class="">P168</td><td class="">copyright year</td><td class="">copyrightYear</td><td class="">date [dateType=Copyrighted]</td></tr>
+<tr><td class="">P172</td><td class="">data size</td><td class="">fileSize</td><td class="">size</td></tr>
+<tr><td class="">P183</td><td class="">editor</td><td class="">editor</td><td class="">contributor [contributorType=Editor]</td></tr>
+<tr><td class="">P185</td><td class="">embargo date</td><td class="">embargoDate</td><td class="">date [dateType=Accepted]</td></tr>
+<tr><td class="">P186</td><td class="">embargo end date</td><td class="">embargoEndDate</td><td class="">date [dateType=Available]</td></tr>
+<tr><td class="">P194</td><td class="">file format</td><td class="">encodingFormat, fileFormat</td><td class="">format</td></tr>
+<tr><td class="">P199</td><td class="">funding</td><td class="">funding</td><td class="">fundingReference</td></tr>
+<tr><td class="">P228</td><td class="">producer</td><td class="">producer</td><td class="">contributor [contributorType=Producer]</td></tr>
+<tr><td class="">P229</td><td class="">provider</td><td class="">provider</td><td class="">contributor [contributorType=HostingInstitution]</td></tr>
+<tr><td class="">P230</td><td class="">publisher</td><td class="">publisher</td><td class="">publisher</td></tr>
+<tr><td class="">P242</td><td class="">sponsor</td><td class="">sponsor</td><td class="">contributor [contributorType=Sponsor]</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: chublets-wikibase-demo</p>
+</section>
+<section class="tbl" id="table-evidence-sources" data-title="Evidence sources">
+  <h3>Evidence sources</h3>
+  <p class="caption">The 13 sources on which the model and its crosswalk rest (S = source, R = assistant recall, which is unchecked).</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Evidence sources">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-evidence-sources.csv" download>CSV</a> <a href="data/table-evidence-sources.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">Code</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">Source</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">Origin</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">Retrieved</th></tr></thead><tbody>
+<tr><td class="">S1</td><td class="">CodeMeta &lt;-&gt; Wikidata crosswalk workbook (template Leyla Jael Castro; review Stephan Ferenz; filled by Florian Thiery; reviewers Maryam, Lu, Aida)</td><td class="">chublets-software/chublets-visuals data/raw/ (HEAD 0a9c5a7)</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S2</td><td class="">47-row transcription of the WikiProject Informatics/Software/Properties PDF, five categories</td><td class="">chublets-software/chublets-visuals data/raw/</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S3</td><td class="">n4o-rse/open-archaeo: target model, 416-entry software subset, controlled vocabulary; model.py read for constants</td><td class="">n4o-rse/open-archaeo (HEAD 51d23b1)</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S4</td><td class="">Wikidata:WikiProject chublets-software</td><td class="">https://www.wikidata.org/wiki/Wikidata:WikiProject_chublets-software</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S5</td><td class="">CodeMeta crosswalk for Wikidata properties (30 rows)</td><td class="">https://codemeta.github.io/crosswalk/wikidata/</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S6</td><td class="">Various Wikidata pages and tutorials seen as search snippets</td><td class="">see docs/05-open-points.md</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S7</td><td class="">Earlier chats with Flo (Wikidata Properties fuer Software, 2026-08-25; chublets-visuals talk chat, 2026-09-10)</td><td class="">claude.ai chat history</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S8</td><td class="">CodeMeta terms page (all terms with ranges, v2 and v3)</td><td class="">https://codemeta.github.io/terms/</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S9</td><td class="">Official ConnOSS crosswalk &#x27;Crosswalks of Research Software Metadata Schemas to CodeMeta&#x27;, v1.2.0 (2026-08-14), CC BY 4.0; 21 schemas incl. Wikidata and DataCite 4.6; 68 properties</td><td class="">https://doi.org/10.5281/zenodo.21935688</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S10</td><td class="">Wikidata:WikiProject Informatics/Software/Properties (page id 31817518; created 10 June 2017, last edited 8 May 2024 22:11 by LiberatorG, 27 edits, fewer than 30 watchers)</td><td class="">https://www.wikidata.org/wiki/Wikidata:WikiProject_Informatics/Software/Properties</td><td class="">2026-10-22</td></tr>
+<tr><td class="">S11</td><td class="">Label and datatype of the 137 Wikidata properties, classes and items of the model against live Wikidata (246 checks, 14 differences)</td><td class="">tools/verify_wikidata.py of the modelling repository</td><td class="">2026-10-21</td></tr>
+<tr><td class="">S12</td><td class="">Decision tables for domain/range and schema.org terms, filled in by Florian Thiery; schema.org terms checked by Claude against schema.ttl of github.com/schemaorg/schemaorg</td><td class="">decisions of 2026-10-22</td><td class="">2026-10-22</td></tr>
+<tr><td class="">R</td><td class="">Assistant recall</td><td class="">-</td><td class="">2026-10-21</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: chublets-wikibase-demo</p>
+</section></div><div class="grp" data-theme="model"><div class="grphead"><h3 class="grp" id="theme-model">Data model</h3><p class="caption">Classes, properties, statements and how a chublet is stored.</p></div>
 <section class="tbl" id="table-model-statistics" data-title="Model statistics">
   <h3>Model statistics</h3>
   <p class="caption">Key figures of the chublets Wikibase data model: 168 properties and 13 classes, their origin classes, and the evidence base (CodeMeta, DataCite via the CodeMeta hub, Wikidata verification). All values are read from the vendored model tables.</p>
@@ -92,24 +304,6 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 <tr><td class="">initial</td><td class="num">37</td><td class="num">46</td><td class="num">50</td><td class="num">16</td><td class="num">--</td><td class="num">149</td></tr>
 <tr><td class="">review</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">9</td><td class="num">9</td></tr>
 <tr class="total"><td class="">total</td><td class="num">37</td><td class="num">46</td><td class="num">52</td><td class="num">18</td><td class="num">15</td><td class="num">168</td></tr>
-  </tbody></table></div>
-  <p class="src">Sources: chublets-wikibase-demo</p>
-</section>
-<section class="tbl" id="table-property-evidence" data-title="Evidence per status">
-  <h3>Evidence per status</h3>
-  <p class="caption">Which external vocabularies the 168 properties point to, by origin class: a Wikidata twin (P4), a loose Wikidata close match (P100), a CodeMeta term, a schema.org term (P102), and a DataCite element (derived via the CodeMeta hub; DataCite itself is not published as a mapping).</p>
-  <div class="tools">
-    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Evidence per status">
-    <span class="count" aria-live="polite"></span>
-    <span class="dl"><a href="data/table-property-evidence.csv" download>CSV</a> <a href="data/table-property-evidence.tex" download>LaTeX</a></span>
-  </div>
-  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">Status</th><th data-col="1" class="num" role="columnheader" tabindex="0" aria-sort="none">Properties</th><th data-col="2" class="num" role="columnheader" tabindex="0" aria-sort="none">Wikidata twin</th><th data-col="3" class="num" role="columnheader" tabindex="0" aria-sort="none">Close match</th><th data-col="4" class="num" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="5" class="num" role="columnheader" tabindex="0" aria-sort="none">schema.org</th><th data-col="6" class="num" role="columnheader" tabindex="0" aria-sort="none">DataCite</th></tr></thead><tbody>
-<tr><td class="">crosswalked</td><td class="num">37</td><td class="num">37</td><td class="num">--</td><td class="num">37</td><td class="num">35</td><td class="num">26</td></tr>
-<tr><td class="">CodeMeta only</td><td class="num">46</td><td class="num">--</td><td class="num">22</td><td class="num">46</td><td class="num">36</td><td class="num">8</td></tr>
-<tr><td class="">Wikidata only</td><td class="num">52</td><td class="num">52</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
-<tr><td class="">chublets addition</td><td class="num">18</td><td class="num">12</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
-<tr><td class="">unclassified</td><td class="num">15</td><td class="num">13</td><td class="num">--</td><td class="num">--</td><td class="num">--</td><td class="num">--</td></tr>
-<tr class="total"><td class="">total</td><td class="num">168</td><td class="num">114</td><td class="num">22</td><td class="num">83</td><td class="num">71</td><td class="num">34</td></tr>
   </tbody></table></div>
   <p class="src">Sources: chublets-wikibase-demo</p>
 </section>
@@ -347,172 +541,6 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
   </tbody></table></div>
   <p class="src">Sources: data/topics.yaml, chublets-wikibase-demo</p>
 </section>
-<section class="tbl" id="table-codemeta-terms" data-title="CodeMeta terms">
-  <h3>CodeMeta terms</h3>
-  <p class="caption">The 84 rows of the CodeMeta term crosswalk (83 distinct terms; relatedLink has two rows) with their CodeMeta type, status (38 crosswalked rows, 46 CodeMeta only), Wikidata property, the Wikibase property they became, the derived DataCite element, and where the term stands in the Wikidata/DataCite bridge (only the 68 terms of the ConnOSS crosswalk are classified).</p>
-  <div class="tools">
-    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of CodeMeta terms">
-    <span class="count" aria-live="polite"></span>
-    <span class="dl"><a href="data/table-codemeta-terms.csv" download>CSV</a> <a href="data/table-codemeta-terms.tex" download>LaTeX</a></span>
-  </div>
-  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta type</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">Status</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">Wikidata</th><th data-col="4" class="" role="columnheader" tabindex="0" aria-sort="none">Wikibase property</th><th data-col="5" class="" role="columnheader" tabindex="0" aria-sort="none">DataCite</th><th data-col="6" class="" role="columnheader" tabindex="0" aria-sort="none">Bridge</th></tr></thead><tbody>
-<tr><td class="">codeRepository</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P1324</td><td class="">P125 source code repository URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">codeSampleType</td><td class="">SoftwareSourceCode</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P163 code sample type</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">programmingLanguage</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P277</td><td class="">P123 programmed in</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">runtimePlatform</td><td class="">SoftwareSourceCode</td><td class="">crosswalked</td><td class="">P400</td><td class="">P143 platform</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">targetProduct</td><td class="">SoftwareSourceCode</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P150 target product</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">applicationCategory</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P103 application category</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">applicationSubCategory</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P128 application sub category</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">applicationSuite</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P129 application suite</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">availableOnDevice</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P158 available on device</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">countriesNotSupported</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P169 countries not supported</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">countriesSupported</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P170 countries supported</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">downloadUrl</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P4945</td><td class="">P133 download URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
-<tr><td class="">featureList</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P192 feature list</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">fileSize</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P3575</td><td class="">P172 data size</td><td class="">size</td><td class="">both</td></tr>
-<tr><td class="">installUrl</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P207 install URL</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">memoryRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P214 memory requirements</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">operatingSystem</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P306</td><td class="">P142 operating system</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">permissions</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P221 permissions</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">processorRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P227 processor requirements</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">screenshot</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P18</td><td class="">P204 image</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">softwareAddOn</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P237 software add on</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">softwareHelp</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P2078</td><td class="">P151 user manual URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">softwareRequirements</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P1547</td><td class="">P109 depends on software</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">softwareVersion</td><td class="">SoftwareApplication</td><td class="">crosswalked</td><td class="">P348</td><td class="">P148 software version identifier</td><td class="">version</td><td class="">both</td></tr>
-<tr><td class="">storageRequirements</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P245 storage requirements</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">supportingData</td><td class="">SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P149 supporting data</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">author</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P178</td><td class="">P113 developer</td><td class="">creator</td><td class="">both</td></tr>
-<tr><td class="">citation</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P2860</td><td class="">P162 cites work</td><td class="">relatedItem</td><td class="">both</td></tr>
-<tr><td class="">contributor</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P767</td><td class="">P131 contributor to the creative work or subject</td><td class="">contributor</td><td class="">both</td></tr>
-<tr><td class="">copyrightHolder</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P167 copyright holder</td><td class="">contributor</td><td class="">DataCite only</td></tr>
-<tr><td class="">copyrightYear</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P168 copyright year</td><td class="">date</td><td class="">DataCite only</td></tr>
-<tr><td class="">dateCreated</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P571</td><td class="">P137 inception</td><td class="">date</td><td class="">both</td></tr>
-<tr><td class="">dateModified</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P5017</td><td class="">P139 last update</td><td class="">date</td><td class="">both</td></tr>
-<tr><td class="">datePublished</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P577</td><td class="">P144 publication date</td><td class="">date</td><td class="">both</td></tr>
-<tr><td class="">editor</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P183 editor</td><td class="">contributor</td><td class="">DataCite only</td></tr>
-<tr><td class="">encoding</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P187 encoding</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">encodingFormat</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P2701</td><td class="">P194 file format</td><td class="">format</td><td class="">both</td></tr>
-<tr><td class="">funder</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P8324</td><td class="">P134 funder</td><td class="">fundingReference, funderName</td><td class="">both</td></tr>
-<tr><td class="">hasPart</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P527</td><td class="">P136 has part(s)</td><td class="">relatedItem</td><td class="">both</td></tr>
-<tr><td class="">isAccessibleForFree</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P209 is accessible for free</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">isPartOf</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P361</td><td class="">P122 part of</td><td class="">relatedItem</td><td class="">both</td></tr>
-<tr><td class="">keywords</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P921</td><td class="">P117 main subject</td><td class="">subject</td><td class="">both</td></tr>
-<tr><td class="">license</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P275</td><td class="">P107 copyright license</td><td class="">rights</td><td class="">both</td></tr>
-<tr><td class="">producer</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P162</td><td class="">P228 producer</td><td class="">contributor</td><td class="">both</td></tr>
-<tr><td class="">provider</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P229 provider</td><td class="">contributor</td><td class="">DataCite only</td></tr>
-<tr><td class="">publisher</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P123</td><td class="">P230 publisher</td><td class="">publisher</td><td class="">both</td></tr>
-<tr><td class="">review</td><td class="">CreativeWork</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P233 review</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">sponsor</td><td class="">CreativeWork</td><td class="">crosswalked</td><td class="">P859</td><td class="">P242 sponsor</td><td class="">contributor</td><td class="">both</td></tr>
-<tr><td class="">description</td><td class="">Thing</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P112 description</td><td class="">description</td><td class="">DataCite only</td></tr>
-<tr><td class="">identifier</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P356</td><td class="">P114 DOI</td><td class="">identifier</td><td class="">both</td></tr>
-<tr><td class="">name</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P2561</td><td class="">P119 name</td><td class="">title</td><td class="">both</td></tr>
-<tr><td class="">sameAs</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P2888</td><td class="">P115 exact match</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">both</td></tr>
-<tr><td class="">url</td><td class="">Thing</td><td class="">crosswalked</td><td class="">P856</td><td class="">P120 official website</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">both</td></tr>
-<tr><td class="">relatedLink</td><td class="">Thing (outside hierarchy)</td><td class="">crosswalked</td><td class="">P973</td><td class="">P110 described at URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
-<tr><td class="">relatedLink</td><td class="">Thing (outside hierarchy)</td><td class="">crosswalked</td><td class="">P11201</td><td class="">P141 official demo URL</td><td class="">relatedIdentifier</td><td class="">both</td></tr>
-<tr><td class="">buildInstructions</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P161 build instructions</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">continuousIntegration</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P166 continuous integration</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">developmentStatus</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P132 development status</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">embargoDate</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P185 embargo date</td><td class="">date</td><td class="">DataCite only</td></tr>
-<tr><td class="">embargoEndDate</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P186 embargo end date</td><td class="">date</td><td class="">DataCite only</td></tr>
-<tr><td class="">funding</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P199 funding</td><td class="">fundingReference</td><td class="">DataCite only</td></tr>
-<tr><td class="">hasSourceCode</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P203 has source code</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">isSourceCodeOf</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P210 is source code of</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">issueTracker</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P1401</td><td class="">P138 issue tracker URL</td><td class="">--</td><td class="">Wikidata only</td></tr>
-<tr><td class="">maintainer</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P126</td><td class="">P140 maintained by</td><td class="">contributor</td><td class="">both</td></tr>
-<tr><td class="">readme</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P231 readme</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">referencePublication</td><td class="">CodeMeta additional</td><td class="">crosswalked</td><td class="">P1343</td><td class="">P111 described by source</td><td class="">relatedItem</td><td class="">DataCite only</td></tr>
-<tr><td class="">softwareSuggestions</td><td class="">CodeMeta additional</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P240 software suggestions</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">fileFormat</td><td class="">SoftwareSourceCode/SoftwareApplication (v2 term)</td><td class="">crosswalked</td><td class="">P2701</td><td class="">P194 file format</td><td class="">format</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">version</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P152 version</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">position</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P225 position</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">releaseNotes</td><td class="">SoftwareSourceCode/SoftwareApplication</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P232 release notes</td><td class="">--</td><td class="">neither</td></tr>
-<tr><td class="">contIntegration</td><td class="">CodeMeta (v2 only)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P165 cont integration</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">address</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P155 address</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">affiliation</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P156 affiliation</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">email</td><td class="">Person</td><td class="">crosswalked</td><td class="">P968</td><td class="">P184 email address</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">familyName</td><td class="">Person</td><td class="">crosswalked</td><td class="">P734</td><td class="">P191 family name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">givenName</td><td class="">Person</td><td class="">crosswalked</td><td class="">P735</td><td class="">P200 given name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">identifier (Person)</td><td class="">Person</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P222 person identifier</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">reviewAspect</td><td class="">Review (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P234 review aspect</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">reviewBody</td><td class="">Review (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P235 review body</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">roleName</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P236 role name</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">startDate</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P243 start date</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-<tr><td class="">endDate</td><td class="">Role (v3)</td><td class="">CodeMeta only</td><td class="">--</td><td class="">P188 end date</td><td class="">--</td><td class="">not in crosswalk</td></tr>
-  </tbody></table></div>
-  <p class="src">Sources: chublets-wikibase-demo</p>
-</section>
-<section class="tbl" id="table-wikidata-groups" data-title="Wikidata groups">
-  <h3>Wikidata groups</h3>
-  <p class="caption">The 109 Wikidata properties considered for the model, by WikiProject group and by what became of them in the Wikibase. Candidate only properties were considered but are not in the property set.</p>
-  <div class="tools">
-    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Wikidata groups">
-    <span class="count" aria-live="polite"></span>
-    <span class="dl"><a href="data/table-wikidata-groups.csv" download>CSV</a> <a href="data/table-wikidata-groups.tex" download>LaTeX</a></span>
-  </div>
-  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">WikiProject group</th><th data-col="1" class="num" role="columnheader" tabindex="0" aria-sort="none">Wikidata only</th><th data-col="2" class="num" role="columnheader" tabindex="0" aria-sort="none">Crosswalked</th><th data-col="3" class="num" role="columnheader" tabindex="0" aria-sort="none">chublets addition</th><th data-col="4" class="num" role="columnheader" tabindex="0" aria-sort="none">Candidate only</th><th data-col="5" class="num" role="columnheader" tabindex="0" aria-sort="none">Total</th></tr></thead><tbody>
-<tr><td class="">people</td><td class="num">6</td><td class="num">10</td><td class="num">1</td><td class="num">5</td><td class="num">22</td></tr>
-<tr><td class="">technical</td><td class="num">11</td><td class="num">6</td><td class="num">--</td><td class="num">--</td><td class="num">17</td></tr>
-<tr><td class="">registries</td><td class="num">13</td><td class="num">--</td><td class="num">3</td><td class="num">--</td><td class="num">16</td></tr>
-<tr><td class="">links</td><td class="num">2</td><td class="num">6</td><td class="num">4</td><td class="num">--</td><td class="num">12</td></tr>
-<tr><td class="">identity</td><td class="num">2</td><td class="num">3</td><td class="num">4</td><td class="num">2</td><td class="num">11</td></tr>
-<tr><td class="">versioning</td><td class="num">6</td><td class="num">5</td><td class="num">--</td><td class="num">--</td><td class="num">11</td></tr>
-<tr><td class="">relations</td><td class="num">8</td><td class="num">1</td><td class="num">--</td><td class="num">--</td><td class="num">9</td></tr>
-<tr><td class="">media</td><td class="num">2</td><td class="num">1</td><td class="num">--</td><td class="num">1</td><td class="num">4</td></tr>
-<tr><td class="">rights</td><td class="num">2</td><td class="num">2</td><td class="num">--</td><td class="num">--</td><td class="num">4</td></tr>
-<tr><td class="">publication</td><td class="num">--</td><td class="num">2</td><td class="num">--</td><td class="num">--</td><td class="num">2</td></tr>
-<tr><td class="">classification</td><td class="num">--</td><td class="num">1</td><td class="num">--</td><td class="num">--</td><td class="num">1</td></tr>
-<tr class="total"><td class="">total</td><td class="num">52</td><td class="num">37</td><td class="num">12</td><td class="num">8</td><td class="num">109</td></tr>
-  </tbody></table></div>
-  <p class="src">Sources: chublets-wikibase-demo</p>
-</section>
-<section class="tbl" id="table-datacite-evidence" data-title="DataCite evidence">
-  <h3>DataCite evidence</h3>
-  <p class="caption">The 34 properties that carry a DataCite element. The element is derived via the CodeMeta hub (CodeMeta term to DataCite element in the ConnOSS crosswalk); a mapping from DataCite to Wikidata is not published. Qualifiers in square brackets tell apart properties that map to the same element (for example the relation or contributor type).</p>
-  <div class="tools">
-    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of DataCite evidence">
-    <span class="count" aria-live="polite"></span>
-    <span class="dl"><a href="data/table-datacite-evidence.csv" download>CSV</a> <a href="data/table-datacite-evidence.tex" download>LaTeX</a></span>
-  </div>
-  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">ID</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">Label</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta term</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">DataCite element [qualifiers]</th></tr></thead><tbody>
-<tr><td class="">P107</td><td class="">copyright license</td><td class="">license</td><td class="">rights</td></tr>
-<tr><td class="">P110</td><td class="">described at URL</td><td class="">relatedLink</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]</td></tr>
-<tr><td class="">P111</td><td class="">described by source</td><td class="">referencePublication</td><td class="">relatedItem [relatedItemType=JournalArticle, relationType=IsDocumentedBy]</td></tr>
-<tr><td class="">P112</td><td class="">description</td><td class="">description</td><td class="">description</td></tr>
-<tr><td class="">P113</td><td class="">developer</td><td class="">author</td><td class="">creator</td></tr>
-<tr><td class="">P114</td><td class="">DOI</td><td class="">identifier</td><td class="">identifier</td></tr>
-<tr><td class="">P115</td><td class="">exact match</td><td class="">sameAs</td><td class="">relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]</td></tr>
-<tr><td class="">P117</td><td class="">main subject</td><td class="">keywords</td><td class="">subject</td></tr>
-<tr><td class="">P119</td><td class="">name</td><td class="">name</td><td class="">title</td></tr>
-<tr><td class="">P120</td><td class="">official website</td><td class="">url</td><td class="">relatedItem [relationType=IsIdenticalTo]; relatedItemIdentifier [relatedItemIdentifierType=URL]</td></tr>
-<tr><td class="">P122</td><td class="">part of</td><td class="">isPartOf</td><td class="">relatedItem [relationType=IsPartOf]</td></tr>
-<tr><td class="">P131</td><td class="">contributor to the creative work or subject</td><td class="">contributor</td><td class="">contributor [contributorType=Contributor]</td></tr>
-<tr><td class="">P133</td><td class="">download URL</td><td class="">downloadUrl</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsIdenticalTo]</td></tr>
-<tr><td class="">P134</td><td class="">funder</td><td class="">funder</td><td class="">fundingReference; funderName</td></tr>
-<tr><td class="">P136</td><td class="">has part(s)</td><td class="">hasPart</td><td class="">relatedItem [relationType=HasPart]</td></tr>
-<tr><td class="">P137</td><td class="">inception</td><td class="">dateCreated</td><td class="">date [dateType=Created]</td></tr>
-<tr><td class="">P139</td><td class="">last update</td><td class="">dateModified</td><td class="">date [dateType=Updated]</td></tr>
-<tr><td class="">P140</td><td class="">maintained by</td><td class="">maintainer</td><td class="">contributor [contributorType=ContactPerson]</td></tr>
-<tr><td class="">P141</td><td class="">official demo URL</td><td class="">relatedLink</td><td class="">relatedIdentifier [relatedIdentifierType=URL, relationType=IsSupplementTo]</td></tr>
-<tr><td class="">P144</td><td class="">publication date</td><td class="">datePublished</td><td class="">date [dateType=Issued]</td></tr>
-<tr><td class="">P148</td><td class="">software version identifier</td><td class="">softwareVersion</td><td class="">version</td></tr>
-<tr><td class="">P162</td><td class="">cites work</td><td class="">citation</td><td class="">relatedItem [relatedItemType=JournalArticle, relationType=Cites]</td></tr>
-<tr><td class="">P167</td><td class="">copyright holder</td><td class="">copyrightHolder</td><td class="">contributor [contributorType=RightsHolder]</td></tr>
-<tr><td class="">P168</td><td class="">copyright year</td><td class="">copyrightYear</td><td class="">date [dateType=Copyrighted]</td></tr>
-<tr><td class="">P172</td><td class="">data size</td><td class="">fileSize</td><td class="">size</td></tr>
-<tr><td class="">P183</td><td class="">editor</td><td class="">editor</td><td class="">contributor [contributorType=Editor]</td></tr>
-<tr><td class="">P185</td><td class="">embargo date</td><td class="">embargoDate</td><td class="">date [dateType=Accepted]</td></tr>
-<tr><td class="">P186</td><td class="">embargo end date</td><td class="">embargoEndDate</td><td class="">date [dateType=Available]</td></tr>
-<tr><td class="">P194</td><td class="">file format</td><td class="">encodingFormat, fileFormat</td><td class="">format</td></tr>
-<tr><td class="">P199</td><td class="">funding</td><td class="">funding</td><td class="">fundingReference</td></tr>
-<tr><td class="">P228</td><td class="">producer</td><td class="">producer</td><td class="">contributor [contributorType=Producer]</td></tr>
-<tr><td class="">P229</td><td class="">provider</td><td class="">provider</td><td class="">contributor [contributorType=HostingInstitution]</td></tr>
-<tr><td class="">P230</td><td class="">publisher</td><td class="">publisher</td><td class="">publisher</td></tr>
-<tr><td class="">P242</td><td class="">sponsor</td><td class="">sponsor</td><td class="">contributor [contributorType=Sponsor]</td></tr>
-  </tbody></table></div>
-  <p class="src">Sources: chublets-wikibase-demo</p>
-</section>
 <section class="tbl" id="table-classes" data-title="Classes">
   <h3>Classes</h3>
   <p class="caption">The 13 classes of the chublets Wikibase: origin, parent class(es) (P1), Wikidata equivalent (P4) and CIDOC CRM class (crmdig:D14 is given for two classes; the others inherit it). Classes marked Wikidata stub were taken over from Wikidata as stubs.</p>
@@ -537,32 +565,7 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 <tr><td class="">Q379</td><td class="">plug-in</td><td class="">Wikidata stub</td><td class="">Q100 software</td><td class="">Q184148</td><td class="">crmdig:D14 (from Q100)</td></tr>
   </tbody></table></div>
   <p class="src">Sources: chublets-wikibase-demo, wikibase-static</p>
-</section>
-<section class="tbl" id="table-evidence-sources" data-title="Evidence sources">
-  <h3>Evidence sources</h3>
-  <p class="caption">The 13 sources on which the model and its crosswalk rest (S = source, R = assistant recall, which is unchecked).</p>
-  <div class="tools">
-    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Evidence sources">
-    <span class="count" aria-live="polite"></span>
-    <span class="dl"><a href="data/table-evidence-sources.csv" download>CSV</a> <a href="data/table-evidence-sources.tex" download>LaTeX</a></span>
-  </div>
-  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">Code</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">Source</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">Origin</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">Retrieved</th></tr></thead><tbody>
-<tr><td class="">S1</td><td class="">CodeMeta &lt;-&gt; Wikidata crosswalk workbook (template Leyla Jael Castro; review Stephan Ferenz; filled by Florian Thiery; reviewers Maryam, Lu, Aida)</td><td class="">chublets-software/chublets-visuals data/raw/ (HEAD 0a9c5a7)</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S2</td><td class="">47-row transcription of the WikiProject Informatics/Software/Properties PDF, five categories</td><td class="">chublets-software/chublets-visuals data/raw/</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S3</td><td class="">n4o-rse/open-archaeo: target model, 416-entry software subset, controlled vocabulary; model.py read for constants</td><td class="">n4o-rse/open-archaeo (HEAD 51d23b1)</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S4</td><td class="">Wikidata:WikiProject chublets-software</td><td class="">https://www.wikidata.org/wiki/Wikidata:WikiProject_chublets-software</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S5</td><td class="">CodeMeta crosswalk for Wikidata properties (30 rows)</td><td class="">https://codemeta.github.io/crosswalk/wikidata/</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S6</td><td class="">Various Wikidata pages and tutorials seen as search snippets</td><td class="">see docs/05-open-points.md</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S7</td><td class="">Earlier chats with Flo (Wikidata Properties fuer Software, 2026-08-25; chublets-visuals talk chat, 2026-09-10)</td><td class="">claude.ai chat history</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S8</td><td class="">CodeMeta terms page (all terms with ranges, v2 and v3)</td><td class="">https://codemeta.github.io/terms/</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S9</td><td class="">Official ConnOSS crosswalk &#x27;Crosswalks of Research Software Metadata Schemas to CodeMeta&#x27;, v1.2.0 (2026-08-14), CC BY 4.0; 21 schemas incl. Wikidata and DataCite 4.6; 68 properties</td><td class="">https://doi.org/10.5281/zenodo.21935688</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S10</td><td class="">Wikidata:WikiProject Informatics/Software/Properties (page id 31817518; created 10 June 2017, last edited 8 May 2024 22:11 by LiberatorG, 27 edits, fewer than 30 watchers)</td><td class="">https://www.wikidata.org/wiki/Wikidata:WikiProject_Informatics/Software/Properties</td><td class="">2026-10-22</td></tr>
-<tr><td class="">S11</td><td class="">Label and datatype of the 137 Wikidata properties, classes and items of the model against live Wikidata (246 checks, 14 differences)</td><td class="">tools/verify_wikidata.py of the modelling repository</td><td class="">2026-10-21</td></tr>
-<tr><td class="">S12</td><td class="">Decision tables for domain/range and schema.org terms, filled in by Florian Thiery; schema.org terms checked by Claude against schema.ttl of github.com/schemaorg/schemaorg</td><td class="">decisions of 2026-10-22</td><td class="">2026-10-22</td></tr>
-<tr><td class="">R</td><td class="">Assistant recall</td><td class="">-</td><td class="">2026-10-21</td></tr>
-  </tbody></table></div>
-  <p class="src">Sources: chublets-wikibase-demo</p>
-</section>
+</section></div>
 </main>
 <footer>Graphics and tables: Florian Thiery, CC BY 4.0. Code: MIT. Built by <code>python main.py</code> from the snapshot recorded in <code>data/raw/SNAPSHOT.md</code>.</footer>
 <script>
@@ -573,9 +576,15 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
   var n=dark?'light':'dark';root.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}});
  function norm(s){return s.toLowerCase()}
  var q=document.getElementById('q');
+ var theme='';
  function applyAll(){var v=norm(q.value);
   document.querySelectorAll('.card').forEach(function(c){c.hidden=v&&norm(c.dataset.name).indexOf(v)<0});
-  document.querySelectorAll('section.tbl').forEach(function(s){filterTable(s,v+' '+norm(s.querySelector('.filter').value))})}
+  document.querySelectorAll('section.tbl').forEach(function(s){filterTable(s,v+' '+norm(s.querySelector('.filter').value))});
+  document.querySelectorAll('div.grp').forEach(function(d){
+   var off=theme&&d.dataset.theme!==theme,any=d.querySelector('.card:not([hidden])')||d.querySelector('section.tbl');
+   d.hidden=off||!any})}
+ document.querySelectorAll('.chip').forEach(function(b){b.addEventListener('click',function(){
+  theme=b.dataset.theme;document.querySelectorAll('.chip').forEach(function(o){o.setAttribute('aria-pressed',o===b?'true':'false')});applyAll()})});
  function filterTable(s,extra){var terms=extra.split(/\s+/).filter(Boolean),n=0,tot=0;
   s.querySelectorAll('tbody tr').forEach(function(r){var txt=norm(r.textContent),ok=terms.every(function(t){return txt.indexOf(t)>=0});r.hidden=!ok;tot++;if(ok)n++});
   s.querySelector('.count').textContent=n+' of '+tot+' rows'}

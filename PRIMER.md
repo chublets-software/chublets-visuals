@@ -17,7 +17,7 @@ Hausmuster, eigene Palette).
 Übersicht: <https://chublets-software.github.io/chublets-visuals/>
 
 **So wird es benutzt.** Dieses Dokument wird zu Beginn jedes Arbeitschats
-hochgeladen; danach genügt „wir machen S13“. Teil A gilt immer, Teil B ist die
+hochgeladen; danach genügt „wir machen S14“. Teil A gilt immer, Teil B ist die
 Übersicht, Teil C beschreibt die Schritte, Teil D sammelt offene Punkte.
 Es ist ein internes Arbeitsdokument (deutsch); Code, README und alles, was das
 Repository nach außen zeigt, ist britisches Englisch.
@@ -176,9 +176,8 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
   gemessenen Textbreite; kein `assert` auf Pixelmaße (Befund 16).
 - **Koordinaten** auf zwei Dezimalstellen gerundet, damit SVGs auf jeder Plattform
   dieselben Bytes haben.
-- **Icons** (Schritte und FAIR) kommen aus `py/icons.py` (Redraws) und
-  `py/visuals_utils.py` (Lupe, Verzweigung, Dreieck, Haken); Zentrierung in
-  `py/chain_banner.py`.
+- **Icons** (Schritte und FAIR) kommen alle aus `py/icons.py`: gleiche Strichstärke,
+  runde Kappen, nach Bounding-Box zentriert (kein Versatz je Icon).
 - **Lizenz:** Grafiken, Tabellen, Captions und Übersichtsseiten immer CC BY 4.0
   von Florian Thiery, Code MIT (`LICENSE-GRAPHICS.md`; Konstanten `CREATOR`,
   `LICENCE` in `visuals_utils.py`).
@@ -211,6 +210,8 @@ Eigenschaften, an denen sich das Ergebnis messen lassen muss:
 | Tabellen und Seiten | LaTeX-`longtable` unter `tex/`; `docs/index.html` und `docs/tables.html`, GitHub Pages aus `main` / `/docs` (läuft) | 2026-10-24 |
 | Bestandsgrafiken | alle bleiben, flach und ohne Header; Step-IDs ändern sich nicht; Ketten (`chublets-four-step-pattern`, `chublets-fair4rs-chain`) und Einzel-Badges bleiben erhalten, dazu je eine Collage (`chublets-four-steps`, `chublets-fair`) und Einzelbilder | 2026-10-25 |
 | Icons | Schloss, Verknüpfungsglied (Interoperable), Kreislauf und Export-Pfeil in `py/icons.py` neu gezeichnet, alle Icons zentriert | 2026-10-25 |
+| Icons | alle acht Icons einheitlich in `py/icons.py` (auch Lupe, Verzweigung, Dreieck, Haken neu) | 2026-10-25 |
+| Übersichtsseiten | sechs Themen (Vocabularies, Data model, Four-step pipeline, FAIR4RS, open-archaeo, Architecture and talk) als Gruppen und klickbare Filter-Chips, kombinierbar mit der Suche; Tabellen gleich gegliedert; neue Grafik ohne Themenzuordnung bricht den Lauf ab | 2026-10-25 |
 | Layout | Maße aus gemessenem Text, keine Pixel-Asserts | 2026-10-24 |
 | Captions Pflicht | `REQUIRE_ALL = True`: eine Grafik ohne Eintrag ist ein Fehler | 2026-10-25 |
 | Altlasten | `crosswalk_data.py`, die Crosswalk-xlsx, die 47-Zeilen-CSV und ungenutzte Helfer in `visuals_utils.py` entfernt | 2026-10-25 |
@@ -255,6 +256,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S10 | Dreizehn Modell-Grafiken | S9 | erledigt 2026-10-24 |
 | S11 | Bestandsgrafiken neu gezeichnet: flach, ohne Header, Zahlen aus dem Modell | S10 | erledigt 2026-10-25 |
 | S12 | Abschluss: Captions Pflicht, Pixel-Asserts weg, Evidenzbasis geprüft, Altlasten und PRIMER aufgeräumt | S11 | erledigt 2026-10-25 |
+| S13 | Politur: alle Icons einheitlich, Übersichtsseiten nach Themen mit Filter-Chips | S12 | erledigt 2026-10-25 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -497,6 +499,14 @@ eine Caption.
 **Abnahme.** `python main.py --strict` ohne Fehler und ohne Hinweis auf fehlende Captions;
 zwei Läufe ändern nichts; `grep -ril starter img/*.svg tex docs/*.html` ohne Treffer.
 
+## S13 — Politur
+
+Alle acht Icons in `py/icons.py` im gleichen Stil (Lupe, Verzweigung, Dreieck, Haken neu); die
+Versätze in `chain_banner.CENTRE` sind null, die alten Funktionen in `visuals_utils.py` entfernt.
+`py/step_gallery.py` gliedert Grafiken und Tabellen in sechs Themen (`THEMES`, `GRAPHIC_THEME`,
+`TABLE_THEME`) mit Chips als Filter. **Abnahme:** `python main.py --strict` zweimal ohne Änderung;
+in `docs/index.html` zeigt ein Klick auf „FAIR4RS“ nur die zehn FAIR-Grafiken.
+
 ---
 
 # Teil D — Offene Punkte
@@ -507,8 +517,6 @@ zwei Läufe ändern nichts; `grep -ril starter img/*.svg tex docs/*.html` ohne T
 - **Konstante 562** (Einträge von `open-archaeo.csv`) steht in
   `py/step_open_archaeo_two_routes.py`, nicht in den vendorten Dateien; beim nächsten
   Snapshot von `open-archaeo` aus der Quelle belegen (Befund 11).
-- **Dünne Icons.** Lupe, Verzweigung, Dreieck und Haken sind etwas dünner gezeichnet als
-  die neuen Icons; auf Zuruf angleichen.
 - **Zweite Variante des Talk-Closings** (Ring plus angebundene externe Hubs wie
   Wikidata/nfdi.software) nur auf Zuruf.
 - **`CITATION.cff`** nennt nur MIT; ob dort beide Lizenzen stehen sollen (`license` als
