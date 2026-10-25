@@ -427,8 +427,10 @@ flache Grafiken).
   die 7 Merges aus `merges.csv` (Eintrag der Quellenliste und Wikidata-Item =
   dasselbe).
 - `wikibase-bootstrap`: die Phasen core (3 Klassen, 10 Properties), model (7
-  Klassen, 158 Properties) und items (803 + 6; die 17 Stubs werden nicht
-  geschrieben), die Regeln des Push und der Ablauf bei nicht leerem Ziel
+  Klassen, 158 Properties) und items (796 + 6; die 17 Stubs und 3
+  Stub-Klassen werden nicht geschrieben; von den 803 open-archaeo-Zeilen der CSV
+  fehlen 7, weil `merges.csv` sie mit ihren Wikidata-Items zusammenführt;
+  geschrieben sind 980 Entitäten und 7 012 Aussagen), die Regeln des Push und der Ablauf bei nicht leerem Ziel
   (Inventory, Adopt-Liste mit 93 Paaren, Lauf). Quelle: README und Dateien des
   Use Case `chublets` in `wikibase-federation`.
 - `static-vs-federation`: ein CSV-Modell, zwei Wege. Aussagen über die beiden
