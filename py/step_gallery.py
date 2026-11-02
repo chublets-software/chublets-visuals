@@ -118,6 +118,7 @@ GRAPHIC_THEME = {
     "statement-provenance": "model", "chublet-identity": "model", "wikibase-bootstrap": "model",
     "static-vs-federation": "model",
     "chublets-software-architecture": "architecture", "chublets-talk-closing": "architecture",
+    "chublets-community-efforts": "architecture", "wgrse-pillars": "architecture",
 }
 TABLE_THEME = {
     "table-codemeta-terms": "vocabularies", "table-wikidata-groups": "vocabularies",

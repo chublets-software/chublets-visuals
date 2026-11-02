@@ -109,9 +109,11 @@ def text(x: float, y: float, s: str, size: float = 14, bold: bool = False, fill:
         extra += ' font-style="italic"'
     if opacity is not None:
         extra += f' fill-opacity="{f(opacity)}"'
+    # a zero-width non-joiner keeps Fira Sans from drawing fi and fl as ligatures
+    label = xml_esc(s.replace("fi", "f\u200ci").replace("fl", "f\u200cl"))
     return (
         f'<text x="{f(x)}" y="{f(y)}" font-family="{FONT_FAMILY}, sans-serif" '
-        f'font-size="{f(size)}"{extra} fill="{fill}" text-anchor="{anchor}">{xml_esc(s)}</text>'
+        f'font-size="{f(size)}"{extra} fill="{fill}" text-anchor="{anchor}">{label}</text>'
     )
 
 

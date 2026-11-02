@@ -258,6 +258,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S12 | Abschluss: Captions Pflicht, Pixel-Asserts weg, Evidenzbasis geprüft, Altlasten und PRIMER aufgeräumt | S11 | erledigt 2026-10-25 |
 | S13 | Politur: alle Icons einheitlich, Übersichtsseiten nach Themen mit Filter-Chips | S12 | erledigt 2026-10-25 |
 | S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | erledigt 2026-10-25 |
+| S15 | Paper-Grafiken der Revision: Architektur neu, `chublets-community-efforts`, `wgrse-pillars` | S14 | erledigt 2026-11-02 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -519,6 +520,18 @@ zählt die Einträge. In `SNAPSHOT.md` standen noch Platzhalter statt Datum (jet
 `model_data.hierarchy_check` liest das Ergebnis, die Caption von `class-tree` nennt es.
 
 ---
+
+## S15 — Paper-Grafiken der Revision
+
+Für die Überarbeitung des Papers (deRSE26/ECEASST) ist `chublets-software-architecture` neu gezeichnet: zwei Reihen,
+Sources, Tables, Data model oben, Wikidata (Referenz), Discovery (geplant), Outputs unten; FDOx, nfdi.software und
+KGE4RSE sind entfallen. Neu sind `chublets-community-efforts` (`py/step_efforts.py`) und `wgrse-pillars`
+(`py/step_wgrse.py`, Neuzeichnung mit hervorgehobenem Marketplace und durchlaufenden Säulen). Das sind 45 Grafiken.
+
+`model_data.entity_facts()` kennt neu `n_items_merged` (`n_items` minus Zeilen in `merges.csv`): die Items nach den
+Zusammenführungen, die Zahl im Paper und in der Architektur. Die übrigen Grafiken zeigen weiter `n_items`; ob sie
+umstellen, ist offen. `model_graphics.text()` setzt zwischen f und i bzw. f und l ein ZWNJ, weil die Ligaturen von
+Fira Sans in resvg die Schreibung verfälschten; das ändert jede Grafik mit diesen Buchstabenfolgen.
 
 # Teil D — Offene Punkte
 

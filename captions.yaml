@@ -293,13 +293,26 @@ chublets-fair-reusable:
 
 chublets-software-architecture:
   caption: >-
-    Architecture of chublets.software from the sources to the marketplaces. The open-archaeo import pipeline
-    ({n_oa_entries} entries) brings software into Wikidata; Wikidata items, FDOx objects and Git repositories
-    are the data sources of the Wikibase of chublets ({n_props} properties, {n_classes} classes, {n_items} items),
-    whose data are exported with SPARQL and rdflib as CodeMeta, DCAT and DataCite to nfdi.software, find.software
-    and the KGE4RSE knowledge graph.
-  alt: Five boxes in a row joined by arrows, from the Wikidata bridge to the marketplaces.
+    Architecture of chublets.software. The open-archaeo register ({n_oa_entries} entries) and selected Wikidata
+    items are the sources. Tables for import, mapping, merging and curation lead to the data model ({n_props}
+    properties, {n_classes} classes, {n_items_merged} items, linked to Wikidata), which yields the Wikibase
+    prototype, a static site, RDF and SPARQL. Discovery through Wikidata to find.software is planned.
+  alt: Two rows of boxes, sources, tables and data model above, Wikidata, planned discovery and outputs below, joined by arrows.
   sources: [chublets-wikibase-demo, open-archaeo]
+
+chublets-community-efforts:
+  caption: >-
+    Community efforts towards visible software in cultural heritage: Little Minions (2019), the Hungry Squirrels
+    Ontology, open-archaeo and Wikidata each contribute a part; chublets.software combines them, and find.software
+    is planned as cross-disciplinary discovery through Wikidata.
+  alt: Six boxes in two rows joined by arrows, from Little Minions to chublets.software and the planned find.software.
+
+wgrse-pillars:
+  caption: >-
+    The pillars and cross-cutting topics of Research Software Engineering in the research data infrastructure,
+    with the Research Software Marketplace highlighted at its generic, NFDI and domain levels. Redrawn and adapted
+    from the figure by Florian Thiery / INFRA-WG-RSE, CC BY 4.0.
+  alt: Three pillars crossed by horizontal bars for metadata, criteria, infrastructure, the highlighted marketplace with three levels, training and community.
 
 open-archaeo-wikidata-pipeline:
   caption: >-

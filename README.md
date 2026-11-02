@@ -51,14 +51,14 @@ changes nothing: `git status` stays clean.
 
 ## Graphics
 
-All 43 graphics are in `img/` as `.svg` and `.png`.
+All 45 graphics are in `img/` as `.svg` and `.png`.
 
 | Group | Graphics |
 |---|---|
 | Vocabularies | `chublets-codemeta-overview`, `chublets-wikidata-properties-overview`, `chublets-codemeta-wikidata-crosswalk`, `chublets-wikibase-datamodel` |
 | Four steps (Ingest, Model, Curate & Link, Export & Publish) | `chublets-four-step-pattern` (chain), `chublets-four-steps` (collage), `chublets-step-ingest`, `-model`, `-curate-link`, `-export-publish`, and the four `step-N-…-badge` icons |
 | FAIR4RS | `chublets-fair4rs-chain`, `chublets-fair` (collage), `chublets-fair-findable`, `-accessible`, `-interoperable`, `-reusable`, and the four `fair-…-badge` icons |
-| Architecture and talk | `chublets-software-architecture`, `chublets-talk-closing` |
+| Architecture and talk | `chublets-software-architecture`, `chublets-talk-closing`, `chublets-community-efforts`, `wgrse-pillars` |
 | open-archaeo | `open-archaeo-wikidata-pipeline`, `open-archaeo-two-routes`, `open-archaeo-python-route`, `open-archaeo-openrefine-route` |
 | Data model | `class-tree`, `property-origin`, `property-topics`, `property-vocabulary-overlap`, `entity-overview`, `property-metadata-layer`, `chublet-item`, `statement-provenance`, `codemeta-coverage`, `chublet-identity`, `wikibase-bootstrap`, `static-vs-federation`, `model-evidence-base` |
 

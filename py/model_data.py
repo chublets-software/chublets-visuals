@@ -313,6 +313,7 @@ def entity_facts() -> dict[str, int]:
         "n_item_statements": sum(1 for st in stm if st["subject"] == "Q360"),
         "n_item_versions": n_versions,
         "n_items": len(items),
+        "n_items_merged": len(items) - len(read_csv(DEMO / "data" / "csv" / "merges.csv")),
         "n_chublet_items": n_chub,
         "n_other_items": len(items) - n_chub - n_none,
         "n_items_no_class": n_none,
