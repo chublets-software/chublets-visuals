@@ -96,10 +96,11 @@ def build() -> g.Canvas:
           '"license": {"name": "GNU General Public License v2.0"'],
          INGEST, lambda y: _badge(xc + 50, y + 68, "CodeMeta", 15)),
         ("QuickStatements (Wikidata)", "export",
-         ['Q74005133  P1324  ".../sparqlunicornGoesGIS"', "Q74005133  P275  Q10513450", 'Q74005133  P348  "0.17.4"'],
+         ['Q74005133  P1324  ".../sparqlunicornGoesGIS"', "Q74005133  P275  Q10513450", "Q74005133  P277  Q28865",
+          'Q74005133  P348  "0.17.4"'],
          EXPORT, lambda y: _wikidata(xc + 12, y + 32, 78)),
         ("Turtle (chublets)", "export",
-         ["chb:Q360  a wikibase:Item ;", "  chbt:P107  chb:Q934 ;", '  chbt:P148  "0.17.4" ;'],
+         ["chb:Q360  a wikibase:Item ;", "  chbt:P107  chb:Q934 ;", "  chbt:P123  chb:Q370 ;", '  chbt:P148  "0.17.4" ;'],
          EXPORT, lambda y: _chublets(xc + 16, y + 22, 70)),
     )
     for i, (title, status, lines, col, logo) in enumerate(cards):
