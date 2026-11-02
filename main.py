@@ -45,6 +45,7 @@ STEPS = [
     ("architecture", "S11: system architecture, sources to outputs", "step_architecture"),
     ("efforts", "S15: community efforts towards visible software", "step_efforts"),
     ("wgrse", "S15: pillars of the WG RSE with the marketplace", "step_wgrse"),
+    ("repository-export", "S18: from a repository to four outputs with CoMET-RS", "step_repository_export"),
     ("fair-pattern", "S11: the four FAIR principles as a chain with badges, and as one collage", "step_fair_pattern"),
     ("fair-findable", "S11: F, Findable", "step_fair_findable"),
     ("fair-accessible", "S11: A, Accessible", "step_fair_accessible"),

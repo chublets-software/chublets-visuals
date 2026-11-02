@@ -119,6 +119,7 @@ GRAPHIC_THEME = {
     "static-vs-federation": "model",
     "chublets-software-architecture": "architecture", "chublets-talk-closing": "architecture",
     "chublets-community-efforts": "architecture", "wgrse-pillars": "architecture",
+    "chublets-repository-export": "architecture",
 }
 TABLE_THEME = {
     "table-codemeta-terms": "vocabularies", "table-wikidata-groups": "vocabularies",

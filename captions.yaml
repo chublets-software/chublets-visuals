@@ -300,6 +300,14 @@ chublets-software-architecture:
   alt: Two rows of boxes, sources, tables and data model above, Wikidata, planned discovery and outputs below, joined by arrows.
   sources: [chublets-wikibase-demo, open-archaeo]
 
+chublets-repository-export:
+  caption: >-
+    Route from a repository to machine-readable records, shown with real output for SPARQLing Unicorn. CoMET-RS
+    extracts ConnOSS or CodeMeta metadata with a source and a confidence for each value. An export in a fork writes
+    QuickStatements for Wikidata and a chublet in Turtle, and lists what needs human judgement in a review file. The
+    transfer to Wikidata and chublets.software is planned. Wikidata logo CC0; ConnOSS logo by the ConnOSS project.
+  alt: A repository leads to CoMET-RS, which fans out to four cards with example lines, ConnOSS metadata, CodeMeta, QuickStatements for Wikidata and Turtle for chublets.
+
 chublets-community-efforts:
   caption: >-
     Community efforts towards visible software in cultural heritage: Little Minions (2019), the Hungry Squirrels

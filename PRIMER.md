@@ -260,7 +260,8 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | erledigt 2026-10-25 |
 | S15 | Paper-Grafiken der Revision: Architektur neu, `chublets-community-efforts`, `wgrse-pillars` | S14 | erledigt 2026-11-02 |
 | S16 | Tabelle `table-properties-crosswalk` mit DCAT-Spalte, Versionen ab 0.3.0 | S15 | erledigt 2026-11-02 |
-| S17 | Datenpflege 2: Demo-Snapshot neu vendort, `entity-overview` zählt ohne zusammengeführte Items (420 chublets) | S16 | erledigt 2026-11-02 |
+| S17 | Datenpflege 2: Demo-Snapshot neu vendort, `entity-overview` zählt ohne zusammengeführte Items (420 chublets) |
+| S18 | `chublets-repository-export`: Weg vom Repository über CoMET-RS zu vier Ausgaben mit echten Zeilen | S17 | erledigt 2026-11-03 | S16 | erledigt 2026-11-02 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -550,6 +551,15 @@ entfernt zwei doppelte Entwickler bei Alligator und belegt sechs Aussagen zu Chr
 ist neu vendort. `entity_facts()` zählt die Aufteilung nach Klasse ohne die in `merges.csv` zusammengeführten Items; diese
 stehen als eigener Balken (7), damit die Summe 826 bleibt. Vorher standen Q381 und Q846, die in der Tabelle noch die
 Klasse chublet tragen, doppelt in der Zahl (444 statt 442). Aussagen: 6855 statt 6879, davon 6444 mit Referenz.
+
+## S18 — Vom Repository zu vier Ausgaben
+
+`chublets-repository-export` (`py/step_repository_export.py`) zeigt den Weg über CoMET-RS und den Export im Fork
+`chublets-software/comet-metadata-extraction` (Tag `v0.4.3-chublets.2`): ein Repository, CoMET-RS und ein Fächer mit
+vier Karten (ConnOSS, CodeMeta, QuickStatements, Turtle) und echten Zeilen zum SPARQLing Unicorn. Die Grafik behauptet
+kein Einspielen: Umgesetzt ist das Erzeugen der Dateien, die Caption nennt die Übertragung als geplant. Neu unter
+`img/source/` sind `wikidata-logo.svg` (CC0) und `connoss-logo.png` (aus den ConnOSS-Folien, Erlaubnis und bessere
+Datei sind offen). Das sind 46 Grafiken.
 
 # Teil D — Offene Punkte
 
