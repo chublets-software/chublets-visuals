@@ -279,8 +279,12 @@ def entity_facts() -> dict[str, int]:
     for st in stm:
         if st["property"] == "P2":
             inst.setdefault(st["subject"], set()).add(st["value"])
-    n_chub = sum(1 for e in items if "Q106" in inst.get(e["id"], ()))
-    n_none = sum(1 for e in items if not inst.get(e["id"]))
+    # items merged into another one (merges.csv) are no entity of their own: the split by class counts the others,
+    # so that a merged item that still carries the chublet class is not counted twice
+    merged_away = {m["from"] for m in read_csv(DEMO / "data" / "csv" / "merges.csv")}
+    live = [e for e in items if e["id"] not in merged_away]
+    n_chub = sum(1 for e in live if "Q106" in inst.get(e["id"], ()))
+    n_none = sum(1 for e in live if not inst.get(e["id"]))
     origin = Counter(e["origin"] for e in items)
     by_kind = Counter(kind.get(st["subject"], "") for st in stm)
     quals = {x["sid"] for x in read_csv(DEMO / "data" / "csv" / "qualifiers.csv")}
@@ -315,7 +319,8 @@ def entity_facts() -> dict[str, int]:
         "n_items": len(items),
         "n_items_merged": len(items) - len(read_csv(DEMO / "data" / "csv" / "merges.csv")),
         "n_chublet_items": n_chub,
-        "n_other_items": len(items) - n_chub - n_none,
+        "n_other_items": len(live) - n_chub - n_none,
+        "n_merged_away": len(items) - len(live),
         "n_items_no_class": n_none,
         "n_statements": len(stm),
         "n_statements_items": by_kind["item"],

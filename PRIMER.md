@@ -260,6 +260,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | erledigt 2026-10-25 |
 | S15 | Paper-Grafiken der Revision: Architektur neu, `chublets-community-efforts`, `wgrse-pillars` | S14 | erledigt 2026-11-02 |
 | S16 | Tabelle `table-properties-crosswalk` mit DCAT-Spalte, Versionen ab 0.3.0 | S15 | erledigt 2026-11-02 |
+| S17 | Datenpflege 2: Demo-Snapshot neu vendort, `entity-overview` zählt ohne zusammengeführte Items (420 chublets) | S16 | erledigt 2026-11-02 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -403,7 +404,7 @@ flache Grafiken).
   83", Überlappung 37, Vereinigung 160 von 168. Der Schritt prüft, dass die sechs
   Gruppen die Properties lückenlos teilen.
 - `entity-overview` (`py/step_entity_overview.py`): 13 Klassen, 826 Items,
-  168 Properties; Items nach Klasse (444 chublets / 368 sonstige / 14 ohne Klasse)
+  168 Properties; Items nach Klasse (420 chublets / 382 sonstige / 17 ohne Klasse / 7 in ein anderes Item zusammengeführt)
   und nach Herkunft (803 open-archaeo / 6 Wikidata / 17 Stubs); Pfeile
   „instance of (P2)" und „statements". Die 6873 Aussagen zählen Demo und Kernel;
   die 6852 in früheren Notizen waren ohne Kernel.
@@ -541,6 +542,14 @@ Anhangstabelle des Papers. `data/dcat-crosswalk.csv` hält die DCAT-Spalte des v
 ist der Rohwert, `dcat_term` die vereinheitlichte Form mit Präfix. Die Rollen über `prov:qualifiedAttribution` stehen
 kurz als „role …“. Die Bezeichnung der DataCite-Spalte in `table-properties-by-topic` ist berichtigt, weil dieselben
 Properties im Crosswalk stehen. Die Versionen zählen ab hier mit `v0.3.0` statt Datum.
+
+## S17 — Datenpflege 2
+
+Die Demo nimmt 22 Items, die Hostprogramme, Sprachen und Plattformen sind, aus der Klasse chublet (420 statt 442),
+entfernt zwei doppelte Entwickler bei Alligator und belegt sechs Aussagen zu Chronological modelling. Der Snapshot
+ist neu vendort. `entity_facts()` zählt die Aufteilung nach Klasse ohne die in `merges.csv` zusammengeführten Items; diese
+stehen als eigener Balken (7), damit die Summe 826 bleibt. Vorher standen Q381 und Q846, die in der Tabelle noch die
+Klasse chublet tragen, doppelt in der Zahl (444 statt 442). Aussagen: 6855 statt 6879, davon 6444 mit Referenz.
 
 # Teil D — Offene Punkte
 

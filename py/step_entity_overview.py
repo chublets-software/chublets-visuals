@@ -81,8 +81,9 @@ def build(M: model_data.Model) -> g.Canvas:
         (f["n_chublet_items"], "chublets (instance of chublet, Q106)", "#475569", "#ffffff"),
         (f["n_other_items"], "other items: topics, accounts, DOIs, URLs", "#94a3b8", INK),
         (f["n_items_no_class"], "items without a class", "#ffffff", INK),
+        (f["n_merged_away"], "merged into another item", "#e2e8f0", INK),
     ], "By class")
-    out += split(iy + 270, [
+    out += split(iy + 296, [
         (f["n_items_open_archaeo"], "imported from the open-archaeo list of archaeological software", CATEGORY_COLORS[0], "#ffffff"),
         (f["n_items_wikidata"], "taken over from Wikidata", CATEGORY_COLORS[4], "#ffffff"),
         (f["n_items_stub"], "stubs: label-only items standing in for Wikidata entities", CATEGORY_COLORS[3], "#ffffff"),

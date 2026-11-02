@@ -77,7 +77,7 @@ entity-overview:
     Contents of the chublets Wikibase: {n_classes} classes, {n_items} items and {n_props} properties.
     Items are instances of classes (P2) and carry statements that use the properties. Of the items,
     {n_chublet_items} are chublets, {n_other_items} are other items (topics, accounts, DOIs, URLs) and
-    {n_items_no_class} have no class. {n_items_open_archaeo} items were imported from the open-archaeo
+    {n_items_no_class} have no class and {n_merged_away} were merged into another item. {n_items_open_archaeo} items were imported from the open-archaeo
     list, {n_items_wikidata} were taken over from Wikidata and {n_items_stub} are stubs for Wikidata
     entities. In total the entities carry {n_statements} statements.
   alt: >-
