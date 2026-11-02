@@ -1,6 +1,8 @@
 cff-version: 1.2.0
 message: "If you use this software or the graphics it produces, please cite it as below."
 title: "chublets-visuals"
+version: 0.3.0
+date-released: 2026-11-02
 type: software
 authors:
   - family-names: Thiery

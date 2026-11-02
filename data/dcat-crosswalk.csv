@@ -1,0 +1,33 @@
+codemeta_term,dcat_term,source_value,mapping_type
+applicationCategory,dcat:theme,theme/category,close match
+downloadUrl,dcat:downloadURL,corrected: downloadURL,close match
+fileSize,dcat:byteSize,corrected: byteSize,close match
+releaseNotes,adms:versionNotes,corrected: adms:versionNotes,close match
+softwareRequirements,dcterms:requires,corrected: dcterms:requires,partial match
+softwareVersion,dcat:version,corrected: dcat:version,close match
+author,dcterms:creator,creator,close match
+contributor,role contributor,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role: contributor",close match
+copyrightHolder,role rightsHolder,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role: rightsHolder",close match
+dateModified,dcterms:modified,update/modification date,close match
+datePublished,dcterms:issued,release date,close match
+editor,role editor,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role: editor",close match
+encodingFormat,dcat:mediaType,corrected: dcat:mediaType,close match
+encodingFormat,dcterms:format,dcterms:format,close match
+funder,role funder,corrected: prov:qualifiedAttribution with dcat:hadRole (Role:funder),close match
+hasPart,dcterms:hasPart,has part,close match
+isPartOf,dcterms:isPartOf,corrected: dcterms:isPartOf,close match
+keywords,dcat:keyword,keyword/tag,close match
+license,dcterms:license,license,close match
+producer,role originator,corrected: prov:qualifiedAttribution with dcat:hadRole (Role:originator),close match
+provider,role resourceProvider,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role: resourceProvider",close match
+publisher,dcterms:publisher,publisher,close match
+sponsor,role sponsor,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role:sponsor",close match
+description,dcterms:description,description,close match
+identifier,dcterms:identifier,identifier,close match
+name,dcterms:title,title,close match
+url,dcat:landingPage,landing page,close match
+url,foaf:homepage,foaf:homepage,close match
+relatedLink,dcterms:relation,relation,close match
+developmentStatus,adms:status,corrected: adms:status,close match
+maintainer,role pointOfContact,"corrected: prov:qualifiedAttribution with dcat:hadRole, Role:pointOfContact",close match
+referencePublication,dcterms:isReferencedBy,corrected: dcterms:isReferencedBy,close match

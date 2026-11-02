@@ -1,0 +1,169 @@
+Topic,ID,Label,Wikidata,CodeMeta,DataCite,DCAT
+Kernel,P1,subclass of,P279,--,--,--
+Kernel,P2,instance of,P31,--,--,--
+Kernel,P3,subproperty of,P1647,--,--,--
+Kernel,P6,reference URL,P854,--,--,--
+Kernel,P7,retrieved,P813,--,--,--
+Kernel,P8,stated in,P248,--,--,--
+Property description,P4,Wikidata equivalent,--,--,--,--
+Property description,P5,formatter URL,P1630,--,--,--
+Property description,P9,domain,--,--,--,--
+Property description,P10,range,--,--,--,--
+Property description,P100,close match Wikidata property,--,--,--,--
+Property description,P101,equivalent CodeMeta term,--,--,--,--
+Property description,P102,equivalent schema.org term,--,--,--,--
+Identity and naming,P106,collection,P195,--,--,--
+Identity and naming,P112,description,"≈ P973, P1343",description,description,dcterms:description
+Identity and naming,P114,DOI,P356,identifier,identifier,dcterms:identifier
+Identity and naming,P115,exact match,P2888,sameAs,"relatedItem, relatedItemIdentifier",--
+Identity and naming,P116,inventory number,P217,--,--,--
+Identity and naming,P118,maintained by WikiProject,P6104,--,--,--
+Identity and naming,P119,name,P2561,name,title,dcterms:title
+Identity and naming,P121,open-archaeo ID,--,--,--,--
+Identity and naming,P127,Wikidata item,--,--,--,--
+Identity and naming,P247,title,P1476,--,--,--
+Registry and catalogue IDs,P108,CRAN project,P5565,--,--,--
+Registry and catalogue IDs,P124,PyPI project,P5568,--,--,--
+Registry and catalogue IDs,P147,SoftWare Hash IDentifier,P6138,--,--,--
+Registry and catalogue IDs,P174,DistroWatch ID,P3112,--,--,--
+Registry and catalogue IDs,P175,Google Play Store app ID,P3418,--,--,--
+Registry and catalogue IDs,P176,Debian stable package,P3442,--,--,--
+Registry and catalogue IDs,P177,Arch Linux package,P3454,--,--,--
+Registry and catalogue IDs,P178,Fedora package,P3463,--,--,--
+Registry and catalogue IDs,P179,Ubuntu package,P3473,--,--,--
+Registry and catalogue IDs,P180,Gentoo package,P3499,--,--,--
+Registry and catalogue IDs,P181,F-Droid package,P3597,--,--,--
+Registry and catalogue IDs,P197,Framalibre ID,P4107,--,--,--
+Registry and catalogue IDs,P198,Free Software Directory entry,P2537,--,--,--
+Registry and catalogue IDs,P217,Open Hub ID,P1972,--,--,--
+Registry and catalogue IDs,P241,SourceForge project,P2209,--,--,--
+Registry and catalogue IDs,P246,swMATH work ID,P6830,--,--,--
+Source code and development,P123,programmed in,P277,programmingLanguage,--,--
+Source code and development,P125,source code repository URL,P1324,codeRepository,--,--
+Source code and development,P126,version control system,P8423,--,--,--
+Source code and development,P138,issue tracker URL,P1401,issueTracker,--,--
+Source code and development,P161,build instructions,--,buildInstructions,--,--
+Source code and development,P163,code sample type,--,codeSampleType,--,--
+Source code and development,P165,cont integration,--,contIntegration,--,--
+Source code and development,P166,continuous integration,--,continuousIntegration,--,--
+Source code and development,P203,has source code,≈ P527,hasSourceCode,--,--
+Source code and development,P210,is source code of,≈ P361,isSourceCodeOf,--,--
+Source code and development,P231,readme,≈ P973,readme,--,--
+"Platform, requirements and dependencies",P109,depends on software,P1547,softwareRequirements,--,dcterms:requires
+"Platform, requirements and dependencies",P142,operating system,P306,operatingSystem,--,--
+"Platform, requirements and dependencies",P143,platform,P400,runtimePlatform,--,--
+"Platform, requirements and dependencies",P158,available on device,≈ P400,availableOnDevice,--,--
+"Platform, requirements and dependencies",P160,binding of software library,P1372,--,--,--
+"Platform, requirements and dependencies",P169,countries not supported,--,countriesNotSupported,--,--
+"Platform, requirements and dependencies",P170,countries supported,--,countriesSupported,--,--
+"Platform, requirements and dependencies",P201,GUI toolkit or framework,P1414,--,--,--
+"Platform, requirements and dependencies",P206,input device,P479,--,--,--
+"Platform, requirements and dependencies",P214,memory requirements,--,memoryRequirements,--,--
+"Platform, requirements and dependencies",P218,output device,P5196,--,--,--
+"Platform, requirements and dependencies",P219,package management system,P3033,--,--,--
+"Platform, requirements and dependencies",P221,permissions,--,permissions,--,--
+"Platform, requirements and dependencies",P224,port,P1641,--,--,--
+"Platform, requirements and dependencies",P227,processor requirements,--,processorRequirements,--,--
+"Platform, requirements and dependencies",P237,software add on,--,softwareAddOn,--,--
+"Platform, requirements and dependencies",P238,software engine,P408,--,--,--
+"Platform, requirements and dependencies",P240,software suggestions,--,softwareSuggestions,--,--
+"Platform, requirements and dependencies",P245,storage requirements,--,storageRequirements,--,--
+"Platform, requirements and dependencies",P248,web interface software,P10627,--,--,--
+"Files, formats and standards",P145,readable file format,P1072,--,--,--
+"Files, formats and standards",P154,writable file format,P1073,--,--,--
+"Files, formats and standards",P172,data size,P3575,fileSize,size,dcat:byteSize
+"Files, formats and standards",P173,distribution format,P437,--,--,--
+"Files, formats and standards",P187,encoding,≈ P10,encoding,--,--
+"Files, formats and standards",P194,file format,P2701,"encodingFormat, fileFormat",format,dcat:mediaType; dcterms:format
+"Files, formats and standards",P212,media type,P1163,--,--,--
+"Files, formats and standards",P250,ISO standard,P503,--,--,--
+"Files, formats and standards",P254,RfC ID,P892,--,--,--
+"Files, formats and standards",P256,TeX string,P1993,--,--,--
+"Files, formats and standards",P257,Unicode character,P487,--,--,--
+"Versions, releases and dates",P132,development status,≈ P548,developmentStatus,--,adms:status
+"Versions, releases and dates",P137,inception,P571,dateCreated,date,--
+"Versions, releases and dates",P139,last update,P5017,dateModified,date,dcterms:modified
+"Versions, releases and dates",P144,publication date,P577,datePublished,date,dcterms:issued
+"Versions, releases and dates",P148,software version identifier,P348,softwareVersion,version,dcat:version
+"Versions, releases and dates",P152,version,≈ P348,version,--,--
+"Versions, releases and dates",P153,version type,P548,--,--,--
+"Versions, releases and dates",P182,"version, edition or translation of",P629,--,--,--
+"Versions, releases and dates",P188,end date,≈ P582,endDate,--,--
+"Versions, releases and dates",P189,end time,P582,--,--,--
+"Versions, releases and dates",P195,followed by,P156,--,--,--
+"Versions, releases and dates",P196,follows,P155,--,--,--
+"Versions, releases and dates",P220,part of the series,P179,--,--,--
+"Versions, releases and dates",P223,point in time,P585,--,--,--
+"Versions, releases and dates",P232,release notes,≈ P973,releaseNotes,--,adms:versionNotes
+"Versions, releases and dates",P243,start date,≈ P580,startDate,--,--
+"Versions, releases and dates",P244,start time,P580,--,--,--
+"Versions, releases and dates",P253,removed feature,P756,--,--,--
+"Links, media and web presence",P104,archive date,P2960,--,--,--
+"Links, media and web presence",P105,archive URL,P1065,--,--,--
+"Links, media and web presence",P110,described at URL,P973,relatedLink,relatedIdentifier,dcterms:relation
+"Links, media and web presence",P120,official website,P856,url,"relatedItem, relatedItemIdentifier",dcat:landingPage; foaf:homepage
+"Links, media and web presence",P133,download URL,P4945,downloadUrl,relatedIdentifier,dcat:downloadURL
+"Links, media and web presence",P141,official demo URL,P11201,relatedLink,relatedIdentifier,dcterms:relation
+"Links, media and web presence",P151,user manual URL,P2078,softwareHelp,--,--
+"Links, media and web presence",P204,image,P18,screenshot,--,--
+"Links, media and web presence",P207,install URL,≈ P4945,installUrl,--,--
+"Links, media and web presence",P208,IRC channel URL,P1613,--,--,--
+"Links, media and web presence",P211,logo image,P154,--,--,--
+"Links, media and web presence",P216,official blog URL,P1581,--,--,--
+"Links, media and web presence",P255,Stack Exchange tag,P1482,--,--,--
+Agent roles,P113,developer,P178,author,creator,dcterms:creator
+Agent roles,P131,contributor to the creative work or subject,P767,contributor,contributor,role contributor
+Agent roles,P134,funder,P8324,funder,"fundingReference, funderName",role funder
+Agent roles,P140,maintained by,P126,maintainer,contributor,role pointOfContact
+Agent roles,P146,series ordinal,P1545,--,--,--
+Agent roles,P171,creator,P170,--,--,--
+Agent roles,P183,editor,≈ P98,editor,contributor,role editor
+Agent roles,P225,position,≈ P1545,position,--,--
+Agent roles,P228,producer,P162,producer,contributor,role originator
+Agent roles,P229,provider,--,provider,contributor,role resourceProvider
+Agent roles,P230,publisher,P123,publisher,publisher,dcterms:publisher
+Agent roles,P236,role name,--,roleName,--,--
+Agent roles,P242,sponsor,P859,sponsor,contributor,role sponsor
+Person and organisation,P135,GitHub account,P2037,--,--,--
+Person and organisation,P155,address,--,address,--,--
+Person and organisation,P156,affiliation,≈ P1416,affiliation,--,--
+Person and organisation,P157,archives at,P485,--,--,--
+Person and organisation,P159,award received,P166,--,--,--
+Person and organisation,P184,email address,P968,email,--,--
+Person and organisation,P191,family name,P734,familyName,--,--
+Person and organisation,P193,field of work,P101,--,--,--
+Person and organisation,P200,given name,P735,givenName,--,--
+Person and organisation,P213,member of,P463,--,--,--
+Person and organisation,P215,notable work,P800,--,--,--
+Person and organisation,P222,person identifier,"≈ P496, P2037",identifier (Person),--,--
+"Rights, funding and access",P107,copyright license,P275,license,rights,dcterms:license
+"Rights, funding and access",P167,copyright holder,≈ P123,copyrightHolder,contributor,role rightsHolder
+"Rights, funding and access",P168,copyright year,--,copyrightYear,date,--
+"Rights, funding and access",P185,embargo date,--,embargoDate,date,--
+"Rights, funding and access",P186,embargo end date,--,embargoEndDate,date,--
+"Rights, funding and access",P199,funding,≈ P8324,funding,fundingReference,--
+"Rights, funding and access",P209,is accessible for free,--,isAccessibleForFree,--,--
+"Rights, funding and access",P226,price,P2284,--,--,--
+"Rights, funding and access",P249,digital rights management system,P1032,--,--,--
+"Classification, features and relations",P103,application category,≈ P31,applicationCategory,--,dcat:theme
+"Classification, features and relations",P117,main subject,P921,keywords,subject,dcat:keyword
+"Classification, features and relations",P122,part of,P361,isPartOf,relatedItem,dcterms:isPartOf
+"Classification, features and relations",P128,application sub category,≈ P921,applicationSubCategory,--,--
+"Classification, features and relations",P129,application suite,≈ P361,applicationSuite,--,--
+"Classification, features and relations",P130,based on,P144,--,--,--
+"Classification, features and relations",P136,has part(s),P527,hasPart,relatedItem,dcterms:hasPart
+"Classification, features and relations",P149,supporting data,--,supportingData,--,--
+"Classification, features and relations",P150,target product,≈ P1547,targetProduct,--,--
+"Classification, features and relations",P164,computes solution to,P2159,--,--,--
+"Classification, features and relations",P190,facet of,P1269,--,--,--
+"Classification, features and relations",P192,feature list,--,featureList,--,--
+"Classification, features and relations",P202,has characteristic,P1552,--,--,--
+"Classification, features and relations",P205,influenced by,P737,--,--,--
+"Classification, features and relations",P251,language of work or name,P407,--,--,--
+"Classification, features and relations",P252,movement,P135,--,--,--
+"Publication, citation and review",P111,described by source,P1343,referencePublication,relatedItem,dcterms:isReferencedBy
+"Publication, citation and review",P162,cites work,P2860,citation,relatedItem,--
+"Publication, citation and review",P233,review,--,review,--,--
+"Publication, citation and review",P234,review aspect,--,reviewAspect,--,--
+"Publication, citation and review",P235,review body,--,reviewBody,--,--
+"Publication, citation and review",P239,software quality assurance,P2992,--,--,--

@@ -259,6 +259,7 @@ Repo frisch (`git fetch` und Fast-Forward), das ersetzt den Upload der Grafiken.
 | S13 | Politur: alle Icons einheitlich, Übersichtsseiten nach Themen mit Filter-Chips | S12 | erledigt 2026-10-25 |
 | S14 | Belege: `open-archaeo.csv` vendort (562 gezählt), Snapshot-Daten, CITATION.cff, Prüfskript Klassenhierarchie | S13 | erledigt 2026-10-25 |
 | S15 | Paper-Grafiken der Revision: Architektur neu, `chublets-community-efforts`, `wgrse-pillars` | S14 | erledigt 2026-11-02 |
+| S16 | Tabelle `table-properties-crosswalk` mit DCAT-Spalte, Versionen ab 0.3.0 | S15 | erledigt 2026-11-02 |
 
 Unabhängig voneinander sind alle Schritte ab S8, soweit sie nicht in der Spalte
 „hängt ab von“ stehen; neue Grafiken brauchen nur `model_data` und `model_graphics`.
@@ -532,6 +533,14 @@ KGE4RSE sind entfallen. Neu sind `chublets-community-efforts` (`py/step_efforts.
 Zusammenführungen, die Zahl im Paper und in der Architektur. Die übrigen Grafiken zeigen weiter `n_items`; ob sie
 umstellen, ist offen. `model_graphics.text()` setzt zwischen f und i bzw. f und l ein ZWNJ, weil die Ligaturen von
 Fira Sans in resvg die Schreibung verfälschten; das ändert jede Grafik mit diesen Buchstabenfolgen.
+
+## S16 — Eigenschaften und ihre Entsprechungen
+
+`table-properties-crosswalk` zeigt alle Properties nach Thema mit Wikidata, CodeMeta, DataCite und DCAT; sie ist die
+Anhangstabelle des Papers. `data/dcat-crosswalk.csv` hält die DCAT-Spalte des veröffentlichten Crosswalks: `source_value`
+ist der Rohwert, `dcat_term` die vereinheitlichte Form mit Präfix. Die Rollen über `prov:qualifiedAttribution` stehen
+kurz als „role …“. Die Bezeichnung der DataCite-Spalte in `table-properties-by-topic` ist berichtigt, weil dieselben
+Properties im Crosswalk stehen. Die Versionen zählen ab hier mit `v0.3.0` statt Datum.
 
 # Teil D — Offene Punkte
 

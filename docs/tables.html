@@ -45,9 +45,9 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 <input id="q" type="search" placeholder="Search all tables" aria-label="Search all tables">
 <button id="theme" type="button" aria-label="Toggle light and dark">Light / dark</button></div></nav>
 <main>
-<h2 id="tables">Tables <small class="count">11 tables</small></h2>
-<p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; the search above filters all tables at once. <a href="#table-model-statistics">Model statistics</a> &middot; <a href="#table-property-origin">Properties by origin</a> &middot; <a href="#table-property-evidence">Evidence per status</a> &middot; <a href="#table-topics">Topics</a> &middot; <a href="#table-topics-by-status">Topics by origin class</a> &middot; <a href="#table-properties-by-topic">Properties by topic</a> &middot; <a href="#table-codemeta-terms">CodeMeta terms</a> &middot; <a href="#table-wikidata-groups">Wikidata groups</a> &middot; <a href="#table-datacite-evidence">DataCite evidence</a> &middot; <a href="#table-classes">Classes</a> &middot; <a href="#table-evidence-sources">Evidence sources</a></p>
-<div class="chips" role="group" aria-label="Filter by theme"><button type="button" class="chip" data-theme="" aria-pressed="true">All <span>11</span></button><button type="button" class="chip" data-theme="vocabularies" aria-pressed="false" title="CodeMeta, Wikidata properties and the evidence the model rests on.">Vocabularies and evidence <span>5</span></button><button type="button" class="chip" data-theme="model" aria-pressed="false" title="Classes, properties, statements and how a chublet is stored.">Data model <span>6</span></button></div><div class="grp" data-theme="vocabularies"><div class="grphead"><h3 class="grp" id="theme-vocabularies">Vocabularies and evidence</h3><p class="caption">CodeMeta, Wikidata properties and the evidence the model rests on.</p></div>
+<h2 id="tables">Tables <small class="count">12 tables</small></h2>
+<p class="caption">The same tables are in the LaTeX appendix (<code>tex/</code>). Click a column header to sort; the search above filters all tables at once. <a href="#table-model-statistics">Model statistics</a> &middot; <a href="#table-property-origin">Properties by origin</a> &middot; <a href="#table-property-evidence">Evidence per status</a> &middot; <a href="#table-topics">Topics</a> &middot; <a href="#table-topics-by-status">Topics by origin class</a> &middot; <a href="#table-properties-by-topic">Properties by topic</a> &middot; <a href="#table-properties-crosswalk">Properties and their counterparts</a> &middot; <a href="#table-codemeta-terms">CodeMeta terms</a> &middot; <a href="#table-wikidata-groups">Wikidata groups</a> &middot; <a href="#table-datacite-evidence">DataCite evidence</a> &middot; <a href="#table-classes">Classes</a> &middot; <a href="#table-evidence-sources">Evidence sources</a></p>
+<div class="chips" role="group" aria-label="Filter by theme"><button type="button" class="chip" data-theme="" aria-pressed="true">All <span>12</span></button><button type="button" class="chip" data-theme="vocabularies" aria-pressed="false" title="CodeMeta, Wikidata properties and the evidence the model rests on.">Vocabularies and evidence <span>6</span></button><button type="button" class="chip" data-theme="model" aria-pressed="false" title="Classes, properties, statements and how a chublet is stored.">Data model <span>6</span></button></div><div class="grp" data-theme="vocabularies"><div class="grphead"><h3 class="grp" id="theme-vocabularies">Vocabularies and evidence</h3><p class="caption">CodeMeta, Wikidata properties and the evidence the model rests on.</p></div>
 <section class="tbl" id="table-property-evidence" data-title="Evidence per status">
   <h3>Evidence per status</h3>
   <p class="caption">Which external vocabularies the 168 properties point to, by origin class: a Wikidata twin (P4), a loose Wikidata close match (P100), a CodeMeta term, a schema.org term (P102), and a DataCite element (derived via the CodeMeta hub; DataCite itself is not published as a mapping).</p>
@@ -65,6 +65,186 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 <tr class="total"><td class="">total</td><td class="num">168</td><td class="num">114</td><td class="num">22</td><td class="num">83</td><td class="num">71</td><td class="num">34</td></tr>
   </tbody></table></div>
   <p class="src">Sources: chublets-wikibase-demo</p>
+</section>
+<section class="tbl" id="table-properties-crosswalk" data-title="Properties and their counterparts">
+  <h3>Properties and their counterparts</h3>
+  <p class="caption">The 168 properties of chublets.software by topic, with their counterparts. Wikidata: twin property, or a close match marked with an approximation sign. DataCite (34 properties) and DCAT (31 properties) are derived from the CodeMeta term through the published crosswalks; they show what can be mapped, not an export that exists today. Role stands for prov:qualifiedAttribution with dcat:hadRole.</p>
+  <div class="tools">
+    <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Properties and their counterparts">
+    <span class="count" aria-live="polite"></span>
+    <span class="dl"><a href="data/table-properties-crosswalk.csv" download>CSV</a> <a href="data/table-properties-crosswalk.tex" download>LaTeX</a></span>
+  </div>
+  <div class="scroll"><table><thead><tr><th data-col="0" class="" role="columnheader" tabindex="0" aria-sort="none">Topic</th><th data-col="1" class="" role="columnheader" tabindex="0" aria-sort="none">ID</th><th data-col="2" class="" role="columnheader" tabindex="0" aria-sort="none">Label</th><th data-col="3" class="" role="columnheader" tabindex="0" aria-sort="none">Wikidata</th><th data-col="4" class="" role="columnheader" tabindex="0" aria-sort="none">CodeMeta</th><th data-col="5" class="" role="columnheader" tabindex="0" aria-sort="none">DataCite</th><th data-col="6" class="" role="columnheader" tabindex="0" aria-sort="none">DCAT</th></tr></thead><tbody>
+<tr><td class="">Kernel</td><td class="">P1</td><td class="">subclass of</td><td class="">P279</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Kernel</td><td class="">P2</td><td class="">instance of</td><td class="">P31</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Kernel</td><td class="">P3</td><td class="">subproperty of</td><td class="">P1647</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Kernel</td><td class="">P6</td><td class="">reference URL</td><td class="">P854</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Kernel</td><td class="">P7</td><td class="">retrieved</td><td class="">P813</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Kernel</td><td class="">P8</td><td class="">stated in</td><td class="">P248</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P4</td><td class="">Wikidata equivalent</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P5</td><td class="">formatter URL</td><td class="">P1630</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P9</td><td class="">domain</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P10</td><td class="">range</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P100</td><td class="">close match Wikidata property</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P101</td><td class="">equivalent CodeMeta term</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Property description</td><td class="">P102</td><td class="">equivalent schema.org term</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P106</td><td class="">collection</td><td class="">P195</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P112</td><td class="">description</td><td class="">≈ P973, P1343</td><td class="">description</td><td class="">description</td><td class="">dcterms:description</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P114</td><td class="">DOI</td><td class="">P356</td><td class="">identifier</td><td class="">identifier</td><td class="">dcterms:identifier</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P115</td><td class="">exact match</td><td class="">P2888</td><td class="">sameAs</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P116</td><td class="">inventory number</td><td class="">P217</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P118</td><td class="">maintained by WikiProject</td><td class="">P6104</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P119</td><td class="">name</td><td class="">P2561</td><td class="">name</td><td class="">title</td><td class="">dcterms:title</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P121</td><td class="">open-archaeo ID</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P127</td><td class="">Wikidata item</td><td class="">--</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Identity and naming</td><td class="">P247</td><td class="">title</td><td class="">P1476</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P108</td><td class="">CRAN project</td><td class="">P5565</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P124</td><td class="">PyPI project</td><td class="">P5568</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P147</td><td class="">SoftWare Hash IDentifier</td><td class="">P6138</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P174</td><td class="">DistroWatch ID</td><td class="">P3112</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P175</td><td class="">Google Play Store app ID</td><td class="">P3418</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P176</td><td class="">Debian stable package</td><td class="">P3442</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P177</td><td class="">Arch Linux package</td><td class="">P3454</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P178</td><td class="">Fedora package</td><td class="">P3463</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P179</td><td class="">Ubuntu package</td><td class="">P3473</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P180</td><td class="">Gentoo package</td><td class="">P3499</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P181</td><td class="">F-Droid package</td><td class="">P3597</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P197</td><td class="">Framalibre ID</td><td class="">P4107</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P198</td><td class="">Free Software Directory entry</td><td class="">P2537</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P217</td><td class="">Open Hub ID</td><td class="">P1972</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P241</td><td class="">SourceForge project</td><td class="">P2209</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Registry and catalogue IDs</td><td class="">P246</td><td class="">swMATH work ID</td><td class="">P6830</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P123</td><td class="">programmed in</td><td class="">P277</td><td class="">programmingLanguage</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P125</td><td class="">source code repository URL</td><td class="">P1324</td><td class="">codeRepository</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P126</td><td class="">version control system</td><td class="">P8423</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P138</td><td class="">issue tracker URL</td><td class="">P1401</td><td class="">issueTracker</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P161</td><td class="">build instructions</td><td class="">--</td><td class="">buildInstructions</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P163</td><td class="">code sample type</td><td class="">--</td><td class="">codeSampleType</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P165</td><td class="">cont integration</td><td class="">--</td><td class="">contIntegration</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P166</td><td class="">continuous integration</td><td class="">--</td><td class="">continuousIntegration</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P203</td><td class="">has source code</td><td class="">≈ P527</td><td class="">hasSourceCode</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P210</td><td class="">is source code of</td><td class="">≈ P361</td><td class="">isSourceCodeOf</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Source code and development</td><td class="">P231</td><td class="">readme</td><td class="">≈ P973</td><td class="">readme</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P109</td><td class="">depends on software</td><td class="">P1547</td><td class="">softwareRequirements</td><td class="">--</td><td class="">dcterms:requires</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P142</td><td class="">operating system</td><td class="">P306</td><td class="">operatingSystem</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P143</td><td class="">platform</td><td class="">P400</td><td class="">runtimePlatform</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P158</td><td class="">available on device</td><td class="">≈ P400</td><td class="">availableOnDevice</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P160</td><td class="">binding of software library</td><td class="">P1372</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P169</td><td class="">countries not supported</td><td class="">--</td><td class="">countriesNotSupported</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P170</td><td class="">countries supported</td><td class="">--</td><td class="">countriesSupported</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P201</td><td class="">GUI toolkit or framework</td><td class="">P1414</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P206</td><td class="">input device</td><td class="">P479</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P214</td><td class="">memory requirements</td><td class="">--</td><td class="">memoryRequirements</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P218</td><td class="">output device</td><td class="">P5196</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P219</td><td class="">package management system</td><td class="">P3033</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P221</td><td class="">permissions</td><td class="">--</td><td class="">permissions</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P224</td><td class="">port</td><td class="">P1641</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P227</td><td class="">processor requirements</td><td class="">--</td><td class="">processorRequirements</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P237</td><td class="">software add on</td><td class="">--</td><td class="">softwareAddOn</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P238</td><td class="">software engine</td><td class="">P408</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P240</td><td class="">software suggestions</td><td class="">--</td><td class="">softwareSuggestions</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P245</td><td class="">storage requirements</td><td class="">--</td><td class="">storageRequirements</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Platform, requirements and dependencies</td><td class="">P248</td><td class="">web interface software</td><td class="">P10627</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P145</td><td class="">readable file format</td><td class="">P1072</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P154</td><td class="">writable file format</td><td class="">P1073</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P172</td><td class="">data size</td><td class="">P3575</td><td class="">fileSize</td><td class="">size</td><td class="">dcat:byteSize</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P173</td><td class="">distribution format</td><td class="">P437</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P187</td><td class="">encoding</td><td class="">≈ P10</td><td class="">encoding</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P194</td><td class="">file format</td><td class="">P2701</td><td class="">encodingFormat, fileFormat</td><td class="">format</td><td class="">dcat:mediaType; dcterms:format</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P212</td><td class="">media type</td><td class="">P1163</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P250</td><td class="">ISO standard</td><td class="">P503</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P254</td><td class="">RfC ID</td><td class="">P892</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P256</td><td class="">TeX string</td><td class="">P1993</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Files, formats and standards</td><td class="">P257</td><td class="">Unicode character</td><td class="">P487</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P132</td><td class="">development status</td><td class="">≈ P548</td><td class="">developmentStatus</td><td class="">--</td><td class="">adms:status</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P137</td><td class="">inception</td><td class="">P571</td><td class="">dateCreated</td><td class="">date</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P139</td><td class="">last update</td><td class="">P5017</td><td class="">dateModified</td><td class="">date</td><td class="">dcterms:modified</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P144</td><td class="">publication date</td><td class="">P577</td><td class="">datePublished</td><td class="">date</td><td class="">dcterms:issued</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P148</td><td class="">software version identifier</td><td class="">P348</td><td class="">softwareVersion</td><td class="">version</td><td class="">dcat:version</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P152</td><td class="">version</td><td class="">≈ P348</td><td class="">version</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P153</td><td class="">version type</td><td class="">P548</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P182</td><td class="">version, edition or translation of</td><td class="">P629</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P188</td><td class="">end date</td><td class="">≈ P582</td><td class="">endDate</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P189</td><td class="">end time</td><td class="">P582</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P195</td><td class="">followed by</td><td class="">P156</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P196</td><td class="">follows</td><td class="">P155</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P220</td><td class="">part of the series</td><td class="">P179</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P223</td><td class="">point in time</td><td class="">P585</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P232</td><td class="">release notes</td><td class="">≈ P973</td><td class="">releaseNotes</td><td class="">--</td><td class="">adms:versionNotes</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P243</td><td class="">start date</td><td class="">≈ P580</td><td class="">startDate</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P244</td><td class="">start time</td><td class="">P580</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Versions, releases and dates</td><td class="">P253</td><td class="">removed feature</td><td class="">P756</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P104</td><td class="">archive date</td><td class="">P2960</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P105</td><td class="">archive URL</td><td class="">P1065</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P110</td><td class="">described at URL</td><td class="">P973</td><td class="">relatedLink</td><td class="">relatedIdentifier</td><td class="">dcterms:relation</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P120</td><td class="">official website</td><td class="">P856</td><td class="">url</td><td class="">relatedItem, relatedItemIdentifier</td><td class="">dcat:landingPage; foaf:homepage</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P133</td><td class="">download URL</td><td class="">P4945</td><td class="">downloadUrl</td><td class="">relatedIdentifier</td><td class="">dcat:downloadURL</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P141</td><td class="">official demo URL</td><td class="">P11201</td><td class="">relatedLink</td><td class="">relatedIdentifier</td><td class="">dcterms:relation</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P151</td><td class="">user manual URL</td><td class="">P2078</td><td class="">softwareHelp</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P204</td><td class="">image</td><td class="">P18</td><td class="">screenshot</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P207</td><td class="">install URL</td><td class="">≈ P4945</td><td class="">installUrl</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P208</td><td class="">IRC channel URL</td><td class="">P1613</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P211</td><td class="">logo image</td><td class="">P154</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P216</td><td class="">official blog URL</td><td class="">P1581</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Links, media and web presence</td><td class="">P255</td><td class="">Stack Exchange tag</td><td class="">P1482</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Agent roles</td><td class="">P113</td><td class="">developer</td><td class="">P178</td><td class="">author</td><td class="">creator</td><td class="">dcterms:creator</td></tr>
+<tr><td class="">Agent roles</td><td class="">P131</td><td class="">contributor to the creative work or subject</td><td class="">P767</td><td class="">contributor</td><td class="">contributor</td><td class="">role contributor</td></tr>
+<tr><td class="">Agent roles</td><td class="">P134</td><td class="">funder</td><td class="">P8324</td><td class="">funder</td><td class="">fundingReference, funderName</td><td class="">role funder</td></tr>
+<tr><td class="">Agent roles</td><td class="">P140</td><td class="">maintained by</td><td class="">P126</td><td class="">maintainer</td><td class="">contributor</td><td class="">role pointOfContact</td></tr>
+<tr><td class="">Agent roles</td><td class="">P146</td><td class="">series ordinal</td><td class="">P1545</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Agent roles</td><td class="">P171</td><td class="">creator</td><td class="">P170</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Agent roles</td><td class="">P183</td><td class="">editor</td><td class="">≈ P98</td><td class="">editor</td><td class="">contributor</td><td class="">role editor</td></tr>
+<tr><td class="">Agent roles</td><td class="">P225</td><td class="">position</td><td class="">≈ P1545</td><td class="">position</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Agent roles</td><td class="">P228</td><td class="">producer</td><td class="">P162</td><td class="">producer</td><td class="">contributor</td><td class="">role originator</td></tr>
+<tr><td class="">Agent roles</td><td class="">P229</td><td class="">provider</td><td class="">--</td><td class="">provider</td><td class="">contributor</td><td class="">role resourceProvider</td></tr>
+<tr><td class="">Agent roles</td><td class="">P230</td><td class="">publisher</td><td class="">P123</td><td class="">publisher</td><td class="">publisher</td><td class="">dcterms:publisher</td></tr>
+<tr><td class="">Agent roles</td><td class="">P236</td><td class="">role name</td><td class="">--</td><td class="">roleName</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Agent roles</td><td class="">P242</td><td class="">sponsor</td><td class="">P859</td><td class="">sponsor</td><td class="">contributor</td><td class="">role sponsor</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P135</td><td class="">GitHub account</td><td class="">P2037</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P155</td><td class="">address</td><td class="">--</td><td class="">address</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P156</td><td class="">affiliation</td><td class="">≈ P1416</td><td class="">affiliation</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P157</td><td class="">archives at</td><td class="">P485</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P159</td><td class="">award received</td><td class="">P166</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P184</td><td class="">email address</td><td class="">P968</td><td class="">email</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P191</td><td class="">family name</td><td class="">P734</td><td class="">familyName</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P193</td><td class="">field of work</td><td class="">P101</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P200</td><td class="">given name</td><td class="">P735</td><td class="">givenName</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P213</td><td class="">member of</td><td class="">P463</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P215</td><td class="">notable work</td><td class="">P800</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Person and organisation</td><td class="">P222</td><td class="">person identifier</td><td class="">≈ P496, P2037</td><td class="">identifier (Person)</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P107</td><td class="">copyright license</td><td class="">P275</td><td class="">license</td><td class="">rights</td><td class="">dcterms:license</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P167</td><td class="">copyright holder</td><td class="">≈ P123</td><td class="">copyrightHolder</td><td class="">contributor</td><td class="">role rightsHolder</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P168</td><td class="">copyright year</td><td class="">--</td><td class="">copyrightYear</td><td class="">date</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P185</td><td class="">embargo date</td><td class="">--</td><td class="">embargoDate</td><td class="">date</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P186</td><td class="">embargo end date</td><td class="">--</td><td class="">embargoEndDate</td><td class="">date</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P199</td><td class="">funding</td><td class="">≈ P8324</td><td class="">funding</td><td class="">fundingReference</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P209</td><td class="">is accessible for free</td><td class="">--</td><td class="">isAccessibleForFree</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P226</td><td class="">price</td><td class="">P2284</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Rights, funding and access</td><td class="">P249</td><td class="">digital rights management system</td><td class="">P1032</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P103</td><td class="">application category</td><td class="">≈ P31</td><td class="">applicationCategory</td><td class="">--</td><td class="">dcat:theme</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P117</td><td class="">main subject</td><td class="">P921</td><td class="">keywords</td><td class="">subject</td><td class="">dcat:keyword</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P122</td><td class="">part of</td><td class="">P361</td><td class="">isPartOf</td><td class="">relatedItem</td><td class="">dcterms:isPartOf</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P128</td><td class="">application sub category</td><td class="">≈ P921</td><td class="">applicationSubCategory</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P129</td><td class="">application suite</td><td class="">≈ P361</td><td class="">applicationSuite</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P130</td><td class="">based on</td><td class="">P144</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P136</td><td class="">has part(s)</td><td class="">P527</td><td class="">hasPart</td><td class="">relatedItem</td><td class="">dcterms:hasPart</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P149</td><td class="">supporting data</td><td class="">--</td><td class="">supportingData</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P150</td><td class="">target product</td><td class="">≈ P1547</td><td class="">targetProduct</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P164</td><td class="">computes solution to</td><td class="">P2159</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P190</td><td class="">facet of</td><td class="">P1269</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P192</td><td class="">feature list</td><td class="">--</td><td class="">featureList</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P202</td><td class="">has characteristic</td><td class="">P1552</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P205</td><td class="">influenced by</td><td class="">P737</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P251</td><td class="">language of work or name</td><td class="">P407</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Classification, features and relations</td><td class="">P252</td><td class="">movement</td><td class="">P135</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P111</td><td class="">described by source</td><td class="">P1343</td><td class="">referencePublication</td><td class="">relatedItem</td><td class="">dcterms:isReferencedBy</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P162</td><td class="">cites work</td><td class="">P2860</td><td class="">citation</td><td class="">relatedItem</td><td class="">--</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P233</td><td class="">review</td><td class="">--</td><td class="">review</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P234</td><td class="">review aspect</td><td class="">--</td><td class="">reviewAspect</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P235</td><td class="">review body</td><td class="">--</td><td class="">reviewBody</td><td class="">--</td><td class="">--</td></tr>
+<tr><td class="">Publication, citation and review</td><td class="">P239</td><td class="">software quality assurance</td><td class="">P2992</td><td class="">--</td><td class="">--</td><td class="">--</td></tr>
+  </tbody></table></div>
+  <p class="src">Sources: data/topics.yaml, data/dcat-crosswalk.csv, chublets-wikibase-demo</p>
 </section>
 <section class="tbl" id="table-codemeta-terms" data-title="CodeMeta terms">
   <h3>CodeMeta terms</h3>
@@ -363,7 +543,7 @@ footer{padding:32px 16px 48px;color:var(--mut);font-size:.85rem}
 </section>
 <section class="tbl" id="table-properties-by-topic" data-title="Properties by topic">
   <h3>Properties by topic</h3>
-  <p class="caption">Catalogue of the 168 properties of the chublets Wikibase by topic. Wikidata: twin property (P4), or the loose close match (P100) marked with an approximation sign. CodeMeta: term(s) of the property. schema.org: = means the schema.org term is the CodeMeta term, otherwise the term is given. DataCite: element derived via the CodeMeta hub (not a published mapping).</p>
+  <p class="caption">Catalogue of the 168 properties of the chublets Wikibase by topic. Wikidata: twin property (P4), or the loose close match (P100) marked with an approximation sign. CodeMeta: term(s) of the property. schema.org: = means the schema.org term is the CodeMeta term, otherwise the term is given. DataCite: element derived from the CodeMeta term through the published crosswalk.</p>
   <div class="tools">
     <input type="search" class="filter" placeholder="Filter rows" aria-label="Filter rows of Properties by topic">
     <span class="count" aria-live="polite"></span>

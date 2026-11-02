@@ -24,6 +24,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 import model_data  # noqa: E402
 import topics as topics_mod  # noqa: E402
+from visuals_utils import ROOT  # noqa: E402
 
 
 @dataclass(frozen=True)
@@ -297,13 +298,48 @@ def t_catalogue(M: model_data.Model, ts: list[topics_mod.Topic]) -> Table:
     cap = (
         f"Catalogue of the {len(M.props)} properties of the chublets Wikibase by topic. Wikidata: twin property (P4), or the loose close match (P100) "
         f"marked with an approximation sign. CodeMeta: term(s) of the property. schema.org: ``='' means the schema.org term is the CodeMeta term, "
-        f"otherwise the term is given. DataCite: element derived via the CodeMeta hub (not a published mapping)."
+        f"otherwise the term is given. DataCite: element derived from the CodeMeta term through the published crosswalk."
     ).replace("``='' ", "= ")
     cols = [Col("ID", width=0.055), Col("Label", width=0.13, brk=True), Col("Datatype", width=0.105), Col("Set", width=0.075),
             Col("Status", width=0.115), Col("Wikidata", width=0.105), Col("CodeMeta", width=0.135, brk=True),
             Col("schema.org", width=0.125, brk=True), Col("DataCite", width=0.115, brk=True)]
     return Table("table-properties-by-topic", "tab:properties-by-topic", "Properties by topic", cap, cols, rows,
                  size=r"\footnotesize", tabcolsep="2.5pt", sources=("data/topics.yaml", "chublets-wikibase-demo"))
+
+
+def _dcat_terms() -> dict[str, list[str]]:
+    """CodeMeta term -> DCAT terms, normalised from the published crosswalk (data/dcat-crosswalk.csv)."""
+    out: dict[str, list[str]] = {}
+    for r in model_data.read_csv(ROOT / "data" / "dcat-crosswalk.csv"):
+        out.setdefault(r["codemeta_term"], []).append(r["dcat_term"])
+    return out
+
+
+def t_crosswalk(M: model_data.Model, ts: list[topics_mod.Topic]) -> Table:
+    dcat = _dcat_terms()
+    rows: list[Row | Sub] = []
+    n_dcat = n_datacite = 0
+    for t in ts:
+        rows.append(Sub(f"{t.label} ({len(t.members)})"))
+        for pid in t.members:
+            p = M.props[pid]
+            terms: list[str] = []
+            for term in p.codemeta_terms:
+                terms += [x for x in dcat.get(term, []) if x not in terms]
+            n_dcat += bool(terms)
+            n_datacite += bool(p.datacite)
+            rows.append(_r(p.id, p.label, _wikidata_cell(p), ", ".join(p.codemeta_terms) or DASH,
+                           ", ".join(p.datacite) or DASH, "; ".join(terms) or DASH))
+    cap = (
+        f"The {len(M.props)} properties of chublets.software by topic, with their counterparts. Wikidata: twin property, or a close match "
+        f"marked with an approximation sign. DataCite ({n_datacite} properties) and DCAT ({n_dcat} properties) are derived from the CodeMeta "
+        f"term through the published crosswalks; they show what can be mapped, not an export that exists today. Role stands for "
+        f"prov:qualifiedAttribution with dcat:hadRole."
+    )
+    cols = [Col("ID", width=0.06), Col("Label", width=0.23, brk=True), Col("Wikidata", width=0.11), Col("CodeMeta", width=0.205, brk=True),
+            Col("DataCite", width=0.17, brk=True), Col("DCAT", width=0.225, brk=True)]
+    return Table("table-properties-crosswalk", "tab:properties-crosswalk", "Properties and their counterparts", cap, cols, rows,
+                 size=r"\footnotesize", tabcolsep="3pt", sources=("data/topics.yaml", "data/dcat-crosswalk.csv", "chublets-wikibase-demo"))
 
 
 def _prop_for_term(M: model_data.Model, row: dict[str, str]) -> model_data.Prop | None:
@@ -423,7 +459,7 @@ def build() -> list[Table]:
     if problems:
         raise RuntimeError("; ".join(problems))
     tables = [
-        t_statistics(M), t_origin(M), t_evidence(M), t_topics(M, ts), t_topics_status(M, ts), t_catalogue(M, ts),
+        t_statistics(M), t_origin(M), t_evidence(M), t_topics(M, ts), t_topics_status(M, ts), t_catalogue(M, ts), t_crosswalk(M, ts),
         t_codemeta(M), t_groups(M), t_datacite(M), t_classes(M), t_sources(),
     ]
     _check_wording(tables)

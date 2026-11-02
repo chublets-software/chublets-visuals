@@ -67,8 +67,9 @@ picture). Captions, alt texts and sources are in `captions.yaml`.
 
 ## Tables
 
-Eleven LaTeX tables in `tex/` (also as CSV and HTML on the overview page): the classes, the
-properties by origin and topic, the CodeMeta terms, the evidence per property, the DataCite
+Twelve LaTeX tables in `tex/` (also as CSV and HTML on the overview page): the classes, the
+properties by origin and topic, the properties with their counterparts in Wikidata, CodeMeta,
+DataCite and DCAT, the CodeMeta terms, the evidence per property, the DataCite
 evidence, the evidence sources and the model statistics. `tex/appendix-tables.tex` includes
 all of them.
 
@@ -76,6 +77,7 @@ all of them.
 
 | Source | Vendored in |
 |---|---|
+| DCAT column of [Crosswalks of research software metadata schemas to CodeMeta](https://doi.org/10.5281/zenodo.21935688) | `data/dcat-crosswalk.csv` |
 | [chublets-wikibase-demo](https://github.com/n4o-rse/chublets-wikibase-demo) (model tables, review) | `data/raw/chublets-wikibase-demo/` |
 | [wikibase-static](https://github.com/n4o-rse/wikibase-static) (kernel tables) | `data/raw/wikibase-static/` |
 | [wikibase-federation](https://github.com/n4o-rse/wikibase-federation) (use case `chublets`) | `data/raw/wikibase-federation/` |

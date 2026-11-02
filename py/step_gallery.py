@@ -123,7 +123,7 @@ GRAPHIC_THEME = {
 TABLE_THEME = {
     "table-codemeta-terms": "vocabularies", "table-wikidata-groups": "vocabularies",
     "table-datacite-evidence": "vocabularies", "table-evidence-sources": "vocabularies",
-    "table-property-evidence": "vocabularies",
+    "table-property-evidence": "vocabularies", "table-properties-crosswalk": "vocabularies",
 }
 
 
